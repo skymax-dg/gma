@@ -1,4 +1,6 @@
 Gma::Application.routes.draw do
+  resources :mags
+
   resources :anagens
 
   resources :articles
