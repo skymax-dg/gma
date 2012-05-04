@@ -1,0 +1,45 @@
+<%= form_for(@anagen) do |f| %>
+  <% if @anagen.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@anagen.errors.count, "error") %> prohibited this anagen from being saved:</h2>
+
+      <ul>
+      <% @anagen.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :codice %><br />
+    <%= f.number_field :codice %>
+  </div>
+  <div class="field">
+    <%= f.label :tipo %><br />
+    <%= f.text_field :tipo %>
+  </div>
+  <div class="field">
+    <%= f.label :cognome %><br />
+    <%= f.text_field :cognome %>
+  </div>
+  <div class="field">
+    <%= f.label :nome %><br />
+    <%= f.text_field :nome %>
+  </div>
+  <div class="field">
+    <%= f.label :ragsoc %><br />
+    <%= f.text_field :ragsoc %>
+  </div>
+  <div class="field">
+    <%= f.label :codfis %><br />
+    <%= f.text_field :codfis %>
+  </div>
+  <div class="field">
+    <%= f.label :pariva %><br />
+    <%= f.text_field :pariva %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

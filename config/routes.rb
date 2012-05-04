@@ -1,4 +1,6 @@
 Gma::Application.routes.draw do
+  resources :anagens
+
   resources :articles
 
   # The priority is based upon order of creation:

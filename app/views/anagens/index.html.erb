@@ -1,0 +1,35 @@
+<h1>Listing anagens</h1>
+
+<table>
+  <tr>
+    <th>Codice</th>
+    <th>Tipo</th>
+    <th>Cognome</th>
+    <th>Nome</th>
+    <th>Ragsoc</th>
+    <th>Codfis</th>
+    <th>Pariva</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @anagens.each do |anagen| %>
+  <tr>
+    <td><%= anagen.codice %></td>
+    <td><%= anagen.tipo %></td>
+    <td><%= anagen.cognome %></td>
+    <td><%= anagen.nome %></td>
+    <td><%= anagen.ragsoc %></td>
+    <td><%= anagen.codfis %></td>
+    <td><%= anagen.pariva %></td>
+    <td><%= link_to 'Show', anagen %></td>
+    <td><%= link_to 'Edit', edit_anagen_path(anagen) %></td>
+    <td><%= link_to 'Destroy', anagen, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Anagen', new_anagen_path %>

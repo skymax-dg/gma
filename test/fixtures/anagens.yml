@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  codice: 1
+  tipo: MyString
+  cognome: MyString
+  nome: MyString
+  ragsoc: MyString
+  codfis: MyString
+  pariva: MyString
+
+two:
+  codice: 1
+  tipo: MyString
+  cognome: MyString
+  nome: MyString
+  ragsoc: MyString
+  codfis: MyString
+  pariva: MyString

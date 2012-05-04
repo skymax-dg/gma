@@ -10,7 +10,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120504130809) do
+ActiveRecord::Schema.define(:version => 20120504142807) do
+
+  create_table "anagens", :force => true do |t|
+    t.integer  "codice"
+    t.string   "tipo"
+    t.string   "cognome"
+    t.string   "nome"
+    t.string   "ragsoc"
+    t.string   "codfis"
+    t.string   "pariva"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "anagens", ["codfis"], :name => "idx_anagens_on_codfis", :unique => true
+  add_index "anagens", ["codice"], :name => "idx_anagens_on_codice", :unique => true
+  add_index "anagens", ["pariva"], :name => "idx_anagens_on_pariva", :unique => true
 
   create_table "articles", :force => true do |t|
     t.string   "codice"
