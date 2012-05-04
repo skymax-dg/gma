@@ -1,4 +1,6 @@
 Gma::Application.routes.draw do
+  resources :causmags
+
   resources :mags
 
   resources :anagens

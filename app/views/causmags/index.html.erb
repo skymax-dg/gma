@@ -1,0 +1,31 @@
+<h1>Listing causmags</h1>
+
+<table>
+  <tr>
+    <th>Descriz</th>
+    <th>Tipo</th>
+    <th>Magsrc</th>
+    <th>Magdst</th>
+    <th>Fattura</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @causmags.each do |causmag| %>
+  <tr>
+    <td><%= causmag.descriz %></td>
+    <td><%= causmag.tipo %></td>
+    <td><%= causmag.magsrc %></td>
+    <td><%= causmag.magdst %></td>
+    <td><%= causmag.fattura %></td>
+    <td><%= link_to 'Show', causmag %></td>
+    <td><%= link_to 'Edit', edit_causmag_path(causmag) %></td>
+    <td><%= link_to 'Destroy', causmag, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Causmag', new_causmag_path %>

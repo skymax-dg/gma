@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120504142807) do
+ActiveRecord::Schema.define(:version => 20120504161156) do
 
   create_table "anagens", :force => true do |t|
     t.integer  "codice"
@@ -37,5 +37,25 @@ ActiveRecord::Schema.define(:version => 20120504142807) do
 
   add_index "articles", ["codice"], :name => "idx_articles_on_codice", :unique => true
   add_index "articles", ["descriz"], :name => "idx_articles_on_descriz", :unique => true
+
+  create_table "causmags", :force => true do |t|
+    t.string   "descriz"
+    t.string   "tipo"
+    t.integer  "magsrc_id"
+    t.integer  "magdst_id"
+    t.string   "fattura"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "causmags", ["magdst_id"], :name => "index_causmags_on_magdst_id"
+  add_index "causmags", ["magsrc_id"], :name => "index_causmags_on_magsrc_id"
+
+  create_table "mags", :force => true do |t|
+    t.integer  "codice"
+    t.string   "descriz"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
 end

@@ -1,0 +1,37 @@
+<%= form_for(@causmag) do |f| %>
+  <% if @causmag.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@causmag.errors.count, "error") %> prohibited this causmag from being saved:</h2>
+
+      <ul>
+      <% @causmag.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :descriz %><br />
+    <%= f.text_field :descriz %>
+  </div>
+  <div class="field">
+    <%= f.label :tipo %><br />
+    <%= f.text_field :tipo %>
+  </div>
+  <div class="field">
+    <%= f.label :magsrc %><br />
+    <%= f.text_field :magsrc %>
+  </div>
+  <div class="field">
+    <%= f.label :magdst %><br />
+    <%= f.text_field :magdst %>
+  </div>
+  <div class="field">
+    <%= f.label :fattura %><br />
+    <%= f.text_field :fattura %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
