@@ -1,0 +1,25 @@
+<h1>Listing mags</h1>
+
+<table>
+  <tr>
+    <th>Codice</th>
+    <th>Descriz</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @mags.each do |mag| %>
+  <tr>
+    <td><%= mag.codice %></td>
+    <td><%= mag.descriz %></td>
+    <td><%= link_to 'Show', mag %></td>
+    <td><%= link_to 'Edit', edit_mag_path(mag) %></td>
+    <td><%= link_to 'Destroy', mag, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Mag', new_mag_path %>
