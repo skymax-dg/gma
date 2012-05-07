@@ -12,12 +12,20 @@
   <% end %>
 
   <div class="field">
+    <%= f.label :azienda %><br />
+    <%= f.number_field :azienda %>
+  </div>
+  <div class="field">
     <%= f.label :codice %><br />
     <%= f.text_field :codice %>
   </div>
   <div class="field">
     <%= f.label :descrizione %><br />
     <%= f.text_field :descriz %>
+  </div>
+  <div class="field">
+    <%= f.label :Prezzo %><br />
+    <%= f.text_field :prezzo %>
   </div>
   <div class="actions">
     <%= f.submit "Crea/Modifica Articolo"%>

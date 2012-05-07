@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Azienda:</b>
+  <%= @conto.azienda %>
+</p>
+
+<p>
+  <b>Annoese:</b>
+  <%= @conto.annoese %>
+</p>
+
+<p>
+  <b>Codice:</b>
+  <%= @conto.codice %>
+</p>
+
+<p>
+  <b>Descriz:</b>
+  <%= @conto.descriz %>
+</p>
+
+<p>
+  <b>Tipoconto:</b>
+  <%= @conto.tipoconto %>
+</p>
+
+<p>
+  <b>Cntrpartita:</b>
+  <%= @conto.cntrpartita %>
+</p>
+
+
+<%= link_to 'Edit', edit_conto_path(@conto) %> |
+<%= link_to 'Back', contos_path %>

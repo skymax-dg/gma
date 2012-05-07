@@ -1,0 +1,33 @@
+<h1>Listing tesdocs</h1>
+
+<table>
+  <tr>
+    <th>Tipo doc</th>
+    <th>Num doc</th>
+    <th>Data doc</th>
+    <th>Descriz</th>
+    <th>Causmag</th>
+    <th>Anagen</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @tesdocs.each do |tesdoc| %>
+  <tr>
+    <td><%= tesdoc.tipo_doc %></td>
+    <td><%= tesdoc.num_doc %></td>
+    <td><%= tesdoc.data_doc %></td>
+    <td><%= tesdoc.descriz %></td>
+    <td><%= tesdoc.causmag %></td>
+    <td><%= tesdoc.anagen %></td>
+    <td><%= link_to 'Show', tesdoc %></td>
+    <td><%= link_to 'Edit', edit_tesdoc_path(tesdoc) %></td>
+    <td><%= link_to 'Destroy', tesdoc, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Tesdoc', new_tesdoc_path %>

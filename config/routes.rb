@@ -1,4 +1,8 @@
 Gma::Application.routes.draw do
+  resources :contos
+
+  resources :tesdocs
+
   resources :prezzoarticclis
 
   resources :causmags

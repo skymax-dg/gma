@@ -1,0 +1,42 @@
+<%= form_for(@conto) do |f| %>
+  <% if @conto.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@conto.errors.count, "error") %> prohibited this conto from being saved:</h2>
+
+      <ul>
+      <% @conto.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :azienda %><br />
+    <%= f.number_field :azienda %>
+  </div>
+  <div class="field">
+    <%= f.label :annoese %><br />
+    <%= f.number_field :annoese %>
+  </div>
+  <div class="field">
+    <%= f.label :codice %><br />
+    <%= f.number_field :codice %>
+  </div>
+  <div class="field">
+    <%= f.label :descriz %><br />
+    <%= f.text_field :descriz %>
+  </div>
+  <div class="field">
+    <%= f.label :tipoconto %><br />
+    <%= select(:conto, :tipoconto, [["Cliente", "C"], ["Fornitore", "F"], ["Altro", "A"]], { :prompt => true }) %>
+    <%#= f.text_field :tipoconto %>
+  </div>
+  <div class="field">
+    <%= f.label :cntrpartita %><br />
+    <%= f.number_field :cntrpartita %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

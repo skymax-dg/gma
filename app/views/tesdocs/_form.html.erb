@@ -1,0 +1,41 @@
+<%= form_for(@tesdoc) do |f| %>
+  <% if @tesdoc.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@tesdoc.errors.count, "error") %> prohibited this tesdoc from being saved:</h2>
+
+      <ul>
+      <% @tesdoc.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :tipo_doc %><br />
+    <%= f.text_field :tipo_doc %>
+  </div>
+  <div class="field">
+    <%= f.label :num_doc %><br />
+    <%= f.number_field :num_doc %>
+  </div>
+  <div class="field">
+    <%= f.label :data_doc %><br />
+    <%= f.date_select :data_doc %>
+  </div>
+  <div class="field">
+    <%= f.label :descriz %><br />
+    <%= f.text_field :descriz %>
+  </div>
+  <div class="field">
+    <%= f.label :causmag %><br />
+    <%= f.text_field :causmag %>
+  </div>
+  <div class="field">
+    <%= f.label :anagen %><br />
+    <%= f.text_field :anagen %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

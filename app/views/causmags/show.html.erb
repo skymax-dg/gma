@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <b>Azienda:</b>
+  <%= @causmag.azienda %>
+</p>
+
+<p>
   <b>Descrizione:</b>
   <%= @causmag.descriz %>
 </p>
@@ -8,6 +13,11 @@
 <p>
   <b>Tipologia:</b>
   <%= @causmag.tipo %>
+</p>
+
+<p>
+  <b>Impatto sul magazzino:</b>
+  <%= @causmag.movimpmag %>
 </p>
 
 <p>
@@ -21,8 +31,8 @@
 </p>
 
 <p>
-  <b>Genera fattura:</b>
-  <%= @causmag.fattura %>
+  <b>Movimento contabile:</b>
+  <%= @causmag.contabile %>
 </p>
 
 

@@ -7,10 +7,12 @@ class Causmag < ActiveRecord::Base
   # tramite :magdst (magdst_id)
   # e la chiave primaria della classe "Mag" (id)  
   belongs_to :magdst, :class_name => "Mag"
+  
+  has_many :tesdocs
 
-  attr_accessible :descriz, :fattura, :tipo, :magsrc_id, :magdst_id
-  validates :descriz, :fattura, :tipo, :presence => true
+  attr_accessible :azienda, :descriz, :contabile, :tipo, :magsrc_id, :magdst_id, :movimpmag
+  validates :azienda, :descriz, :contabile, :tipo, :movimpmag, :presence => true
   # Fare un validate con i valori ammessi
-  validates :fattura, :length => { :maximum => 1, :too_long  => "1 carattere obbligatorio (Valori ammessi: S = Con Fattura - N = Senza Fattura" }
+  validates :contabile, :length => { :maximum => 1, :too_long  => "1 carattere obbligatorio (Valori ammessi: S = Mov.Contabile - N = Mov.non Contabile" }
   validates :tipo,  :length => { :maximum => 1, :too_long  => "1 carattere obbligatorio (Valori ammessi: V = Vendita - A = Acquisto - G = Generico" }
 end

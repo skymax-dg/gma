@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Tipo doc:</b>
+  <%= @tesdoc.tipo_doc %>
+</p>
+
+<p>
+  <b>Num doc:</b>
+  <%= @tesdoc.num_doc %>
+</p>
+
+<p>
+  <b>Data doc:</b>
+  <%= @tesdoc.data_doc %>
+</p>
+
+<p>
+  <b>Descriz:</b>
+  <%= @tesdoc.descriz %>
+</p>
+
+<p>
+  <b>Causmag:</b>
+  <%= @tesdoc.causmag %>
+</p>
+
+<p>
+  <b>Anagen:</b>
+  <%= @tesdoc.anagen %>
+</p>
+
+
+<%= link_to 'Edit', edit_tesdoc_path(@tesdoc) %> |
+<%= link_to 'Back', tesdocs_path %>

@@ -7,9 +7,9 @@ class Mag < ActiveRecord::Base
   # tramite l'attributo "magdst_id"
   has_many :causmags, :foreign_key => "magdst_id",
                      :dependent => :destroy  
-  attr_accessible :codice, :descriz
+  attr_accessible :azienda, :codice, :descriz
 
-  validates :codice, :descriz, :presence => true
+  validates :azienda, :codice, :descriz, :presence => true
   validates :codice, :descriz, :uniqueness => true
 
   validates :descriz,  :length => { :maximum => 50, :too_long  => "Lunghezza massima permessa: 50 caratteri" }

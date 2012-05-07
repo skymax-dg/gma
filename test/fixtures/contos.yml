@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  azienda: 1
+  annoese: 1
+  codice: 1
+  descriz: MyString
+  tipoconto: MyString
+  cntrpartita: 1
+
+two:
+  azienda: 1
+  annoese: 1
+  codice: 1
+  descriz: MyString
+  tipoconto: MyString
+  cntrpartita: 1

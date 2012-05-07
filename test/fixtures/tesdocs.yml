@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  tipo_doc: MyString
+  num_doc: 1
+  data_doc: 2012-05-07
+  descriz: MyString
+  causmag: 
+  anagen: 
+
+two:
+  tipo_doc: MyString
+  num_doc: 1
+  data_doc: 2012-05-07
+  descriz: MyString
+  causmag: 
+  anagen: 

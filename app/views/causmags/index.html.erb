@@ -2,11 +2,13 @@
 
 <table>
   <tr>
+    <th>Azienda</th>
     <th>Descrizione</th>
     <th>Tipologia</th>
+    <th>Impatto sul magazzino</th>
     <th>Magazzino di origine</th>
     <th>Magazzino di destinazione</th>
-    <th>Genera fattura</th>
+    <th>Movimento contabile</th>
     <th></th>
     <th></th>
     <th></th>
@@ -14,11 +16,13 @@
 
 <% @causmags.each do |causmag| %>
   <tr>
+    <td><%= causmag.azienda %></td>
     <td><%= causmag.descriz %></td>
     <td><%= causmag.tipo %></td>
+    <td><%= causmag.movimpmag %></td>
     <td><%= causmag.magsrc.descriz unless causmag.magsrc.nil? %></td>
     <td><%= causmag.magdst.descriz unless causmag.magdst.nil? %></td>
-    <td><%= causmag.fattura %></td>
+    <td><%= causmag.contabile %></td>
     <td><%= link_to 'Show', causmag %></td>
     <td><%= link_to 'Edit', edit_causmag_path(causmag) %></td>
     <td><%= link_to 'Destroy', causmag, :confirm => 'Are you sure?', :method => :delete %></td>

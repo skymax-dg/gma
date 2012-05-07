@@ -1,10 +1,12 @@
 class Anagen < ActiveRecord::Base
-  has_many :prezzoarticclis, :foreign_key => "anag_id",
-                             :dependent => :destroy  
-  attr_accessible :codice, :tipo, :cognome, :nome, :ragsoc, :codfis, :pariva
+  #has_many :prezzoarticclis, :foreign_key => "anag_id",
+  #                           :dependent => :destroy
+  #has_many :tesdocs
+  
+  attr_accessible :codice, :tipo, :cognome, :nome, :ragsoc, :codfis, :pariva, :sconto
 
   validates :codice, :tipo, :presence => true
-  validates :codice, :codfis, :pariva, :uniqueness => true
+  validates :codice, :uniqueness => true
 
   # Fare un validate su :tipo con i valori ammessi
   validates :tipo,  :length => { :maximum => 1, :too_long  => "1 carattere obbligatorio (Valori ammessi: F = persona Fisica - G = persona Giuridica - D = Ditta individuale" }
@@ -19,4 +21,5 @@ class Anagen < ActiveRecord::Base
     return "#{cognome}-#{nome}" unless tipo == "G"
     return ragsoc
   end
+
 end

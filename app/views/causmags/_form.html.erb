@@ -12,6 +12,10 @@
   <% end %>
 
   <div class="field">
+    <%= f.label :azienda %><br />
+    <%= f.number_field :azienda %>
+  </div>
+  <div class="field">
     <%= f.label "descrizione" %><br />
     <%= f.text_field :descriz %>
   </div>
@@ -28,8 +32,12 @@
     <%= collection_select :causmag, :magdst_id, Mag.all, :id, :descriz, :prompt => false, :include_blank => true %>
   </div>
   <div class="field">
-    <%= f.label "Genera fattura" %><br />
-    <%= select(:causmag, :fattura, [["Si", "S"], ["No", "N"]], { :include_blank => true })%>
+    <%= f.label "Movimento contabile" %><br />
+    <%= select(:causmag, :contabile, [["Si", "S"], ["No", "N"]], { :include_blank => true })%>
+  </div>
+  <div class="field">
+    <%= f.label "Impatto sul magazzino" %>
+    <%= select(:causmag, :movimpmag, [["Movimenta", "M"], ["Impegna", "I"], ["Nessuno", "N"]], { :prompt => true }) %>
   </div>
   <div class="actions">
     <%= f.submit %>

@@ -2,6 +2,7 @@
 
 <table>
   <tr>
+    <th>Azienda</th>
     <th>Codice</th>
     <th>Descriz</th>
     <th></th>
@@ -11,6 +12,7 @@
 
 <% @mags.each do |mag| %>
   <tr>
+    <td><%= mag.azienda %></td>
     <td><%= mag.codice %></td>
     <td><%= mag.descriz %></td>
     <td><%= link_to 'Show', mag %></td>

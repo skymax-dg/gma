@@ -17,7 +17,7 @@
   </div>
   <div class="field">
     <%= f.label :tipo %><br />
-    <%= f.text_field :tipo %>
+    <%= select(:anagen, :tipo, [["Ditta individuale", "I"], ["Persona fisica", "F"], ["Persona giuridica", "G"]], { :prompt => true }) %>
   </div>
   <div class="field">
     <%= f.label :cognome %><br />
@@ -38,6 +38,10 @@
   <div class="field">
     <%= f.label :pariva %><br />
     <%= f.text_field :pariva %>
+  </div>
+  <div class="field">
+    <%= f.label :sconto %><br />
+    <%= f.text_field :sconto %>
   </div>
   <div class="actions">
     <%= f.submit %>

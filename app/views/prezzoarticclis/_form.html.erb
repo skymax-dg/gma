@@ -21,8 +21,7 @@
   </div>
   <div class="field">
     <%= f.label :prezzo %><br />
-    <%= f.text_field :prezzo %>
-    <% number_field_tag 'Prezzo', nil, :in => 0...999999 %>
+    <%= number_field_tag 'Prezzo', 0.00, :in => 0...999999 %>
   </div>
   <div class="actions">
     <%= f.submit %>

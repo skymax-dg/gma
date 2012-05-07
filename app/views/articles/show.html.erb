@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <b>Azienda:</b>
+  <%= @article.azienda %>
+</p>
+
+<p>
   <b>Codice:</b>
   <%= @article.codice %>
 </p>
@@ -10,6 +15,10 @@
   <%= @article.descriz %>
 </p>
 
+<p>
+  <b>Prezzo:</b>
+  <%= @article.prezzo %>
+</p>
 
 <%= link_to 'Modifica', edit_article_path(@article) %> |
 <%= link_to 'Indietro', articles_path %>

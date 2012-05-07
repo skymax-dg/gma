@@ -5,7 +5,7 @@ class CreateCausmags < ActiveRecord::Migration
       t.string :tipo
       t.references :magsrc
       t.references :magdst
-      t.string :fattura
+      t.string :contabile
 
       t.timestamps
     end
