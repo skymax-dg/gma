@@ -41,7 +41,6 @@ class CausmagsController < ApplicationController
   # POST /causmags.json
   def create
     @causmag = Causmag.new(params[:causmag])
-
     respond_to do |format|
       if @causmag.save
         format.html { redirect_to @causmag, :notice => 'Causmag was successfully created.' }
@@ -57,7 +56,6 @@ class CausmagsController < ApplicationController
   # PUT /causmags/1.json
   def update
     @causmag = Causmag.find(params[:id])
-
     respond_to do |format|
       if @causmag.update_attributes(params[:causmag])
         format.html { redirect_to @causmag, :notice => 'Causmag was successfully updated.' }

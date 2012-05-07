@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120504161156) do
+ActiveRecord::Schema.define(:version => 20120506223806) do
 
   create_table "anagens", :force => true do |t|
     t.integer  "codice"
@@ -57,5 +57,16 @@ ActiveRecord::Schema.define(:version => 20120504161156) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "prezzoarticclis", :force => true do |t|
+    t.integer  "anag_id"
+    t.integer  "artic_id"
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
+    t.decimal  "prezzo",     :precision => 8, :scale => 2
+  end
+
+  add_index "prezzoarticclis", ["anag_id"], :name => "index_prezzoarticclis_on_anag_id"
+  add_index "prezzoarticclis", ["artic_id"], :name => "index_prezzoarticclis_on_artic_id"
 
 end

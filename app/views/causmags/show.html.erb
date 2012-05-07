@@ -1,27 +1,27 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Descriz:</b>
+  <b>Descrizione:</b>
   <%= @causmag.descriz %>
 </p>
 
 <p>
-  <b>Tipo:</b>
+  <b>Tipologia:</b>
   <%= @causmag.tipo %>
 </p>
 
 <p>
-  <b>Magsrc:</b>
-  <%= @causmag.magsrc %>
+  <b>Magazzino di origine:</b>
+  <%= @causmag.magsrc.descriz unless @causmag.magsrc.nil? %>
 </p>
 
 <p>
-  <b>Magdst:</b>
-  <%= @causmag.magdst %>
+  <b>Magazzino di destinazione:</b>
+  <%= @causmag.magdst.descriz unless @causmag.magdst.nil? %>
 </p>
 
 <p>
-  <b>Fattura:</b>
+  <b>Genera fattura:</b>
   <%= @causmag.fattura %>
 </p>
 

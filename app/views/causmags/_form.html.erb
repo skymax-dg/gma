@@ -12,24 +12,24 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :descriz %><br />
+    <%= f.label "descrizione" %><br />
     <%= f.text_field :descriz %>
   </div>
   <div class="field">
-    <%= f.label :tipo %><br />
-    <%= f.text_field :tipo %>
+    <%= f.label "tipologia" %>
+    <%= select(:causmag, :tipo, [["Vendita", "V"], ["Acquisto", "A"]], { :include_blank => true }) %>
   </div>
   <div class="field">
-    <%= f.label :magsrc %><br />
-    <%= f.text_field :magsrc %>
+    <%= f.label "magazzino di origine" %><br />
+    <%= collection_select :causmag, :magsrc_id, Mag.all, :id, :descriz, :prompt => false, :include_blank => true %>
   </div>
   <div class="field">
-    <%= f.label :magdst %><br />
-    <%= f.text_field :magdst %>
+    <%= f.label "magazzino di destinazione" %><br />
+    <%= collection_select :causmag, :magdst_id, Mag.all, :id, :descriz, :prompt => false, :include_blank => true %>
   </div>
   <div class="field">
-    <%= f.label :fattura %><br />
-    <%= f.text_field :fattura %>
+    <%= f.label "Genera fattura" %><br />
+    <%= select(:causmag, :fattura, [["Si", "S"], ["No", "N"]], { :include_blank => true })%>
   </div>
   <div class="actions">
     <%= f.submit %>

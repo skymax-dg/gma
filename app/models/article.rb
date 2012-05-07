@@ -1,4 +1,6 @@
 class Article < ActiveRecord::Base
+  has_many :prezzoarticclis, :foreign_key => "artic_id",
+                             :dependent => :destroy  
   attr_accessible :codice, :descriz
 
   validates :codice, :descriz, :presence => true

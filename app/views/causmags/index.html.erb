@@ -2,11 +2,11 @@
 
 <table>
   <tr>
-    <th>Descriz</th>
-    <th>Tipo</th>
-    <th>Magsrc</th>
-    <th>Magdst</th>
-    <th>Fattura</th>
+    <th>Descrizione</th>
+    <th>Tipologia</th>
+    <th>Magazzino di origine</th>
+    <th>Magazzino di destinazione</th>
+    <th>Genera fattura</th>
     <th></th>
     <th></th>
     <th></th>
@@ -16,8 +16,8 @@
   <tr>
     <td><%= causmag.descriz %></td>
     <td><%= causmag.tipo %></td>
-    <td><%= causmag.magsrc %></td>
-    <td><%= causmag.magdst %></td>
+    <td><%= causmag.magsrc.descriz unless causmag.magsrc.nil? %></td>
+    <td><%= causmag.magdst.descriz unless causmag.magdst.nil? %></td>
     <td><%= causmag.fattura %></td>
     <td><%= link_to 'Show', causmag %></td>
     <td><%= link_to 'Edit', edit_causmag_path(causmag) %></td>

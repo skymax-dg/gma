@@ -1,4 +1,12 @@
 class Mag < ActiveRecord::Base
+  # definisce una relazione 1aN col la classe causmag(:causmags)
+  # tramite l'attributo "magsrc_id"
+  has_many :causmags, :foreign_key => "magsrc_id",
+                     :dependent => :destroy  
+  # definisce una relazione 1aN col la classe causmag(:causmags)
+  # tramite l'attributo "magdst_id"
+  has_many :causmags, :foreign_key => "magdst_id",
+                     :dependent => :destroy  
   attr_accessible :codice, :descriz
 
   validates :codice, :descriz, :presence => true

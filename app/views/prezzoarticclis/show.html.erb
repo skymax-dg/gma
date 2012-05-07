@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Anagrafica cliente:</b>
+  <%= @prezzoarticcli.anag.nominativo %>
+</p>
+
+<p>
+  <b>Articolo:</b>
+  <%= @prezzoarticcli.artic.descriz %>
+</p>
+
+<p>
+  <b>Prezzo:</b>
+  <%= @prezzoarticcli.prezzo %>
+</p>
+
+
+<%= link_to 'Edit', edit_prezzoarticcli_path(@prezzoarticcli) %> |
+<%= link_to 'Back', prezzoarticclis_path %>
