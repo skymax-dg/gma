@@ -1,16 +1,19 @@
 class CreateTesdocs < ActiveRecord::Migration
   def change
     create_table :tesdocs do |t|
-      t.string :tipo_doc, :limit => 1
-      t.integer :num_doc
-      t.date :data_doc
+      t.integer :azienda, :null => false
+      t.integer :annoese, :null => false
+      t.string :tipo_doc, :limit => 1, :null => false
+      t.integer :num_doc, :null => false
+      t.date :data_doc, :null => false
       t.string :descriz, :limit => 150
       t.references :causmag
-      t.references :anagen
+      t.references :conto
+      t.decimal :sconto, :precision => 5, :scale => 2, :default => 0, :null => false
 
       t.timestamps
     end
     add_index :tesdocs, :causmag_id
-    add_index :tesdocs, :anagen_id
+    add_index :tesdocs, :conto_id
   end
 end

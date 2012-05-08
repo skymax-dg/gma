@@ -1,35 +1,41 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <b>Azienda:</b>
+  <%= @tesdoc.azienda %>
+  <b>Annoese:</b>
+  <%= @tesdoc.annoese %>
+</p>
+
+<p>
   <b>Tipo doc:</b>
   <%= @tesdoc.tipo_doc %>
-</p>
-
-<p>
-  <b>Num doc:</b>
+  <b>Nr. documento:</b>
   <%= @tesdoc.num_doc %>
-</p>
-
-<p>
-  <b>Data doc:</b>
+  <b>Data documento:</b>
   <%= @tesdoc.data_doc %>
 </p>
 
 <p>
-  <b>Descriz:</b>
+  <b>Descrizione:</b>
   <%= @tesdoc.descriz %>
+  <b>Causale:</b>
+  <%= @tesdoc.causmag.descriz %>
+  <b>Conto anagrafica:</b>
+  <%= @tesdoc.conto.descriz %>
+  <b>Sconto:</b>
+  <%= @tesdoc.sconto %>
 </p>
-
 <p>
-  <b>Causmag:</b>
-  <%= @tesdoc.causmag %>
+  DescrizioneArticolo
+  DescrizioneRiga
+  Quantita'
+  Prezzo
+  Sconto
 </p>
-
-<p>
-  <b>Anagen:</b>
-  <%= @tesdoc.anagen %>
-</p>
-
+<% unless @tesdoc.rigdocs.empty? %>
+  <%= render :partial => 'shared/rigdoc', :collection => @tesdoc.rigdocs %>
+<% end %>
 
 <%= link_to 'Edit', edit_tesdoc_path(@tesdoc) %> |
 <%= link_to 'Back', tesdocs_path %>

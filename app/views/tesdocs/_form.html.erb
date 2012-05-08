@@ -12,6 +12,14 @@
   <% end %>
 
   <div class="field">
+    <%= f.label :azienda %><br />
+    <%= f.text_field :azienda %>
+  </div>
+  <div class="field">
+    <%= f.label :annoese %><br />
+    <%= f.text_field :annoese %>
+  </div>
+  <div class="field">
     <%= f.label :tipo_doc %><br />
     <%= f.text_field :tipo_doc %>
   </div>
@@ -28,12 +36,16 @@
     <%= f.text_field :descriz %>
   </div>
   <div class="field">
-    <%= f.label :causmag %><br />
-    <%= f.text_field :causmag %>
+    <%= f.label :causale %><br />
+    <%= collection_select :tesdoc, :causmag_id, Causmag.all, :id, :descriz, :prompt => true %>
   </div>
   <div class="field">
-    <%= f.label :anagen %><br />
-    <%= f.text_field :anagen %>
+    <%= f.label :conto_anagrafica %><br />
+    <%= collection_select :tesdoc, :conto_id, Conto.all, :id, :descriz, :prompt => true %>
+  </div>
+  <div class="field">
+    <%= f.label :sconto %><br />
+    <%= f.text_field :sconto %>
   </div>
   <div class="actions">
     <%= f.submit %>

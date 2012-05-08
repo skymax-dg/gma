@@ -10,103 +10,125 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120507161422) do
+ActiveRecord::Schema.define(:version => 20120507234312) do
 
   create_table "anagens", :force => true do |t|
-    t.integer  "codice"
-    t.string   "tipo"
-    t.string   "cognome"
-    t.string   "nome"
-    t.string   "ragsoc"
-    t.string   "codfis"
-    t.string   "pariva"
-    t.datetime "created_at",                                                :null => false
-    t.datetime "updated_at",                                                :null => false
-    t.decimal  "sconto",     :precision => 5, :scale => 2, :default => 0.0
+    t.integer  "azienda",                                                                  :null => false
+    t.integer  "codice",                                                                   :null => false
+    t.string   "tipo",       :limit => 1,                                                  :null => false
+    t.string   "cognome",    :limit => 100
+    t.string   "nome",       :limit => 100
+    t.string   "ragsoc",     :limit => 150
+    t.string   "codfis",     :limit => 16
+    t.string   "pariva",     :limit => 11
+    t.decimal  "sconto",                    :precision => 5, :scale => 2, :default => 0.0, :null => false
+    t.datetime "created_at",                                                               :null => false
+    t.datetime "updated_at",                                                               :null => false
   end
 
-  add_index "anagens", ["codfis"], :name => "idx_anagens_on_codfis", :unique => true
-  add_index "anagens", ["codice"], :name => "idx_anagens_on_codice", :unique => true
-  add_index "anagens", ["cognome", "nome"], :name => "idx_anagens_on_cognome-nome"
-  add_index "anagens", ["pariva"], :name => "idx_anagens_on_pariva", :unique => true
-  add_index "anagens", ["ragsoc"], :name => "idx_anagens_on_ragsoc"
+  add_index "anagens", ["azienda", "codfis"], :name => "idx_anagens_on_codfis", :unique => true
+  add_index "anagens", ["azienda", "codice"], :name => "idx_anagens_on_codice", :unique => true
+  add_index "anagens", ["azienda", "cognome", "nome"], :name => "idx_anagens_on_cognome-nome"
+  add_index "anagens", ["azienda", "pariva"], :name => "idx_anagens_on_pariva", :unique => true
+  add_index "anagens", ["azienda", "ragsoc"], :name => "idx_anagens_on_ragsoc"
 
   create_table "articles", :force => true do |t|
-    t.string   "codice"
-    t.string   "descriz"
-    t.datetime "created_at",                                                :null => false
-    t.datetime "updated_at",                                                :null => false
-    t.decimal  "prezzo",     :precision => 8, :scale => 2, :default => 0.0
-    t.integer  "azienda",                                                   :null => false
+    t.integer  "azienda",                                                                  :null => false
+    t.string   "codice",                                                                   :null => false
+    t.string   "descriz",    :limit => 100,                                                :null => false
+    t.decimal  "prezzo",                    :precision => 8, :scale => 2, :default => 0.0, :null => false
+    t.datetime "created_at",                                                               :null => false
+    t.datetime "updated_at",                                                               :null => false
   end
 
-  add_index "articles", ["codice"], :name => "idx_articles_on_codice", :unique => true
-  add_index "articles", ["descriz"], :name => "idx_articles_on_descriz", :unique => true
+  add_index "articles", ["azienda", "codice"], :name => "idx_articles_on_codice", :unique => true
+  add_index "articles", ["azienda", "descriz"], :name => "idx_articles_on_descriz", :unique => true
 
   create_table "causmags", :force => true do |t|
-    t.string   "descriz"
-    t.string   "tipo"
+    t.integer  "azienda",                   :null => false
+    t.string   "descriz",    :limit => 100, :null => false
+    t.string   "tipo",       :limit => 1,   :null => false
+    t.string   "movimpmag",  :limit => 1,   :null => false
     t.integer  "magsrc_id"
     t.integer  "magdst_id"
-    t.string   "contabile",  :limit => 1
-    t.datetime "created_at",              :null => false
-    t.datetime "updated_at",              :null => false
-    t.integer  "azienda",                 :null => false
-    t.string   "movimpmag",  :limit => 1
+    t.string   "contabile",  :limit => 1,   :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
+  add_index "causmags", ["azienda", "descriz"], :name => "idx_causmags_on_descriz", :unique => true
   add_index "causmags", ["magdst_id"], :name => "index_causmags_on_magdst_id"
   add_index "causmags", ["magsrc_id"], :name => "index_causmags_on_magsrc_id"
 
   create_table "contos", :force => true do |t|
-    t.integer  "azienda",                                   :null => false
-    t.integer  "annoese",                                   :null => false
-    t.integer  "codice",                                    :null => false
-    t.string   "descriz",                                   :null => false
-    t.string   "tipoconto",                                 :null => false
+    t.integer  "azienda",                                                    :null => false
+    t.integer  "annoese",                                                    :null => false
+    t.integer  "codice",                                                     :null => false
+    t.string   "descriz",                                                    :null => false
+    t.string   "tipoconto",                                                  :null => false
     t.integer  "cntrpartita"
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
-    t.decimal  "sconto",      :precision => 5, :scale => 2
+    t.decimal  "sconto",      :precision => 5, :scale => 2, :default => 0.0, :null => false
+    t.datetime "created_at",                                                 :null => false
+    t.datetime "updated_at",                                                 :null => false
   end
 
-  add_index "contos", ["azienda", "annoese", "codice"], :name => "idx_contos_on_azienda-annoese-codice", :unique => true
-  add_index "contos", ["descriz"], :name => "idx_contos_on_descriz"
+  add_index "contos", ["azienda", "annoese", "codice"], :name => "idx_contos_on_codice", :unique => true
+  add_index "contos", ["azienda", "annoese", "descriz"], :name => "idx_contos_on_descriz"
 
   create_table "mags", :force => true do |t|
-    t.integer  "codice"
-    t.string   "descriz"
+    t.integer  "azienda",    :null => false
+    t.integer  "codice",     :null => false
+    t.string   "descriz",    :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.integer  "azienda",    :null => false
   end
+
+  add_index "mags", ["azienda", "codice"], :name => "idx_mags_on_codice", :unique => true
+  add_index "mags", ["azienda", "descriz"], :name => "idx_mags_on_descriz", :unique => true
 
   create_table "prezzoarticclis", :force => true do |t|
+    t.integer  "azienda",                                  :null => false
     t.integer  "anag_id"
     t.integer  "artic_id"
+    t.decimal  "prezzo",     :precision => 8, :scale => 2, :null => false
     t.datetime "created_at",                               :null => false
     t.datetime "updated_at",                               :null => false
-    t.decimal  "prezzo",     :precision => 8, :scale => 2
   end
 
-  add_index "prezzoarticclis", ["anag_id"], :name => "index_prezzoarticclis_on_anag_id"
-  add_index "prezzoarticclis", ["artic_id"], :name => "index_prezzoarticclis_on_artic_id"
+  add_index "prezzoarticclis", ["azienda", "anag_id", "artic_id"], :name => "index_prezzoarticclis_on_azienda_and_anag_id_and_artic_id", :unique => true
+  add_index "prezzoarticclis", ["azienda", "anag_id"], :name => "index_prezzoarticclis_on_azienda_and_anag_id"
+  add_index "prezzoarticclis", ["azienda", "artic_id"], :name => "index_prezzoarticclis_on_azienda_and_artic_id"
 
-  create_table "tesdocs", :force => true do |t|
-    t.string   "tipo_doc",   :limit => 1
-    t.integer  "num_doc"
-    t.date     "data_doc"
+  create_table "rigdocs", :force => true do |t|
+    t.integer  "tesdoc_id",                                                                :null => false
+    t.integer  "article_id"
     t.string   "descriz",    :limit => 150
-    t.integer  "causmag_id"
-    t.integer  "anagen_id"
+    t.integer  "qta"
+    t.decimal  "prezzo",                    :precision => 8, :scale => 2, :default => 0.0, :null => false
+    t.decimal  "sconto",                    :precision => 5, :scale => 2, :default => 0.0, :null => false
     t.datetime "created_at",                                                               :null => false
     t.datetime "updated_at",                                                               :null => false
-    t.decimal  "sconto",                    :precision => 5, :scale => 2, :default => 0.0
-    t.integer  "azienda",                                                                  :null => false
-    t.integer  "annoese",                                                                  :null => false
   end
 
-  add_index "tesdocs", ["anagen_id"], :name => "index_tesdocs_on_anagen_id"
+  add_index "rigdocs", ["article_id"], :name => "index_rigdocs_on_article_id"
+  add_index "rigdocs", ["descriz"], :name => "index_rigdocs_on_descriz"
+  add_index "rigdocs", ["tesdoc_id"], :name => "index_rigdocs_on_tesdoc_id"
+
+  create_table "tesdocs", :force => true do |t|
+    t.integer  "azienda",                                                                  :null => false
+    t.integer  "annoese",                                                                  :null => false
+    t.string   "tipo_doc",   :limit => 1,                                                  :null => false
+    t.integer  "num_doc",                                                                  :null => false
+    t.date     "data_doc",                                                                 :null => false
+    t.string   "descriz",    :limit => 150
+    t.integer  "causmag_id"
+    t.integer  "conto_id"
+    t.decimal  "sconto",                    :precision => 5, :scale => 2, :default => 0.0, :null => false
+    t.datetime "created_at",                                                               :null => false
+    t.datetime "updated_at",                                                               :null => false
+  end
+
   add_index "tesdocs", ["causmag_id"], :name => "index_tesdocs_on_causmag_id"
+  add_index "tesdocs", ["conto_id"], :name => "index_tesdocs_on_conto_id"
 
 end

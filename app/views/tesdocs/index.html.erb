@@ -2,12 +2,15 @@
 
 <table>
   <tr>
+    <th>Azienda</th>
+    <th>AnnoEse</th>
     <th>Tipo doc</th>
-    <th>Num doc</th>
-    <th>Data doc</th>
-    <th>Descriz</th>
-    <th>Causmag</th>
-    <th>Anagen</th>
+    <th>Nr. doc</th>
+    <th>Data documento</th>
+    <th>Descrizione</th>
+    <th>Causale</th>
+    <th>ContoAnagrafica</th>
+    <th>Sconto</th>
     <th></th>
     <th></th>
     <th></th>
@@ -15,12 +18,15 @@
 
 <% @tesdocs.each do |tesdoc| %>
   <tr>
+    <td><%= tesdoc.azienda %></td>
+    <td><%= tesdoc.annoese %></td>
     <td><%= tesdoc.tipo_doc %></td>
     <td><%= tesdoc.num_doc %></td>
     <td><%= tesdoc.data_doc %></td>
     <td><%= tesdoc.descriz %></td>
-    <td><%= tesdoc.causmag %></td>
-    <td><%= tesdoc.anagen %></td>
+    <td><%= tesdoc.causmag.descriz %></td>
+    <td><%= tesdoc.conto.descriz %></td>
+    <td><%= tesdoc.sconto %></td>
     <td><%= link_to 'Show', tesdoc %></td>
     <td><%= link_to 'Edit', edit_tesdoc_path(tesdoc) %></td>
     <td><%= link_to 'Destroy', tesdoc, :confirm => 'Are you sure?', :method => :delete %></td>

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  article: 
+  desciz: MyString
+  qta: 1
+  prezzo: 9.99
+  sconto: 9.99
+
+two:
+  article: 
+  desciz: MyString
+  qta: 1
+  prezzo: 9.99
+  sconto: 9.99
