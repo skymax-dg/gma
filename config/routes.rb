@@ -1,4 +1,11 @@
 Gma::Application.routes.draw do
+#root :to => 'menu#home'
+  get "menu/home"
+
+  get "menu/contact"
+
+  get "menu/help"
+
   resources :contos
 
   resources :tesdocs
@@ -13,6 +20,7 @@ Gma::Application.routes.draw do
 
   resources :articles
 
+  root              :to => 'menu#home'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

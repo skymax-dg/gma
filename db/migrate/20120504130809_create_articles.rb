@@ -2,7 +2,7 @@ class CreateArticles < ActiveRecord::Migration
   def change
     create_table :articles do |t|
       t.integer :azienda, :null => false
-      t.string  :codice, :null => false
+      t.string  :codice, :limit => 20, :null => false
       t.string  :descriz, :limit => 100, :null => false
       t.decimal :prezzo, :precision => 8, :scale => 2, :default => 0, :null => false
 

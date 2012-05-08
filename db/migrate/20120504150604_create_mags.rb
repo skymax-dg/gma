@@ -3,7 +3,7 @@ class CreateMags < ActiveRecord::Migration
     create_table :mags do |t|
       t.integer :azienda, :null => false
       t.integer :codice, :null => false
-      t.string :descriz, :null => false
+      t.string :descriz, :limit => 50, :null => false
 
       t.timestamps
     end

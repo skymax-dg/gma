@@ -4,8 +4,8 @@ class CreateContos < ActiveRecord::Migration
       t.integer :azienda, :null => false
       t.integer :annoese, :null => false
       t.integer :codice, :null => false
-      t.string :descriz, :null => false
-      t.string :tipoconto, :null => false
+      t.string :descriz, :limit => 150, :null => false
+      t.string :tipoconto, :limit => 1, :null => false
       t.integer :cntrpartita
       t.decimal :sconto, :precision => 5, :scale => 2, :default => 0, :null => false
 

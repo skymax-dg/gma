@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120507234312) do
+ActiveRecord::Schema.define(:version => 20120508132703) do
 
   create_table "anagens", :force => true do |t|
     t.integer  "azienda",                                                                  :null => false
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(:version => 20120507234312) do
 
   create_table "articles", :force => true do |t|
     t.integer  "azienda",                                                                  :null => false
-    t.string   "codice",                                                                   :null => false
+    t.string   "codice",     :limit => 20,                                                 :null => false
     t.string   "descriz",    :limit => 100,                                                :null => false
     t.decimal  "prezzo",                    :precision => 8, :scale => 2, :default => 0.0, :null => false
     t.datetime "created_at",                                                               :null => false
@@ -61,26 +61,26 @@ ActiveRecord::Schema.define(:version => 20120507234312) do
   add_index "causmags", ["magsrc_id"], :name => "index_causmags_on_magsrc_id"
 
   create_table "contos", :force => true do |t|
-    t.integer  "azienda",                                                    :null => false
-    t.integer  "annoese",                                                    :null => false
-    t.integer  "codice",                                                     :null => false
-    t.string   "descriz",                                                    :null => false
-    t.string   "tipoconto",                                                  :null => false
+    t.integer  "azienda",                                                                   :null => false
+    t.integer  "annoese",                                                                   :null => false
+    t.integer  "codice",                                                                    :null => false
+    t.string   "descriz",     :limit => 150,                                                :null => false
+    t.string   "tipoconto",   :limit => 1,                                                  :null => false
     t.integer  "cntrpartita"
-    t.decimal  "sconto",      :precision => 5, :scale => 2, :default => 0.0, :null => false
-    t.datetime "created_at",                                                 :null => false
-    t.datetime "updated_at",                                                 :null => false
+    t.decimal  "sconto",                     :precision => 5, :scale => 2, :default => 0.0, :null => false
+    t.datetime "created_at",                                                                :null => false
+    t.datetime "updated_at",                                                                :null => false
   end
 
   add_index "contos", ["azienda", "annoese", "codice"], :name => "idx_contos_on_codice", :unique => true
   add_index "contos", ["azienda", "annoese", "descriz"], :name => "idx_contos_on_descriz"
 
   create_table "mags", :force => true do |t|
-    t.integer  "azienda",    :null => false
-    t.integer  "codice",     :null => false
-    t.string   "descriz",    :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "azienda",                  :null => false
+    t.integer  "codice",                   :null => false
+    t.string   "descriz",    :limit => 50, :null => false
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
   end
 
   add_index "mags", ["azienda", "codice"], :name => "idx_mags_on_codice", :unique => true
@@ -101,7 +101,6 @@ ActiveRecord::Schema.define(:version => 20120507234312) do
 
   create_table "rigdocs", :force => true do |t|
     t.integer  "tesdoc_id",                                                                :null => false
-    t.integer  "prgrig",                                                                   :null => false
     t.integer  "article_id"
     t.string   "descriz",    :limit => 150
     t.integer  "qta"
@@ -109,10 +108,12 @@ ActiveRecord::Schema.define(:version => 20120507234312) do
     t.decimal  "sconto",                    :precision => 5, :scale => 2, :default => 0.0, :null => false
     t.datetime "created_at",                                                               :null => false
     t.datetime "updated_at",                                                               :null => false
+    t.integer  "prgrig",                                                  :default => 0,   :null => false
   end
 
   add_index "rigdocs", ["article_id"], :name => "index_rigdocs_on_article_id"
   add_index "rigdocs", ["descriz"], :name => "index_rigdocs_on_descriz"
+  add_index "rigdocs", ["tesdoc_id", "prgrig"], :name => "index_tesdocs_on_conto_id_prgrig", :unique => true
   add_index "rigdocs", ["tesdoc_id"], :name => "index_rigdocs_on_tesdoc_id"
 
   create_table "tesdocs", :force => true do |t|
@@ -131,6 +132,14 @@ ActiveRecord::Schema.define(:version => 20120507234312) do
 
   add_index "tesdocs", ["causmag_id"], :name => "index_tesdocs_on_causmag_id"
   add_index "tesdocs", ["conto_id"], :name => "index_tesdocs_on_conto_id"
-  add_index "rigdocs", ["tesdoc_id", "prgrig"], :name => "index_tesdocs_on_conto_id_prgrig", :unique => true
+
+  create_table "users", :force => true do |t|
+    t.integer  "azienda",                  :null => false
+    t.string   "login",      :limit => 20, :null => false
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+  end
+
+  add_index "users", ["azienda", "login"], :name => "idx_users_on_login", :unique => true
 
 end
