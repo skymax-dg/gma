@@ -101,6 +101,7 @@ ActiveRecord::Schema.define(:version => 20120507234312) do
 
   create_table "rigdocs", :force => true do |t|
     t.integer  "tesdoc_id",                                                                :null => false
+    t.integer  "prgrig",                                                                   :null => false
     t.integer  "article_id"
     t.string   "descriz",    :limit => 150
     t.integer  "qta"
@@ -130,5 +131,6 @@ ActiveRecord::Schema.define(:version => 20120507234312) do
 
   add_index "tesdocs", ["causmag_id"], :name => "index_tesdocs_on_causmag_id"
   add_index "tesdocs", ["conto_id"], :name => "index_tesdocs_on_conto_id"
+  add_index "rigdocs", ["tesdoc_id", "prgrig"], :name => "index_tesdocs_on_conto_id_prgrig", :unique => true
 
 end

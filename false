@@ -1,2 +1,0 @@
-      invoke  active_record
-      create    db/migrate/20120507151352_add_azienda_to_article.rb
