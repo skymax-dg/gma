@@ -21,21 +21,30 @@
   <%= @tesdoc.descriz %>
   <b>Causale:</b>
   <%= @tesdoc.causmag.descriz %>
+  <b>Codice conto anag.:</b>
+  <%= @tesdoc.conto.codice %>
   <b>Conto anagrafica:</b>
   <%= @tesdoc.conto.descriz %>
   <b>Sconto:</b>
   <%= @tesdoc.sconto %>
 </p>
-<p>
-  DescrizioneArticolo
-  DescrizioneRiga
-  Quantita'
-  Prezzo
-  Sconto
-</p>
-<% unless @tesdoc.rigdocs.empty? %>
-  <%= render :partial => 'shared/rigdoc', :collection => @tesdoc.rigdocs %>
-<% end %>
 
-<%= link_to 'Edit', edit_tesdoc_path(@tesdoc) %> |
-<%= link_to 'Back', tesdocs_path %>
+<table>
+  <tr>
+    <th>Descrizione_Articolo|</th>
+    <th>Descrizione_Riga|</th>
+    <th>Quantita'|</th>
+    <th>Prezzo|</th>
+    <th>Sconto|</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <%= render :partial => 'show_rigdoc', :collection => @tesdoc.rigdocs unless @tesdoc.rigdocs.empty? %>
+</table>
+
+<%= link_to 'Indietro', tesdocs_path %>
+<%= link_to 'Elimina documento', @tesdoc, :confirm => 'Confermi eliminazione?', :method => :delete %>
+<%= link_to 'Modifica testata', edit_tesdoc_path %>
+<%= link_to 'Aggiungi riga', addrow_tesdoc_path %>

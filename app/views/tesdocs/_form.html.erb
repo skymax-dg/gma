@@ -1,53 +1,19 @@
 <%= form_for(@tesdoc) do |f| %>
-  <% if @tesdoc.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@tesdoc.errors.count, "error") %> prohibited this tesdoc from being saved:</h2>
 
-      <ul>
-      <% @tesdoc.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render :partial => 'shared/error_messages', :locals => {:f => @tesdoc} %>
 
-  <div class="field">
-    <%= f.label :azienda %><br />
-    <%= f.text_field :azienda %>
-  </div>
-  <div class="field">
-    <%= f.label :annoese %><br />
-    <%= f.text_field :annoese %>
-  </div>
-  <div class="field">
-    <%= f.label :tipo_doc %><br />
-    <%= f.text_field :tipo_doc %>
-  </div>
-  <div class="field">
-    <%= f.label :num_doc %><br />
-    <%= f.number_field :num_doc %>
-  </div>
-  <div class="field">
-    <%= f.label :data_doc %><br />
-    <%= f.date_select :data_doc %>
-  </div>
-  <div class="field">
-    <%= f.label :descriz %><br />
-    <%= f.text_field :descriz %>
-  </div>
-  <div class="field">
-    <%= f.label :causale %><br />
-    <%= collection_select :tesdoc, :causmag_id, Causmag.all, :id, :descriz, :prompt => true %>
-  </div>
-  <div class="field">
-    <%= f.label :conto_anagrafica %><br />
-    <%= collection_select :tesdoc, :conto_id, Conto.all, :id, :descriz, :prompt => true %>
-  </div>
-  <div class="field">
-    <%= f.label :sconto %><br />
-    <%= f.text_field :sconto %>
-  </div>
+  <%= render :partial => 'upd_tesdoc', :locals => {:f => f } %>
+  
+  <br/>
+  <br/>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit :controller => :tesdoc, :action = :addrow, :method => :post %>
   </div>
 <% end %>
+
+
+  <%= render :partial => 'rigdoc', :collection => @tesdoc.rigdocs unless @tesdoc.rigdocs.empty? %>
+  
+  
+  
+

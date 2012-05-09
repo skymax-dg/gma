@@ -8,7 +8,11 @@ Gma::Application.routes.draw do
 
   resources :contos
 
-  resources :tesdocs
+  resources :tesdocs do
+    member do
+      get :addrow
+    end
+  end
 
   resources :prezzoarticclis
 
@@ -19,6 +23,8 @@ Gma::Application.routes.draw do
   resources :anagens
 
   resources :articles
+
+  resources :rigdocs
 
   root              :to => 'menu#home'
   # The priority is based upon order of creation:

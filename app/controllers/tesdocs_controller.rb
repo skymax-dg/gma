@@ -32,6 +32,14 @@ class TesdocsController < ApplicationController
     end
   end
 
+  # GET /tesdocs/addrow
+  # GET /tesdocs/addrow.json
+  def addrow
+    @tesdoc = Tesdoc.find(params[:id])
+    @rigdoc = @tesdoc.rigdocs.build
+    @article= Article.new
+  end
+
   # GET /tesdocs/1/edit
   def edit
     @tesdoc = Tesdoc.find(params[:id])
@@ -73,7 +81,7 @@ class TesdocsController < ApplicationController
   # DELETE /tesdocs/1.json
   def destroy
     @tesdoc = Tesdoc.find(params[:id])
-    @tesdoc.destroy
+#    @tesdoc.destroy
 
     respond_to do |format|
       format.html { redirect_to tesdocs_url }

@@ -1,0 +1,24 @@
+<%= form_for rigdoc, :url => tesdoc_path(@post), :method => :put do |f| %>
+
+
+  <div class="field">
+    <%= f.label "Descizione riga" %>
+    <%= f.text_field :descriz, :size => 50 %>
+    <%= f.label "Articolo" %>
+    <%#= collection_select (rigdoc.article, :article_id, Article.all, :id, :codice,  {:include_blank => true, :selected => rigdoc.article.id}) %>
+    <%#= collection_select (rigdoc.article, :article_id, Article.all, :id, :descriz, {:include_blank => true, :selected => rigdoc.article.id}) %>
+    <%= collection_select (rigdoc.article, :article_id, Article.all, :id, :codice,  {:include_blank => true}) %>
+    <%= collection_select (rigdoc.article, :article_id, Article.all, :id, :descriz, {:include_blank => true}) %>
+    <%= f.label "Qtà" %>
+    <%= f.number_field :qta, :size => 3 %>
+    <%= f.label "Prezzo" %>
+    <%= f.number_field :prezzo, :size => 6  %>
+    <%= f.label "Sconto" %>
+    <%= f.number_field :sconto, :size => 6  %>
+  </div>
+  <br/>
+  <br/>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
