@@ -1,12 +1,11 @@
-<%= form_for rigdoc, :url => tesdoc_path(@post), :method => :put do |f| %>
+<%= form_for rigdoc do |f| %>
 
 
   <div class="field">
-    <%= f.label "Descizione riga" %>
+    <%= hidden_field(:rigdoc, :tesdoc_id) %>
+    <%= f.label "Descizione riga2" %>
     <%= f.text_field :descriz, :size => 50 %>
     <%= f.label "Articolo" %>
-    <%#= collection_select (rigdoc.article, :article_id, Article.all, :id, :codice,  {:include_blank => true, :selected => rigdoc.article.id}) %>
-    <%#= collection_select (rigdoc.article, :article_id, Article.all, :id, :descriz, {:include_blank => true, :selected => rigdoc.article.id}) %>
     <%= collection_select (rigdoc.article, :article_id, Article.all, :id, :codice,  {:include_blank => true}) %>
     <%= collection_select (rigdoc.article, :article_id, Article.all, :id, :descriz, {:include_blank => true}) %>
     <%= f.label "Qtà" %>

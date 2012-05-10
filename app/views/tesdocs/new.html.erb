@@ -1,5 +1,18 @@
 <h1>Nuovo Documento</h1>
 
-<%= render 'form' %>
+<%= form_for(@tesdoc) do |f| %>
+
+  <%= render :partial => 'shared/error_messages', :locals => {:f => @tesdoc} %>
+
+  <%= render :partial => 'upd_tesdoc', :locals => {:f => f } %>
+  
+  <br/>
+  <br/>
+  <div class="actions">
+    <%= f.submit "SALVA TESTATA" %>
+  </div>
+<% end %>
+
+<%#= render 'form' %>
 
 <%= link_to 'Back', tesdocs_path %>

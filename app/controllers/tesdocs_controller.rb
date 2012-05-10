@@ -37,7 +37,10 @@ class TesdocsController < ApplicationController
   def addrow
     @tesdoc = Tesdoc.find(params[:id])
     @rigdoc = @tesdoc.rigdocs.build
-    @article= Article.new
+    @rigdoc.tesdoc_id = @tesdoc.id 
+#    @article= Article.new
+#    @rigdoc = Rigdoc.new
+
   end
 
   # GET /tesdocs/1/edit

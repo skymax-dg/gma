@@ -1,5 +1,4 @@
 Gma::Application.routes.draw do
-#root :to => 'menu#home'
   get "menu/home"
 
   get "menu/contact"

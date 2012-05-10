@@ -101,6 +101,7 @@ ActiveRecord::Schema.define(:version => 20120508132703) do
 
   create_table "rigdocs", :force => true do |t|
     t.integer  "tesdoc_id",                                                                :null => false
+    t.integer  "prgrig",                                                                   :null => false
     t.integer  "article_id"
     t.string   "descriz",    :limit => 150
     t.integer  "qta"
@@ -108,12 +109,11 @@ ActiveRecord::Schema.define(:version => 20120508132703) do
     t.decimal  "sconto",                    :precision => 5, :scale => 2, :default => 0.0, :null => false
     t.datetime "created_at",                                                               :null => false
     t.datetime "updated_at",                                                               :null => false
-    t.integer  "prgrig",                                                  :default => 0,   :null => false
   end
 
   add_index "rigdocs", ["article_id"], :name => "index_rigdocs_on_article_id"
   add_index "rigdocs", ["descriz"], :name => "index_rigdocs_on_descriz"
-  add_index "rigdocs", ["tesdoc_id", "prgrig"], :name => "index_tesdocs_on_conto_id_prgrig", :unique => true
+  add_index "rigdocs", ["tesdoc_id", "prgrig"], :name => "index_rigdocs_on_tesdoc_id_and_prgrig", :unique => true
   add_index "rigdocs", ["tesdoc_id"], :name => "index_rigdocs_on_tesdoc_id"
 
   create_table "tesdocs", :force => true do |t|
