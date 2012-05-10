@@ -31,8 +31,9 @@
 
 <table>
   <tr>
-    <th>Descrizione_Articolo__________________________</th>
-    <th>Descrizione_Riga______________________________</th>
+    <th>Codice articolo</th>
+    <th>Descrizione_articolo__________________________</th>
+    <th>Descrizione_riga______________________________</th>
     <th>Quantita'</th>
     <th>Prezzo___</th>
     <th>Sconto___</th>
@@ -41,7 +42,7 @@
     <th></th>
   </tr>
 
-  <%= render :partial => 'show_rigdoc', :collection => @tesdoc.rigdocs unless @tesdoc.rigdocs.empty? %>
+  <%= render :partial => '/rigdocs/line', :collection => @tesdoc.rigdocs unless @tesdoc.rigdocs.empty? %>
 </table>
 
 <%= link_to 'Indietro', tesdocs_path %>

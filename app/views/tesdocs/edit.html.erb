@@ -1,20 +1,7 @@
 <h1>Modifica Testata documento</h1>
 <br/>
 
-<%= form_for(@tesdoc) do |f| %>
-
-  <%= render :partial => 'shared/error_messages', :locals => {:f => @tesdoc} %>
-
-  <%= render :partial => 'upd_tesdoc', :locals => {:f => f } %>
-  
-  <br/>
-  <br/>
-  <div class="actions">
-    <%= f.submit "AGGIORNA TESTATA" %>
-  </div>
-<% end %>
-
-<%#= render 'form' %>
+<%= render 'form' %>
 
 <%= link_to 'Show', @tesdoc %> |
 <%= link_to 'Back', tesdocs_path %>

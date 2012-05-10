@@ -35,12 +35,9 @@ class TesdocsController < ApplicationController
   # GET /tesdocs/addrow
   # GET /tesdocs/addrow.json
   def addrow
-    @tesdoc = Tesdoc.find(params[:id])
-    @rigdoc = @tesdoc.rigdocs.build
-    @rigdoc.tesdoc_id = @tesdoc.id 
-#    @article= Article.new
-#    @rigdoc = Rigdoc.new
-
+#    @tesdoc = Tesdoc.find(params[:id])
+#    @rigdoc = @tesdoc.rigdocs.build # La Build valorizza automaticamente il campo rigdoc.tesdoc_id 
+    @rigdoc = Tesdoc.find(params[:id]).rigdocs.build # La Build valorizza automaticamente il campo rigdoc.tesdoc_id 
   end
 
   # GET /tesdocs/1/edit
@@ -84,7 +81,7 @@ class TesdocsController < ApplicationController
   # DELETE /tesdocs/1.json
   def destroy
     @tesdoc = Tesdoc.find(params[:id])
-#    @tesdoc.destroy
+    @tesdoc.destroy
 
     respond_to do |format|
       format.html { redirect_to tesdocs_url }

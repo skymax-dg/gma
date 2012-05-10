@@ -1,2 +1,35 @@
-<h1>Rigdocs#show</h1>
-<p>Find me in app/views/rigdocs/show.html.erb</p>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Descrizione riga:</b>
+  <%= @rigdoc.descriz %>
+</p>
+
+<p>
+  <b>Codice articolo:</b>
+  <%= @rigdoc.article.codice unless @rigdoc.article.nil? %>
+</p>
+
+<p>
+  <b>Descrizione articolo:</b>
+  <%= @rigdoc.article.descriz unless @rigdoc.article.nil? %>
+</p>
+
+<p>
+  <b>Quantita':</b>
+  <%= @rigdoc.qta %>
+</p>
+
+<p>
+  <b>Prezzo:</b>
+  <%= @rigdoc.prezzo %>
+</p>
+
+<p>
+  <b>Sconto:</b>
+  <%= @rigdoc.sconto %>
+</p>
+
+<%= link_to 'Indietro', @rigdoc.tesdoc %>
+<%= link_to 'Elimina riga', @rigdoc, :confirm => 'Confermi eliminazione?', :method => :delete %>
+<%= link_to 'Modifica riga', edit_rigdoc_path %>

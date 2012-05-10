@@ -6,8 +6,8 @@
     <%= f.label "Descizione riga2" %>
     <%= f.text_field :descriz, :size => 50 %>
     <%= f.label "Articolo" %>
-    <%= collection_select (rigdoc.article, :article_id, Article.all, :id, :codice,  {:include_blank => true}) %>
-    <%= collection_select (rigdoc.article, :article_id, Article.all, :id, :descriz, {:include_blank => true}) %>
+    <%= collection_select (:rigdoc, :article_id, Article.all, :id, :codice,  {:include_blank => true}) %>
+    <%= collection_select (:rigdoc, :article_id, Article.all, :id, :descriz, {:include_blank => true}) %>
     <%= f.label "Qtà" %>
     <%= f.number_field :qta, :size => 3 %>
     <%= f.label "Prezzo" %>

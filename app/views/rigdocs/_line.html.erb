@@ -1,0 +1,11 @@
+<tr>
+  <td><%= line.article.codice unless line.article.nil? %></td>
+  <td><%= line.article.descriz  unless line.article.nil? %></td>
+  <td><%= line.descriz %></td>
+  <td><%= line.qta %></td>
+  <td><%= line.prezzo %></td>
+  <td><%= line.sconto %></td>
+  <td><%= link_to 'Dettaglio', line %></td>
+  <td><%= link_to 'SU''', line %></td>
+  <td><%= link_to 'GIU''', line %></td>
+</tr>

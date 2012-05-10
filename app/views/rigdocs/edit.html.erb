@@ -1,2 +1,7 @@
-<h1>Rigdocs#edit</h1>
-<p>Find me in app/views/rigdocs/edit.html.erb</p>
+<h1>Modifica Riga documento</h1>
+<br/>
+
+<%= render :partial => 'upd_rigdoc', :locals => {:rigdoc => @rigdoc } %>
+
+<%= link_to 'Show', @rigdoc %> |
+<%#= link_to 'Back', tesdocs_path %>
