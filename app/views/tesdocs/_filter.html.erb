@@ -1,5 +1,5 @@
 <%= form_tag (:filter_tesdocs, :method => :get) do %>
-  Ricerca per:______ filtro:____________________________________Cli__For_Alt
+  Ricerca per:________________________________________________Cli_For_Alt
   <br/>
   <br/>
   <%= select_tag ("tpfilter",
@@ -9,5 +9,5 @@
   <%= check_box_tag 'clifilter', 'C', true %>
   <%= check_box_tag 'forfilter', 'F', true %>
   <%= check_box_tag 'altfilter', 'A', true %>
-  <%= submit_tag 'AVVIA RICERCA' %>
+  <%= submit_tag 'FILTRA' %>
 <% end %>
