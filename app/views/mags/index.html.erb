@@ -10,7 +10,8 @@
     <th></th>
   </tr>
 
-<%= render :partial => 'line', :collection => @mags unless @mags.empty? %>
+  <%= will_paginate @mags %>
+  <%= render :partial => 'line', :collection => @mags unless @mags.empty? %>
 </table>
 
 <br />

@@ -14,7 +14,8 @@
     <th></th>
   </tr>
 
-<%= render :partial => 'line', :collection => @causmags unless @causmags.empty? %>
+  <%= will_paginate @causmags %>
+  <%= render :partial => 'line', :collection => @causmags unless @causmags.empty? %>
 </table>
 
 <br />

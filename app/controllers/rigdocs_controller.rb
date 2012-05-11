@@ -27,11 +27,6 @@ class RigdocsController < ApplicationController
 
   def show
     @rigdoc = Rigdoc.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render :json => @tesdoc }
-    end
   end
 
   def edit
@@ -40,26 +35,16 @@ class RigdocsController < ApplicationController
 
   def update
     @rigdoc = Rigdoc.find(params[:_id])
-
-    respond_to do |format|
-      if @rigdoc.update_attributes(params[:rigdoc])
-        format.html { redirect_to @rigdoc, :notice => 'Tesdoc was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render :action => "edit" }
-        format.json { render :json => @tesdoc.errors, :status => :unprocessable_entity }
-      end
+    if @rigdoc.update_attributes(params[:rigdoc])
+      redirect_to @rigdoc, :notice => 'Tesdoc was successfully updated.'
+    else
+      render :action => "edit"
     end
   end
 
   def destroy
     @rigdoc = Rigdoc.find(params[:id])
     @rigdoc.destroy
-
-    respond_to do |format|
-      format.html { redirect_to @rigdoc.tesdoc }
-      format.json { head :no_content }
-    end
+    redirect_to @rigdoc.tesdoc
   end
-
 end

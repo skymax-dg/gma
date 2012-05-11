@@ -13,7 +13,8 @@
     <th></th>
   </tr>
 
-<%= render :partial => 'line', :collection => @contos unless @contos.empty? %>
+  <%= will_paginate @contos %>
+  <%= render :partial => 'line', :collection => @contos unless @contos.empty? %>
 </table>
 
 <br />

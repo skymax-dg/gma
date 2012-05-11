@@ -11,7 +11,8 @@
     <th></th>
   </tr>
 
-<%= render :partial => 'line', :collection => @articles unless @articles.empty? %>
+  <%= will_paginate @articles %>
+  <%= render :partial => 'line', :collection => @articles unless @articles.empty? %>
 </table>
 
 <br />
