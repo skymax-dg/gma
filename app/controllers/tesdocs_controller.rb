@@ -1,9 +1,25 @@
 class TesdocsController < ApplicationController
 
   def filter
-    tp = params[filter][tp]
-    des = params[filter][del]
-    @tesdoc = Tesdoc.find(params[:_id])
+    tpfilter = params[:tpfilter]
+    tpc = params[:clifilter]
+    tpf = params[:forfilter]
+    tpa = params[:altfilter]
+    @tesdocs = []
+    if tpfilter == "RS" then
+      desfilter = params[:desfilter]
+      @tesdocs = Tesdoc.joins(:conto).where([" contos.descriz like :d and contos.tipoconto IN (:tpc, :tpf, :tpa)",
+                                           {:d => "%#{desfilter}%", :tpc => tpc, :tpf => tpf, :tpa => tpa}
+                                           ])
+    end
+    if tpfilter == "MS" then
+      desfilter = params[:desfilter].to_i
+      @tesdocs = Tesdoc.joins(:conto).where([" contos.codice >= :d and contos.codice <= :d and contos.tipoconto IN (:tpc, :tpf, :tpa)",
+                                             {:d => desfilter, :tpc => tpc, :tpf => tpf, :tpa => tpa}
+                                             ])
+    end
+
+    render "index"
   end
 
   # GET /tesdocs

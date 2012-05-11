@@ -1,30 +1,13 @@
-
-
-
-<%= form_for(@tesdoc) do |f| %>
-  <div class="field">
-    <%= f.label "azienda" %>
-    <%= f.text_field :azienda, :size => 1 %>
-    <%= f.label "anno" %>
-    <%= f.text_field :annoese, :size => 3 %>
-    <%= f.label "tipo???" %>
-    <%= f.text_field :tipo_doc, :size => 3 %>
-    <%= f.label "nr" %>
-    <%= f.number_field :num_doc, :size => 6  %>
-    <%= f.label "data" %>
-    <%= f.date_select :data_doc, :order => [:day, :month, :year], :use_short_month => true %>
-    <%= f.label "descrizione" %>
-    <%= f.text_field :descriz %>
-  </div>
-  <div class="field">
-    <%= f.label "causale" %>
-    <%= collection_select :tesdoc, :causmag_id, Causmag.all, :id, :descriz, :prompt => true %>
-    <%= f.label "codice conto_anagrafica" %>
-    <%= collection_select :tesdoc, :conto_id, Conto.all, :id, :codice, :prompt => true %>
-  <%# "#{my_remote_function(:url => {:controller => :tesdocs, :action => "upd_conto-des"}, :with => "'provincia_id'=+value")}" %>
-    <%= f.label "conto_anagrafica" %>
-    <%= collection_select :tesdoc, :conto_id, Conto.all, :id, :descriz, :prompt => true %>
-    <%= f.label "sconto" %>
-    <%= f.text_field :sconto %>
-  </div>
+<%= form_tag (:filter_tesdocs, :method => :get) do %>
+  Ricerca per:______ filtro:____________________________________Cli__For_Alt
+  <br/>
+  <br/>
+  <%= select_tag ("tpfilter",
+                  options_for_select([["Ragione sociale", "RS"], ["Codice fiscale", "CF"],
+                                      ["Partiva iva", "PI"], ["Mastro contabile", "MS"]], "RS")) %>
+  <%= text_field_tag "desfilter", "", :size => 50 %>
+  <%= check_box_tag 'clifilter', 'C', true %>
+  <%= check_box_tag 'forfilter', 'F', true %>
+  <%= check_box_tag 'altfilter', 'A', true %>
+  <%= submit_tag 'AVVIA RICERCA' %>
 <% end %>

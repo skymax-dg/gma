@@ -11,6 +11,9 @@ Gma::Application.routes.draw do
     member do
       get :addrow
     end
+    collection do
+      get :filter
+    end
   end
 
   resources :prezzoarticclis

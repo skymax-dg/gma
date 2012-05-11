@@ -1,19 +1,7 @@
 <h1>Elenco DOCUMENTI</h1>
 <br />
+<%= render :partial => 'filter' %>
 
-<%= form_tag "/tesdocs", :method => :get do %>
-  <div class="field">
-    <%= label :filter, "Ricerca per:" %> ------ <%= label_tag :filter, "filtro:" %>
-    <br/>
-    <br/>
-    <%= select :filter,
-               :tp,
-               {"Ragione sociale" => :RS, "Codice fiscale" => :CF,
-                "Partiva iva" => :PI, "Mastro contabile" => :MS} %>
-    <%= text_field :filter, :des, :size => 35 %>
-  <div>
-  <%= submit_tag 'AVVIA RICERCA' %>
-<% end %>
 <br />
 <br />
 <table>
@@ -25,6 +13,8 @@
     <th>Data documento|</th>
     <th>Descrizione documento|</th>
     <th>Causale documento|</th>
+    <th>TipoConto|</th>
+    <th>CodiceConto|</th>
     <th>ContoAnagrafica|</th>
     <th>Sconto|</th>
     <th></th>
