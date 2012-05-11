@@ -13,19 +13,7 @@
     <th></th>
   </tr>
 
-<% @contos.each do |conto| %>
-  <tr>
-    <td><%= conto.azienda %></td>
-    <td><%= conto.annoese %></td>
-    <td><%= conto.codice %></td>
-    <td><%= conto.descriz %></td>
-    <td><%= conto.tipoconto %></td>
-    <td><%= conto.cntrpartita %></td>
-    <td><%= link_to 'Show', conto %></td>
-    <td><%= link_to 'Edit', edit_conto_path(conto) %></td>
-    <td><%= link_to 'Destroy', conto, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
+<%= render :partial => 'line', :collection => @contos unless @contos.empty? %>
 </table>
 
 <br />

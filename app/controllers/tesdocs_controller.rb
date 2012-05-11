@@ -2,14 +2,12 @@ class TesdocsController < ApplicationController
 
   def filter
     @tesdocs = Tesdoc.filter(params[:tpfilter], params[:desfilter],
-                             [params[:clifilter], params[:forfilter], params[:altfilter]])
+                             [params[:clifilter], params[:forfilter], params[:altfilter]],params[:page])
     render "index"
   end
 
-  # GET /tesdocs
-  # GET /tesdocs.json
   def index
-    @tesdocs = Tesdoc.all
+    @tesdocs = Tesdoc.paginate(:page => params[:page], :per_page => 10)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -17,43 +15,27 @@ class TesdocsController < ApplicationController
     end
   end
 
-  # GET /tesdocs/1
-  # GET /tesdocs/1.json
   def show
     @tesdoc = Tesdoc.find(params[:id])
-
+@rigdocs = @tesdoc.rigdocs.paginate(:page => params[:page], :per_page => 10)
     respond_to do |format|
       format.html # show.html.erb
       format.json { render :json => @tesdoc }
     end
   end
 
-  # GET /tesdocs/new
-  # GET /tesdocs/new.json
   def new
     @tesdoc = Tesdoc.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render :json => @tesdoc }
-    end
   end
 
-  # GET /tesdocs/addrow
-  # GET /tesdocs/addrow.json
   def addrow
-#    @tesdoc = Tesdoc.find(params[:id])
-#    @rigdoc = @tesdoc.rigdocs.build # La Build valorizza automaticamente il campo rigdoc.tesdoc_id 
     @rigdoc = Tesdoc.find(params[:id]).rigdocs.build # La Build valorizza automaticamente il campo rigdoc.tesdoc_id 
   end
 
-  # GET /tesdocs/1/edit
   def edit
     @tesdoc = Tesdoc.find(params[:id])
   end
 
-  # POST /tesdocs
-  # POST /tesdocs.json
   def create
     @tesdoc = Tesdoc.new(params[:tesdoc])
 
@@ -68,8 +50,6 @@ class TesdocsController < ApplicationController
     end
   end
 
-  # PUT /tesdocs/1
-  # PUT /tesdocs/1.json
   def update
     @tesdoc = Tesdoc.find(params[:id])
 
@@ -84,8 +64,6 @@ class TesdocsController < ApplicationController
     end
   end
 
-  # DELETE /tesdocs/1
-  # DELETE /tesdocs/1.json
   def destroy
     @tesdoc = Tesdoc.find(params[:id])
     @tesdoc.destroy

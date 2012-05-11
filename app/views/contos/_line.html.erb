@@ -1,0 +1,12 @@
+<%= will_paginate(@contos) %>
+<tr>
+  <td><%= line.azienda %></td>
+  <td><%= line.annoese %></td>
+  <td><%= line.codice %></td>
+  <td><%= line.descriz %></td>
+  <td><%= line.tipoconto %></td>
+  <td><%= line.cntrpartita %></td>
+  <td><%= link_to 'Visualizza', line %></td>
+  <td><%= link_to 'Modifica', edit_conto_path(line) %></td>
+  <td><%= link_to 'Elimina', line, :confirm => 'Confermi?', :method => :delete %></td>
+</tr>

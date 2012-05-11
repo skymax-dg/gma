@@ -1,3 +1,4 @@
+<%= will_paginate(@rigdocs) %>
 <tr>
   <td><%= line.article.codice unless line.article.nil? %></td>
   <td><%= line.article.descriz  unless line.article.nil? %></td>
@@ -9,5 +10,4 @@
   <td><%= link_to 'Dettaglio', line %></td>
   <td><%= link_to 'SU''', :controller => :rigdocs, :action => :up, :id => line.id %></td>
   <td><%= link_to 'GIU''', :controller => :rigdocs, :action => :down, :id => line.id %></td>
-  <td><%#= link_to 'GIU''', down_rigdoc_path %></td>
 </tr>

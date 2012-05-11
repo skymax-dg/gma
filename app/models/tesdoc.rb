@@ -12,17 +12,16 @@ class Tesdoc < ActiveRecord::Base
   validates :tipo_doc, :length => { :maximum => 1, :too_long  => "1 carattere obbligatorio (Valori ammessi: ????? )"}
   validates :descriz,  :length => { :maximum => 150, :too_long  => "Lunghezza massima permessa: 150 caratteri" }
   
-#  def self.filtra (tp, des, cl, fr, al)
-  def self.filter (tp, des, tpc)
+  def self.filter (tp, des, tpc, page)
     if tp == "RS"
       joins(:conto).where(["contos.descriz like :d and contos.tipoconto IN (:tpc)",
                                 {:d => "%#{des}%", :tpc => tpc}
-                               ])
+                               ]).paginate(:page => page, :per_page => 10)
     elsif tp == "MS" then
       des = des.to_i
       joins(:conto).where(["contos.codice >= :d and contos.codice <= :d and contos.tipoconto IN (:tpc)",
                                 {:d => des, :tpc => tpc}
-                               ])
+                               ]).paginate(:page => page, :per_page => 10)
     elsif tp == "CF" then
     
     elsif tp == "PI" then

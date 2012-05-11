@@ -10,16 +10,7 @@
     <th></th>
   </tr>
 
-<% @mags.each do |mag| %>
-  <tr>
-    <td><%= mag.azienda %></td>
-    <td><%= mag.codice %></td>
-    <td><%= mag.descriz %></td>
-    <td><%= link_to 'Show', mag %></td>
-    <td><%= link_to 'Edit', edit_mag_path(mag) %></td>
-    <td><%= link_to 'Destroy', mag, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
+<%= render :partial => 'line', :collection => @mags unless @mags.empty? %>
 </table>
 
 <br />

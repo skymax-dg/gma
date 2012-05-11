@@ -41,7 +41,8 @@
     <th></th>
     <th></th>
   </tr>
-  <%= render :partial => '/rigdocs/line', :collection => @tesdoc.rigdocs unless @tesdoc.rigdocs.empty? %>
+  <%#= render :partial => '/rigdocs/line', :collection => @tesdoc.rigdocs unless @tesdoc.rigdocs.empty? %>
+  <%= render :partial => '/rigdocs/line', :collection => @rigdocs unless @rigdocs.empty? %>
 </table>
 
 <%= link_to 'Indietro', tesdocs_path %>

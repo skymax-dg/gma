@@ -11,17 +11,7 @@
     <th></th>
   </tr>
 
-<% @articles.each do |article| %>
-  <tr>
-    <td><%= article.azienda %></td>
-    <td><%= article.codice %></td>
-    <td><%= article.descriz %></td>
-    <td><%= article.prezzo %></td>
-    <td><%= link_to 'Visualizza', article %></td>
-    <td><%= link_to 'Modifica', edit_article_path(article) %></td>
-    <td><%= link_to 'Elimina', article, :confirm => 'Confermi?', :method => :delete %></td>
-  </tr>
-<% end %>
+<%= render :partial => 'line', :collection => @articles unless @articles.empty? %>
 </table>
 
 <br />

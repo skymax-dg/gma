@@ -12,9 +12,10 @@ class RigdocsController < ApplicationController
   end
 
   def create
-    @tesdoc = Tesdoc.find(params[:rigdoc][:tesdoc_id]) 
+    @tesdoc = Tesdoc.find(params[:rigdoc][:tesdoc_id])
+    newprg = @tesdoc.rigdocs.last.prgrig + 1  
     @rigdoc = @tesdoc.rigdocs.build(params[:rigdoc])
-    #@rigdoc.article_id = params[:article_id]
+    @rigdoc.prgrig = newprg
     if @rigdoc.save
       flash[:success] = "AGGIUNTA Riga documento!"
       redirect_to @tesdoc

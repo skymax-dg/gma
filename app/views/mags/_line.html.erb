@@ -1,0 +1,9 @@
+<%= will_paginate(@mags) %>
+<tr>
+  <td><%= line.azienda %></td>
+  <td><%= line.codice %></td>
+  <td><%= line.descriz %></td>
+  <td><%= link_to 'Visualizza', line %></td>
+  <td><%= link_to 'Modifica', edit_mag_path(line) %></td>
+  <td><%= link_to 'Elimina', line, :confirm => 'Confermi?', :method => :delete %></td>
+</tr>

@@ -14,20 +14,7 @@
     <th></th>
   </tr>
 
-<% @causmags.each do |causmag| %>
-  <tr>
-    <td><%= causmag.azienda %></td>
-    <td><%= causmag.descriz %></td>
-    <td><%= causmag.tipo %></td>
-    <td><%= causmag.movimpmag %></td>
-    <td><%= causmag.magsrc.descriz unless causmag.magsrc.nil? %></td>
-    <td><%= causmag.magdst.descriz unless causmag.magdst.nil? %></td>
-    <td><%= causmag.contabile %></td>
-    <td><%= link_to 'Show', causmag %></td>
-    <td><%= link_to 'Edit', edit_causmag_path(causmag) %></td>
-    <td><%= link_to 'Destroy', causmag, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
+<%= render :partial => 'line', :collection => @causmags unless @causmags.empty? %>
 </table>
 
 <br />
