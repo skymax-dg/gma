@@ -5,7 +5,9 @@
   <td><%= line.qta %></td>
   <td><%= line.prezzo %></td>
   <td><%= line.sconto %></td>
+  <td><%= line.prgrig %></td>
   <td><%= link_to 'Dettaglio', line %></td>
-  <td><%= link_to 'SU''', line %></td>
-  <td><%= link_to 'GIU''', line %></td>
+  <td><%= link_to 'SU''', :controller => :rigdocs, :action => :up, :id => line.id %></td>
+  <td><%= link_to 'GIU''', :controller => :rigdocs, :action => :down, :id => line.id %></td>
+  <td><%#= link_to 'GIU''', down_rigdoc_path %></td>
 </tr>

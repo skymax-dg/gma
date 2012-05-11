@@ -1,4 +1,16 @@
 class RigdocsController < ApplicationController
+  def down
+    @rigdoc = Rigdoc.find(params[:id])
+    @rigdoc.move :down
+    redirect_to @rigdoc.tesdoc
+  end
+
+  def up
+    @rigdoc = Rigdoc.find(params[:id])
+    @rigdoc.move :up
+    redirect_to @rigdoc.tesdoc
+  end
+
   def create
     @tesdoc = Tesdoc.find(params[:rigdoc][:tesdoc_id]) 
     @rigdoc = @tesdoc.rigdocs.build(params[:rigdoc])
@@ -26,7 +38,7 @@ class RigdocsController < ApplicationController
   end
 
   def update
-    @rigdoc = Rigdoc.find(params[:id])
+    @rigdoc = Rigdoc.find(params[:_id])
 
     respond_to do |format|
       if @rigdoc.update_attributes(params[:rigdoc])

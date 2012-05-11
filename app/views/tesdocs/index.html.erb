@@ -1,7 +1,21 @@
 <h1>Elenco DOCUMENTI</h1>
 <br />
-<br />
 
+<%= form_tag "/tesdocs", :method => :get do %>
+  <div class="field">
+    <%= label :filter, "Ricerca per:" %> ------ <%= label_tag :filter, "filtro:" %>
+    <br/>
+    <br/>
+    <%= select :filter,
+               :tp,
+               {"Ragione sociale" => :RS, "Codice fiscale" => :CF,
+                "Partiva iva" => :PI, "Mastro contabile" => :MS} %>
+    <%= text_field :filter, :des, :size => 35 %>
+  <div>
+  <%= submit_tag 'AVVIA RICERCA' %>
+<% end %>
+<br />
+<br />
 <table>
   <tr>
     <th>Azienda|</th>
@@ -18,9 +32,7 @@
     <th></th>
   </tr>
 
-<%# @tesdocs.each do |tesdoc| %>
   <%= render :partial => 'line', :collection => @tesdocs unless @tesdocs.empty? %>
-<%# end %>
 </table>
 
 <br />

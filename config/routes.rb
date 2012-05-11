@@ -23,7 +23,12 @@ Gma::Application.routes.draw do
 
   resources :articles
 
-  resources :rigdocs
+  resources :rigdocs do
+    member do
+      get :up
+      get :down
+    end
+  end
 
   root              :to => 'menu#home'
   # The priority is based upon order of creation:

@@ -1,4 +1,11 @@
 class TesdocsController < ApplicationController
+
+  def filter
+    tp = params[filter][tp]
+    des = params[filter][del]
+    @tesdoc = Tesdoc.find(params[:_id])
+  end
+
   # GET /tesdocs
   # GET /tesdocs.json
   def index
