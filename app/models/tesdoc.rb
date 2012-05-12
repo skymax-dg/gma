@@ -23,9 +23,9 @@ class Tesdoc < ActiveRecord::Base
                                 {:d => des, :tpc => tpc}
                                ]).paginate(:page => page, :per_page => 10)
     elsif tp == "CF" then
-    
+      paginate(:page => page, :per_page => 10)
     elsif tp == "PI" then
-    
+      paginate(:page => page, :per_page => 10)
     end
   end
 end

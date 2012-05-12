@@ -34,7 +34,7 @@ class RigdocsController < ApplicationController
   end
 
   def update
-    @rigdoc = Rigdoc.find(params[:_id])
+    @rigdoc = Rigdoc.find(params[:id])
     if @rigdoc.update_attributes(params[:rigdoc])
       redirect_to @rigdoc, :notice => 'Tesdoc was successfully updated.'
     else
