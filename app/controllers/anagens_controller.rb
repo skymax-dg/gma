@@ -11,6 +11,10 @@ class AnagensController < ApplicationController
     @anagen = Anagen.new
   end
 
+  def addind
+    @anaind = Anagen.find(params[:id]).anainds.build # La Build valorizza automaticamente il campo anaind.anagen_id 
+  end
+
   def edit
     @anagen = Anagen.find(params[:id])
   end

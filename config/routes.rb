@@ -5,7 +5,23 @@ Gma::Application.routes.draw do
 
   get "menu/help"
 
+  root              :to => 'menu#home'
+
+#  resources :prezzoarticclis
+
+  resources :articles
+
+  resources :causmags
+
   resources :contos
+
+  resources :anagens do
+    member do
+      get :addind
+    end
+  end
+
+  resources :anainds
 
   resources :tesdocs do
     member do
@@ -16,24 +32,12 @@ Gma::Application.routes.draw do
     end
   end
 
-  resources :prezzoarticclis
-
-  resources :causmags
-
-  resources :mags
-
-  resources :anagens
-
-  resources :articles
-
   resources :rigdocs do
     member do
       get :up
       get :down
     end
   end
-
-  root              :to => 'menu#home'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

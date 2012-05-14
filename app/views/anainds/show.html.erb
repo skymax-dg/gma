@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+<h1>Mostra Indirizzo anagrafica</h1>
+<p>
+  <b>Tpind:</b>
+  <%= @anaind.tpind %>
+</p>
+
+<p>
+  <b>Indir:</b>
+  <%= @anaind.indir %>
+</p>
+
+<p>
+  <b>Cap:</b>
+  <%= @anaind.cap %>
+</p>
+
+<p>
+  <b>Localita:</b>
+  <%= @anaind.localita %>
+</p>
+
+<p>
+  <b>Nrmag:</b>
+  <%= @anaind.nrmag %>
+</p>
+
+<%= link_to 'Indietro', @anaind.anagen %>
+<%= link_to 'Elimina indirizzo', @anaind, :confirm => 'Confermi eliminazione?', :method => :delete %>
+<%= link_to 'Modifica indirizzo', edit_anaind_path %>

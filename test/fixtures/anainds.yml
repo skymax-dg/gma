@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  anagen: 
+  tpind: MyString
+  indir: MyString
+  localita: MyString
+  cap: MyString
+  nrmag: 1
+
+two:
+  anagen: 
+  tpind: MyString
+  indir: MyString
+  localita: MyString
+  cap: MyString
+  nrmag: 1

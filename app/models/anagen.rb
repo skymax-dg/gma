@@ -2,7 +2,7 @@ class Anagen < ActiveRecord::Base
   #has_many :prezzoarticclis, :foreign_key => "anag_id",
   #                           :dependent => :destroy
   has_many :contos
-  #has_many :andind
+  has_many :anainds
   
   attr_accessible :codice, :tipo, :denomin, :codfis, :pariva, :telefono, :email, :fax, :web, :sconto
 

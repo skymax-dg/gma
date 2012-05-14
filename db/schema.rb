@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120514144637) do
+ActiveRecord::Schema.define(:version => 20120514230627) do
 
   create_table "anagens", :force => true do |t|
     t.integer  "codice",                                                                   :null => false
@@ -31,6 +31,19 @@ ActiveRecord::Schema.define(:version => 20120514144637) do
   add_index "anagens", ["codice"], :name => "idx_anagens_on_codice", :unique => true
   add_index "anagens", ["denomin"], :name => "idx_anagens_on_denomin"
   add_index "anagens", ["pariva"], :name => "idx_anagens_on_pariva", :unique => true
+
+  create_table "anainds", :force => true do |t|
+    t.integer  "anagen_id"
+    t.string   "tpind",      :limit => 1
+    t.string   "indir",      :limit => 100
+    t.string   "localita",   :limit => 100
+    t.string   "cap",        :limit => 5
+    t.integer  "nrmag"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "anainds", ["anagen_id"], :name => "index_anainds_on_anagen_id"
 
   create_table "articles", :force => true do |t|
     t.integer  "azienda",                                                                  :null => false
@@ -91,6 +104,7 @@ ActiveRecord::Schema.define(:version => 20120514144637) do
 
   create_table "rigdocs", :force => true do |t|
     t.integer  "tesdoc_id",                                                                :null => false
+    t.integer  "prgrig"
     t.integer  "article_id"
     t.string   "descriz",    :limit => 150
     t.integer  "qta"
@@ -98,12 +112,10 @@ ActiveRecord::Schema.define(:version => 20120514144637) do
     t.decimal  "sconto",                    :precision => 5, :scale => 2, :default => 0.0, :null => false
     t.datetime "created_at",                                                               :null => false
     t.datetime "updated_at",                                                               :null => false
-    t.integer  "prgrig",                                                  :default => 0,   :null => false
   end
 
   add_index "rigdocs", ["article_id"], :name => "index_rigdocs_on_article_id"
   add_index "rigdocs", ["descriz"], :name => "index_rigdocs_on_descriz"
-  add_index "rigdocs", ["tesdoc_id", "prgrig"], :name => "index_rigdocs_on_tesdoc_id_and_prgrig", :unique => true
   add_index "rigdocs", ["tesdoc_id"], :name => "index_rigdocs_on_tesdoc_id"
 
   create_table "tesdocs", :force => true do |t|

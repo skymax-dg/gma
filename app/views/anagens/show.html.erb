@@ -3,14 +3,8 @@
 <p>
   <b>Codice:</b>
   <%= @anagen.codice %>
-</p>
-
-<p>
   <b>Tipo:</b>
   <%= @anagen.tipo %>
-</p>
-
-<p>
   <b>Denominazione:</b>
   <%= @anagen.denomin %>
 </p>
@@ -18,9 +12,6 @@
 <p>
   <b>Codfis:</b>
   <%= @anagen.codfis %>
-</p>
-
-<p>
   <b>Pariva:</b>
   <%= @anagen.pariva %>
 </p>
@@ -28,27 +19,38 @@
 <p>
   <b>Telefono:</b>
   <%= @anagen.telefono %>
-</p>
-
-<p>
-  <b>E-mail:</b>
-  <%= @anagen.email %>
-</p>
-
-<p>
   <b>Fax:</b>
   <%= @anagen.fax %>
 </p>
 
 <p>
+  <b>E-mail:</b>
+  <%= @anagen.email %>
   <b>Sito Web:</b>
   <%= @anagen.web %>
-</p>
-
-<p>
   <b>Sconto:</b>
   <%= @anagen.sconto %>
 </p>
 
-<%= link_to 'Modifica', edit_anagen_path(@anagen) %> |
+<table>
+  <tr>
+    <th>Tipo ind.</th>
+    <th>Indirizzo__________________________</th>
+    <th>Localita'_______________________</th>
+    <th>Cap</th>
+    <th>Nr.Mag</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <%= render :partial => '/anainds/line', :collection => @anagen.anainds unless @anagen.anainds.empty? %>
+  <br>
+</table>
+  <br>
+  <br>
+
 <%= link_to 'Indietro', anagens_path %>
+<%= link_to 'Elimina anagrafica', @anagen, :confirm => 'Confermi eliminazione?', :method => :delete %>
+<%= link_to 'Modifica anagrafica', edit_anagen_path %>
+<%= link_to 'Aggiungi indirizzo', addind_anagen_path %>

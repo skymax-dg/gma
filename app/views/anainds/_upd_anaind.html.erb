@@ -1,0 +1,22 @@
+<%= form_for anaind do |f| %>
+  <div class="field">
+    <%= hidden_field(:anaind, :anagen_id) %>
+    <%= f.label "tipo ind" %>
+    <%= f.text_field :tpind, :size => 3 %>
+    <%= f.label "Indirizzo" %>
+    <%= f.text_field :indir, :size => 50 %>
+  </div>
+  <div class="field">
+    <%= f.label "Localita" %>
+    <%= f.text_field :localita, :size => 50 %>
+    <%= f.label "Cap" %>
+    <%= f.text_field :cap, :size => 5 %>
+    <%= f.label "Magazzino" %>
+    <%= f.number_field :nrmag, :size => 3 %>
+  </div>
+  <br/>
+  <br/>
+  <div class="actions">
+    <%= f.submit "SALVA"%>
+  </div>
+<% end %>

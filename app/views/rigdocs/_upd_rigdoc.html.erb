@@ -1,9 +1,7 @@
 <%= form_for rigdoc do |f| %>
-
-
   <div class="field">
     <%= hidden_field(:rigdoc, :tesdoc_id) %>
-    <%= f.label "Descizione riga2" %>
+    <%= f.label "Descizione riga" %>
     <%= f.text_field :descriz, :size => 50 %>
     <%= f.label "Articolo" %>
     <%= collection_select (:rigdoc, :article_id, Article.all, :id, :codice,  {:include_blank => true}) %>
@@ -18,6 +16,6 @@
   <br/>
   <br/>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "SALVA"%>
   </div>
 <% end %>

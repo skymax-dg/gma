@@ -2,43 +2,31 @@
   <%= render :partial => 'shared/error_messages', :locals => {:f => @anagen} %>
 
   <div class="field">
-    <%= f.label :codice %><br />
+    <%= f.label :codice %>
     <%= f.number_field :codice %>
-  </div>
-  <div class="field">
-    <%= f.label :tipo %><br />
+    <%= f.label :tipo %>
     <%= select(:anagen, :tipo, [["Ditta individuale", "I"], ["Persona fisica", "F"], ["Persona giuridica", "G"]], { :prompt => true }) %>
-  </div>
-  <div class="field">
-    <%= f.label "Denominazione" %><br />
+    <%= f.label "Denominazione" %>
     <%= f.text_field :denomin, :size => 55 %>
   </div>
   <div class="field">
-    <%= f.label "Codice Fiscale" %><br />
+    <%= f.label "Codice Fiscale" %>
     <%= f.text_field :codfis, :size => 35 %>
-  </div>
-  <div class="field">
-    <%= f.label "Partita Iva" %><br />
+    <%= f.label "Partita Iva" %>
     <%= f.text_field :pariva %>
   </div>
   <div class="field">
-    <%= f.label "Telefono" %><br />
+    <%= f.label "Telefono" %>
     <%= f.text_field :telefono %>
-  </div>
-  <div class="field">
-    <%= f.label "E-mail" %><br />
-    <%= f.text_field :email, :size => 45 %>
-  </div>
-  <div class="field">
-    <%= f.label "Fax" %><br />
+    <%= f.label "Fax" %>
     <%= f.text_field :fax %>
   </div>
   <div class="field">
-    <%= f.label "Sito Web" %><br />
+    <%= f.label "E-mail" %>
+    <%= f.text_field :email, :size => 45 %>
+    <%= f.label "Sito Web" %>
     <%= f.text_field :web, :size => 55 %>
-  </div>
-  <div class="field">
-    <%= f.label "Sconto" %><br />
+    <%= f.label "Sconto" %>
     <%= f.text_field :sconto, :size => 4 %>
   </div>
   <div class="actions">
