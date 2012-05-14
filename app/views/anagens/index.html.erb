@@ -1,38 +1,26 @@
-<h1>Listing anagens</h1>
-
+<h1>Elenco Anagrafiche soggetti</h1>
 <table>
   <tr>
     <th>Codice</th>
     <th>Tipo</th>
-    <th>Cognome</th>
-    <th>Nome</th>
-    <th>Ragsoc</th>
+    <th>Denomin</th>
     <th>Codfis</th>
     <th>Pariva</th>
+    <th>Telefono</th>
+    <th>E-Mail</th>
+    <th>Fax</th>
+    <th>Sito Web</th>
     <th>Sconto</th>
     <th></th>
     <th></th>
     <th></th>
   </tr>
 
-<% @anagens.each do |anagen| %>
-  <tr>
-    <td><%= anagen.codice %></td>
-    <td><%= anagen.tipo %></td>
-    <td><%= anagen.cognome %></td>
-    <td><%= anagen.nome %></td>
-    <td><%= anagen.ragsoc %></td>
-    <td><%= anagen.codfis %></td>
-    <td><%= anagen.pariva %></td>
-    <td><%= anagen.sconto %></td>
-    <td><%= link_to 'Show', anagen %></td>
-    <td><%= link_to 'Edit', edit_anagen_path(anagen) %></td>
-    <td><%= link_to 'Destroy', anagen, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
+  <%= will_paginate @anagens %>
+  <%= render :partial => 'line', :collection => @anagens unless @anagens.empty? %>
 </table>
 
 <br />
 
-<%= link_to 'New Anagen', new_anagen_path %>
+<%= link_to 'Nuova Anagrafica', new_anagen_path %>
 - <%= link_to 'Menu', :controller => "menu", :action => "home" %>

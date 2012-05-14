@@ -1,15 +1,5 @@
 <%= form_for(@conto) do |f| %>
-  <% if @conto.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@conto.errors.count, "error") %> prohibited this conto from being saved:</h2>
-
-      <ul>
-      <% @conto.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render :partial => 'shared/error_messages', :locals => {:f => @conto} %>
 
   <div class="field">
     <%= f.label :azienda %><br />
@@ -37,6 +27,6 @@
     <%= f.number_field :cntrpartita %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "SALVA" %>
   </div>
 <% end %>

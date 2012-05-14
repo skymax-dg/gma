@@ -1,5 +1,5 @@
 <p id="notice"><%= notice %></p>
-
+<h1>Mostra Anagrafica soggetti</h1>
 <p>
   <b>Codice:</b>
   <%= @anagen.codice %>
@@ -11,18 +11,8 @@
 </p>
 
 <p>
-  <b>Cognome:</b>
-  <%= @anagen.cognome %>
-</p>
-
-<p>
-  <b>Nome:</b>
-  <%= @anagen.nome %>
-</p>
-
-<p>
-  <b>Ragsoc:</b>
-  <%= @anagen.ragsoc %>
+  <b>Denominazione:</b>
+  <%= @anagen.denomin %>
 </p>
 
 <p>
@@ -36,10 +26,29 @@
 </p>
 
 <p>
+  <b>Telefono:</b>
+  <%= @anagen.telefono %>
+</p>
+
+<p>
+  <b>E-mail:</b>
+  <%= @anagen.email %>
+</p>
+
+<p>
+  <b>Fax:</b>
+  <%= @anagen.fax %>
+</p>
+
+<p>
+  <b>Sito Web:</b>
+  <%= @anagen.web %>
+</p>
+
+<p>
   <b>Sconto:</b>
   <%= @anagen.sconto %>
 </p>
 
-
-<%= link_to 'Edit', edit_anagen_path(@anagen) %> |
-<%= link_to 'Back', anagens_path %>
+<%= link_to 'Modifica', edit_anagen_path(@anagen) %> |
+<%= link_to 'Indietro', anagens_path %>

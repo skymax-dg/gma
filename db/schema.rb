@@ -10,25 +10,27 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+ActiveRecord::Schema.define(:version => 20120514144637) do
+
   create_table "anagens", :force => true do |t|
-    t.integer  "azienda",                                                                  :null => false
     t.integer  "codice",                                                                   :null => false
     t.string   "tipo",       :limit => 1,                                                  :null => false
-    t.string   "cognome",    :limit => 100
-    t.string   "nome",       :limit => 100
-    t.string   "ragsoc",     :limit => 150
     t.string   "codfis",     :limit => 16
     t.string   "pariva",     :limit => 11
     t.decimal  "sconto",                    :precision => 5, :scale => 2, :default => 0.0, :null => false
     t.datetime "created_at",                                                               :null => false
     t.datetime "updated_at",                                                               :null => false
+    t.string   "denomin",    :limit => 150
+    t.string   "telefono",   :limit => 20
+    t.string   "email",      :limit => 50
+    t.string   "fax",        :limit => 20
+    t.string   "web",        :limit => 50
   end
 
-  add_index "anagens", ["azienda", "codfis"], :name => "idx_anagens_on_codfis", :unique => true
-  add_index "anagens", ["azienda", "codice"], :name => "idx_anagens_on_codice", :unique => true
-  add_index "anagens", ["azienda", "cognome", "nome"], :name => "idx_anagens_on_cognome-nome"
-  add_index "anagens", ["azienda", "pariva"], :name => "idx_anagens_on_pariva", :unique => true
-  add_index "anagens", ["azienda", "ragsoc"], :name => "idx_anagens_on_ragsoc"
+  add_index "anagens", ["codfis"], :name => "idx_anagens_on_codfis", :unique => true
+  add_index "anagens", ["codice"], :name => "idx_anagens_on_codice", :unique => true
+  add_index "anagens", ["denomin"], :name => "idx_anagens_on_denomin"
+  add_index "anagens", ["pariva"], :name => "idx_anagens_on_pariva", :unique => true
 
   create_table "articles", :force => true do |t|
     t.integer  "azienda",                                                                  :null => false
@@ -44,17 +46,17 @@
 
   create_table "causmags", :force => true do |t|
     t.integer  "azienda",                                  :null => false
-    t.integer  "tipo_doc",                  :default => 0, :null => false
-    t.string   "des_caus",   :limit => 100
     t.string   "descriz",    :limit => 100,                :null => false
     t.string   "tipo",       :limit => 1,                  :null => false
     t.string   "movimpmag",  :limit => 1,                  :null => false
-    t.integer  "nrmag_src"
-    t.integer  "nrmag_dst"
     t.string   "contabile",  :limit => 1,                  :null => false
-    t.string   "modulo",     :limit => 50
     t.datetime "created_at",                               :null => false
     t.datetime "updated_at",                               :null => false
+    t.integer  "tipo_doc",                  :default => 0, :null => false
+    t.string   "des_caus",   :limit => 100
+    t.string   "modulo",     :limit => 50
+    t.integer  "nrmag_src"
+    t.integer  "nrmag_dst"
   end
 
   add_index "causmags", ["azienda", "descriz"], :name => "idx_causmags_on_descriz", :unique => true

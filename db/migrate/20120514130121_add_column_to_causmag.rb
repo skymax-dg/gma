@@ -9,9 +9,9 @@ class AddColumnToCausmag < ActiveRecord::Migration
 
   def down
     remove_column :causmags, :tipo_doc
-    add_column :causmags, :des_caus
-    add_column :causmags, :modulo
-    add_column :causmags, :nrmag_src
-    add_column :causmags, :nrmag_dst
+    remove_column :causmags, :des_caus
+    remove_column :causmags, :modulo
+    remove_column :causmags, :nrmag_src
+    remove_column :causmags, :nrmag_dst
   end
 end

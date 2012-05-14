@@ -1,15 +1,5 @@
 <%= form_for(@anagen) do |f| %>
-  <% if @anagen.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@anagen.errors.count, "error") %> prohibited this anagen from being saved:</h2>
-
-      <ul>
-      <% @anagen.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render :partial => 'shared/error_messages', :locals => {:f => @anagen} %>
 
   <div class="field">
     <%= f.label :codice %><br />
@@ -20,30 +10,38 @@
     <%= select(:anagen, :tipo, [["Ditta individuale", "I"], ["Persona fisica", "F"], ["Persona giuridica", "G"]], { :prompt => true }) %>
   </div>
   <div class="field">
-    <%= f.label :cognome %><br />
-    <%= f.text_field :cognome %>
+    <%= f.label "Denominazione" %><br />
+    <%= f.text_field :denomin, :size => 55 %>
   </div>
   <div class="field">
-    <%= f.label :nome %><br />
-    <%= f.text_field :nome %>
+    <%= f.label "Codice Fiscale" %><br />
+    <%= f.text_field :codfis, :size => 35 %>
   </div>
   <div class="field">
-    <%= f.label :ragsoc %><br />
-    <%= f.text_field :ragsoc %>
-  </div>
-  <div class="field">
-    <%= f.label :codfis %><br />
-    <%= f.text_field :codfis %>
-  </div>
-  <div class="field">
-    <%= f.label :pariva %><br />
+    <%= f.label "Partita Iva" %><br />
     <%= f.text_field :pariva %>
   </div>
   <div class="field">
-    <%= f.label :sconto %><br />
-    <%= f.text_field :sconto %>
+    <%= f.label "Telefono" %><br />
+    <%= f.text_field :telefono %>
+  </div>
+  <div class="field">
+    <%= f.label "E-mail" %><br />
+    <%= f.text_field :email, :size => 45 %>
+  </div>
+  <div class="field">
+    <%= f.label "Fax" %><br />
+    <%= f.text_field :fax %>
+  </div>
+  <div class="field">
+    <%= f.label "Sito Web" %><br />
+    <%= f.text_field :web, :size => 55 %>
+  </div>
+  <div class="field">
+    <%= f.label "Sconto" %><br />
+    <%= f.text_field :sconto, :size => 4 %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "SALVA"%>
   </div>
 <% end %>

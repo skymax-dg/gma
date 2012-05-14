@@ -1,0 +1,15 @@
+<tr>
+  <td><%= line.codice %></td>
+  <td><%= line.tipo %></td>
+  <td><%= line.denomin %></td>
+  <td><%= line.codfis %></td>
+  <td><%= line.pariva %></td>
+  <td><%= line.telefono %></td>
+  <td><%= line.email %></td>
+  <td><%= line.fax %></td>
+  <td><%= line.web %></td>
+  <td><%= line.sconto %></td>
+  <td><%= link_to 'Visualizza', line %></td>
+  <td><%= link_to 'Modifica', edit_anagen_path(line) %></td>
+  <td><%= link_to 'Elimina', line, :confirm => 'Confermi?', :method => :delete %></td>
+</tr>

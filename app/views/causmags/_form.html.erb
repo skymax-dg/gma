@@ -1,15 +1,5 @@
 <%= form_for(@causmag) do |f| %>
-  <% if @causmag.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@causmag.errors.count, "error") %> prohibited this causmag from being saved:</h2>
-
-      <ul>
-      <% @causmag.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render :partial => 'shared/error_messages', :locals => {:f => @causmag} %>
 
   <div class="field">
     <%= f.label :azienda %><br />
@@ -52,6 +42,6 @@
     <%= f.text_field :modulo %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "SALVA" %>
   </div>
 <% end %>
