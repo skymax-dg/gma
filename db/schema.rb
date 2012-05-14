@@ -10,7 +10,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(:version => 20120514123408) do
+=======
+ActiveRecord::Schema.define(:version => 20120514130121) do
+>>>>>>> add-method-to-causmag
 
   create_table "anagens", :force => true do |t|
     t.integer  "azienda",                                                                  :null => false
@@ -45,13 +49,18 @@ ActiveRecord::Schema.define(:version => 20120514123408) do
   add_index "articles", ["azienda", "descriz"], :name => "idx_articles_on_descriz", :unique => true
 
   create_table "causmags", :force => true do |t|
-    t.integer  "azienda",                   :null => false
-    t.string   "descriz",    :limit => 100, :null => false
-    t.string   "tipo",       :limit => 1,   :null => false
-    t.string   "movimpmag",  :limit => 1,   :null => false
-    t.string   "contabile",  :limit => 1,   :null => false
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.integer  "azienda",                                  :null => false
+    t.integer  "tipo_doc",                  :default => 0, :null => false
+    t.string   "des_caus",   :limit => 100
+    t.string   "descriz",    :limit => 100,                :null => false
+    t.string   "tipo",       :limit => 1,                  :null => false
+    t.string   "movimpmag",  :limit => 1,                  :null => false
+    t.integer  "nrmag_src"
+    t.integer  "nrmag_dst"
+    t.string   "contabile",  :limit => 1,                  :null => false
+    t.string   "modulo",     :limit => 50
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
   end
 
   add_index "causmags", ["azienda", "descriz"], :name => "idx_causmags_on_descriz", :unique => true
