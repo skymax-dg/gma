@@ -37,6 +37,5 @@ class CausmagsController < ApplicationController
     @causmag = Causmag.find(params[:id])
     @causmag.destroy
     redirect_to causmags_url
-    end
   end
 end
