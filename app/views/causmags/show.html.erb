@@ -4,10 +4,19 @@
   <b>Azienda:</b>
   <%= @causmag.azienda %>
 </p>
+<p>
+  <b>Gruppo:</b>
+  <%= @causmag.tipo_doc %>
+</p>
 
 <p>
   <b>Descrizione:</b>
   <%= @causmag.descriz %>
+</p>
+
+<p>
+  <b>Descr. causale:</b>
+  <%= @causmag.des_caus %>
 </p>
 
 <p>
@@ -21,10 +30,24 @@
 </p>
 
 <p>
+  <b>Mag. origine (default)</b>
+  <%= @causmag.nrmag_src %>
+</p>
+
+<p>
+  <b>Mag. destin. (default)</b>
+  <%= @causmag.nrmag_dst %>
+</p>
+
+<p>
   <b>Movimento contabile:</b>
   <%= @causmag.contabile %>
 </p>
 
+<p>
+  <b>Nome modulo:</b>
+  <%= @causmag.modulo %>
+</p>
 
 <%= link_to 'Edit', edit_causmag_path(@causmag) %> |
 <%= link_to 'Back', causmags_path %>

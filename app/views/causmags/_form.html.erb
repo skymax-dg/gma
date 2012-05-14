@@ -16,20 +16,40 @@
     <%= f.number_field :azienda %>
   </div>
   <div class="field">
+    <%= f.label "Gruppo (0-9)" %><br />
+    <%= f.number_field :tipo_doc %>
+  </div>
+  <div class="field">
     <%= f.label "descrizione" %><br />
     <%= f.text_field :descriz %>
   </div>
   <div class="field">
+    <%= f.label "descrizione causale" %><br />
+    <%= f.text_field :des_caus %>
+  </div>
+  <div class="field">
     <%= f.label "tipologia" %>
-    <%= select(:causmag, :tipo, [["Entrata", "E"], ["Uscita", "U"], ["Trasferimento", "T"]], { :include_blank => true }) %>
+    <%= select(:causmag, :tipo, [["Entrata", "E"], ["Uscita", "U"], ["Transito", "T"]], { :include_blank => true }) %>
+  </div>
+  <div class="field">
+    <%= f.label "Impatto sul magazzino" %>
+    <%= select(:causmag, :movimpmag, [["Movimenta", "M"], ["Impegna", "I"], ["Nessuno", "N"]], { :prompt => true }) %>
+  </div>
+  <div class="field">
+    <%= f.label "Magazzino origine (default)" %><br />
+    <%= f.number_field :nrmag_src %>
+  </div>
+  <div class="field">
+    <%= f.label "Magazzino destin. (default)" %><br />
+    <%= f.number_field :nrmag_dst %>
   </div>
   <div class="field">
     <%= f.label "Movimento contabile" %><br />
     <%= select(:causmag, :contabile, [["Si", "S"], ["No", "N"]], { :include_blank => true })%>
   </div>
   <div class="field">
-    <%= f.label "Impatto sul magazzino" %>
-    <%= select(:causmag, :movimpmag, [["Movimenta", "M"], ["Impegna", "I"], ["Nessuno", "N"]], { :prompt => true }) %>
+    <%= f.label "Nome modulo" %><br />
+    <%= f.text_field :modulo %>
   </div>
   <div class="actions">
     <%= f.submit %>
