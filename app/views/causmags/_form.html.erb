@@ -21,15 +21,7 @@
   </div>
   <div class="field">
     <%= f.label "tipologia" %>
-    <%= select(:causmag, :tipo, [["Vendita", "V"], ["Acquisto", "A"]], { :include_blank => true }) %>
-  </div>
-  <div class="field">
-    <%= f.label "magazzino di origine" %><br />
-    <%= collection_select :causmag, :magsrc_id, Mag.all, :id, :descriz, :prompt => false, :include_blank => true %>
-  </div>
-  <div class="field">
-    <%= f.label "magazzino di destinazione" %><br />
-    <%= collection_select :causmag, :magdst_id, Mag.all, :id, :descriz, :prompt => false, :include_blank => true %>
+    <%= select(:causmag, :tipo, [["Entrata", "E"], ["Uscita", "U"], ["Trasferimento", "T"]], { :include_blank => true }) %>
   </div>
   <div class="field">
     <%= f.label "Movimento contabile" %><br />
