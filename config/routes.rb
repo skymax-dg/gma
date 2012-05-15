@@ -5,7 +5,7 @@ Gma::Application.routes.draw do
 
   get "menu/help"
 
-  root              :to => 'menu#home'
+  root :to => 'menu#home'
 
 #  resources :prezzoarticclis
 
@@ -15,18 +15,11 @@ Gma::Application.routes.draw do
 
   resources :contos
 
-  resources :anagens do
-    member do
-      get :addind
-    end
-  end
+  resources :anagens
 
   resources :anainds
 
   resources :tesdocs do
-    member do
-      get :addrow
-    end
     collection do
       get :filter
     end

@@ -51,3 +51,4 @@
 <%= link_to 'Elimina documento', @tesdoc, :confirm => 'Confermi eliminazione?', :method => :delete %>
 <%= link_to 'Modifica testata', edit_tesdoc_path %>
 <%= link_to 'Aggiungi riga', addrow_tesdoc_path %>
+<%= link_to 'Aggiungi riga2', :controller => :rigdocs, :action => :new, :id => @tesdoc.id %>

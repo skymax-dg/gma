@@ -4,7 +4,7 @@ class CreateAnainds < ActiveRecord::Migration
       t.references :anagen
       t.string :tpind, :limit => 2
       t.string :indir, :limit => 100
-      t.string :localita, :limit => 100
+      t.string :desloc, :limit => 100
       t.string :cap, :limit => 5
       t.integer :nrmag
 

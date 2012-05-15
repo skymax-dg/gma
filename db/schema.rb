@@ -15,16 +15,16 @@ ActiveRecord::Schema.define(:version => 20120514230627) do
   create_table "anagens", :force => true do |t|
     t.integer  "codice",                                                                   :null => false
     t.string   "tipo",       :limit => 1,                                                  :null => false
+    t.string   "denomin",    :limit => 150
     t.string   "codfis",     :limit => 16
     t.string   "pariva",     :limit => 11
+    t.string   "telefono",   :limit => 20
+    t.string   "fax",        :limit => 20
+    t.string   "email",      :limit => 50
+    t.string   "web",        :limit => 50
     t.decimal  "sconto",                    :precision => 5, :scale => 2, :default => 0.0, :null => false
     t.datetime "created_at",                                                               :null => false
     t.datetime "updated_at",                                                               :null => false
-    t.string   "denomin",    :limit => 150
-    t.string   "telefono",   :limit => 20
-    t.string   "email",      :limit => 50
-    t.string   "fax",        :limit => 20
-    t.string   "web",        :limit => 50
   end
 
   add_index "anagens", ["codfis"], :name => "idx_anagens_on_codfis", :unique => true
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(:version => 20120514230627) do
     t.integer  "anagen_id"
     t.string   "tpind",      :limit => 2
     t.string   "indir",      :limit => 100
-    t.string   "localita",   :limit => 100
+    t.string   "desloc",     :limit => 100
     t.string   "cap",        :limit => 5
     t.integer  "nrmag"
     t.datetime "created_at",                :null => false
@@ -60,16 +60,14 @@ ActiveRecord::Schema.define(:version => 20120514230627) do
   create_table "causmags", :force => true do |t|
     t.integer  "azienda",                                  :null => false
     t.string   "descriz",    :limit => 100,                :null => false
+    t.string   "des_caus",   :limit => 100
     t.string   "tipo",       :limit => 1,                  :null => false
     t.string   "movimpmag",  :limit => 1,                  :null => false
     t.string   "contabile",  :limit => 1,                  :null => false
+    t.integer  "tipo_doc",                  :default => 0, :null => false
+    t.string   "modulo",     :limit => 50
     t.datetime "created_at",                               :null => false
     t.datetime "updated_at",                               :null => false
-    t.integer  "tipo_doc",                  :default => 0, :null => false
-    t.string   "des_caus",   :limit => 100
-    t.string   "modulo",     :limit => 50
-    t.integer  "nrmag_src"
-    t.integer  "nrmag_dst"
   end
 
   add_index "causmags", ["azienda", "descriz"], :name => "idx_causmags_on_descriz", :unique => true
@@ -104,7 +102,6 @@ ActiveRecord::Schema.define(:version => 20120514230627) do
 
   create_table "rigdocs", :force => true do |t|
     t.integer  "tesdoc_id",                                                                :null => false
-    t.integer  "prgrig"
     t.integer  "article_id"
     t.string   "descriz",    :limit => 150
     t.integer  "qta"
@@ -112,10 +109,12 @@ ActiveRecord::Schema.define(:version => 20120514230627) do
     t.decimal  "sconto",                    :precision => 5, :scale => 2, :default => 0.0, :null => false
     t.datetime "created_at",                                                               :null => false
     t.datetime "updated_at",                                                               :null => false
+    t.integer  "prgrig",                                                  :default => 0,   :null => false
   end
 
   add_index "rigdocs", ["article_id"], :name => "index_rigdocs_on_article_id"
   add_index "rigdocs", ["descriz"], :name => "index_rigdocs_on_descriz"
+  add_index "rigdocs", ["tesdoc_id", "prgrig"], :name => "index_rigdocs_on_tesdoc_id_and_prgrig", :unique => true
   add_index "rigdocs", ["tesdoc_id"], :name => "index_rigdocs_on_tesdoc_id"
 
   create_table "tesdocs", :force => true do |t|

@@ -3,12 +3,14 @@ class AnaindsController < ApplicationController
     @anagen = Anagen.find(params[:anaind][:anagen_id])
     @anaind = @anagen.anainds.build(params[:anaind])
     if @anaind.save
-      flash[:success] = "AGGIUNTO Indirizzo anagrafico!"
-      redirect_to @anagen
+      redirect_to @anagen, :notice => 'Indirizzo anagrafico aggiunto con successo.'
     else
-      flash[:error] = "ERRORE !!! Salvatatggio indirizzo non riuscito"
-      redirect_to @anagen
+      render :action => :new
     end
+  end
+
+  def new
+    @anaind = Anagen.find(params[:id]).anainds.build # La Build valorizza automaticamente il campo anaind.anagen_id
   end
 
   def show
@@ -24,14 +26,13 @@ class AnaindsController < ApplicationController
     if @anaind.update_attributes(params[:anaind])
       redirect_to @anaind, :notice => 'Indirizzo anagrafico modificato con successo.'
     else
-      render :action => "edit"
+      render :action => :edit
     end
   end
 
   def destroy
     @anaind = Anaind.find(params[:id])
     @anaind.destroy
-redirect_to anainds_url
-#redirect_to @anaind.anagen
+    redirect_to @anaind.anagen
   end
 end

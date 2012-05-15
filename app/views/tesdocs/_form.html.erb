@@ -1,8 +1,30 @@
+<%= render :partial => 'shared/error_messages', :locals => {:f => @tesdoc} %>
 <%= form_for(@tesdoc) do |f| %>
-
-  <%= render :partial => 'shared/error_messages', :locals => {:f => @tesdoc} %>
-
-  <%= render :partial => 'upd_tesdoc', :locals => {:f => f } %>
+  <div class="field">
+    <%= f.label "azienda" %>
+    <%= f.text_field :azienda, :size => 1 %>
+    <%= f.label "anno" %>
+    <%= f.text_field :annoese, :size => 3 %>
+    <%= f.label "tipo???" %>
+    <%= f.text_field :tipo_doc, :size => 3 %>
+    <%= f.label "nr" %>
+    <%= f.number_field :num_doc, :size => 6  %>
+    <%= f.label "data" %>
+    <%= f.date_select :data_doc, :order => [:day, :month, :year], :use_short_month => true %>
+    <%= f.label "descrizione" %>
+    <%= f.text_field :descriz %>
+  </div>
+  <div class="field">
+    <%= f.label "causale" %>
+    <%= collection_select :tesdoc, :causmag_id, Causmag.all, :id, :descriz, :prompt => true %>
+    <%= f.label "codice conto_anagrafica" %>
+    <%= collection_select :tesdoc, :conto_id, Conto.all, :id, :codice, :prompt => true %>
+  <%# "#{my_remote_function(:url => {:controller => :tesdocs, :action => "upd_conto-des"}, :with => "'provincia_id'=+value")}" %>
+    <%= f.label "conto_anagrafica" %>
+    <%= collection_select :tesdoc, :conto_id, Conto.all, :id, :descriz, :prompt => true %>
+    <%= f.label "sconto" %>
+    <%= f.text_field :sconto %>
+  </div>
   
   <br/>
   <br/>

@@ -11,10 +11,6 @@ class AnagensController < ApplicationController
     @anagen = Anagen.new
   end
 
-  def addind
-    @anaind = Anagen.find(params[:id]).anainds.build # La Build valorizza automaticamente il campo anaind.anagen_id 
-  end
-
   def edit
     @anagen = Anagen.find(params[:id])
   end
@@ -22,7 +18,7 @@ class AnagensController < ApplicationController
   def create
     @anagen = Anagen.new(params[:anagen])
     if @anagen.save
-      redirect_to @anagen, :notice => 'Anagen was successfully created.'
+      redirect_to @anagen, :notice => 'Anagrafica soggetti creata con successo.'
     else
       render :action => "new"
     end
@@ -31,7 +27,7 @@ class AnagensController < ApplicationController
   def update
     @anagen = Anagen.find(params[:id])
     if @anagen.update_attributes(params[:anagen])
-      redirect_to @anagen, :notice => 'Anagen was successfully updated.'
+      redirect_to @anagen, :notice => 'Anagrafica soggetti aggiornata con successo.'
     else
       render :action => "edit"
     end

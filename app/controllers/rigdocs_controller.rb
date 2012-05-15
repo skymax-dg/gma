@@ -17,12 +17,14 @@ class RigdocsController < ApplicationController
     @rigdoc = @tesdoc.rigdocs.build(params[:rigdoc])
     @rigdoc.prgrig = newprg
     if @rigdoc.save
-      flash[:success] = "AGGIUNTA Riga documento!"
-      redirect_to @tesdoc
+      redirect_to @tesdoc, :notice => 'Riga documento aggiunta con successo.'
     else
-      flash[:error] = "ERRORE !!! Salvatatggio riga non riuscito"
-      redirect_to @tesdoc
+      render :action => :new
     end
+  end
+
+  def new
+    @rigdoc = Tesdoc.find(params[:id]).rigdocs.build # La Build valorizza automaticamente il campo rigdoc.tesdoc_id
   end
 
   def show

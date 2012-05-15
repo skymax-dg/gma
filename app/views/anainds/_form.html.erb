@@ -1,4 +1,5 @@
-<%= form_for anaind do |f| %>
+<%= render :partial => 'shared/error_messages', :locals => {:f => @anaind} %>
+<%= form_for @anaind do |f| %>
   <div class="field">
     <%= hidden_field(:anaind, :anagen_id) %>
     <%= f.label "tipo ind" %>
@@ -8,7 +9,7 @@
   </div>
   <div class="field">
     <%= f.label "Localita" %>
-    <%= f.text_field :localita, :size => 50 %>
+    <%= f.text_field :desloc, :size => 50 %>
     <%= f.label "Cap" %>
     <%= f.text_field :cap, :size => 5 %>
     <%= f.label "Magazzino" %>

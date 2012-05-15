@@ -19,10 +19,6 @@ class TesdocsController < ApplicationController
     @tesdoc = Tesdoc.new
   end
 
-  def addrow
-    @rigdoc = Tesdoc.find(params[:id]).rigdocs.build # La Build valorizza automaticamente il campo rigdoc.tesdoc_id 
-  end
-
   def edit
     @tesdoc = Tesdoc.find(params[:id])
   end
