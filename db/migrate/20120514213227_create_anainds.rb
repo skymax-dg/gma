@@ -2,7 +2,7 @@ class CreateAnainds < ActiveRecord::Migration
   def change
     create_table :anainds do |t|
       t.references :anagen
-      t.string :tpind, :limit => 1
+      t.string :tpind, :limit => 2
       t.string :indir, :limit => 100
       t.string :localita, :limit => 100
       t.string :cap, :limit => 5
