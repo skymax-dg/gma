@@ -5,7 +5,7 @@
     <%= f.label :codice %>
     <%= f.number_field :codice %>
     <%= f.label :tipo %>
-    <%= select(:anagen, :tipo, Anagen::TIPO, { :prompt => true }) %>
+    <%= select(:anagen, :tipo, Anagen::TIPO.values, { :prompt => true }) %>
     <%= f.label "Denominazione" %>
     <%= f.text_field :denomin, :size => 55 %>
   </div>
