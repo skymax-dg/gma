@@ -1,4 +1,8 @@
 Gma::Application.routes.draw do
+  resources :localitas
+
+  resources :paeses
+
   get "menu/home"
 
   get "menu/contact"

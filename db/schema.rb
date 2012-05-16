@@ -10,21 +10,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120514230627) do
+ActiveRecord::Schema.define(:version => 20120516143120) do
 
   create_table "anagens", :force => true do |t|
     t.integer  "codice",                                                                   :null => false
     t.string   "tipo",       :limit => 1,                                                  :null => false
-    t.string   "denomin",    :limit => 150
     t.string   "codfis",     :limit => 16
     t.string   "pariva",     :limit => 11
-    t.string   "telefono",   :limit => 20
-    t.string   "fax",        :limit => 20
-    t.string   "email",      :limit => 50
-    t.string   "web",        :limit => 50
     t.decimal  "sconto",                    :precision => 5, :scale => 2, :default => 0.0, :null => false
     t.datetime "created_at",                                                               :null => false
     t.datetime "updated_at",                                                               :null => false
+    t.string   "denomin",    :limit => 150
+    t.string   "telefono",   :limit => 20
+    t.string   "email",      :limit => 50
+    t.string   "fax",        :limit => 20
+    t.string   "web",        :limit => 50
   end
 
   add_index "anagens", ["codfis"], :name => "idx_anagens_on_codfis", :unique => true
@@ -34,13 +34,16 @@ ActiveRecord::Schema.define(:version => 20120514230627) do
 
   create_table "anainds", :force => true do |t|
     t.integer  "anagen_id"
-    t.string   "tpind",      :limit => 2
-    t.string   "indir",      :limit => 100
-    t.string   "desloc",     :limit => 100
-    t.string   "cap",        :limit => 5
+    t.string   "indir",       :limit => 100
+    t.string   "desloc",      :limit => 100
+    t.string   "cap",         :limit => 5
     t.integer  "nrmag"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
+    t.integer  "localita_id"
+    t.string   "flsl",        :limit => 1,   :default => "S", :null => false
+    t.string   "flsp",        :limit => 1,   :default => "S", :null => false
+    t.string   "flmg",        :limit => 1,   :default => "N", :null => false
   end
 
   add_index "anainds", ["anagen_id"], :name => "index_anainds_on_anagen_id"
@@ -60,14 +63,16 @@ ActiveRecord::Schema.define(:version => 20120514230627) do
   create_table "causmags", :force => true do |t|
     t.integer  "azienda",                                  :null => false
     t.string   "descriz",    :limit => 100,                :null => false
-    t.string   "des_caus",   :limit => 100
     t.string   "tipo",       :limit => 1,                  :null => false
     t.string   "movimpmag",  :limit => 1,                  :null => false
     t.string   "contabile",  :limit => 1,                  :null => false
-    t.integer  "tipo_doc",                  :default => 0, :null => false
-    t.string   "modulo",     :limit => 50
     t.datetime "created_at",                               :null => false
     t.datetime "updated_at",                               :null => false
+    t.integer  "tipo_doc",                  :default => 0, :null => false
+    t.string   "des_caus",   :limit => 100
+    t.string   "modulo",     :limit => 50
+    t.integer  "nrmag_src"
+    t.integer  "nrmag_dst"
   end
 
   add_index "causmags", ["azienda", "descriz"], :name => "idx_causmags_on_descriz", :unique => true
@@ -86,6 +91,28 @@ ActiveRecord::Schema.define(:version => 20120514230627) do
 
   add_index "contos", ["azienda", "annoese", "codice"], :name => "idx_contos_on_codice", :unique => true
   add_index "contos", ["azienda", "annoese", "descriz"], :name => "idx_contos_on_descriz"
+
+  create_table "localitas", :force => true do |t|
+    t.string   "descriz",    :limit => 50, :null => false
+    t.string   "prov",       :limit => 2
+    t.string   "cap",        :limit => 5
+    t.integer  "paese_id"
+    t.string   "codfis",     :limit => 4
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+  end
+
+  add_index "localitas", ["descriz"], :name => "idx_localitas_on_descriz", :unique => true
+  add_index "localitas", ["paese_id"], :name => "index_localitas_on_paese_id"
+
+  create_table "paeses", :force => true do |t|
+    t.string   "descriz",    :limit => 50, :null => false
+    t.string   "tpeu",       :limit => 1,  :null => false
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+  end
+
+  add_index "paeses", ["descriz"], :name => "idx_paeses_on_descriz", :unique => true
 
   create_table "prezzoarticclis", :force => true do |t|
     t.integer  "azienda",                                  :null => false

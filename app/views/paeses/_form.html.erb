@@ -1,0 +1,25 @@
+<%= form_for(@paese) do |f| %>
+  <% if @paese.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@paese.errors.count, "error") %> prohibited this paese from being saved:</h2>
+
+      <ul>
+      <% @paese.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :descriz %><br />
+    <%= f.text_field :descriz %>
+  </div>
+  <div class="field">
+    <%= f.label :tpeu %><br />
+    <%= f.text_field :tpeu %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

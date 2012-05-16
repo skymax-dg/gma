@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  descriz: MyString
+  prov: MyString
+  cap: MyString
+  paese: 
+  codfis: MyString
+
+two:
+  descriz: MyString
+  prov: MyString
+  cap: MyString
+  paese: 
+  codfis: MyString

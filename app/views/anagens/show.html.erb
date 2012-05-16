@@ -4,7 +4,7 @@
   <b>Codice:</b>
   <%= @anagen.codice %>
   <b>Tipo:</b>
-  <%= @anagen.tipo %>
+  <%= Anagen::TIPO[@anagen.tipo] %>
   <b>Denominazione:</b>
   <%= @anagen.denomin %>
 </p>

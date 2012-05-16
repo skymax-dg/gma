@@ -1,0 +1,31 @@
+<h1>Listing localitas</h1>
+
+<table>
+  <tr>
+    <th>Descriz</th>
+    <th>Prov</th>
+    <th>Cap</th>
+    <th>Paese</th>
+    <th>Codfis</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @localitas.each do |localita| %>
+  <tr>
+    <td><%= localita.descriz %></td>
+    <td><%= localita.prov %></td>
+    <td><%= localita.cap %></td>
+    <td><%= localita.paese %></td>
+    <td><%= localita.codfis %></td>
+    <td><%= link_to 'Show', localita %></td>
+    <td><%= link_to 'Edit', edit_localita_path(localita) %></td>
+    <td><%= link_to 'Destroy', localita, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Localita', new_localita_path %>
