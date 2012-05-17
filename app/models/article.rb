@@ -1,5 +1,5 @@
 class Article < ActiveRecord::Base
-  has_many :rigdoc
+  has_many :rigdocs
 
   attr_accessible :codice, :descriz, :prezzo, :azienda
 

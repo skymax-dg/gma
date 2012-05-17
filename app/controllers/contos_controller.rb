@@ -9,6 +9,8 @@ class ContosController < ApplicationController
 
   def new
     @conto = Conto.new
+    @conto.azienda = StaticData::AZIENDA
+    @conto.annoese = StaticData::ANNOESE
   end
 
   def edit

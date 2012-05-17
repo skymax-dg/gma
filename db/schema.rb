@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120516143120) do
+ActiveRecord::Schema.define(:version => 20120517152528) do
 
   create_table "anagens", :force => true do |t|
     t.integer  "codice",                                                                   :null => false
@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(:version => 20120516143120) do
     t.decimal  "sconto",                     :precision => 5, :scale => 2, :default => 0.0, :null => false
     t.datetime "created_at",                                                                :null => false
     t.datetime "updated_at",                                                                :null => false
+    t.integer  "anagen_id"
   end
 
   add_index "contos", ["azienda", "annoese", "codice"], :name => "idx_contos_on_codice", :unique => true
@@ -110,6 +111,7 @@ ActiveRecord::Schema.define(:version => 20120516143120) do
     t.string   "tpeu",       :limit => 1,  :null => false
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
+    t.string   "prepiva",    :limit => 2
   end
 
   add_index "paeses", ["descriz"], :name => "idx_paeses_on_descriz", :unique => true

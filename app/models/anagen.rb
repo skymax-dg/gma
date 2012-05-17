@@ -18,7 +18,7 @@ class Anagen < ActiveRecord::Base
   validates :email, :length => { :maximum => 50, :too_long  => "Lunghezza massima permessa: 50 caratteri" }
   validates :fax, :length => { :maximum => 20, :too_long  => "Lunghezza massima permessa: 20 caratteri" }
   validates :web, :length => { :maximum => 50, :too_long  => "Lunghezza massima permessa: 50 caratteri" }
-  
-  TIPO = {'F' => 'Fisica', 'G' => 'Giuridica', 'I' => 'Ditta Individuale'}
-  
+
+  TIPO = $ParAzienda['ANAGEN']['TIPO SOGGETTO']
+
 end

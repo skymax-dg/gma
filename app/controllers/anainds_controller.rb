@@ -2,10 +2,15 @@ class AnaindsController < ApplicationController
   def create
     @anagen = Anagen.find(params[:anaind][:anagen_id])
     @anaind = @anagen.anainds.build(params[:anaind])
-    if @anaind.save
-      redirect_to @anagen, :notice => 'Indirizzo anagrafico aggiunto con successo.'
-    else
+    if @anaind.nrmag.to_i <= 0 and @anaind.flmg == "S"
+      flash[:error]="magazzino incompatibile"
       render :action => :new
+    else 
+      if @anaind.save
+        redirect_to @anagen, :notice => 'Indirizzo anagrafico aggiunto con successo.'
+      else
+        render :action => :new
+      end
     end
   end
 

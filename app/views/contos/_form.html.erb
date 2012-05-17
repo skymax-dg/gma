@@ -2,29 +2,35 @@
   <%= render :partial => 'shared/error_messages', :locals => {:f => @conto} %>
 
   <div class="field">
-    <%= f.label :azienda %><br />
+    <%= f.label "Azienda" %><br />
     <%= f.number_field :azienda %>
   </div>
   <div class="field">
-    <%= f.label :annoese %><br />
+    <%= f.label "Anno Esercizio" %><br />
     <%= f.number_field :annoese %>
   </div>
   <div class="field">
-    <%= f.label :codice %><br />
+    <%= f.label "Codice" %><br />
     <%= f.number_field :codice %>
   </div>
   <div class="field">
-    <%= f.label :descriz %><br />
+    <%= f.label "Descrizione" %><br />
     <%= f.text_field :descriz %>
   </div>
   <div class="field">
-    <%= f.label :tipoconto %><br />
-    <%= select(:conto, :tipoconto, [["Cliente", "C"], ["Fornitore", "F"], ["Altro", "A"]], { :prompt => true }) %>
-    <%#= f.text_field :tipoconto %>
+    <%= f.label "Anagrafica" %><br />
+    <%= collection_select :conto, :anagen_id, Anagen.all, :id, :denomin, {:include_blank => true} %>
   </div>
   <div class="field">
-    <%= f.label :cntrpartita %><br />
+    <%= f.label "Tipologia conto" %><br />
+    <%= select(:conto, :tipoconto, Conto::TIPOCONTO.invert, { :prompt => true }) %>
+  </div>
+  <div class="field">
+    <%= f.label "Contropartita" %><br />
     <%= f.number_field :cntrpartita %>
+  <div class="field">
+    <%= f.label "Sconto" %>
+    <%= f.number_field :sconto, :size => 4 %>
   </div>
   <div class="actions">
     <%= f.submit "SALVA" %>

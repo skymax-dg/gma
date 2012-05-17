@@ -4,6 +4,6 @@ class AddLocalitaToAnaind < ActiveRecord::Migration
   end
 
   def down
-    remove_column :anainds, :localita
+    remove_column :anainds, :localita_id
   end
 end

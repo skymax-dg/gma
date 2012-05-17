@@ -9,6 +9,7 @@ class ArticlesController < ApplicationController
 
   def new
     @article = Article.new
+    @article.azienda = StaticData::AZIENDA
   end
 
   def edit

@@ -1,6 +1,6 @@
 class PaesesController < ApplicationController
   def index
-    @paeses = Paese.all
+    @paeses = Paese.paginate(:page => params[:page], :per_page => 10)
   end
 
   def show
@@ -18,7 +18,7 @@ class PaesesController < ApplicationController
   def create
     @paese = Paese.new(params[:paese])
     if @paese.save
-      redirect_to @paese, :notice => 'Nasione/Stato inserito con successo.' 
+      redirect_to @paese, :notice => 'Nazione/Stato inserito con successo.' 
     else
       render :action => "new"
     end
@@ -27,7 +27,7 @@ class PaesesController < ApplicationController
   def update
     @paese = Paese.find(params[:id])
     if @paese.update_attributes(params[:paese])
-      redirect_to @paese, :notice => 'Nasione/Stato aggiornato con successo.'
+      redirect_to @paese, :notice => 'Nazione/Stato aggiornato con successo.'
     else
       render :action => "edit"
     end

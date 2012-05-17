@@ -1,25 +1,19 @@
 <%= form_for(@paese) do |f| %>
-  <% if @paese.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@paese.errors.count, "error") %> prohibited this paese from being saved:</h2>
-
-      <ul>
-      <% @paese.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render :partial => 'shared/error_messages', :locals => {:f => @paese} %>
 
   <div class="field">
-    <%= f.label :descriz %><br />
+    <%= f.label "Descrizione" %><br />
     <%= f.text_field :descriz %>
   </div>
   <div class="field">
-    <%= f.label :tpeu %><br />
-    <%= f.text_field :tpeu %>
+    <%= f.label "Tipo/Appartenenza" %><br />
+    <%= select(:paese, :tpeu, Paese::TPEU.invert, { :prompt => true }) %>
+  </div>
+  <div class="field">
+    <%= f.label "Prefisso P.Iva" %><br />
+    <%= f.text_field :prepiva %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "SALVA"%>
   </div>
 <% end %>

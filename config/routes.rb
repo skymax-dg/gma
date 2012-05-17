@@ -1,7 +1,4 @@
 Gma::Application.routes.draw do
-  resources :localitas
-
-  resources :paeses
 
   get "menu/home"
 
@@ -12,6 +9,10 @@ Gma::Application.routes.draw do
   root :to => 'menu#home'
 
 #  resources :prezzoarticclis
+
+  resources :localitas
+
+  resources :paeses
 
   resources :articles
 

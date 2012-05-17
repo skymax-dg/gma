@@ -1,0 +1,39 @@
+AZIENDA: 1
+ANNOESE: 2012
+ANAGEN:
+  TIPO SOGGETTO:
+    F: 'Persona fisica'
+    G: 'Persona giuridica'
+    I: 'Ditta individuale'  
+
+CAUSMAG:
+  TIPO_DOC:
+    0: 'Gruppo generico'
+    1: 'Gruppo ddt'
+    2: 'Gruppo contabile'
+    3: 'Gruppo tre'
+    4: 'Gruppo quattro'
+  TIPO:
+    E: 'Entrata'
+    U: 'Uscita'
+    T: 'Trasferimento'
+  MOVIMPMAG:
+    M: 'Movimenta Mag.'
+    I: 'Impegna Mag.'
+    N: 'Nessun impatto Mag.'
+  CONTABILE:
+    S: 'Si'
+    N: 'No'
+  NRMAG:
+    1: 'Magazzino principale'
+    2: 'Magazzino secondario'
+CONTO:
+  TIPOCONTO:
+    C: 'Cliente'
+    F: 'Fornitore'
+    A: 'Altro'
+PAESE:
+  TPEU:
+    E: 'Europeo'
+    X: 'Extraeuropeo'
+    N: 'Da assegnare'

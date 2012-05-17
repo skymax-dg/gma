@@ -1,12 +1,12 @@
 <p id="notice"><%= notice %></p>
-
+<h1>Mostra Citta'</h1>
 <p>
-  <b>Descriz:</b>
+  <b>Descrizione:</b>
   <%= @localita.descriz %>
 </p>
 
 <p>
-  <b>Prov:</b>
+  <b>Provincia:</b>
   <%= @localita.prov %>
 </p>
 
@@ -16,8 +16,8 @@
 </p>
 
 <p>
-  <b>Paese:</b>
-  <%= @localita.paese %>
+  <b>Paese di appartenenza:</b>
+  <%= @localita.paese.descriz %>
 </p>
 
 <p>
@@ -25,6 +25,5 @@
   <%= @localita.codfis %>
 </p>
 
-
-<%= link_to 'Edit', edit_localita_path(@localita) %> |
-<%= link_to 'Back', localitas_path %>
+<%= link_to 'Modifica', edit_localita_path(@localita) %> |
+<%= link_to 'Indietro', localitas_path %>

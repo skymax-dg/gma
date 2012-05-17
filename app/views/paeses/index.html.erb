@@ -1,25 +1,19 @@
-<h1>Listing paeses</h1>
-
+<h1>Elenco stati/nazioni</h1>
 <table>
   <tr>
-    <th>Descriz</th>
-    <th>Tpeu</th>
+    <th>Descrizione</th>
+    <th>Tipo</th>
+    <th>Prefisso P.Iva</th>
     <th></th>
     <th></th>
     <th></th>
   </tr>
 
-<% @paeses.each do |paese| %>
-  <tr>
-    <td><%= paese.descriz %></td>
-    <td><%= paese.tpeu %></td>
-    <td><%= link_to 'Show', paese %></td>
-    <td><%= link_to 'Edit', edit_paese_path(paese) %></td>
-    <td><%= link_to 'Destroy', paese, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
+  <%= will_paginate @paeses %>
+  <%= render :partial => 'line', :collection => @paeses unless @paeses.empty? %>
 </table>
 
 <br />
 
-<%= link_to 'New Paese', new_paese_path %>
+<%= link_to 'Nuovo stato/nazione', new_paese_path %>
+- <%= link_to 'Menu', :controller => "menu", :action => "home" %>

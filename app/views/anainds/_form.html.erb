@@ -2,13 +2,17 @@
 <%= form_for @anaind do |f| %>
   <div class="field">
     <%= hidden_field(:anaind, :anagen_id) %>
-    <%= f.label "tipo ind" %>
-    <%= f.text_field :tpind, :size => 3 %>
+    <%= f.label "Indirizzo valido come:" %>
+    <br/>  <br/>
+    <%= check_box :anaind, :flsl, {}, 'S', 'N' %> Sede legale <br/> 
+    <%= check_box :anaind, :flsp, {}, 'S', 'N' %> Indirizzo di spedizione <br/>
+    <%= check_box :anaind, :flmg, {}, 'S', 'N' %> Indirizzo di magazzino <br/> <br/>
     <%= f.label "Indirizzo" %>
     <%= f.text_field :indir, :size => 50 %>
   </div>
   <div class="field">
     <%= f.label "Localita" %>
+    <%= collection_select :anaind, :localita_id, Localita.all, :id, :descriz, {:include_blank => true} %>
     <%= f.text_field :desloc, :size => 50 %>
     <%= f.label "Cap" %>
     <%= f.text_field :cap, :size => 5 %>

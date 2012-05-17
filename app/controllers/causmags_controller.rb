@@ -9,6 +9,7 @@ class CausmagsController < ApplicationController
 
   def new
     @causmag = Causmag.new
+    @causmag.azienda = StaticData::AZIENDA
   end
 
   def edit

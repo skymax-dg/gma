@@ -7,7 +7,7 @@
   </div>
   <div class="field">
     <%= f.label "Gruppo (0-9)" %><br />
-    <%= f.number_field :tipo_doc %>
+    <%= select(:causmag, :tipo_doc, Causmag::TIPO_DOC.invert, { :prompt => true }) %>
   </div>
   <div class="field">
     <%= f.label "descrizione" %><br />
@@ -19,23 +19,23 @@
   </div>
   <div class="field">
     <%= f.label "tipologia" %>
-    <%= select(:causmag, :tipo, [["Entrata", "E"], ["Uscita", "U"], ["Transito", "T"]], { :include_blank => true }) %>
+    <%= select(:causmag, :tipo, Causmag::TIPO.invert, { :prompt => true }) %>
   </div>
   <div class="field">
     <%= f.label "Impatto sul magazzino" %>
-    <%= select(:causmag, :movimpmag, [["Movimenta", "M"], ["Impegna", "I"], ["Nessuno", "N"]], { :prompt => true }) %>
+    <%= select(:causmag, :movimpmag, Causmag::MOVIMPMAG.invert, { :prompt => true }) %>
   </div>
   <div class="field">
     <%= f.label "Magazzino origine (default)" %><br />
-    <%= f.number_field :nrmag_src %>
+    <%= select(:causmag, :nrmag_src, Causmag::NRMAG.invert, { :include_blank => true }) %>
   </div>
   <div class="field">
-    <%= f.label "Magazzino destin. (default)" %><br />
-    <%= f.number_field :nrmag_dst %>
+    <%= f.label "Magazzino destinazione (default)" %><br />
+    <%= select(:causmag, :nrmag_dst, Causmag::NRMAG.invert, { :include_blank => true }) %>
   </div>
   <div class="field">
     <%= f.label "Movimento contabile" %><br />
-    <%= select(:causmag, :contabile, [["Si", "S"], ["No", "N"]], { :include_blank => true })%>
+    <%= select(:causmag, :contabile, Causmag::CONTABILE.invert, { :prompt => true })%>
   </div>
   <div class="field">
     <%= f.label "Nome modulo" %><br />

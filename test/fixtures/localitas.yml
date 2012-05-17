@@ -4,12 +4,12 @@ one:
   descriz: MyString
   prov: MyString
   cap: MyString
-  paese: 
   codfis: MyString
+  paese: 
 
 two:
   descriz: MyString
   prov: MyString
   cap: MyString
-  paese: 
   codfis: MyString
+  paese: 

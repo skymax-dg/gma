@@ -6,7 +6,7 @@
 </p>
 
 <p>
-  <b>Annoese:</b>
+  <b>Anno esercizio:</b>
   <%= @conto.annoese %>
 </p>
 
@@ -16,20 +16,29 @@
 </p>
 
 <p>
-  <b>Descriz:</b>
+  <b>Descrizione:</b>
   <%= @conto.descriz %>
 </p>
 
 <p>
-  <b>Tipoconto:</b>
-  <%= @conto.tipoconto %>
+  <b>Anagrafica:</b>
+  <%= @conto.anagen.denomin %>
 </p>
 
 <p>
-  <b>Cntrpartita:</b>
+  <b>Tipo conto:</b>
+  <%= Conto::TIPOCONTO[@conto.tipoconto] %>
+</p>
+
+<p>
+  <b>Contropartita:</b>
   <%= @conto.cntrpartita %>
 </p>
 
+<p>
+  <b>Sconto:</b>
+  <%= @conto.sconto %>
+</p>
 
-<%= link_to 'Edit', edit_conto_path(@conto) %> |
-<%= link_to 'Back', contos_path %>
+<%= link_to 'Modifica', edit_conto_path(@conto) %> |
+<%= link_to 'Indietro', contos_path %>

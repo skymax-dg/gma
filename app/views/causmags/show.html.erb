@@ -6,7 +6,7 @@
 </p>
 <p>
   <b>Gruppo:</b>
-  <%= @causmag.tipo_doc %>
+  <%= Causmag::TIPO_DOC[@causmag.tipo_doc] %>
 </p>
 
 <p>
@@ -21,27 +21,27 @@
 
 <p>
   <b>Tipologia:</b>
-  <%= @causmag.tipo %>
+  <%= Causmag::TIPO[@causmag.tipo] %>
 </p>
 
 <p>
   <b>Impatto sul magazzino:</b>
-  <%= @causmag.movimpmag %>
+  <%= Causmag::MOVIMPMAG[@causmag.movimpmag] %>
 </p>
 
 <p>
   <b>Mag. origine (default)</b>
-  <%= @causmag.nrmag_src %>
+  <%= Causmag::NRMAG[@causmag.nrmag_src] %>
 </p>
 
 <p>
   <b>Mag. destin. (default)</b>
-  <%= @causmag.nrmag_dst %>
+  <%= Causmag::NRMAG[@causmag.nrmag_dst] %>
 </p>
 
 <p>
   <b>Movimento contabile:</b>
-  <%= @causmag.contabile %>
+  <%= Causmag::CONTABILE[@causmag.contabile] %>
 </p>
 
 <p>
@@ -49,5 +49,5 @@
   <%= @causmag.modulo %>
 </p>
 
-<%= link_to 'Edit', edit_causmag_path(@causmag) %> |
-<%= link_to 'Back', causmags_path %>
+<%= link_to 'Modifica', edit_causmag_path(@causmag) %> |
+<%= link_to 'Indietro', causmags_path %>

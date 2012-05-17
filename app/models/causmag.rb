@@ -8,4 +8,11 @@ class Causmag < ActiveRecord::Base
   validates :descriz, :des_caus, :length => { :maximum => 100, :too_long  => "Lunghezza massima consentita: 100 caratteri" }
   validates :tipo,  :length => { :maximum => 1, :too_long  => "1 carattere obbligatorio (Valori ammessi: E = Entrata - U = Uscita - T = Trasferimento" }
   validates :contabile, :length => { :maximum => 1, :too_long  => "1 carattere obbligatorio (Valori ammessi: S = Mov.Contabile - N = Mov.non Contabile" }
+
+  TIPO_DOC = $ParAzienda['CAUSMAG']['TIPO_DOC']
+  TIPO = $ParAzienda['CAUSMAG']['TIPO']
+  MOVIMPMAG = $ParAzienda['CAUSMAG']['MOVIMPMAG']
+  CONTABILE = $ParAzienda['CAUSMAG']['CONTABILE']
+  NRMAG = $ParAzienda['CAUSMAG']['NRMAG']
+
 end

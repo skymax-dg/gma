@@ -1,6 +1,6 @@
 class LocalitasController < ApplicationController
   def index
-    @localitas = Localita.all
+    @localitas = Localita.paginate(:page => params[:page], :per_page => 10)
   end
 
   def show
@@ -18,7 +18,7 @@ class LocalitasController < ApplicationController
   def create
     @localita = Localita.new(params[:localita])
     if @localita.save
-      redirect_to @localita, :notice => 'Localita was successfully created.'
+      redirect_to @localita, :notice => 'Localita'' inserita con successo.'
     else
       render :action => "new"
     end
@@ -27,7 +27,7 @@ class LocalitasController < ApplicationController
   def update
     @localita = Localita.find(params[:id])
     if @localita.update_attributes(params[:localita])
-      redirect_to @localita, :notice => 'Localita was successfully updated.'
+      redirect_to @localita, :notice => 'Localita'' aggiornata con successo.'
     else
       render :action => "edit"
     end
