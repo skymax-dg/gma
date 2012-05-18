@@ -5,22 +5,17 @@ class AnaindsController < ApplicationController
      
     if Anaind.nrmagexist(@anaind.id, @anaind.anagen_id, @anaind.nrmag)
       flash.now[:error] = "Indirizzo già esistente per il magazzino: #{@anaind.nrmag}"
-      flash.keep
       render :action => :new
-    else
-      if @anaind.flmg == "S" and @anaind.nrmag == 0
-        flash.now[:error] = "Magazzino di riferimento non specificato"
+      elsif (@anaind.flmg == "S" and @anaind.nrmag == 0) or
+            (@anaind.flmg == "N" and @anaind.nrmag > 0)
+        flash.now[:error] = "Magazzino di riferimento incompatibile con il check: Indirizzo di magazzino"
         flash.keep
-        @anaind.nrmag = 1
         render :action => :new
-      else 
-        if @anaind.save
+        elsif @anaind.save
           redirect_to @anagen, :notice => 'Indirizzo anagrafico aggiunto con successo.'
         else
           flash.now[:error] = "ERRORE !!! durante il salvataggio dell'indirizzo anagrafico"
           render :action => :new
-        end
-      end
     end
   end
 
@@ -43,23 +38,20 @@ class AnaindsController < ApplicationController
   def update
     @anaind = Anaind.find(params[:id])
     anaind = params[:anaind]
-    if Anaind.nrmagexist(params[:id], anaind[:anagen_id], anaind[:nrmag])
+    if Anaind.nrmagexist(params[:id].to_i, anaind[:anagen_id].to_i, anaind[:nrmag].to_i)
       flash.now[:error] = "Indirizzo già esistente per il magazzino: #{anaind[:nrmag]}"
       flash.keep
       render :action => :edit
-    else
-      if anaind[:flmg] == "S" and anaind[:nrmag] == 0
-        flash.now[:error] = "Magazzino di riferimento non specificato"
+      elsif (anaind[:flmg] == "S" and anaind[:nrmag] == "0") or
+            (anaind[:flmg] == "N" and anaind[:nrmag] > "0")
+        flash.now[:error] = "Magazzino di riferimento incompatibile con il check: Indirizzo di magazzino"
         flash.keep
         render :action => :edit
-      else 
-        if @anaind.update_attributes(params[:anaind])
-          redirect_to @anaind, :notice => 'Indirizzo anagrafico modificato con successo.'
+        elsif @anaind.update_attributes(params[:anaind])
+         redirect_to @anaind, :notice => 'Indirizzo anagrafico modificato con successo.'
         else
-          flash.now[:error] = "ERRORE !!! durante il salvataggio dell'indirizzo anagrafico"
-          render :action => :edit
-        end
-      end
+         flash.now[:error] = "ERRORE !!! durante il salvataggio dell'indirizzo anagrafico"
+         render :action => :edit
     end
   end
 
