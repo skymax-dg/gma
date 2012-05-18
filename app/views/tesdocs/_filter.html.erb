@@ -1,10 +1,10 @@
-<%= form_tag (:filter_tesdocs, :method => :get) do %>
+<%= form_tag(:filter_tesdocs, :method => :get) do %>
   Ricerca per:________________________________________________Cli_For_Alt
   <br/>
   <br/>
-  <%= select_tag ("tpfilter",
-                  options_for_select([["Ragione sociale", "RS"], ["Codice fiscale", "CF"],
-                                      ["Partiva iva", "PI"], ["Mastro contabile", "MS"]], "RS")) %>
+  <%= select_tag("tpfilter",
+                 options_for_select([["Ragione sociale", "RS"], ["Codice fiscale", "CF"],
+                                     ["Partiva iva", "PI"], ["Mastro contabile", "MS"]], "RS")) %>
   <%= text_field_tag "desfilter", "", :size => 50 %>
   <%= check_box_tag 'clifilter', 'C', true %>
   <%= check_box_tag 'forfilter', 'F', true %>

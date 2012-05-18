@@ -9,7 +9,7 @@
 
 <p>
   <b>Tipo doc:</b>
-  <%= @tesdoc.tipo_doc %>
+  <%= Tesdoc::TIPO_DOC[@tesdoc.tipo_doc] %>
   <b>Nr. documento:</b>
   <%= @tesdoc.num_doc %>
   <b>Data documento:</b>
@@ -25,6 +25,17 @@
   <%= @tesdoc.conto.codice %>
   <b>Conto anagrafica:</b>
   <%= @tesdoc.conto.descriz %>
+</p>
+
+<p>
+  <b>Mag. origine</b>
+  <%= Tesdoc::NRMAG[@tesdoc.nrmagsrc] %>
+
+  <b>Mag. destinaz.</b>
+  <%= Tesdoc::NRMAG[@tesdoc.nrmagdst] %>
+
+  <b>Segue fattura:</b>
+  <%= Tesdoc::SEGUEFATT[@tesdoc.seguefatt] %>
   <b>Sconto:</b>
   <%= @tesdoc.sconto %>
 </p>

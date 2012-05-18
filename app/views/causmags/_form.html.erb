@@ -27,11 +27,11 @@
   </div>
   <div class="field">
     <%= f.label "Magazzino origine (default)" %><br />
-    <%= select(:causmag, :nrmag_src, Causmag::NRMAG.invert, { :include_blank => true }) %>
+    <%= select(:causmag, :nrmagsrc, Causmag::NRMAG.invert) %>
   </div>
   <div class="field">
     <%= f.label "Magazzino destinazione (default)" %><br />
-    <%= select(:causmag, :nrmag_dst, Causmag::NRMAG.invert, { :include_blank => true }) %>
+    <%= select(:causmag, :nrmagdst, Causmag::NRMAG.invert) %>
   </div>
   <div class="field">
     <%= f.label "Movimento contabile" %><br />

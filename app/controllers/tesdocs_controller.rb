@@ -17,6 +17,8 @@ class TesdocsController < ApplicationController
 
   def new
     @tesdoc = Tesdoc.new
+    @tesdoc.azienda = StaticData::AZIENDA
+    @tesdoc.annoese = StaticData::ANNOESE
   end
 
   def edit

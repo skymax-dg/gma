@@ -1,10 +1,19 @@
 AZIENDA: 1
 ANNOESE: 2012
+ANARIF: 1
 ANAGEN:
   TIPO SOGGETTO:
     F: 'Persona fisica'
     G: 'Persona giuridica'
     I: 'Ditta individuale'  
+ANAIND:
+  NRMAG:
+    0: 'Nessun magazzino'
+    1: 'Magazzino 1'
+    2: 'Magazzino 2'
+    3: 'Magazzino 3'
+    4: 'Magazzino 4'
+    5: 'Magazzino 5'
 
 CAUSMAG:
   TIPO_DOC:
@@ -24,9 +33,6 @@ CAUSMAG:
   CONTABILE:
     S: 'Si'
     N: 'No'
-  NRMAG:
-    1: 'Magazzino principale'
-    2: 'Magazzino secondario'
 CONTO:
   TIPOCONTO:
     C: 'Cliente'
@@ -37,3 +43,16 @@ PAESE:
     E: 'Europeo'
     X: 'Extraeuropeo'
     N: 'Da assegnare'
+TESDOC:
+  SEGUEFATT:
+    S: 'Si'
+    N: 'No'
+  TIPO_DOC:
+    0: 'Doc.Generico'
+    1: 'Ddt'
+    2: 'Fatt.Riep.'
+    3: 'Fatt.Imm.'
+    4: 'Reso'
+    5: 'tipo5'
+    6: 'tipo6'
+    7: 'tipo7'

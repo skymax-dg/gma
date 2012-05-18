@@ -1,7 +1,7 @@
 <tr>
   <td><%= line.azienda %></td>
   <td><%= line.annoese %></td>
-  <td><%= line.tipo_doc %></td>
+  <td><%= Tesdoc::TIPO_DOC[line.tipo_doc] %></td>
   <td><%= line.num_doc %></td>
   <td><%= line.data_doc %></td>
   <td><%= line.descriz %></td>
@@ -9,6 +9,9 @@
   <td><%= line.conto.tipoconto %></td>
   <td><%= line.conto.codice %></td>
   <td><%= line.conto.descriz %></td>
+  <td><%= Tesdoc::NRMAG[line.nrmagsrc] %></td>
+  <td><%= Tesdoc::NRMAG[line.nrmagdst] %></td>
+  <td><%= Tesdoc::SEGUEFATT[line.seguefatt] %></td>
   <td><%= line.sconto %></td>
   <td><%= link_to 'Dettaglio', line %></td>
 </tr>

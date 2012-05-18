@@ -1,8 +1,10 @@
 <tr>
-  <td><%= line.decoflgs %></td>
   <td><%= line.indir %></td>
   <td><%= line.desloc %></td>
   <td><%= line.cap %></td>
-  <td><%= line.nrmag %></td>
+  <td><%= 'X' if line.flsl == 'S' %></td>
+  <td><%= 'X' if line.flsp == 'S' %></td>
+  <td><%= 'X' if line.flmg == 'S' %></td>
+  <td><%= Anaind::NRMAG[line.nrmag] %></td>
   <td><%= link_to 'Dettaglio', line %></td>
 </tr>

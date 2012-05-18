@@ -16,8 +16,8 @@
     <%= f.text_field :desloc, :size => 50 %>
     <%= f.label "Cap" %>
     <%= f.text_field :cap, :size => 5 %>
-    <%= f.label "Magazzino" %>
-    <%= f.number_field :nrmag, :size => 3 %>
+    <%= f.label "Indirizzo valido per:" %>
+    <%= select(:anaind, :nrmag, Anaind::NRMAG.invert) %>
   </div>
   <br/>
   <br/>

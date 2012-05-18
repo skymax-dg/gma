@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120517152528) do
+ActiveRecord::Schema.define(:version => 20120518120606) do
 
   create_table "anagens", :force => true do |t|
     t.integer  "codice",                                                                   :null => false
@@ -71,8 +71,8 @@ ActiveRecord::Schema.define(:version => 20120517152528) do
     t.integer  "tipo_doc",                  :default => 0, :null => false
     t.string   "des_caus",   :limit => 100
     t.string   "modulo",     :limit => 50
-    t.integer  "nrmag_src"
-    t.integer  "nrmag_dst"
+    t.integer  "nrmagsrc",                                 :null => false
+    t.integer  "nrmagdst",                                 :null => false
   end
 
   add_index "causmags", ["azienda", "descriz"], :name => "idx_causmags_on_descriz", :unique => true
@@ -149,7 +149,6 @@ ActiveRecord::Schema.define(:version => 20120517152528) do
   create_table "tesdocs", :force => true do |t|
     t.integer  "azienda",                                                                  :null => false
     t.integer  "annoese",                                                                  :null => false
-    t.string   "tipo_doc",   :limit => 1,                                                  :null => false
     t.integer  "num_doc",                                                                  :null => false
     t.date     "data_doc",                                                                 :null => false
     t.string   "descriz",    :limit => 150
@@ -158,6 +157,10 @@ ActiveRecord::Schema.define(:version => 20120517152528) do
     t.decimal  "sconto",                    :precision => 5, :scale => 2, :default => 0.0, :null => false
     t.datetime "created_at",                                                               :null => false
     t.datetime "updated_at",                                                               :null => false
+    t.integer  "nrmagsrc",                                                :default => 0,   :null => false
+    t.integer  "nrmagdst",                                                :default => 0,   :null => false
+    t.string   "seguefatt",  :limit => 1,                                 :default => "N", :null => false
+    t.integer  "tipo_doc",                                                :default => 0,   :null => false
   end
 
   add_index "tesdocs", ["causmag_id"], :name => "index_tesdocs_on_causmag_id"

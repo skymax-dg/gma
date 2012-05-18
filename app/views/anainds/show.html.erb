@@ -1,11 +1,6 @@
 <p id="notice"><%= notice %></p>
 <h1>Mostra Indirizzo anagrafica</h1>
 <p>
-  <b>Valido come:</b>
-  <%= @anaind.decoflgs %>
-</p>
-
-<p>
   <b>Indir:</b>
   <%= @anaind.indir %>
 </p>
@@ -21,9 +16,16 @@
 </p>
 
 <p>
-  <b>Nrmag:</b>
-  <%= @anaind.nrmag %>
+  <b>Valido come:</b>
+  <%= @anaind.decoflgs %>
 </p>
+
+<% if @anaind.flmg == "S" %>
+<p>
+  <b>Rif. magazzino:</b>
+  <%= Anaind::NRMAG[@anaind.nrmag] %>
+</p>
+<% end %>
 
 <%= link_to 'Indietro', @anaind.anagen %>
 <%= link_to 'Elimina indirizzo', @anaind, :confirm => 'Confermi eliminazione?', :method => :delete %>

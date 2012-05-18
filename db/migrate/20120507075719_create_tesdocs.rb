@@ -3,7 +3,7 @@ class CreateTesdocs < ActiveRecord::Migration
     create_table :tesdocs do |t|
       t.integer :azienda, :null => false
       t.integer :annoese, :null => false
-      t.string :tipo_doc, :limit => 1, :null => false
+      t.integer :tipo_doc, :null => false
       t.integer :num_doc, :null => false
       t.date :data_doc, :null => false
       t.string :descriz, :limit => 150
