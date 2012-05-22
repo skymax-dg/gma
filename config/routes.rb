@@ -28,6 +28,9 @@ Gma::Application.routes.draw do
     collection do
       get :filter
     end
+    member do
+      get :updmag
+    end
   end
 
   resources :rigdocs do

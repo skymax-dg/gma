@@ -1,4 +1,8 @@
 class TesdocsController < ApplicationController
+  def updmag
+    dsds
+  end
+
   def filter
     @tesdocs = Tesdoc.filter(params[:tpfilter], params[:desfilter],
                              [params[:clifilter], params[:forfilter], params[:altfilter]],params[:page])
@@ -35,6 +39,7 @@ class TesdocsController < ApplicationController
   end
 
   def update
+  dfd
     @tesdoc = Tesdoc.find(params[:id])
     if @tesdoc.update_attributes(params[:tesdoc])
       redirect_to @tesdoc, :notice => 'Tesdoc was successfully updated.'

@@ -14,9 +14,17 @@
     <%= f.label "descrizione" %>
     <%= f.text_field :descriz%>
   </div>
-  
-  <%= render :partial => 'caus_conto' %>
+  <div class="field">
+    <%= f.label "causale" %>
+    <%= collection_select :tesdoc, :causmag_id, Causmag.all, :id, :descriz, :prompt => true %>
+    <%= f.label "codice conto_anagrafica" %>
+    <%= collection_select :tesdoc, :conto_id, Conto.all, :id, :codice, :prompt => true %>
+  <%# "#{my_remote_function(:url => {:controller => :tesdocs, :action => "upd_conto-des"}, :with => "'provincia_id'=+value")}" %>
+    <%#= f.label "conto_anagrafica" %>
+    <%#= collection_select :tesdoc, :conto_id, Conto.all, :id, :descriz, :prompt => true %>
+  </div>
   <br />
+  <%= link_to("UPD MAG", :action => :updformmagtst, :remote => true) %> 
 
   <div class="field">
     <%#= f.label "Magazzino origine" %><br />

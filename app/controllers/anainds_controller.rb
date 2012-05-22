@@ -2,7 +2,6 @@ class AnaindsController < ApplicationController
   def create
     @anagen = Anagen.find(params[:anaind][:anagen_id])
     @anaind = @anagen.anainds.build(params[:anaind])# La Build setta @anaind.anagen_id = @anagen.id
-     
     if Anaind.nrmagexist(@anaind.id, @anaind.anagen_id, @anaind.nrmag)
       flash.now[:error] = "Indirizzo già esistente per il magazzino: #{@anaind.nrmag}"
       render :action => :new

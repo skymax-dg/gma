@@ -6,5 +6,6 @@ class StaticData
 
   AZIENDA = $ParAzienda['AZIENDA']
   ANNOESE = $ParAzienda['ANNOESE']
+  ANARIF = $ParAzienda['ANARIF']
 
 end

@@ -1,4 +1,5 @@
 <%= render :partial => 'shared/error_messages', :locals => {:f => @tesdoc} %>
+<% apptes = @tesdoc %>
 <%= form_for(@tesdoc) do |f| %>
   <div class="field">
     <%= f.label "azienda" %>
@@ -14,9 +15,24 @@
     <%= f.label "descrizione" %>
     <%= f.text_field :descriz%>
   </div>
-  
-  <%= render :partial => 'caus_conto' %>
-  <br />
+<%= form_tag(updmag_tesdoc_path(apptes), :method => :get) do %>
+  <div class="field">
+    <%= label_tag 'causale' %>
+    <%#= select_tag("tesdoc", Causmag.all, :id, :descriz, :prompt => true) %>
+    <%= select_tag("cau", options_from_collection_for_select(Causmag.all, "id", "descriz"), :prompt => "Seleziona la causale") %>
+    <%= label_tag "codice conto_anagrafica" %>
+    <%#= select_tag("tesdoc", Conto.all, :id, :codice, :prompt => true) %>
+    <%= select_tag("cnt", options_from_collection_for_select(Conto.all, "id", "descriz"), :prompt => "Seleziona il conto") %>
+  <%# "#{my_remote_function(:url => {:controller => :tesdocs, :action => "upd_conto-des"}, :with => "'provincia_id'=+value")}" %>
+    <%#= f.label "conto_anagrafica" %>
+    <%#= collection_select :tesdoc, :conto_id, Conto.all, :id, :descriz, :prompt => true %>
+  </div>
+  <%#= link_to("UPD MAG", :action => :updformmagtst, :remote => true) %> 
+  <br/>
+  <div class="actions">
+    <%= f.submit "UPD MAG" %>
+  </div>
+<% end %>
 
   <div class="field">
     <%#= f.label "Magazzino origine" %><br />

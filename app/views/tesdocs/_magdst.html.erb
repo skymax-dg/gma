@@ -1,0 +1,15 @@
+<% mags = Hash[*Anaind::NRMAG.select{|k,v| [0].index(k)}.flatten] %>
+<% if tesdoc.causmag.nil? or (tesdoc.causmag.tipo == "U" and tesdoc.conto.nil?) %>
+<% elsif tesdoc.causmag.tipo == "U" %>
+    <% mags = tesdoc.conto.magsavailable([0]) %>
+<% else %>
+    <% mags = Anagen.find(StaticData::ANARIF).magsavailable([0]) %>
+<% end %>
+
+
+<%# if tesdoc.conto.nil? %>
+  <%# mags = Hash[*Anaind::NRMAG.select{|k,v| [0].index(k)}.flatten] %>
+<%# else %>
+  <%# mags = tesdoc.conto.magsavailable([0]) %>
+<%# end %>
+<%= select(:tesdoc, :nrmagdst, mags.invert) %>

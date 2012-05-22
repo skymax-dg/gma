@@ -8,4 +8,8 @@ class Conto < ActiveRecord::Base
   
   TIPOCONTO = $ParAzienda['CONTO']['TIPOCONTO']
 
+  def magsavailable(inivalue)
+    return Hash[*Anaind::NRMAG.select{|k,v| inivalue.index(k)}.flatten] if self.anagen.nil?
+    return self.anagen.magsavailable(inivalue)
+  end
 end
