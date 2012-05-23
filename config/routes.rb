@@ -27,6 +27,7 @@ Gma::Application.routes.draw do
   resources :tesdocs do
     collection do
       get :filter
+      get :choose_tipo_doc
     end
     member do
       get :updmag

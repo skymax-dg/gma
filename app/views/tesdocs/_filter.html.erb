@@ -4,10 +4,21 @@
   <br/>
   <%= select_tag("tpfilter",
                  options_for_select([["Ragione sociale", "RS"], ["Codice fiscale", "CF"],
-                                     ["Partiva iva", "PI"], ["Mastro contabile", "MS"]], "RS")) %>
-  <%= text_field_tag "desfilter", "", :size => 50 %>
-  <%= check_box_tag 'clifilter', 'C', true %>
-  <%= check_box_tag 'forfilter', 'F', true %>
-  <%= check_box_tag 'altfilter', 'A', true %>
+                                     ["Partiva iva", "PI"], ["Mastro contabile", "MS"]], @tpfilter)) %>
+  <%= text_field_tag "desfilter", @desfilter, :size => 50 %>
+  <%= check_box_tag 'clifilter', 'C', @clifilter %>
+  <%= check_box_tag 'forfilter', 'F', @forfilter %>
+  <%= check_box_tag 'altfilter', 'A', @altfilter %>
+  <%= text_field_tag 'tipo_doc', @tipo_doc, :size => 1 %>
+  <br />
+  <br />
+  <div>
+    Causale:
+    <%= select_tag("causmagfilter",
+                   options_from_collection_for_select(@causmags, "id", "descriz"),
+                   {:selected => @causmagfilter, :include_blank => ""}) %>
+    <br />
+    <br />
+  </div>
   <%= submit_tag 'FILTRA' %>
 <% end %>

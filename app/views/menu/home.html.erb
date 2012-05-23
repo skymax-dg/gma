@@ -1,50 +1,45 @@
 <% if @user.signed_in?%>
-	<h1>Menu' GMA</h1>
-	<br>
-	<br>
-	<br>
-	<br>
+	<h1>Menu' Principale GMA</h1>
+	<br \>
+	<br \>
+	<br \>
+	<br \>
 	<%= link_to "Gestione stati/nazioni", {:controller => 'paeses', :action => 'index'} %>
-	<br>
-	<br>
-	<br>
+	<br \>
+	<br \>
+	<br \>
 	<%= link_to "Gestione citta'", {:controller => 'localitas', :action => 'index'} %>
-	<br>
-	<br>
-	<br>
+	<br \>
+	<br \>
+	<br \>
 	<%= link_to "Gestione causali", {:controller => 'causmags', :action => 'index'} %>
-	<br>
-	<br>
-	<br>
+	<br \>
+	<br \>
+	<br \>
 	<%= link_to "Gestione articoli", {:controller => 'articles', :action => 'index'} %>
-	<br>
-	<br>
-	<br>
+	<br \>
+	<br \>
+	<br \>
 	<%= link_to "Gestione conti clienti/fornitori", {:controller => 'contos', :action => 'index'} %>
-	<br>
-	<br>
-	<br>
+	<br \>
+	<br \>
+	<br \>
 	<%= link_to "Gestione anagrafica soggetti", {:controller => 'anagens', :action => 'index'} %>
-	<br>
-	<br>
-	<br>
-	<%= link_to "Gestione documenti", {:controller => 'tesdocs', :action => 'index'} %>
-	<br>
-	<br>
-	<br>
+	<br \>
+	<br \>
+	<br \>
+	<%= link_to "Gestione documenti", {:controller => 'tesdocs', :action => 'choose_tipo_doc'} %>
+	<br \>
+	<br \>
+	<br \>
 	<%= link_to "Gestione archivio documenti", {:controller => 'tesdocs', :action => 'index'} %>
-	<br>
-	<br>
-	<br>
-
-	<%#= link_to "Export postsID (XLS)", {:controller => 'users', :action => 'exp_posts_by_user_xls',
-										 :id => current_user.id}%>
+	<br \>
+	<br \>
+	<br \>
 <% else %>
   <h1>Gestione magazzino articoli</h1>
-
   <p>
 	Utente non autorizzato o login non effettuato.
   </p>
-
   <%#= link_to "Sign up now!", signup_path, :class => "signup_button round" %>
 <% end if %>

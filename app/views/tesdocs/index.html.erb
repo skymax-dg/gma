@@ -1,4 +1,4 @@
-<h1>Elenco Documenti</h1>
+<h1>Elenco Documenti (<%= Causmag::TIPO_DOC[@tipo_doc.to_i] %>) </h1>
 <br />
 <%= render :partial => 'filter' %>
 
@@ -32,4 +32,5 @@
 <br />
 
 <%= link_to 'Aggiungi documento', new_tesdoc_path %>
-- <%= link_to 'Menu', :controller => "menu", :action => "home" %>
+- <%#= link_to 'Menu', :controller => "menu", :action => "home" %>
+  <%= link_to 'Menu tipo-documenti', :action => "choose_tipo_doc" %>

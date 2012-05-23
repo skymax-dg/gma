@@ -4,13 +4,27 @@ class TesdocsController < ApplicationController
   end
 
   def filter
-    @tesdocs = Tesdoc.filter(params[:tpfilter], params[:desfilter],
-                             [params[:clifilter], params[:forfilter], params[:altfilter]],params[:page])
+    @tipo_doc  = params[:tipo_doc].to_i
+    @tpfilter  = params[:tpfilter]
+    @desfilter = params[:desfilter]
+    @clifilter = params[:clifilter]
+    @forfilter = params[:forfilter]
+    @altfilter = params[:altfilter]
+    @causmagfilter = params[:causmagfilter]
+    @causmags = Causmag.find(:all, :conditions => ["tipo_doc = :tpd", {:tpd => @tipo_doc}])
+    @tesdocs = Tesdoc.filter(@tpfilter, @desfilter,
+                             [@clifilter, @forfilter, @altfilter],
+                             @tipo_doc,
+                             @causmagfilter,
+                             params[:page])
     render "index"
   end
 
   def index
     @tesdocs = Tesdoc.paginate(:page => params[:page], :per_page => 10)
+  end
+
+  def choose_tipo_doc
   end
 
   def show
