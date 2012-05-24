@@ -35,9 +35,9 @@ CAUSMAG:
     N: 'No'
 CONTO:
   TIPOCONTO:
-    C: 'Cliente'
+    C: 'Cliente__'
     F: 'Fornitore'
-    A: 'Altro'
+    A: 'Altro____'
 PAESE:
   TPEU:
     E: 'Europeo'

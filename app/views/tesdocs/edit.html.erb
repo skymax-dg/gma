@@ -1,7 +1,6 @@
-<h1>Modifica Testata documento</h1>
+<h1>Modifica Testata documento (<%= Causmag::TIPO_DOC[se_tipo_doc.to_i] %>) </h1>
 <br/>
 
 <%= render 'form' %>
 
-<%= link_to 'Visualizza', @tesdoc %> |
-<%= link_to 'Indietro', tesdocs_path %>
+<%= link_to 'Indietro', @tesdoc %>

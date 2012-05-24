@@ -1,4 +1,4 @@
-<h1>Elenco Documenti (<%= Causmag::TIPO_DOC[@tipo_doc.to_i] %>) </h1>
+<h1>Elenco Documenti (<%= Causmag::TIPO_DOC[se_tipo_doc.to_i] %>) </h1>
 <br />
 <%= render :partial => 'filter' %>
 
@@ -25,12 +25,14 @@
     <th></th>
   </tr>
 
-  <%= will_paginate @tesdocs%>
-  <%= render :partial => 'line', :collection => @tesdocs unless @tesdocs.empty? %>
+  <%= will_paginate @tesdocs unless @tesdocs.nil? %>
+  <%= render :partial => 'line', :collection => @tesdocs unless @tesdocs.nil? %>
 </table>
 
 <br />
 
-<%= link_to 'Aggiungi documento', new_tesdoc_path %>
-- <%#= link_to 'Menu', :controller => "menu", :action => "home" %>
-  <%= link_to 'Menu tipo-documenti', :action => "choose_tipo_doc" %>
+<%= link_to 'Aggiungi documento', {:action => 'new',
+                                   :causmag => @causmagfilter||"",
+                                   :conto => @contofilter||""
+                                  } %>
+- <%= link_to 'Menu tipo-documenti', :action => "choose_tipo_doc" %>

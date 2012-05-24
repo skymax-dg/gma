@@ -1,13 +1,14 @@
-<h1>Menu' Gestione documenti</h1>
-<br \>
-<br \>
-<br \>
-<br \>
+<h1>MENU' GESTIONE DOCUMENTI</h1>
+<br />
+<br />
+<ul>
+<h2>
 <% Tesdoc::TIPO_DOC.each {|k, v| %>
-  <%= link_to v, {:controller => 'tesdocs', :action => 'filter', :tipo_doc => k} %>
-  <br \>
-  <br \>
-  <br \>
+<li> <%= link_to v.upcase, {:controller => 'tesdocs', :action => 'index', :tipo_doc => k} %> </li>
+<br />
+<br />
+<br />
+<br />
 <% } %>
-
-<%= link_to 'MENU PRINCIPALE', :controller => "menu", :action => "home" %>
+<li> <%= link_to 'MENU PRINCIPALE', :controller => "menu", :action => "home" %> </li>
+</h2></ul>

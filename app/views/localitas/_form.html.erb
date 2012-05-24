@@ -2,24 +2,24 @@
   <%= render :partial => 'shared/error_messages', :locals => {:f => @localita} %>
 
   <div class="field">
-    <%= f.label "Descrizione" %><br />
+    <b> <%= f.label "Descrizione" %> </b> <br />
     <%= f.text_field :descriz %>
   </div>
   <div class="field">
-    <%= f.label "Provincia" %><br />
+    <b> <%= f.label "Provincia" %> </b> <br />
     <%= f.text_field :prov %>
   </div>
   <div class="field">
-    <%= f.label "Cap" %><br />
+    <b> <%= f.label "Cap" %> </b> <br />
     <%= f.text_field :cap %>
   </div>
   <div class="field">
-    <%= f.label "Stato/Nazione" %><br />
+    <b> <%= f.label "Stato/Nazione" %> </b> <br />
     <%= collection_select :localita, :paese_id, Paese.all, :id, :descriz, :prompt => true %>
 <%#= link_to 'Aggiungi Stato/Nazione', :controller => :paeses, :action => :new, :id => @localita.id %>
   </div>
   <div class="field">
-    <%= f.label "CodFis" %><br />
+    <b> <%= f.label "CodFis" %> </b> <br />
     <%= f.text_field :codfis %>
   </div>
   <div class="actions">

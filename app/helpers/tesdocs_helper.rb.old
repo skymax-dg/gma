@@ -10,7 +10,7 @@ module TesdocsHelper
   end
 
   def store_tipo_doc (td)
-    session[:se_tipo_doc] = td unless td.nil?
+    session[:se_tipo_doc] = td
   end
     
   def se_tipo_doc

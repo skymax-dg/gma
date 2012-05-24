@@ -1,9 +1,9 @@
 <%= form_for(updmag_tesdoc_path(@tesdoc), :method => :get) do |f2|%>
 <%#= form_for(@tesdoc) do |f2| %>
   <div class="field">
-    <%= f2.label "causale" %>
+    <b> <%= f2.label "causale" %> </b>
     <%= collection_select :tesdoc, :causmag_id, Causmag.all, :id, :descriz, :prompt => true %>
-    <%= f2.label "codice conto_anagrafica" %>
+    <b> <%= f2.label "codice conto_anagrafica" %> </b>
     <%= collection_select :tesdoc, :conto_id, Conto.all, :id, :codice, :prompt => true %>
   <%# "#{my_remote_function(:url => {:controller => :tesdocs, :action => "upd_conto-des"}, :with => "'provincia_id'=+value")}" %>
     <%#= f.label "conto_anagrafica" %>

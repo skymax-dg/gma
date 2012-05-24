@@ -2,16 +2,16 @@
 <%= form_for @rigdoc do |f| %>
   <div class="field">
     <%= hidden_field(:rigdoc, :tesdoc_id) %>
-    <%= f.label "Descizione riga" %>
+    <b> <%= f.label "Descizione riga" %> </b>
     <%= f.text_field :descriz, :size => 50 %>
-    <%= f.label "Articolo" %>
+    <b> <%= f.label "Articolo" %> </b>
     <%= collection_select (:rigdoc, :article_id, Article.all, :id, :codice,  {:include_blank => true}) %>
     <%= collection_select (:rigdoc, :article_id, Article.all, :id, :descriz, {:include_blank => true}) %>
-    <%= f.label "Qtà" %>
+    <b> <%= f.label "Qtà" %> </b>
     <%= f.number_field :qta, :size => 3 %>
-    <%= f.label "Prezzo" %>
+    <b> <%= f.label "Prezzo" %> </b>
     <%= f.number_field :prezzo, :size => 6  %>
-    <%= f.label "Sconto" %>
+    <b> <%= f.label "Sconto" %> </b>
     <%= f.number_field :sconto, :size => 6  %>
   </div>
   <br/>

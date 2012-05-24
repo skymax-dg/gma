@@ -1,6 +1,6 @@
-<h1>Nuovo Documento</h1>
+<h1>Nuovo Documento (<%= Causmag::TIPO_DOC[se_tipo_doc.to_i] %>) </h1>
 <br/>
 
 <%= render 'form' %>
 
-<%= link_to 'Indietro', tesdocs_path %>
+<%= link_to 'Indietro', :tesdocs %>

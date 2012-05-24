@@ -2,31 +2,31 @@
 <%= form_for(@anagen) do |f| %>
 
   <div class="field">
-    <%= f.label :codice %>
+    <b> <%= f.label :codice %> </b>
     <%= f.number_field :codice %>
-    <%= f.label :tipo %>
+    <b> <%= f.label :tipo %> </b>
     <%= select(:anagen, :tipo, Anagen::TIPO.invert, { :prompt => true }) %>
-    <%= f.label "Denominazione" %>
+    <b> <%= f.label "Denominazione" %> </b>
     <%= f.text_field :denomin, :size => 55 %>
   </div>
   <div class="field">
-    <%= f.label "Codice Fiscale" %>
+    <b> <%= f.label "Codice Fiscale" %> </b>
     <%= f.text_field :codfis, :size => 35 %>
-    <%= f.label "Partita Iva" %>
+    <b> <%= f.label "Partita Iva" %> </b>
     <%= f.text_field :pariva %>
   </div>
   <div class="field">
-    <%= f.label "Telefono" %>
+    <b> <%= f.label "Telefono" %> </b>
     <%= f.text_field :telefono %>
-    <%= f.label "Fax" %>
+    <b> <%= f.label "Fax" %> </b>
     <%= f.text_field :fax %>
   </div>
   <div class="field">
-    <%= f.label "E-mail" %>
+    <b> <%= f.label "E-mail" %> </b>
     <%= f.text_field :email, :size => 45 %>
-    <%= f.label "Sito Web" %>
+    <b> <%= f.label "Sito Web" %> </b>
     <%= f.text_field :web, :size => 55 %>
-    <%= f.label "Sconto" %>
+    <b> <%= f.label "Sconto" %> </b>
     <%= f.text_field :sconto, :size => 4 %>
   </div>
   <div class="actions">

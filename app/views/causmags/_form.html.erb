@@ -2,43 +2,43 @@
   <%= render :partial => 'shared/error_messages', :locals => {:f => @causmag} %>
 
   <div class="field">
-    <%= f.label :azienda %><br />
+    <b> <%= f.label :azienda %> </b> <br />
     <%= f.number_field :azienda %>
   </div>
   <div class="field">
-    <%= f.label "Gruppo (0-9)" %><br />
+    <b> <%= f.label "Gruppo (0-9)" %> </b> <br />
     <%= select(:causmag, :tipo_doc, Causmag::TIPO_DOC.invert, { :prompt => true }) %>
   </div>
   <div class="field">
-    <%= f.label "descrizione" %><br />
+    <b> <%= f.label "descrizione" %> </b> <br />
     <%= f.text_field :descriz %>
   </div>
   <div class="field">
-    <%= f.label "descrizione causale" %><br />
+    <b> <%= f.label "descrizione causale" %> </b> <br />
     <%= f.text_field :des_caus %>
   </div>
   <div class="field">
-    <%= f.label "tipologia" %>
+    <b> <%= f.label "tipologia" %> </b>
     <%= select(:causmag, :tipo, Causmag::TIPO.invert, { :prompt => true }) %>
   </div>
   <div class="field">
-    <%= f.label "Impatto sul magazzino" %>
+    <b> <%= f.label "Impatto sul magazzino" %> </b>
     <%= select(:causmag, :movimpmag, Causmag::MOVIMPMAG.invert, { :prompt => true }) %>
   </div>
   <div class="field">
-    <%= f.label "Magazzino origine (default)" %><br />
+    <b> <%= f.label "Magazzino origine (default)" %> </b> <br />
     <%= select(:causmag, :nrmagsrc, Causmag::NRMAG.invert) %>
   </div>
   <div class="field">
-    <%= f.label "Magazzino destinazione (default)" %><br />
+    <b> <%= f.label "Magazzino destinazione (default)" %> </b> <br />
     <%= select(:causmag, :nrmagdst, Causmag::NRMAG.invert) %>
   </div>
   <div class="field">
-    <%= f.label "Movimento contabile" %><br />
+    <b> <%= f.label "Movimento contabile" %> </b> <br />
     <%= select(:causmag, :contabile, Causmag::CONTABILE.invert, { :prompt => true })%>
   </div>
   <div class="field">
-    <%= f.label "Nome modulo" %><br />
+    <b> <%= f.label "Nome modulo" %> </b> <br />
     <%= f.text_field :modulo %>
   </div>
   <div class="actions">

@@ -2,34 +2,34 @@
   <%= render :partial => 'shared/error_messages', :locals => {:f => @conto} %>
 
   <div class="field">
-    <%= f.label "Azienda" %><br />
+    <b> <%= f.label "Azienda" %> </b> <br />
     <%= f.number_field :azienda %>
   </div>
   <div class="field">
-    <%= f.label "Anno Esercizio" %><br />
+    <b> <%= f.label "Anno Esercizio" %> </b> <br />
     <%= f.number_field :annoese %>
   </div>
   <div class="field">
-    <%= f.label "Codice" %><br />
+    <b> <%= f.label "Codice" %> </b> <br />
     <%= f.number_field :codice %>
   </div>
   <div class="field">
-    <%= f.label "Descrizione" %><br />
+    <b> <%= f.label "Descrizione" %> </b> <br />
     <%= f.text_field :descriz %>
   </div>
   <div class="field">
-    <%= f.label "Anagrafica" %><br />
+    <b> <%= f.label "Anagrafica" %> </b> <br />
     <%= collection_select :conto, :anagen_id, Anagen.all, :id, :denomin, {:include_blank => true} %>
   </div>
   <div class="field">
-    <%= f.label "Tipologia conto" %><br />
+    <b> <%= f.label "Tipologia conto" %> </b> <br />
     <%= select(:conto, :tipoconto, Conto::TIPOCONTO.invert, { :prompt => true }) %>
   </div>
   <div class="field">
-    <%= f.label "Contropartita" %><br />
+    <b> <%= f.label "Contropartita" %> </b> <br />
     <%= f.number_field :cntrpartita %>
   <div class="field">
-    <%= f.label "Sconto" %>
+    <b> <%= f.label "Sconto" %> </b>
     <%= f.number_field :sconto, :size => 4 %>
   </div>
   <div class="actions">

@@ -1,22 +1,25 @@
 <%= form_tag(:filter_tesdocs, :method => :get) do %>
-  Ricerca per:________________________________________________Cli_For_Alt
+  <b> Ricerca per:________________________________________________Cli_For_Alt </b>
   <br/>
   <br/>
   <%= select_tag("tpfilter",
                  options_for_select([["Ragione sociale", "RS"], ["Codice fiscale", "CF"],
-                                     ["Partiva iva", "PI"], ["Mastro contabile", "MS"]], @tpfilter)) %>
-  <%= text_field_tag "desfilter", @desfilter, :size => 50 %>
+                                     ["Partiva iva", "PI"]], @tpfilter)) %>
+  <%= text_field_tag "desfilter", @desfilter, :size => 61 %>
   <%= check_box_tag 'clifilter', 'C', @clifilter %>
   <%= check_box_tag 'forfilter', 'F', @forfilter %>
   <%= check_box_tag 'altfilter', 'A', @altfilter %>
-  <%= text_field_tag 'tipo_doc', @tipo_doc, :size => 1 %>
   <br />
   <br />
   <div>
-    Causale:
+    <b> Causale: </b>
     <%= select_tag("causmagfilter",
-                   options_from_collection_for_select(@causmags, "id", "descriz"),
-                   {:selected => @causmagfilter, :include_blank => ""}) %>
+                   options_from_collection_for_select(@causmags, :id, :descriz, {:selected => @causmagfilter.to_i}),
+                   {:include_blank => true}) %>
+    <b> Mastro contabile: </b>
+    <%= select_tag("contofilter",
+                   options_from_collection_for_select(@contos, :id, :desest1,{:selected => @contofilter.to_i}),
+                   {:include_blank => ""}) %>
     <br />
     <br />
   </div>

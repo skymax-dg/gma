@@ -2,15 +2,15 @@
   <%= render :partial => 'shared/error_messages', :locals => {:f => @paese} %>
 
   <div class="field">
-    <%= f.label "Descrizione" %><br />
+    <b> <%= f.label "Descrizione" %> </b> <br />
     <%= f.text_field :descriz %>
   </div>
   <div class="field">
-    <%= f.label "Tipo/Appartenenza" %><br />
+    <b> <%= f.label "Tipo/Appartenenza" %> </b> <br />
     <%= select(:paese, :tpeu, Paese::TPEU.invert, { :prompt => true }) %>
   </div>
   <div class="field">
-    <%= f.label "Prefisso P.Iva" %><br />
+    <b> <%= f.label "Prefisso P.Iva" %> </b> <br />
     <%= f.text_field :prepiva %>
   </div>
   <div class="actions">

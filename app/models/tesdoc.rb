@@ -10,43 +10,22 @@ class Tesdoc < ActiveRecord::Base
             :causmag_id, :conto_id, :nrmagsrc, :nrmagdst, :seguefatt, :sconto, :presence => true
 # Fare un validate su :tipo_doc con i valori ammessi
   validates :descriz,  :length => { :maximum => 150, :too_long  => "Lunghezza massima permessa: 150 caratteri" }
-  
-  def self.filter (tp, des, tpc, tipo_doc, causmag, page)
-    whcausmag = ""
-    whcausmag = "and causmags.id = " + causmag unless causmag == "" or causmag.nil?
-    if tp == "RS"
-      includes(:causmag, :conto =>[:anagen]).where(["causmags.tipo_doc = :tipo_doc " +
-                                                    whcausmag +
-                                                    " and anagens.denomin like :d and contos.tipoconto IN (:tpc)",
-                                                    {:tipo_doc => tipo_doc.to_i, :d => "%#{des}%", :tpc => tpc}
-                                                   ]).paginate(:page => page, :per_page => 10)
-    elsif tp == "CF" then
-      includes(:causmag, :conto =>[:anagen]).where(["causmags.tipo_doc = :tipo_doc " +
-                                                    whcausmag +
-                                                    " and anagens.codfis like :d and contos.tipoconto IN (:tpc)",
-                                                    {:tipo_doc => tipo_doc.to_i, :d => "%#{des}%", :tpc => tpc}
-                                                   ]).paginate(:page => page, :per_page => 10)
-    elsif tp == "PI" then
-      includes(:causmag, :conto =>[:anagen]).where(["causmags.tipo_doc = :tipo_doc " +
-                                                    whcausmag +
-                                                    " and anagens.pariva like :d and contos.tipoconto IN (:tpc)",
-                                                    {:tipo_doc => tipo_doc.to_i, :d => "%#{des}%", :tpc => tpc}
-                                                   ]).paginate(:page => page, :per_page => 10)
-    elsif tp == "MS" then
-      includes(:causmag, :conto =>[:anagen]).where(["causmags.tipo_doc = :tipo_doc " +
-                                                    whcausmag +
-                                                    " and contos.codice >= :d and contos.codice <= :d and contos.tipoconto IN (:tpc)",
-                                                    {:tipo_doc => tipo_doc.to_i, :d => des.to_i, :tpc => tpc}
-                                                   ]).paginate(:page => page, :per_page => 10)
-    elsif tp.nil? then
-      includes(:causmag).where(["causmags.tipo_doc = :tipo_doc " + whcausmag,
-                                          {:tipo_doc => tipo_doc.to_i}
-                                         ]).paginate(:page => page, :per_page => 10)
-    end
-  end
 
   NRMAG = $ParAzienda['ANAIND']['NRMAG']
   SEGUEFATT = $ParAzienda['TESDOC']['SEGUEFATT']
   TIPO_DOC = $ParAzienda['CAUSMAG']['TIPO_DOC']
 
+  def self.filter (tp, des, tpc, tipo_doc, causmag, conto, page)
+    whcausmag = " "
+    whconto = " "
+    whcausmag = " and causmags.id = " + causmag unless causmag == "" or causmag.nil?
+    whconto = " and contos.id = " + conto unless conto == "" or conto.nil?
+
+    hsh = {"RS" => "denomin", "CF" => "codfis", "PI" => "pariva"}
+    includes(:causmag, :conto =>[:anagen]).where(["causmags.tipo_doc = :tipo_doc" +
+                                                  whcausmag + whconto +
+                                                  " and anagens.#{hsh[tp]} like :d and contos.tipoconto IN (:tpc)",
+                                                  {:tipo_doc => tipo_doc.to_i, :d => "%#{des}%", :tpc => tpc}
+                                                 ]).paginate(:page => page, :per_page => 10) unless hsh[tp].nil?
+  end
 end

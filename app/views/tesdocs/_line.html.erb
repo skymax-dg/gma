@@ -3,7 +3,7 @@
   <td><%= line.annoese %></td>
   <td><%= Causmag::TIPO_DOC[line.causmag.tipo_doc] %></td>
   <td><%= line.num_doc %></td>
-  <td><%= line.data_doc %></td>
+  <td><%= line.data_doc.strftime('%d-%m-%Y') %></td>
   <td><%= line.descriz %></td>
   <td><%= line.causmag.descriz %></td>
   <td><%= line.conto.tipoconto %></td>

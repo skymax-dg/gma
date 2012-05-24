@@ -1,54 +1,75 @@
 <%= render :partial => 'shared/error_messages', :locals => {:f => @tesdoc} %>
 <%= form_for(@tesdoc) do |f| %>
   <div class="field">
-    <%= f.label "azienda" %>
-    <%= f.text_field :azienda, :size => 1 %>
-    <%= f.label "anno" %>
-    <%= f.text_field :annoese, :size => 3 %>
-    <%= f.label "tipo???" %>
+    <b> <%= f.label "Azienda:" %> </b>
+    <%= f.text_field :azienda, :size => 1, :disabled => true %>
+    <b> <%= f.label "Anno:" %> </b>
+    <%= f.text_field :annoese, :size => 3, :disabled => true %>
+    <b> <%= f.label "Tipo???:" %> </b>
     <%= select(:tesdoc, :tipo_doc, Tesdoc::TIPO_DOC.invert)%>
-    <%= f.label "nr" %>
-    <%= f.number_field :num_doc, :size => 6  %>
-    <%= f.label "data" %>
+    <b> <%= f.label "Nr:" %> </b>
+    <%= f.number_field :num_doc, :size => 6 %>
+    <b> <%= f.label "Data:" %> </b>
     <%= f.date_select :data_doc, :order => [:day, :month, :year], :use_short_month => true %>
-    <%= f.label "descrizione" %>
-    <%= f.text_field :descriz%>
   </div>
-  
-  <%= render :partial => 'caus_conto' %>
   <br />
-
   <div class="field">
-    <%#= f.label "Magazzino origine" %><br />
-    <%#= select(:tesdoc, :nrmagsrc, Tesdoc::NRMAG.invert) %>
+    <b> <%= f.label "Descrizione:" %> </b>
+    <%= f.text_field :descriz, :size => 94 %>
+  </div>
+  <br />
+  <div class="field">
+    <b> <%= f.label "Causale:" %> </b>
+    <%= f.text_field :causmag_id, :size => 1, :disabled => true %>
+    <%= @causmag.descriz %>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <b> Descrizione estesa: </b>
+    <%= @causmag.des_caus %>
+  <br />
   </div>
   <div class="field">
-    <%#= f.label "Magazzino destinazione" %><br />
-    <%#= select(:tesdoc, :nrmagdst, Tesdoc::NRMAG.invert) %>
+    <b> Merce in: </b>
+    <%= Causmag::TIPO[@causmag.tipo] %>
+    &nbsp;&nbsp;&nbsp;
+    <b> Movimento contabile: </b>
+    <%= Causmag::CONTABILE[@causmag.contabile] %>
+    &nbsp;&nbsp;&nbsp;
+    <b> Impatto sul magazzino: </b>
+    <%= Causmag::MOVIMPMAG[@causmag.movimpmag] %>
+    <br />
+    <br />
+    <%#= collection_select :tesdoc, :causmag_id, Causmag.all, :id, :descriz, :prompt => true %>
+    <b> <%= f.label "Conto anagrafica:" %> </b>
+    <%= f.text_field :conto_id, :size => 1, :disabled => true %>
+    <%= @conto.desest1 %>
+    <%#= collection_select :tesdoc, :conto_id, Conto.all, :id, :codice, :prompt => true %>
+  <%# "#{my_remote_function(:url => {:controller => :tesdocs, :action => "upd_conto-des"}, :with => "'provincia_id'=+value")}" %>
   </div>
-
-  <%= f.label "Magazzino origine" %>
-  <%= f.label "Magazzino destinazione" %>
+  <br />
+  <div class="field">
+    <b> <%= f.label "Magazzino origine" %> </b>-
+    <b> <%= f.label "Magazzino destinazione" %> </b>
+  </div>
   <div id="magsrcdst">
-    <%= render :partial => 'magsrcdst', :locals => {:tesdoc => @tesdoc} %>
+    <%= render :partial => 'magsrcdst', :locals => {:tesdoc => @tesdoc, :causmag => @causmag} %>
   </div>
   <br />
-
-
   <div class="field">
-    <%= f.label "Segue fattura" %><br />
+    <b> <%= f.label "Segue fattura: " %> </b>
     <%= select(:tesdoc, :seguefatt, Tesdoc::SEGUEFATT.invert)%>
   </div>
 
-
   <div class="field">
-    <%= f.label "sconto" %>
+    <b> <%= f.label "sconto" %> </b>
     <%= f.text_field :sconto %>
   </div>
-  
-  <br/>
-  <br/>
+
+  <br />
+  <br />
+
   <div class="actions">
     <%= f.submit "SALVA TESTATA" %>
   </div>
+  <br />
+  <br />
 <% end %>

@@ -1,5 +1,5 @@
 <p id="notice"><%= notice %></p>
-<h1>Mostra Documento</h1>
+<h1>Mostra Documento (<%= Causmag::TIPO_DOC[se_tipo_doc.to_i] %>) </h1>
 <p>
   <b>Azienda:</b>
   <%= @tesdoc.azienda %>
@@ -13,7 +13,7 @@
   <b>Nr. documento:</b>
   <%= @tesdoc.num_doc %>
   <b>Data documento:</b>
-  <%= @tesdoc.data_doc %>
+  <%= @tesdoc.data_doc.strftime('%d-%m-%Y') %>
 </p>
 
 <p>
@@ -58,7 +58,12 @@
   <%= render :partial => '/rigdocs/line', :collection => @rigdocs unless @rigdocs.empty? %>
 </table>
 
-<%= link_to 'Indietro', tesdocs_path %>
+<%= link_to 'Indietro', :tesdocs %>
 <%= link_to 'Elimina documento', @tesdoc, :confirm => 'Confermi eliminazione?', :method => :delete %>
-<%= link_to 'Modifica testata', edit_tesdoc_path %>
+<%= link_to 'Modifica testata', :edit_tesdoc %>
 <%= link_to 'Aggiungi riga', :controller => :rigdocs, :action => :new, :id => @tesdoc.id %>
+<br />
+<%= link_to 'Aggiungi documento', {:action => 'new',
+                                   :causmag => @tesdoc.causmag_id||"",
+                                   :conto => @tesdoc.conto_id||""
+                                  } %>

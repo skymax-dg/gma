@@ -30,7 +30,7 @@ Gma::Application.routes.draw do
       get :choose_tipo_doc
     end
     member do
-      get :updmag
+      #get :updmag
     end
   end
 

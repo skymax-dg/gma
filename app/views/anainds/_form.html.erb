@@ -2,21 +2,21 @@
 <%= form_for @anaind do |f| %>
   <div class="field">
     <%= hidden_field(:anaind, :anagen_id) %>
-    <%= f.label "Indirizzo valido come:" %>
-    <br/>  <br/>
-    <%= check_box :anaind, :flsl, {}, 'S', 'N' %> Sede legale <br/> 
-    <%= check_box :anaind, :flsp, {}, 'S', 'N' %> Indirizzo di spedizione <br/>
-    <%= check_box :anaind, :flmg, {}, 'S', 'N' %> Indirizzo di magazzino <br/> <br/>
-    <%= f.label "Indirizzo" %>
+    <b> <%= f.label "Indirizzo valido come:" %> </b>
+    <br />  <br />
+    <%= check_box :anaind, :flsl, {}, 'S', 'N' %> <b> Sede legale </b> <br /> 
+    <%= check_box :anaind, :flsp, {}, 'S', 'N' %> <b> Indirizzo di spedizione </b> <br />
+    <%= check_box :anaind, :flmg, {}, 'S', 'N' %> <b> Indirizzo di magazzino </b> <br /> <br />
+    <b> <%= f.label "Indirizzo" %> </b>
     <%= f.text_field :indir, :size => 50 %>
   </div>
   <div class="field">
-    <%= f.label "Localita" %>
+    <b> <%= f.label "Localita" %> </b>
     <%= collection_select :anaind, :localita_id, Localita.all, :id, :descriz, {:include_blank => true} %>
     <%= f.text_field :desloc, :size => 50 %>
-    <%= f.label "Cap" %>
+    <b> <%= f.label "Cap" %> </b>
     <%= f.text_field :cap, :size => 5 %>
-    <%= f.label "Indirizzo valido per:" %>
+    <b> <%= f.label "Indirizzo valido per:" %> </b>
     <%= select(:anaind, :nrmag, Anaind::NRMAG.invert) %>
   </div>
   <br/>

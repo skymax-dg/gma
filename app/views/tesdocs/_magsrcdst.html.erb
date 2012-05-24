@@ -1,9 +1,9 @@
 <span class="field_mag">
   <span class="field_magsrc">
-    <%= render :partial => 'magsrc', :locals => {:tesdoc => tesdoc} %>
-  <span/>
+    <b> <%= select(:tesdoc, :nrmagsrc, findmags("S", tesdoc.causmag_id, tesdoc.conto_id).invert, :selected => causmag.nrmagsrc) %> </b>
+  </span>
   <span class="field_magdst">
-    <%= render :partial => 'magdst', :locals => {:tesdoc => tesdoc} %>
-  <span/>
+    <b> <%= select(:tesdoc, :nrmagdst, findmags("D", tesdoc.causmag_id, tesdoc.conto_id).invert, :selected => causmag.nrmagdst) %> </b>
+  </span>
   <br />
-<span/>
+</span>

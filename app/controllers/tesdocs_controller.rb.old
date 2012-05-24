@@ -1,6 +1,6 @@
 class TesdocsController < ApplicationController
-  def index
-    store_tipo_doc(params[:tipo_doc])
+  def set_tipo_doc
+    store_tipo_doc(params[:tipo_doc]) unless params[:tipo_doc].nil?
     init_filter()
   end
 
@@ -29,12 +29,14 @@ class TesdocsController < ApplicationController
       init_filter 
     end
     @tesdoc = Tesdoc.new
-    @causmag = Causmag.find(params[:causmag])
-    @conto = Conto.find(params[:conto])
     @tesdoc.azienda = StaticData::AZIENDA
     @tesdoc.annoese = StaticData::ANNOESE
-    @tesdoc.causmag_id = @causmag.id
-    @tesdoc.conto_id = @conto.id
+    @tesdoc.causmag_id = params[:causmag]
+    @tesdoc.conto_id = params[:conto]
+  end
+
+  def index
+    @tesdocs = Tesdoc.paginate(:page => params[:page], :per_page => 10)
   end
 
   def choose_tipo_doc
@@ -49,8 +51,6 @@ class TesdocsController < ApplicationController
 
   def edit
     @tesdoc = Tesdoc.find(params[:id])
-    @causmag = Causmag.find(@tesdoc.causmag_id)
-    @conto = Conto.find(@tesdoc.conto_id)
   end
 
   def create
