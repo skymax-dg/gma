@@ -16,16 +16,24 @@ class Tesdoc < ActiveRecord::Base
   TIPO_DOC = $ParAzienda['CAUSMAG']['TIPO_DOC']
 
   def self.filter (tp, des, tpc, tipo_doc, causmag, conto, page)
-    whcausmag = " "
-    whconto = " "
-    whcausmag = " and causmags.id = " + causmag unless causmag == "" or causmag.nil?
-    whconto = " and contos.id = " + conto unless conto == "" or conto.nil?
-
     hsh = {"RS" => "denomin", "CF" => "codfis", "PI" => "pariva"}
-    includes(:causmag, :conto =>[:anagen]).where(["causmags.tipo_doc = :tipo_doc" +
-                                                  whcausmag + whconto +
-                                                  " and anagens.#{hsh[tp]} like :d and contos.tipoconto IN (:tpc)",
-                                                  {:tipo_doc => tipo_doc.to_i, :d => "%#{des}%", :tpc => tpc}
-                                                 ]).paginate(:page => page, :per_page => 10) unless hsh[tp].nil?
+    hshvar = Hash.new
+
+    whcausmag = "causmags.tipo_doc = :tipo_doc"
+    hshvar[:tipo_doc] = tipo_doc.to_i
+    whcausmag += " and causmags.id = :cm" unless causmag == "" or causmag.nil?
+    hshvar[:cm] = causmag unless causmag == "" or causmag.nil?
+
+    whconto = " and contos.tipoconto IN (:tpc)"
+    hshvar[:tpc] = tpc
+    whconto += " and contos.id = :cn" unless conto == "" or conto.nil?
+    hshvar[:cn] = conto unless conto == "" or conto.nil?
+
+    whana = "" 
+    whana = " and anagens.#{hsh[tp]} like :d" unless des == ""
+    hshvar[:d] = "%#{des}%" unless des == ""
+    
+    includes(:causmag, :conto =>[:anagen]).where([whcausmag + whconto + whana,
+                                                  hshvar]).paginate(:page => page, :per_page => 10) unless hsh[tp].nil?
   end
 end

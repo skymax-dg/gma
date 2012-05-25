@@ -20,7 +20,6 @@ class Anaind < ActiveRecord::Base
 
   def self.nrmagexist(id, anagen_id, nrmag)
     nr = Anaind.count(:conditions => ['anagen_id = :v1 and nrmag = :v2 and id != :v3',
-#    nr = Anaind.count(:conditions => ["Fanagen_id = " + anagen_id + " and nrmag = :v2 and id != :v3",
                                        {:v1 => anagen_id, :v2 => nrmag, :v3 => id}
                                      ]) unless id.nil?
     nr = Anaind.count(:conditions => ["anagen_id = :v1 and nrmag = :v2",

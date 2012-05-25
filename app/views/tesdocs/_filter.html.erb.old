@@ -11,9 +11,6 @@
   <%= check_box_tag 'altfilter', 'A', @altfilter %>
   <br />
   <br />
-  <div id="proviamo">
-    SOSTITUIRE
-  </div>
   <div>
     <b> Causale: </b>
     <%= select_tag("causmagfilter",
@@ -28,6 +25,3 @@
   </div>
   <%= submit_tag 'FILTRA' %>
 <% end %>
-<%#                   {:include_blank => true}) %>
-<%#                   {:include_blank => true, :onchange => "/tesdocs/filter.submit_tag();"}) %>
-<%# :onchange => remote_function(:url => {:controller => 'controller', :action => 'action'}) %>

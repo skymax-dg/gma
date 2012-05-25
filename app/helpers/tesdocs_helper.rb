@@ -6,7 +6,7 @@ module TesdocsHelper
     @altfilter = "A"
     @causmags = Causmag.find(:all, :conditions => ["tipo_doc = :tpd", {:tpd => se_tipo_doc}])
     @contos = Conto.find4docfilter([@clifilter, @forfilter, @altfilter], @tpfilter||"", @desfilter||"")
-    render "index"
+#    render "index"
   end
 
   def store_tipo_doc (td)

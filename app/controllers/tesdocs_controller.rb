@@ -6,7 +6,7 @@ class TesdocsController < ApplicationController
 
   def filter
     @tpfilter  = params[:tpfilter]
-    @desfilter = params[:desfilter]
+    @desfilter = params[:desfilter].strip
     @clifilter = params[:clifilter]
     @forfilter = params[:forfilter]
     @altfilter = params[:altfilter]
@@ -20,21 +20,35 @@ class TesdocsController < ApplicationController
                              @causmagfilter,
                              @contofilter,
                              params[:page])
-    render "index"
-  end
-
-  def new 
-    if params[:causmag].empty? or params[:conto].empty?
-      flash[:success] = "Per creare un nuovo DOC e' necessario prima impostare Causale e MastroContabile nei filtri e cliccare il bottone FILTRA"
-      init_filter 
+#    render "index"
+    respond_to do |format|
+      format.html {render 'index.html.erb'}
+      format.js {jtest("alex")}
+        #render :text => "alert('Hello, world!')",
+        #       :content_type => "text/javascript"}
     end
-    @tesdoc = Tesdoc.new
-    @causmag = Causmag.find(params[:causmag])
-    @conto = Conto.find(params[:conto])
-    @tesdoc.azienda = StaticData::AZIENDA
-    @tesdoc.annoese = StaticData::ANNOESE
-    @tesdoc.causmag_id = @causmag.id
-    @tesdoc.conto_id = @conto.id
+  end
+  
+  def new
+    respond_to do |format|
+      format.html do
+        if params[:causmag].empty? or params[:conto].empty?
+          flash[:success] = "Per creare un nuovo DOC e' necessario prima impostare Causale e MastroContabile nei filtri e cliccare il bottone FILTRA"
+          init_filter
+          render "index"
+        else 
+          @tesdoc = Tesdoc.new
+          @causmag = Causmag.find(params[:causmag])
+          @conto = Conto.find(params[:conto])
+          @tesdoc.azienda = StaticData::AZIENDA
+          @tesdoc.annoese = StaticData::ANNOESE
+          @tesdoc.causmag_id = @causmag.id
+          @tesdoc.conto_id = @conto.id
+        end
+      end
+      format.js
+    end
+  #render "new"
   end
 
   def choose_tipo_doc
