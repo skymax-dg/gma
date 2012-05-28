@@ -3,4 +3,5 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Indietro', :tesdocs %>
+<%#= link_to 'Indietro', :tesdocs %>
+<%= link_to 'Indietro', {:controller => 'tesdocs', :action => 'index', :tipo_doc => se_tipo_doc} %>

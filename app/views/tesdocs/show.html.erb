@@ -58,7 +58,8 @@
   <%= render :partial => '/rigdocs/line', :collection => @rigdocs unless @rigdocs.empty? %>
 </table>
 
-<%= link_to 'Indietro', :tesdocs %>
+<%#= link_to 'Indietro', :tesdocs %>
+<%= link_to 'Indietro', {:controller => 'tesdocs', :action => 'index', :tipo_doc => se_tipo_doc} %>
 <%= link_to 'Elimina documento', @tesdoc, :confirm => 'Confermi eliminazione?', :method => :delete %>
 <%= link_to 'Modifica testata', :edit_tesdoc %>
 <%= link_to 'Aggiungi riga', :controller => :rigdocs, :action => :new, :id => @tesdoc.id %>

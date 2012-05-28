@@ -6,13 +6,16 @@
     <%= f.text_field :descriz, :size => 50 %>
     <b> <%= f.label "Articolo" %> </b>
     <%= collection_select (:rigdoc, :article_id, Article.all, :id, :codice,  {:include_blank => true}) %>
-    <%= collection_select (:rigdoc, :article_id, Article.all, :id, :descriz, {:include_blank => true}) %>
+    <%#= collection_select (:rigdoc, :article_id, Article.all, :id, :descriz, {:include_blank => true}) %>
     <b> <%= f.label "Qtà" %> </b>
     <%= f.number_field :qta, :size => 3 %>
     <b> <%= f.label "Prezzo" %> </b>
     <%= f.number_field :prezzo, :size => 6  %>
-    <b> <%= f.label "Sconto" %> </b>
+    <b> <%= f.label "ScontoX" %> </b>
     <%= f.number_field :sconto, :size => 6  %>
+
+    <%= link_to 'Prezzo articolo', {:action => 'prezzoarticle'}, :remote => true %>
+    <a href="javascript:prova();" data-remote="true">Prezzo articolo</a>
   </div>
   <br/>
   <br/>

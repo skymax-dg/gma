@@ -1,4 +1,5 @@
 var v1 = $("#causmagfilter").val();
 var v2 = $("#contofilter").val();
-if (v1=="" || v2=="") {alert("Per poter inserire un nuovo docuento è necessario specificare nei filtri la causale ed il conto")};
+var url = "http://localhost:3000/tesdocs/new?causmag=" + v1 + "&conto=" + v2
+if (v1=="" || v2=="") {alert("Per poter inserire un nuovo documento è necessario specificare nei filtri la causale ed il conto")} else {window.location = url};
 //$("#proviamo").html(v1);

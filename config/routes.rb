@@ -38,6 +38,11 @@ Gma::Application.routes.draw do
     member do
       get :up
       get :down
+      get :prezzoarticle
+get :get_idarticle1
+    end
+    collection do
+get :get_idarticle2
     end
   end
   # The priority is based upon order of creation:

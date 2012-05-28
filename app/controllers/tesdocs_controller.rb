@@ -20,23 +20,17 @@ class TesdocsController < ApplicationController
                              @causmagfilter,
                              @contofilter,
                              params[:page])
-#    render "index"
-    respond_to do |format|
-      format.html {render 'index.html.erb'}
-      format.js {jtest("alex")}
-        #render :text => "alert('Hello, world!')",
-        #       :content_type => "text/javascript"}
-    end
+    render "index"
   end
   
   def new
     respond_to do |format|
       format.html do
-        if params[:causmag].empty? or params[:conto].empty?
+        if params[:causmag].empty? or params[:causmag].nil? or params[:conto].empty? or params[:conto].nil?
           flash[:success] = "Per creare un nuovo DOC e' necessario prima impostare Causale e MastroContabile nei filtri e cliccare il bottone FILTRA"
           init_filter
           render "index"
-        else 
+        else
           @tesdoc = Tesdoc.new
           @causmag = Causmag.find(params[:causmag])
           @conto = Conto.find(params[:conto])
@@ -44,6 +38,7 @@ class TesdocsController < ApplicationController
           @tesdoc.annoese = StaticData::ANNOESE
           @tesdoc.causmag_id = @causmag.id
           @tesdoc.conto_id = @conto.id
+          @tesdoc.sconto = @conto.sconto
         end
       end
       format.js
@@ -72,6 +67,13 @@ class TesdocsController < ApplicationController
     if @tesdoc.save
       redirect_to @tesdoc, :notice => 'Tesdoc was successfully created.'
     else
+      @causmag = Causmag.find(params[:tesdoc][:causmag_id])
+      @conto = Conto.find(params[:tesdoc][:conto_id])
+      @tesdoc.azienda = StaticData::AZIENDA
+      @tesdoc.annoese = StaticData::ANNOESE
+      @tesdoc.causmag_id = @causmag.id
+      @tesdoc.conto_id = @conto.id
+      @tesdoc.sconto = @conto.sconto
       render :action => "new"
     end
   end

@@ -3,8 +3,10 @@
   <div class="field">
     <b> <%= f.label "Azienda:" %> </b>
     <%= f.text_field :azienda, :size => 1, :disabled => true %>
+    <%= f.hidden_field :azienda %>
     <b> <%= f.label "Anno:" %> </b>
     <%= f.text_field :annoese, :size => 3, :disabled => true %>
+    <%= f.hidden_field :annoese %>
     <b> <%= f.label "Tipo???:" %> </b>
     <%= select(:tesdoc, :tipo_doc, Tesdoc::TIPO_DOC.invert)%>
     <b> <%= f.label "Nr:" %> </b>
@@ -21,6 +23,7 @@
   <div class="field">
     <b> <%= f.label "Causale:" %> </b>
     <%= f.text_field :causmag_id, :size => 1, :disabled => true %>
+    <%= f.hidden_field :causmag_id %>
     <%= @causmag.descriz %>
     &nbsp;&nbsp;&nbsp;&nbsp;
     <b> Descrizione estesa: </b>
@@ -38,11 +41,10 @@
     <%= Causmag::MOVIMPMAG[@causmag.movimpmag] %>
     <br />
     <br />
-    <%#= collection_select :tesdoc, :causmag_id, Causmag.all, :id, :descriz, :prompt => true %>
     <b> <%= f.label "Conto anagrafica:" %> </b>
     <%= f.text_field :conto_id, :size => 1, :disabled => true %>
+    <%= f.hidden_field :conto_id %>
     <%= @conto.desest1 %>
-    <%#= collection_select :tesdoc, :conto_id, Conto.all, :id, :codice, :prompt => true %>
   <%# "#{my_remote_function(:url => {:controller => :tesdocs, :action => "upd_conto-des"}, :with => "'provincia_id'=+value")}" %>
   </div>
   <br />

@@ -1,9 +1,13 @@
 <span class="field_mag">
+  <% magsrc = findmags("S", tesdoc.causmag_id, tesdoc.conto_id) %>
+  <% magdst = findmags("D", tesdoc.causmag_id, tesdoc.conto_id) %>
+  <% if magsrc[causmag.nrmagsrc].nil? then magsrcsel = 0 else magsrcsel = causmag.nrmagsrc end %>
+  <% if magdst[causmag.nrmagdst].nil? then magdstsel = 0 else magdstsel = causmag.nrmagdst end %>
   <span class="field_magsrc">
-    <b> <%= select(:tesdoc, :nrmagsrc, findmags("S", tesdoc.causmag_id, tesdoc.conto_id).invert, :selected => causmag.nrmagsrc) %> </b>
+    <b> <%= select(:tesdoc, :nrmagsrc, magsrc.invert, :selected => magsrcsel) %> </b>
   </span>
   <span class="field_magdst">
-    <b> <%= select(:tesdoc, :nrmagdst, findmags("D", tesdoc.causmag_id, tesdoc.conto_id).invert, :selected => causmag.nrmagdst) %> </b>
+    <b> <%= select(:tesdoc, :nrmagdst, magdst.invert, :selected => magdstsel) %> </b>
   </span>
   <br />
 </span>
