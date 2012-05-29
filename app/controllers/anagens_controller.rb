@@ -20,6 +20,7 @@ class AnagensController < ApplicationController
     if @anagen.save
       redirect_to @anagen, :notice => 'Anagrafica soggetti creata con successo.'
     else
+      flash[:error] = "Il salvataggio dell'anagrafica non e' andato a buon fine"
       render :action => "new"
     end
   end
@@ -29,6 +30,7 @@ class AnagensController < ApplicationController
     if @anagen.update_attributes(params[:anagen])
       redirect_to @anagen, :notice => 'Anagrafica soggetti aggiornata con successo.'
     else
+      flash[:error] = "Il salvataggio dell'anagrafica non e' andato a buon fine"
       render :action => "edit"
     end
   end
@@ -37,8 +39,9 @@ class AnagensController < ApplicationController
     @anagen = Anagen.find(params[:id])
     begin
       @anagen.destroy
+      flash[:notice] = "Cancellazione Eseguita"
     rescue
-      flash[:notice] = $!.message
+      flash[:error] = $!.message
     end
     redirect_to anagens_url
   end

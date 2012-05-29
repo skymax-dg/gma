@@ -21,6 +21,7 @@ class ArticlesController < ApplicationController
     if @article.save
       redirect_to @article, :notice => 'Article was successfully created.'
     else
+      flash[:error] = "Il salvataggio dell'articolo non e' andato a buon fine"
       render :action => "new"
     end
   end
@@ -30,6 +31,7 @@ class ArticlesController < ApplicationController
     if @article.update_attributes(params[:article])
       redirect_to @article, :notice => 'Article was successfully updated.'
     else
+      flash[:error] = "Il salvataggio dell'articolo non e' andato a buon fine"
       render :action => "edit"
     end
   end
@@ -38,8 +40,9 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
     begin
       @article.destroy
+      flash[:notice] = "Cancellazione Eseguita"
     rescue
-      flash[:notice] = $!.message
+      flash[:error] = $!.message
     end
     redirect_to articles_url
   end

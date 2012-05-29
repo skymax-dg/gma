@@ -20,6 +20,7 @@ class PaesesController < ApplicationController
     if @paese.save
       redirect_to @paese, :notice => 'Nazione/Stato inserito con successo.' 
     else
+      flash[:error] = "Il salvataggio del paese non e' andato a buon fine"
       render :action => "new"
     end
   end
@@ -29,6 +30,7 @@ class PaesesController < ApplicationController
     if @paese.update_attributes(params[:paese])
       redirect_to @paese, :notice => 'Nazione/Stato aggiornato con successo.'
     else
+      flash[:error] = "Il salvataggio del paese non e' andato a buon fine"
       render :action => "edit"
     end
   end
@@ -38,8 +40,9 @@ class PaesesController < ApplicationController
 
     begin
       @paese.destroy
+      flash[:notice] = "Cancellazione Eseguita"
     rescue
-      flash[:notice] = $!.message
+      flash[:error] = $!.message
     end
     redirect_to paeses_url
   end

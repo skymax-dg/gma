@@ -28,6 +28,7 @@ class RigdocsController < ApplicationController
     if @rigdoc.save
       redirect_to @tesdoc, :notice => 'Riga documento aggiunta con successo.'
     else
+      flash[:error] = "Il salvataggio della riga non e' andato a buon fine"
       render :action => :new
     end
   end
@@ -51,6 +52,7 @@ class RigdocsController < ApplicationController
     if @rigdoc.update_attributes(params[:rigdoc])
       redirect_to @rigdoc, :notice => 'Testata documento modificata con successo.'
     else
+      flash[:error] = "Il salvataggio della riga non e' andato a buon fine"
       render :action => "edit"
     end
   end
@@ -58,6 +60,7 @@ class RigdocsController < ApplicationController
   def destroy
     @rigdoc = Rigdoc.find(params[:id])
     @rigdoc.destroy
+    flash[:notice] = "Cancellazione Eseguita"
     redirect_to @rigdoc.tesdoc
   end
 end

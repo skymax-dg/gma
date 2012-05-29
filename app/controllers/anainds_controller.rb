@@ -3,17 +3,16 @@ class AnaindsController < ApplicationController
     @anagen = Anagen.find(params[:anaind][:anagen_id])
     @anaind = @anagen.anainds.build(params[:anaind])# La Build setta @anaind.anagen_id = @anagen.id
     if Anaind.nrmagexist(@anaind.id, @anaind.anagen_id, @anaind.nrmag)
-      flash.now[:error] = "Indirizzo già esistente per il magazzino: #{@anaind.nrmag}"
+      flash.now[:error] = "Indirizzo gia' esistente per il magazzino: #{@anaind.nrmag}"
       render :action => :new
       elsif (@anaind.flmg == "S" and @anaind.nrmag == 0) or
             (@anaind.flmg == "N" and @anaind.nrmag > 0)
-        flash.now[:error] = "Magazzino di riferimento incompatibile con il check: Indirizzo di magazzino"
-        flash.keep
+        flash[:error] = "Magazzino di riferimento incompatibile con il check: Indirizzo di magazzino"
         render :action => :new
         elsif @anaind.save
           redirect_to @anagen, :notice => 'Indirizzo anagrafico aggiunto con successo.'
         else
-          flash.now[:error] = "ERRORE !!! durante il salvataggio dell'indirizzo anagrafico"
+          flash[:error] = "ERRORE !!! durante il salvataggio dell'indirizzo anagrafico"
           render :action => :new
     end
   end
@@ -45,18 +44,16 @@ class AnaindsController < ApplicationController
     @anaind = Anaind.find(params[:id])
     anaind = params[:anaind]
     if Anaind.nrmagexist(params[:id].to_i, anaind[:anagen_id].to_i, anaind[:nrmag].to_i)
-      flash.now[:error] = "Indirizzo già esistente per il magazzino: #{anaind[:nrmag]}"
-      flash.keep
+      flash[:error] = "Indirizzo gia' esistente per il magazzino: #{anaind[:nrmag]}"
       render :action => :edit
       elsif (anaind[:flmg] == "S" and anaind[:nrmag] == "0") or
             (anaind[:flmg] == "N" and anaind[:nrmag] > "0")
-        flash.now[:error] = "Magazzino di riferimento incompatibile con il check: Indirizzo di magazzino"
-        flash.keep
+        flash[:error] = "Magazzino di riferimento incompatibile con il check: Indirizzo di magazzino"
         render :action => :edit
         elsif @anaind.update_attributes(params[:anaind])
          redirect_to @anaind, :notice => 'Indirizzo anagrafico modificato con successo.'
         else
-         flash.now[:error] = "ERRORE !!! durante il salvataggio dell'indirizzo anagrafico"
+         flash[:error] = "ERRORE !!! durante il salvataggio dell'indirizzo anagrafico"
          render :action => :edit
     end
   end
@@ -65,8 +62,9 @@ class AnaindsController < ApplicationController
     @anaind = Anaind.find(params[:id])
     begin
       @anaind.destroy
+      flash[:notice] = "Cancellazione Eseguita"
     rescue
-      flash[:notice] = $!.message
+      flash[:error] = $!.message
     end
     redirect_to @anaind.anagen
   end

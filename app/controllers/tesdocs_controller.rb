@@ -74,6 +74,7 @@ class TesdocsController < ApplicationController
       @tesdoc.causmag_id = @causmag.id
       @tesdoc.conto_id = @conto.id
       @tesdoc.sconto = @conto.sconto
+      flash[:error] = "Il salvataggio del documento non e' andato a buon fine"
       render :action => "new"
     end
   end
@@ -83,6 +84,7 @@ class TesdocsController < ApplicationController
     if @tesdoc.update_attributes(params[:tesdoc])
       redirect_to @tesdoc, :notice => 'Tesdoc was successfully updated.'
     else
+      flash[:error] = "Il salvataggio del documento non e' andato a buon fine"
       render :action => "edit" 
     end
   end
@@ -90,6 +92,7 @@ class TesdocsController < ApplicationController
   def destroy
     @tesdoc = Tesdoc.find(params[:id])
     @tesdoc.destroy
+    flash[:notice] = "Cancellazione Eseguita"
     redirect_to tesdocs_url
   end
 end

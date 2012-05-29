@@ -20,6 +20,7 @@ class LocalitasController < ApplicationController
     if @localita.save
       redirect_to @localita, :notice => 'Localita'' inserita con successo.'
     else
+      flash[:error] = "Il salvataggio della localita' non e' andato a buon fine"
       render :action => "new"
     end
   end
@@ -29,6 +30,7 @@ class LocalitasController < ApplicationController
     if @localita.update_attributes(params[:localita])
       redirect_to @localita, :notice => 'Localita'' aggiornata con successo.'
     else
+      flash[:error] = "Il salvataggio della localita' non e' andato a buon fine"
       render :action => "edit"
     end
   end
@@ -36,6 +38,7 @@ class LocalitasController < ApplicationController
   def destroy
     @localita = Localita.find(params[:id])
     @localita.destroy
+    flash[:notice] = "Cancellazione Eseguita"
     redirect_to localitas_url
   end
 end

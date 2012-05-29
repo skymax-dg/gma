@@ -23,6 +23,7 @@ class CausmagsController < ApplicationController
     if @causmag.save
       redirect_to @causmag, :notice => 'Causmag was successfully created.'
     else
+      flash[:error] = "Il salvataggio della causale non e' andato a buon fine"
       render :action => "new"
     end
   end
@@ -32,6 +33,7 @@ class CausmagsController < ApplicationController
     if @causmag.update_attributes(params[:causmag])
       redirect_to @causmag, :notice => 'Causmag was successfully updated.'
     else
+      flash[:error] = "Il salvataggio della causale non e' andato a buon fine"
       render :action => "edit"
     end
   end
@@ -40,8 +42,9 @@ class CausmagsController < ApplicationController
     @causmag = Causmag.find(params[:id])
     begin
       @causmag.destroy
+      flash[:notice] = "Cancellazione Eseguita"
     rescue
-      flash[:notice] = $!.message
+      flash[:error] = $!.message
     end
     redirect_to causmags_url
   end
