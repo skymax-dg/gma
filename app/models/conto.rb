@@ -5,6 +5,7 @@ class Conto < ActiveRecord::Base
   attr_accessible :annoese, :azienda, :codice, :descriz, :anagen_id, :tipoconto, :cntrpartita, :sconto
 
   validates :annoese, :azienda, :codice, :descriz, :tipoconto, :sconto, :presence => true
+  validates :descriz, :length => { :maximum => 150}
   
   TIPOCONTO = $ParAzienda['CONTO']['TIPOCONTO']
 

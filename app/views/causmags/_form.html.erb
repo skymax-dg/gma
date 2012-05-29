@@ -3,11 +3,12 @@
 
   <div class="field">
     <b> <%= f.label :azienda %> </b> <br />
-    <%= f.number_field :azienda %>
+    <%= f.text_field :azienda, :size => 1, :disabled => true %>
+    <%= f.hidden_field :azienda %>
   </div>
   <div class="field">
     <b> <%= f.label "Gruppo (0-9)" %> </b> <br />
-    <%= select(:causmag, :tipo_doc, Causmag::TIPO_DOC.invert, { :prompt => true }) %>
+    <%= select(:causmag, :tipo_doc, Causmag::TIPO_DOC.invert.sort, { :prompt => true }) %>
   </div>
   <div class="field">
     <b> <%= f.label "descrizione" %> </b> <br />
@@ -19,23 +20,23 @@
   </div>
   <div class="field">
     <b> <%= f.label "tipologia" %> </b>
-    <%= select(:causmag, :tipo, Causmag::TIPO.invert, { :prompt => true }) %>
+    <%= select(:causmag, :tipo, Causmag::TIPO.invert.sort, { :prompt => true }) %>
   </div>
   <div class="field">
     <b> <%= f.label "Impatto sul magazzino" %> </b>
-    <%= select(:causmag, :movimpmag, Causmag::MOVIMPMAG.invert, { :prompt => true }) %>
+    <%= select(:causmag, :movimpmag, Causmag::MOVIMPMAG.invert.sort, { :prompt => true }) %>
   </div>
   <div class="field">
     <b> <%= f.label "Magazzino origine (default)" %> </b> <br />
-    <%= select(:causmag, :nrmagsrc, Causmag::NRMAG.invert) %>
+    <%= select(:causmag, :nrmagsrc, Causmag::NRMAG.invert.sort) %>
   </div>
   <div class="field">
     <b> <%= f.label "Magazzino destinazione (default)" %> </b> <br />
-    <%= select(:causmag, :nrmagdst, Causmag::NRMAG.invert) %>
+    <%= select(:causmag, :nrmagdst, Causmag::NRMAG.invert.sort) %>
   </div>
   <div class="field">
     <b> <%= f.label "Movimento contabile" %> </b> <br />
-    <%= select(:causmag, :contabile, Causmag::CONTABILE.invert, { :prompt => true })%>
+    <%= select(:causmag, :contabile, Causmag::CONTABILE.invert.sort, { :prompt => true })%>
   </div>
   <div class="field">
     <b> <%= f.label "Nome modulo" %> </b> <br />

@@ -1,9 +1,9 @@
 <% if f.errors.any? %>
   <div id="error_explanation">
-    <h2><%= pluralize(f.errors.count, "error") %>
-      prohibited this from being saved:
+    <h2><%= pluralize(f.errors.count, "errore", "errori") %>
+      : Salvataggio dati NON riuscito:
     </h2>
-    <p>There were problems with the following fields:</p>
+    <p>Ci sono problemi con le informazioni seguenti:</p>
     <ul>
       <% f.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>

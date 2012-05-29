@@ -8,8 +8,6 @@ Gma::Application.routes.draw do
 
   root :to => 'menu#home'
 
-#  resources :prezzoarticclis
-
   resources :localitas
 
   resources :paeses
@@ -18,31 +16,34 @@ Gma::Application.routes.draw do
 
   resources :causmags
 
-  resources :contos
+  resources :contos do
+    collection do
+      get :scontoanagen
+    end
+  end
 
   resources :anagens
 
-  resources :anainds
+  resources :anainds do
+    collection do
+      get :descrizloc
+    end
+  end
 
   resources :tesdocs do
     collection do
       get :filter
       get :choose_tipo_doc
     end
-    member do
-      #get :updmag
-    end
   end
 
   resources :rigdocs do
+    collection do
+      get :prezzoarticle
+    end
     member do
       get :up
       get :down
-      get :prezzoarticle
-get :get_idarticle1
-    end
-    collection do
-get :get_idarticle2
     end
   end
   # The priority is based upon order of creation:

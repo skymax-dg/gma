@@ -12,12 +12,15 @@
   </div>
   <div class="field">
     <b> <%= f.label "Localita" %> </b>
-    <%= collection_select :anaind, :localita_id, Localita.all, :id, :descriz, {:include_blank => true} %>
+    <%= collection_select(:anaind, :localita_id, Localita.all, :id, :descriz,
+                          {:include_blank => true},
+                            {:data => {:remote => true, :url => url_for(:controller => :anainds,
+                                                                        :action => :descrizloc)}})%>
     <%= f.text_field :desloc, :size => 50 %>
     <b> <%= f.label "Cap" %> </b>
     <%= f.text_field :cap, :size => 5 %>
     <b> <%= f.label "Indirizzo valido per:" %> </b>
-    <%= select(:anaind, :nrmag, Anaind::NRMAG.invert) %>
+    <%= select(:anaind, :nrmag, (Anaind::NRMAG).invert.sort) %>
   </div>
   <br/>
   <br/>

@@ -3,11 +3,13 @@
 
   <div class="field">
     <b> <%= f.label "Azienda" %> </b> <br />
-    <%= f.number_field :azienda %>
+    <%= f.text_field :azienda, :size => 1, :disabled => true %>
+    <%= f.hidden_field :azienda %>
   </div>
   <div class="field">
     <b> <%= f.label "Anno Esercizio" %> </b> <br />
-    <%= f.number_field :annoese %>
+    <%= f.text_field :annoese, :size => 3, :disabled => true %>
+    <%= f.hidden_field :annoese %>
   </div>
   <div class="field">
     <b> <%= f.label "Codice" %> </b> <br />
@@ -19,11 +21,14 @@
   </div>
   <div class="field">
     <b> <%= f.label "Anagrafica" %> </b> <br />
-    <%= collection_select :conto, :anagen_id, Anagen.all, :id, :denomin, {:include_blank => true} %>
+    <%= collection_select(:conto, :anagen_id, Anagen.all, :id, :denomin,
+                          {:include_blank => true},
+                           {:data => {:remote => true, :url => url_for(:controller => :contos,
+                                                                       :action => :scontoanagen)}})%>
   </div>
   <div class="field">
     <b> <%= f.label "Tipologia conto" %> </b> <br />
-    <%= select(:conto, :tipoconto, Conto::TIPOCONTO.invert, { :prompt => true }) %>
+    <%= select(:conto, :tipoconto, Conto::TIPOCONTO.invert.sort, { :prompt => true }) %>
   </div>
   <div class="field">
     <b> <%= f.label "Contropartita" %> </b> <br />

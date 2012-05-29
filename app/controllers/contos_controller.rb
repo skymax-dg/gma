@@ -1,4 +1,11 @@
 class ContosController < ApplicationController
+  def scontoanagen
+    @sconto = Anagen.find(params[:conto][:anagen_id]).sconto unless params[:conto][:anagen_id].empty? 
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def index
     @contos = Conto.paginate(:page => params[:page], :per_page => 10)
   end
@@ -19,10 +26,15 @@ class ContosController < ApplicationController
 
   def create
     @conto = Conto.new(params[:conto])
-    if @conto.save
-      redirect_to @conto, :notice => 'Conto was successfully created.'
-    else
+    if (@conto.tipoconto = "C" or @conto.tipoconto = "F") and @conto.anagen_id.nil?
+      flash.alert = "Per la tipologia " + Conto::TIPOCONTO["C"] + "/" + Conto::TIPOCONTO["F"] + " e' obbligatorio specificare una anagrafica soggetto"
       render :action => "new"
+    else
+      if @conto.save
+        redirect_to @conto, :notice => 'Conto was successfully created.'
+      else
+        render :action => "new"
+      end
     end
   end
 

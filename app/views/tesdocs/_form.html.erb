@@ -8,7 +8,7 @@
     <%= f.text_field :annoese, :size => 3, :disabled => true %>
     <%= f.hidden_field :annoese %>
     <b> <%= f.label "Tipo???:" %> </b>
-    <%= select(:tesdoc, :tipo_doc, Tesdoc::TIPO_DOC.invert)%>
+    <%= select(:tesdoc, :tipo_doc, Tesdoc::TIPO_DOC.invert.sort)%>
     <b> <%= f.label "Nr:" %> </b>
     <%= f.number_field :num_doc, :size => 6 %>
     <b> <%= f.label "Data:" %> </b>
@@ -58,7 +58,7 @@
   <br />
   <div class="field">
     <b> <%= f.label "Segue fattura: " %> </b>
-    <%= select(:tesdoc, :seguefatt, Tesdoc::SEGUEFATT.invert)%>
+    <%= select(:tesdoc, :seguefatt, Tesdoc::SEGUEFATT.invert.sort)%>
   </div>
 
   <div class="field">

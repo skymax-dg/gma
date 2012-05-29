@@ -6,7 +6,7 @@ class CreateAnainds < ActiveRecord::Migration
       t.string :indir, :limit => 100
       t.string :desloc, :limit => 100
       t.string :cap, :limit => 5
-      t.integer :nrmag
+      t.integer :nrmag, :null => false
 
       t.timestamps
     end

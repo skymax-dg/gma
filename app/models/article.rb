@@ -5,6 +5,6 @@ class Article < ActiveRecord::Base
 
   validates :codice, :descriz, :azienda, :presence => true
   validates :codice, :descriz, :uniqueness => true
-  validates :codice,  :length => { :maximum => 10, :too_long  => "Lunghezza massima permessa: 10 caratteri" }
-  validates :descriz, :length => { :maximum => 50, :too_long  => "Lunghezza massima permessa: 50 caratteri" }
+  validates :codice,  :length => { :maximum => 10}
+  validates :descriz, :length => { :maximum => 50}
 end

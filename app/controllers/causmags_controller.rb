@@ -10,6 +10,8 @@ class CausmagsController < ApplicationController
   def new
     @causmag = Causmag.new
     @causmag.azienda = StaticData::AZIENDA
+    @causmag.nrmagsrc = 0
+    @causmag.nrmagdst = 0
   end
 
   def edit

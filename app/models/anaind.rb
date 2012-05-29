@@ -5,8 +5,7 @@ class Anaind < ActiveRecord::Base
   attr_accessible :indir, :cap, :desloc, :anagen_id, :localita_id, :flsl, :flsp, :flmg, :nrmag
   
   validates :flsl, :flsp, :flmg, :nrmag, :indir, :presence => true
-  validates :flsl, :flsp, :flmg, :length => { :maximum => 1, :too_long  => "1 carattere obbligatorio per i flag (S/N)" }
-  validates :indir, :length => { :maximum => 100, :too_long  => "Lunghezza massima: 100 caratteri" }
+  validates :indir, :length => { :maximum => 100}
 
   NRMAG = $ParAzienda['ANAIND']['NRMAG']
 

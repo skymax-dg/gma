@@ -4,10 +4,10 @@
   <% if magsrc[causmag.nrmagsrc].nil? then magsrcsel = 0 else magsrcsel = causmag.nrmagsrc end %>
   <% if magdst[causmag.nrmagdst].nil? then magdstsel = 0 else magdstsel = causmag.nrmagdst end %>
   <span class="field_magsrc">
-    <b> <%= select(:tesdoc, :nrmagsrc, magsrc.invert, :selected => magsrcsel) %> </b>
+    <b> <%= select(:tesdoc, :nrmagsrc, magsrc.invert.sort, :selected => magsrcsel) %> </b>
   </span>
   <span class="field_magdst">
-    <b> <%= select(:tesdoc, :nrmagdst, magdst.invert, :selected => magdstsel) %> </b>
+    <b> <%= select(:tesdoc, :nrmagdst, magdst.invert.sort, :selected => magdstsel) %> </b>
   </span>
   <br />
 </span>

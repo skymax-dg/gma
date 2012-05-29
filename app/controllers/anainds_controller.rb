@@ -18,6 +18,13 @@ class AnaindsController < ApplicationController
     end
   end
 
+  def descrizloc
+    @descrizloc = Localita.find(params[:anaind][:localita_id]).descriz unless params[:anaind][:localita_id].empty? 
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def new
     @anaind = Anagen.find(params[:id]).anainds.build # La Build valorizza automaticamente il campo anaind.anagen_id
     @anaind.flsl = 'N'

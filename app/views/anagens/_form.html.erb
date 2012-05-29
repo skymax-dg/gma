@@ -5,7 +5,7 @@
     <b> <%= f.label :codice %> </b>
     <%= f.number_field :codice %>
     <b> <%= f.label :tipo %> </b>
-    <%= select(:anagen, :tipo, Anagen::TIPO.invert, { :prompt => true }) %>
+    <%= select(:anagen, :tipo, Anagen::TIPO.invert.sort, { :prompt => true }) %>
     <b> <%= f.label "Denominazione" %> </b>
     <%= f.text_field :denomin, :size => 55 %>
   </div>

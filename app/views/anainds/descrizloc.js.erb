@@ -1,0 +1,13 @@
+v1 = $("#anaind_desloc").val();
+v2 = "<%=@descrizloc%>";
+if (v1 == "")
+{ 
+  $("#anaind_desloc").val(v2);
+}
+else if (v1 != v2)
+{
+  if (confirm("vuoi sostituire " + v1 + " con " + v2 + "?"))
+  {
+    $("#anaind_desloc").val(v2);
+  }
+}

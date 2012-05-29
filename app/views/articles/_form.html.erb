@@ -3,7 +3,8 @@
 
   <div class="field">
     <b> <%= f.label :azienda %> </b> <br />
-    <%= f.number_field :azienda %>
+    <%= f.text_field :azienda, :size => 1, :disabled => true %>
+    <%= f.hidden_field :azienda %>
   </div>
   <div class="field">
     <b> <%= f.label :codice %> </b> <br />

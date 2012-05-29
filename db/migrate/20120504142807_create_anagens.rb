@@ -14,8 +14,8 @@ class CreateAnagens < ActiveRecord::Migration
       t.timestamps
     end
     add_index :anagens, [:azienda, :codice], {:name => "idx_anagens_on_codice", :unique => true}
-    add_index :anagens, [:azienda, :codfis], {:name => "idx_anagens_on_codfis", :unique => true}
-    add_index :anagens, [:azienda, :pariva], {:name => "idx_anagens_on_pariva", :unique => true}
+    add_index :anagens, [:azienda, :codfis], {:name => "idx_anagens_on_codfis"}
+    add_index :anagens, [:azienda, :pariva], {:name => "idx_anagens_on_pariva"}
     add_index :anagens, [:azienda, :cognome, :nome], {:name => "idx_anagens_on_cognome-nome"}
     add_index :anagens, [:azienda, :ragsoc], {:name => "idx_anagens_on_ragsoc"}
   end

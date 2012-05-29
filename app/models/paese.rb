@@ -4,8 +4,7 @@ class Paese < ActiveRecord::Base
   attr_accessible :descriz, :tpeu, :prepiva
   
   validates :descriz, :tpeu, :presence => true
-  validates :descriz, :length => { :maximum => 50, :too_long  => "Lunghezza massima permessa: 50 caratteri" }
-  validates :tpeu, :length => { :maximum => 1, :too_long  => "Valore obbligatorio: E=Europeo - X=eXtraeuropeo" }
+  validates :descriz, :length => { :maximum => 50}
 
   TPEU = $ParAzienda['PAESE']['TPEU']
 

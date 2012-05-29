@@ -47,12 +47,3 @@ TESDOC:
   SEGUEFATT:
     S: 'Si'
     N: 'No'
-#  TIPO_DOC:
-#    0: 'Doc.Generico'
-#    1: 'Ddt'
-#    2: 'Fatt.Riep.'
-#    3: 'Fatt.Imm.'
-#    4: 'Reso'
-#    5: 'tipo5'
-#    6: 'tipo6'
-#    7: 'tipo7'

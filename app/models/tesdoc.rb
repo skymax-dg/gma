@@ -8,8 +8,7 @@ class Tesdoc < ActiveRecord::Base
 
   validates :azienda, :annoese, :tipo_doc, :num_doc, :data_doc, :descriz,
             :causmag_id, :conto_id, :nrmagsrc, :nrmagdst, :seguefatt, :sconto, :presence => true
-# Fare un validate su :tipo_doc con i valori ammessi
-  validates :descriz,  :length => { :maximum => 150, :too_long  => "Lunghezza massima permessa: 150 caratteri" }
+  validates :descriz,  :length => { :maximum => 150}
 
   NRMAG = $ParAzienda['ANAIND']['NRMAG']
   SEGUEFATT = $ParAzienda['TESDOC']['SEGUEFATT']

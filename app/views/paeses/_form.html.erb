@@ -7,7 +7,7 @@
   </div>
   <div class="field">
     <b> <%= f.label "Tipo/Appartenenza" %> </b> <br />
-    <%= select(:paese, :tpeu, Paese::TPEU.invert, { :prompt => true }) %>
+    <%= select(:paese, :tpeu, Paese::TPEU.invert.sort, { :prompt => true }) %>
   </div>
   <div class="field">
     <b> <%= f.label "Prefisso P.Iva" %> </b> <br />

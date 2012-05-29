@@ -27,17 +27,17 @@ ActiveRecord::Schema.define(:version => 20120518120606) do
     t.string   "web",        :limit => 50
   end
 
-  add_index "anagens", ["codfis"], :name => "idx_anagens_on_codfis", :unique => true
+  add_index "anagens", ["codfis"], :name => "idx_anagens_on_codfis"
   add_index "anagens", ["codice"], :name => "idx_anagens_on_codice", :unique => true
   add_index "anagens", ["denomin"], :name => "idx_anagens_on_denomin"
-  add_index "anagens", ["pariva"], :name => "idx_anagens_on_pariva", :unique => true
+  add_index "anagens", ["pariva"], :name => "idx_anagens_on_pariva"
 
   create_table "anainds", :force => true do |t|
     t.integer  "anagen_id"
     t.string   "indir",       :limit => 100
     t.string   "desloc",      :limit => 100
     t.string   "cap",         :limit => 5
-    t.integer  "nrmag"
+    t.integer  "nrmag",                                       :null => false
     t.datetime "created_at",                                  :null => false
     t.datetime "updated_at",                                  :null => false
     t.integer  "localita_id"

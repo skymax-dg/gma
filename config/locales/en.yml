@@ -2,4 +2,495 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  paese:
+    descriz: "Descrizione"
+  prohibited this from being saved: "Non e' possibile salvare i dati"
+  activerecord:
+    models:
+      anagen: "Anagrafica soggetto"
+      anaind: "Indirizzo"
+      article: "Articolo"
+      causmag: "Causale di magazzino"
+      conto: "Piano dei conti"
+      localita: "Citta'"
+      paese: "Nazione"
+      rigdoc: "Riga documento"
+      tesdoc: "Testata documento"
+      user: "Utente"
+    attributes:
+      anagen:
+        codice: "Codice"
+        tipo: "Tipo soggetto"
+        denomin: "Denominazione"
+        codfis: "Codice fiscale"
+        pariva: "Partita iva"
+        telefono: "Telefono"
+        email: "Email"
+        fax: "Fax"
+        web: "Web"
+        sconto: "Sconto"
+      anaind:
+        indir: "Indirizzo"
+        cap: "C.A.P."
+        desloc: "Descrizione localita'"
+        anagen_id: "Codice anagrafica"
+        localita_id: "Codice citta'"
+        flsl: "Sede legale"
+        flsp: "Spedizione"
+        flmg: "Magazzino"
+      article:
+        azienda: "Azienda"
+        codice: "Codice"
+        descriz: "Descrizione"
+        prezzo: "Prezzo"
+      causmag:
+        azienda: "Azienda"
+        tipo_doc: "Tipo documento"
+        descriz: "Descrizione"
+        des_caus: "Descrizione ulteriore"
+        tipo: "Tipologia"
+        movimpmag: "Impatto sul magazzino"
+        nrmagsrc: "Magazzino di origine"
+        nrmagdst: "Magazzino di destinazione"
+        contabile: "Impatto contabile"
+        modulo: "Prototipo di stampa"
+      conto:
+        azienda: "Azienda"
+        annoese: "Anno Esercizio"
+        codice: "Codice"
+        descriz: "Descrizione"
+        anagen_id: "Codice soggetto"
+        tipoconto: "Tipologia"
+        cntrpartita: "Contropartita"
+        sconto: "Sconto"
+      localita:
+        cap: "C.A.P."
+        codfis: "Codice belfiore (C.F.)"
+        descriz: "Descrizione"
+        prov: "Provincia"
+        paese_id: "Paese"
+      paese:
+        descriz: "Descrizione"
+        tpeu: "Appartenenza"
+        prepiva: "Prefisso IVA"
+      rigdoc:
+        descriz: "Descrizione"
+        prezzo: "Prezzo"
+        qta: "Quantita'"
+        sconto: "Sconto"
+        article_id: "Codice articolo"
+        prgrig: "Riga nr"
+      tesdoc:
+        azienda: "Azienda"
+        annoese: "Anno Esercizio"
+        tipo_doc: "Tipo documento"
+        num_doc: "Numero documento"
+        data_doc: "Data documento"
+        descriz: "Descrizione"
+        causmag_id: "Codice causale"
+        nrmagsrc: "Magazzino di origine"
+        nrmagdst: "Magazzino di destinazione"
+        seguefatt: "Segue fattura"
+        conto_id: "Codice conto"
+        sconto: "Sconto"
+      user:
+        login: "Nome utente"
+        pwd: "Password"
+    errors:
+      template:
+        header:
+          one: "Questo %{model} non puo' essere salvato: 1 errore"
+          other: "Questo %{model} non puo' essere salvato: %{count} errori."
+        body: "Per favore ricontrolla:"
+
+      messages:
+        taken: "e' gia' in uso"
+        record_invalid: "Validazione fallita: %{errors}"
+        <<: *errors_messages
+        blank: ": Campo Obbligatorio!"
+
+      full_messages:
+        format: "%{attribute} %{message}"
+      models:
+        student:
+          attributes:
+            base:
+              at_least_one: "Compila almeno uno dei seguenti campi: Nome, Cognome, Matricola"
+
+  errors:
+    errors:
+      template:
+        header:
+          one: "Questo %{model} non puo' essere salvato: 1 errore"
+          other: "Questo %{model} non puo' essere salvato: %{count} errori."
+        body: "Per favore ricontrolla:"
+
+      messages:
+        taken: "e' gia' in uso"
+        record_invalid: "Validazione fallita: %{errors}"
+        <<: *errors_messages
+
+      full_messages:
+        format: "%{t attribute} %{message}"
+
+  # = General =
+  # ===========
+  gen:
+    yes: "Si"
+    no: "No"
+    ok: "OK"
+    stop: "Stop"
+    save: "Salva"
+    cancel: "Annulla"
+    edit: "Modifica"
+    delete: "Elimina"
+    done: "Fatto"
+    back: "Indietro"
+    continue: "Continua"
+    proceed: "Procedi"
+    modify: "Modifica"
+    abort: "Annulla"
+    accept: "Accetta"
+    decline: "Rifiuta"
+    revoke: "Revoca"
+    welcome: "Benvenuto"
+    add: "Aggiungi"
+    add_one: "Aggiungi uno"
+    add_another: "Aggiungi altro"
+    home: "Home"
+    previous: "Precedente"
+    next: "Successivo"
+    active: "Attivo"
+    inactive: "Inattivo"
+    invited: "Invitato"
+    login: "Accedi"
+    logout: "Esci"
+    supervisor: "Supervisore"
+    reg_user: "Utente normale"
+    owner: "Proprietario"
+    invite: "Invita"
+    search: "Ricerca"
+    qsearch: "Ricerca rapida"
+    dashboard: "Pannello di controllo"
+    description: "Descrizione"
+    name: "Nome"
+    full_name: "Nome e Cognome"
+    author: "Autore"
+    role: "ruolo"
+    status: "Status"
+    title: "Titolo"
+    notes: "Note"
+    nothing_to_see: "Elenco vuoto"
+    the_date: "Data"
+    from: "Da"
+    to: "A"
+    general_info: "Informazioni generali"
+    pdf: "PDF"
+    pos: "Pos"
+    empty_list: "Lista vuota"
+    code_num: "n. "
+    points: "Punti"
+    total: "Totale"
+    none: "Nessuno"
+
+    # ============
+    # = entities =
+    # ============
+
+    forms_link: "Moduli"
+    form: "Modulo"
+    the_forms: "I moduli"
+    new_form: "Nuovo modulo"
+    all_forms: "Tutti i moduli"
+
+    extra: "Extra"
+    choices: "Scelte"
+
+    add_choice: "Aggiungi una risposta"
+    question: "Domanda"
+    questions: "Quesiti"
+    answer: "Risposta"
+    answers: "Risposte"
+    choice: "Scelta"
+    correct: "Corretta"
+    incorrect: "Incorretta"
+
+    template: "Modello"
+    new_template: "Nuovo modello"
+
+    ts_available: "Disponibili"
+    ts_requested: "Richiesti"
+    ts_selected: "Scelti"
+    ts_needed: "Rimanenti"
+
+    # ===========
+    # = various =
+    # ===========
+  
+  # ==========
+  # = tabnav =
+  # ==========
+  tnav:
+    home: "Home"
+
+  views:
+    pagination:
+      truncate: "..."
+      previous: "<"
+      next: ">"
+      first: "<<"
+      last: ">>"
+
+  # ==================
+  # = submit buttons =
+  # ==================
+  helpers:
+    select:
+      prompt: "Seleziona"
+
+    submit:
+      create: 'Crea %{model}'
+      update: 'Aggiorna %{model}'
+      submit: 'Invia %{model}'
+
+  # ================
+  # = simple forms =
+  # ================
+  simple_form:
+    error_notification:
+      default_message: "Ci sono errori, per favore controlla:"
+    required:
+      text: 'obbligatorio'
+      mark: '*'
+
+    labels:
+      # ==================================
+      # = a few model-independent labels =
+      # ==================================
+      name: :name
+      title: :title
+      description: :description
+      notes: :notes
+      
+      # ==========
+      # = models =
+      # ==========
+      paese:
+        descriz: 'Descrizione'
+        tpeu: 'Tipo'
+  failures:
+    invalid_request: "Richiesta non valida"
+  notices:
+    success_creating_course: "Corso creato con successo"
+    success_updating_course: "Corso modificato con successo"
+    success_destroying_course: "Corso eliminato con successo"
+    success_adding_topic: "Materia aggiunta con successo"
+
+  errors:
+    messages:
+      not_found: "non trovato"
+      already_confirmed: "e' stato gia' confermato"
+      not_locked: "non era bloccato"
+
+  number:
+    format:
+      delimiter: ""
+      precision: 2
+      significant: false
+      strip_insignificant_zeros: false
+      separator: "."
+
+    currency:
+      format:
+        format: "%n %u"
+        unit: "€"
+        separator: "."
+        delimiter: ","
+        precision: 2
+        significant: false
+        strip_insignificant_zeros: false
+
+    percentage:
+      format:
+        delimiter: ""
+        # precision:
+
+    precision:
+      format:
+        # separator:
+        delimiter: ""
+        # precision:
+
+    human:
+      format:
+        # separator:
+        delimiter: ""
+        precision: 1
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            one: "Byte"
+            other: "Byte"
+          kb: "Kb"
+          mb: "Mb"
+          gb: "Gb"
+          tb: "Tb"
+      decimal_units:
+        format: "%n %u"
+        units:
+          unit: ""
+          thousand: "Mila"
+          million: "Milioni"
+          billion: "Miliardi"
+          trillion: "Bilioni"
+          quadrillion: "Biliardi"
+
+  date:
+    formats:
+      default: "%d-%m-%Y"
+      short: "%d %b"
+      long: "%d %B %Y"
+
+    day_names:
+      - Domenica
+      - Lunedi
+      - Martedi
+      - Mercoledi
+      - Giovedi
+      - Venerdi
+      - Sabato
+    abbr_day_names:
+      - Dom
+      - Lun
+      - Mar
+      - Mer
+      - Gio
+      - Ven
+      - Sab
+
+    month_names:
+      - ~
+      - Gennaio
+      - Febbraio
+      - Marzo
+      - Aprile
+      - Maggio
+      - Giugno
+      - Luglio
+      - Agosto
+      - Settembre
+      - Ottobre
+      - Novembre
+      - Dicembre
+    abbr_month_names:
+      - ~
+      - Gen
+      - Feb
+      - Mar
+      - Apr
+      - Mag
+      - Giu
+      - Lug
+      - Ago
+      - Set
+      - Ott
+      - Nov
+      - Dic
+    order:
+      - :day
+      - :month
+      - :year
+
+  time:
+    formats:
+      default: "%a %d %b %Y, %H:%M:%S %z"
+      short: "%d %b %H:%M"
+      long: "%d %B %Y %H:%M"
+    am: 'am'
+    pm: 'pm'
+
+  datetime:
+    distance_in_words:
+      half_a_minute: "mezzo minuto"
+      less_than_x_seconds:
+        one: "meno di un secondo"
+        other: "meno di %{count} secondi"
+      x_seconds:
+        one: "1 secondo"
+        other: "%{count} secondi"
+      less_than_x_minutes:
+        one: "meno di un minuto"
+        other: "meno di %{count} minuti"
+      x_minutes:
+        one: "1 minuto"
+        other: "%{count} minuti"
+      about_x_hours:
+        one: "circa un'ora"
+        other: "circa %{count} ore"
+      x_days:
+        one: "1 giorno"
+        other: "%{count} giorni"
+      about_x_months:
+        one: "circa un mese"
+        other: "circa %{count} mesi"
+      x_months:
+        one: "1 mese"
+        other: "%{count} mesi"
+      about_x_years:
+        one: "circa un anno"
+        other: "circa %{count} anni"
+      over_x_years:
+        one: "oltre un anno"
+        other: "oltre %{count} anni"
+      almost_x_years:
+        one: "circa 1 anno"
+        other: "circa %{count} anni"
+    prompts:
+      year: "Anno"
+      month: "Mese"
+      day: "Giorno"
+      hour: "Ora"
+      minute: "Minuto"
+      second: "Secondi"
+
+  support:
+    array:
+      words_connector: ", "
+      two_words_connector: " e "
+      last_word_connector: " e "
+
+    select:
+      prompt: "Seleziona"
+
+  errors:
+    format: "%{attribute} %{message}"
+
+    messages: &errors_messages
+      inclusion: "non e' incluso nella lista"
+      exclusion: "e' riservato"
+      invalid: "non e' valido"
+      confirmation: "non coincide con la conferma"
+      accepted: "deve essere accettata"
+      empty: "non puo' essere vuoto"
+      blank: "non puo' essere lasciato in bianco"
+      too_long:
+        one: "e' troppo lungo (il massimo e' 1 carattere)"
+        other: "e' troppo lungo (il massimo e' %{count} caratteri)"
+      too_short:
+        one: "e' troppo corto (il minimo e' 1 carattere)"
+        other: "e' troppo corto (il minimo e' %{count} caratteri)"
+      wrong_length:
+        one: "e' della lunghezza sbagliata (deve essere di 1 carattere)"
+        other: "e' della lunghezza sbagliata (deve essere di %{count} caratteri)"
+      not_a_number: "non e' un numero"
+      not_an_integer: "non e' un intero"
+      greater_than: "deve essere superiore a %{count}"
+      greater_than_or_equal_to: "deve essere superiore o uguale a %{count}"
+      equal_to: "deve essere uguale a %{count}"
+      less_than: "deve essere meno di %{count}"
+      less_than_or_equal_to: "deve essere meno o uguale a %{count}"
+      odd: "deve essere dispari"
+      even: "deve essere pari"

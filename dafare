@@ -1,11 +1,14 @@
-gestione eventi: In inserimento di un nuovo conto quando seleziono l'anagrafica
-se il campo conto.sconto=0 proporre lo sconto presente in anagens
+FATTO: gestione eventi: In inserimento di un nuovo conto quando seleziono l'anagrafica
+                        se il campo conto.sconto=0 proporre lo sconto presente in anagens
 
-gestione eventi: In inserimento di una nuova riga documento quando seleziono l'articolo
-se il campo rigdoc.prezzo=0 proporre il prezzo presente in articles
+FATTO: gestione eventi: In inserimento/modifica nuova riga documento se seleziono un articolo
+                        proporre il prezzo presente in articles
 
 FATTO: In inserimento di un nuovo documento quando seleziono il conto
-se il campo tesdoc.sconto=0 proporre lo sconto presente in contos
+       se il campo tesdoc.sconto=0 proporre lo sconto presente in contos
 
 FATTO: In inserimento di una nuova riga documento 
-se il campo rigdoc.sconto=0 proporre lo sconto presente in tesdocs
+       se il campo rigdoc.sconto=0 proporre lo sconto presente in tesdocs
+
+FATTO: in views\tesdocs\new.js.erb la var url = "http://localhost:3000/tesdocs/new?causmag=" + v1 + "&conto=" + v2
+       va bene solo per prove locali
