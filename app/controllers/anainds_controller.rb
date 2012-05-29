@@ -63,7 +63,11 @@ class AnaindsController < ApplicationController
 
   def destroy
     @anaind = Anaind.find(params[:id])
-    @anaind.destroy
+    begin
+      @anaind.destroy
+    rescue
+      flash[:notice] = $!.message
+    end
     redirect_to @anaind.anagen
   end
 end

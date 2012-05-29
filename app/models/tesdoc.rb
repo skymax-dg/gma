@@ -1,7 +1,7 @@
 class Tesdoc < ActiveRecord::Base
   belongs_to :causmag
   belongs_to :conto
-  has_many :rigdocs
+  has_many :rigdocs, :dependent => :destroy
 
   attr_accessible :azienda, :annoese, :tipo_doc, :num_doc, :data_doc, :descriz,
                   :causmag_id, :nrmagsrc, :nrmagdst, :seguefatt, :conto_id, :sconto

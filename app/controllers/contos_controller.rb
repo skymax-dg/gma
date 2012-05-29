@@ -49,7 +49,11 @@ class ContosController < ApplicationController
 
   def destroy
     @conto = Conto.find(params[:id])
-    @conto.destroy
+    begin
+      @conto.destroy
+    rescue
+      flash[:notice] = $!.message
+    end
     redirect_to contos_url
   end
 end

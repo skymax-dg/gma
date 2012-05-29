@@ -38,7 +38,11 @@ class CausmagsController < ApplicationController
 
   def destroy
     @causmag = Causmag.find(params[:id])
-    @causmag.destroy
+    begin
+      @causmag.destroy
+    rescue
+      flash[:notice] = $!.message
+    end
     redirect_to causmags_url
   end
 end

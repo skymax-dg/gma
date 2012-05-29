@@ -1,8 +1,9 @@
 class Anagen < ActiveRecord::Base
   #has_many :prezzoarticclis, :foreign_key => "anag_id",
   #                           :dependent => :destroy
+  before_destroy :require_no_contos
   has_many :contos
-  has_many :anainds
+  has_many :anainds, :dependent => :destroy
   
   attr_accessible :codice, :tipo, :denomin, :codfis, :pariva, :telefono, :email, :fax, :web, :sconto
 
@@ -30,4 +31,12 @@ class Anagen < ActiveRecord::Base
                        :conditions => ["anagen_id = :anaid and flmg = 'S'", {:anaid => self.id}]).map{|c| c.nrmag}
     Hash[*Anaind::NRMAG.select{|k,v| (mags+inivalue).index(k)}.flatten]
   end
+
+  private
+
+  def require_no_contos
+    self.errors.add :base, "Almeno un conto fa riferimento all' anagrafica che si desidera eliminare."
+    raise ActiveRecord::RecordInvalid.new self unless contos.count == 0
+  end
+
 end

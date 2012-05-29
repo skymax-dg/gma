@@ -35,7 +35,12 @@ class PaesesController < ApplicationController
 
   def destroy
     @paese = Paese.find(params[:id])
-    @paese.destroy
+
+    begin
+      @paese.destroy
+    rescue
+      flash[:notice] = $!.message
+    end
     redirect_to paeses_url
   end
 end

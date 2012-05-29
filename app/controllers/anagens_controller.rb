@@ -35,7 +35,11 @@ class AnagensController < ApplicationController
 
   def destroy
     @anagen = Anagen.find(params[:id])
-    @anagen.destroy
+    begin
+      @anagen.destroy
+    rescue
+      flash[:notice] = $!.message
+    end
     redirect_to anagens_url
   end
 end

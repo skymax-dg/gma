@@ -36,7 +36,11 @@ class ArticlesController < ApplicationController
 
   def destroy
     @article = Article.find(params[:id])
-    @article.destroy
+    begin
+      @article.destroy
+    rescue
+      flash[:notice] = $!.message
+    end
     redirect_to articles_url
   end
 end

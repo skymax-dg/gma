@@ -1,4 +1,6 @@
 class Localita < ActiveRecord::Base
+  before_destroy :require_no_anainds
+
   has_many :anainds
   belongs_to :paese
 
@@ -9,4 +11,12 @@ class Localita < ActiveRecord::Base
   validates :cap, :length => { :maximum => 5}
   validates :codfis, :length => { :maximum => 4}
   validates :prov, :length => { :maximum => 2}
+
+  private
+
+  def require_no_anainds
+    self.errors.add :base, "Almeno un indirizzo fa riferimento alla citta' che si desidera eliminare."
+    raise ActiveRecord::RecordInvalid.new self unless anainds.count == 0
+  end
+
 end
