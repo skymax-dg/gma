@@ -18,7 +18,23 @@ class AnaindsController < ApplicationController
   end
 
   def descrizloc
-    @descrizloc = Localita.find(params[:anaind][:localita_id]).descriz unless params[:anaind][:localita_id].empty? 
+    loc_id = params[:anaind][:localita_id]
+    if loc_id.nil? or loc_id.empty? 
+    else
+      loc = Localita.find(loc_id)
+      @descrizloc = ""
+      @descrizloc = loc.cap + ", " unless loc.cap.empty?
+      @descrizloc = @descrizloc + loc.descriz
+      @descrizloc = @descrizloc + " (" + loc.prov + ")" unless loc.prov.empty?
+      @descrizloc = @descrizloc + " - " + loc.paese.descriz unless loc.paese.nil?
+      @caploc = loc.cap unless loc.cap.empty?
+    end 
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def reset_locid
     respond_to do |format|
       format.js
     end

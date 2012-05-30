@@ -1,0 +1,28 @@
+var cnt = "<%= @cnt %>";
+if (cnt == 0)
+{
+  alert("Ricerca negativa");
+  $("#paese_descriz").val("");
+  $("#paese_descriz").focus();
+} else 
+{
+  if (cnt == 1)
+  {
+    $("#paese_descriz").val("<%= @des_paese %>");
+    $("#localita_paese_id").attr("hidden","hidden");
+  } else 
+  {
+    if (cnt > 1)
+    {
+      $("#paese_descriz").attr("hidden","hidden");
+      $("#par_paese").html("<%= escape_javascript(render(:partial => 'paese',
+                                                         :locals => {:hd => false,
+                                                                     :data => {:remote => true, :url => url_for(:controller => :localitas,
+                                                                                                                :action => :cbb_paese)
+                                                                              }
+                                                                    })) %>");
+      $('#localita_paese_id').attr('size', 10);
+      $("#localita_paese_id").focus().fist;
+    }
+  }
+}

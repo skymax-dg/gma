@@ -16,7 +16,8 @@
                           {:include_blank => true},
                             {:data => {:remote => true, :url => url_for(:controller => :anainds,
                                                                         :action => :descrizloc)}})%>
-    <%= f.text_field :desloc, :size => 50 %>
+    <%= f.text_field(:desloc, {:size => 50, :data => {:remote => true, :url => url_for(:controller => :anainds, :action => :reset_locid)}})%>
+
     <b> <%= f.label "Cap" %> </b>
     <%= f.text_field :cap, :size => 5 %>
     <b> <%= f.label "Indirizzo valido per:" %> </b>

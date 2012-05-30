@@ -1,13 +1,17 @@
-v1 = $("#anaind_desloc").val();
-v2 = "<%=@descrizloc%>";
-if (v1 == "")
+desform = $("#anaind_desloc").val();
+capform = $("#anaind_cap").val();
+desdb = "<%=@descrizloc%>";
+capdb = "<%=@caploc%>";
+if (desform == "")
 { 
-  $("#anaind_desloc").val(v2);
+  $("#anaind_desloc").val(desdb);
+  $("#anaind_cap").val(capdb);
 }
-else if (v1 != v2)
+else if (desform != desdb)
 {
-  if (confirm("vuoi sostituire " + v1 + " con " + v2 + "?"))
+  if (confirm("vuoi sostituire " + desform + " con " + desdb + "?"))
   {
-    $("#anaind_desloc").val(v2);
+    $("#anaind_desloc").val(desdb);
+    $("#anaind_cap").val(capdb);
   }
 }

@@ -8,7 +8,12 @@ Gma::Application.routes.draw do
 
   root :to => 'menu#home'
 
-  resources :localitas
+  resources :localitas do
+    collection do
+      get :ges_paese
+      get :cbb_paese
+    end
+  end
 
   resources :paeses
 
@@ -27,6 +32,7 @@ Gma::Application.routes.draw do
   resources :anainds do
     collection do
       get :descrizloc
+      get :reset_locid
     end
   end
 
