@@ -47,3 +47,6 @@ TESDOC:
   SEGUEFATT:
     S: 'Si'
     N: 'No'
+RIGDOC:
+  PATHXLS: 'C:'
+  FILEXLS: 'C:'

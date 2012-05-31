@@ -1,5 +1,5 @@
 class LocalitasController < ApplicationController
-  def ges_paese
+  def chg_des_paese
     @des_paese = params[:paese][:descriz]
     @cnt = -1
     if @des_paese.nil? or @des_paese.empty? 
@@ -17,7 +17,7 @@ class LocalitasController < ApplicationController
     end 
   end
 
-  def cbb_paese
+  def chg_cmb_paese
     @id_paese = params[:localita][:paese_id]
     if @id_paese.nil? or @id_paese.empty? 
       @des_paese = ""

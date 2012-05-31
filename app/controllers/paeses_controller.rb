@@ -9,6 +9,7 @@ class PaesesController < ApplicationController
 
   def new
     @paese = Paese.new
+@paese.descriz = params[:descriz] unless params[:descriz].nil?
   end
 
   def edit

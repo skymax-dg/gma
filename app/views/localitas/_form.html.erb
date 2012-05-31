@@ -19,12 +19,14 @@
     <%#= collection_select :localita, :paese_id, Paese.all, :id, :descriz, :prompt => true %>
 
 <%= fields_for @localita.paese do |fp| %>
-  <%= fp.text_field(:descriz, {:size => 50, :data => {:remote => true, :url => url_for(:controller => :localitas, :action => :ges_paese)}})%>
+  <%= fp.text_field(:descriz, {:size => 50, :data => {:remote => true, 
+                                                      :url => url_for(:controller => :localitas,
+                                                                      :action => :chg_des_paese)}})%>
 <% end %>
 
-<div id="par_paese">
-<%#= collection_select :localita, :paese_id, @paeses, :id, :descriz, {:include_blank => true}, {:hidden => true} %>
-<%= render :partial => 'paese', :locals => {:hd => true} %>
+<div id="prt_paese">
+<%= render :partial => 'paese', :locals => {:hd => true} unless @paeses.nil?%>
+<%= f.hidden_field :paese_id if @paeses.nil?%>
 </div>
 
   </div>

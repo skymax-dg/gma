@@ -12,6 +12,8 @@ gem 'json'
 
 gem 'will_paginate', '~> 3.0.beta'
 
+gem 'spreadsheet'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

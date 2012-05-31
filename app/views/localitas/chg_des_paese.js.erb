@@ -1,7 +1,11 @@
 var cnt = "<%= @cnt %>";
 if (cnt == 0)
 {
-  alert("Ricerca negativa");
+  if (confirm("Paese/Nazione non trovato, vuoi procedere all'inserimento?"))
+  {
+    window.location = "<%= root_url %>paeses/new?descriz=" + $("#paese_descriz").val();
+  }
+  //alert("Ricerca negativa");
   $("#paese_descriz").val("");
   $("#paese_descriz").focus();
 } else 
@@ -9,19 +13,22 @@ if (cnt == 0)
   if (cnt == 1)
   {
     $("#paese_descriz").val("<%= @des_paese %>");
-    $("#localita_paese_id").attr("hidden","hidden");
+//alert("sost:" + "<%= @paeses.first.id %>" + ":");
+//alert("vecchio:" + $("#localita_paese_id").val() + ":");
+    $("#localita_paese_id").val("<%= @paeses.first.id %>");
+//alert("nuovo:" + $("#localita_paese_id").val() + ":");
   } else 
   {
     if (cnt > 1)
     {
       $("#paese_descriz").attr("hidden","hidden");
-      $("#par_paese").html("<%= escape_javascript(render(:partial => 'paese',
+      $("#prt_paese").html("<%= escape_javascript(render(:partial => 'paese',
                                                          :locals => {:hd => false,
                                                                      :data => {:remote => true, :url => url_for(:controller => :localitas,
                                                                                                                 :action => :cbb_paese)
                                                                               }
                                                                     })) %>");
-      $('#localita_paese_id').attr('size', 10);
+      $('#localita_paese_id').attr('size', 5);
       $("#localita_paese_id").focus().fist;
     }
   }

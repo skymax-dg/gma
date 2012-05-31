@@ -10,8 +10,8 @@ Gma::Application.routes.draw do
 
   resources :localitas do
     collection do
-      get :ges_paese
-      get :cbb_paese
+      get :chg_des_paese
+      get :chg_cmb_paese
     end
   end
 
@@ -46,6 +46,7 @@ Gma::Application.routes.draw do
   resources :rigdocs do
     collection do
       get :prezzoarticle
+      get :addrow_fromxls
     end
     member do
       get :up

@@ -62,6 +62,7 @@
 <%= link_to 'Elimina documento', @tesdoc, :confirm => 'Confermi eliminazione?', :method => :delete %>
 <%= link_to 'Modifica testata', :edit_tesdoc %>
 <%= link_to 'Aggiungi riga', :controller => :rigdocs, :action => :new, :id => @tesdoc.id %>
+<%= link_to 'Carica righe da file', :controller => :rigdocs, :action => :addrow_fromxls, :id => @tesdoc.id %>
 <br />
 <%= link_to 'Aggiungi documento', {:action => 'new',
                                    :causmag => @tesdoc.causmag_id||"",
