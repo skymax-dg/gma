@@ -1,16 +1,19 @@
 class LocalitasController < ApplicationController
   def chg_des_paese
     @des_paese = params[:paese][:descriz]
-    @cnt = -1
-    if @des_paese.nil? or @des_paese.empty? 
+    if @des_paese.empty? 
+      @nr = -1
       @paeses = Paese.all
       @des_paese = ""
     else
-      @paeses = Paese.where("descriz like ?", "%" + @des_paese + "%")
-      @cnt = @paeses.count
-      if @cnt == 1
+      @nr, @paeses = Paese.findlike_des(params[:paese][:descriz])
+      #@paeses = Paese.where("descriz like ?", "%" + @des_paese + "%")
+      #@nr = @paeses.count
+      if @nr == 1
+        #@des_paese = @paeses.descriz
+        #@id = @paeses.first.id
         @des_paese = @paeses.first.descriz
-        @id = @paeses.first.id
+        @id = @paeses.id
       end
     end
     respond_to do |format|

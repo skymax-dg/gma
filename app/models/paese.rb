@@ -8,6 +8,12 @@ class Paese < ActiveRecord::Base
   validates :descriz, :length => { :maximum => 50}
 
   TPEU = $ParAzienda['PAESE']['TPEU']
+  
+  def self.findlike_des(descriz)
+    paeses = where("descriz like ?", "%" + descriz + "%")
+    return 0, paeses if paeses.nil?
+    return paeses.count, paeses
+  end
 
   private
 
@@ -15,5 +21,4 @@ class Paese < ActiveRecord::Base
     self.errors.add :base, "Almeno una citta' fa riferimento al Paese che si desidera eliminare."
     raise ActiveRecord::RecordInvalid.new self unless localitas.count == 0
   end
-  
 end

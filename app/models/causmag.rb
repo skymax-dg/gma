@@ -6,7 +6,6 @@ class Causmag < ActiveRecord::Base
   attr_accessible :azienda, :tipo_doc, :descriz, :des_caus, :tipo, :movimpmag, :nrmagsrc, :nrmagdst, :contabile, :causale_id, :modulo
 
   validates :azienda, :descriz, :contabile, :tipo, :movimpmag, :nrmagsrc, :nrmagdst, :presence => true
-  # Fare un validate con i valori ammessi
   validates :descriz, :des_caus, :length => { :maximum => 100}
 
   TIPO_DOC = $ParAzienda['CAUSMAG']['TIPO_DOC']

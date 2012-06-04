@@ -1,5 +1,5 @@
-var cnt = "<%= @cnt %>";
-if (cnt == 0)
+var nr = "<%= @nr %>";
+if (nr == 0)
 {
   if (confirm("Paese/Nazione non trovato, vuoi procedere all'inserimento?"))
   {
@@ -10,13 +10,13 @@ if (cnt == 0)
   $("#paese_descriz").focus();
 } else 
 {
-  if (cnt == 1)
+  if (nr == 1)
   {
     $("#paese_descriz").val("<%= @des_paese %>");
     $("#localita_paese_id").val("<%= @id %>");
   } else 
   {
-    if (cnt > 1)
+    if (nr > 1)
     {
       $("#paese_descriz").attr("hidden","hidden");
       $("#prt_paese").html("<%= escape_javascript(render(:partial => 'paese',
