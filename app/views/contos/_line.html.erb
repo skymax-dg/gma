@@ -5,6 +5,7 @@
   <td><%= line.descriz %></td>
   <td><%= line.anagen.denomin unless line.anagen.nil? %></td>
   <td><%= Conto::TIPOCONTO[line.tipoconto] %></td>
+  <td><%= Conto::TIPOPEO[line.tipopeo] %></td>
   <td><%= line.cntrpartita %></td>
   <td><%= line.sconto %></td>
   <td><%= link_to 'Visualizza', line %></td>

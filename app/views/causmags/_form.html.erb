@@ -39,6 +39,10 @@
     <%= select(:causmag, :contabile, Causmag::CONTABILE.invert.sort, { :prompt => true })%>
   </div>
   <div class="field">
+    <b> <%= f.label "Causale contabile" %> </b> <br />
+    <%= collection_select(:causmag, :causale_id, Causale.all, :id, :descriz, {:include_blank => true}) %>
+  </div>
+  <div class="field">
     <b> <%= f.label "Nome modulo" %> </b> <br />
     <%= f.text_field :modulo %>
   </div>

@@ -10,8 +10,12 @@
     <%= select(:paese, :tpeu, Paese::TPEU.invert.sort, { :prompt => true }) %>
   </div>
   <div class="field">
-    <b> <%= f.label "Prefisso P.Iva" %> </b> <br />
-    <%= f.text_field :prepiva %>
+    <b> <%= f.label "Codice belfiore (CF)" %> </b> <br />
+    <%= f.text_field :codfis, :size => 5 %>
+  </div>
+  <div class="field">
+    <b> <%= f.label "Prefisso P_Iva" %> </b> <br />
+    <%= f.text_field :prepiva, :size => 5 %>
   </div>
   <div class="actions">
     <%= f.submit "SALVA"%>

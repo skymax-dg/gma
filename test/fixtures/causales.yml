@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  azienda: 1
+  descriz: MyString
+  tipoiva: MyString
+  tiporeg: MyString
+  contoiva: 1
+
+two:
+  azienda: 1
+  descriz: MyString
+  tipoiva: MyString
+  tiporeg: MyString
+  contoiva: 1

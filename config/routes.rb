@@ -21,13 +21,15 @@ Gma::Application.routes.draw do
 
   resources :causmags
 
-  resources :contos do
+  resources :causales
+
+  resources :contos
+
+  resources :anagens do
     collection do
-      get :scontoanagen
+      get :chg_tipo
     end
   end
-
-  resources :anagens
 
   resources :anainds do
     collection do

@@ -10,6 +10,7 @@ class LocalitasController < ApplicationController
       @cnt = @paeses.count
       if @cnt == 1
         @des_paese = @paeses.first.descriz
+        @id = @paeses.first.id
       end
     end
     respond_to do |format|
@@ -40,7 +41,7 @@ class LocalitasController < ApplicationController
   def new
     @localita = Localita.new
     @localita.paese = Paese.new
-@paeses = Paese.all
+#    @paeses = Paese.all
   end
 
   def edit
@@ -69,8 +70,12 @@ class LocalitasController < ApplicationController
 
   def destroy
     @localita = Localita.find(params[:id])
-    @localita.destroy
-    flash[:notice] = "Cancellazione Eseguita"
+    begin
+      @localita.destroy
+      flash[:notice] = "Cancellazione Eseguita"
+    rescue
+      flash[:error] = $!.message
+    end
     redirect_to localitas_url
   end
 end

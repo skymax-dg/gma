@@ -1,11 +1,4 @@
 class ContosController < ApplicationController
-  def scontoanagen
-    @sconto = Anagen.find(params[:conto][:anagen_id]).sconto unless params[:conto][:anagen_id].empty? 
-    respond_to do |format|
-      format.js
-    end
-  end
-
   def index
     @contos = Conto.paginate(:page => params[:page], :per_page => 10)
   end

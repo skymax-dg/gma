@@ -1,8 +1,9 @@
 class Causmag < ActiveRecord::Base
   before_destroy :require_no_tesdocs
   has_many :tesdocs
+  belongs_to :causale
 
-  attr_accessible :azienda, :tipo_doc, :descriz, :des_caus, :tipo, :movimpmag, :nrmagsrc, :nrmagdst, :contabile, :modulo
+  attr_accessible :azienda, :tipo_doc, :descriz, :des_caus, :tipo, :movimpmag, :nrmagsrc, :nrmagdst, :contabile, :causale_id, :modulo
 
   validates :azienda, :descriz, :contabile, :tipo, :movimpmag, :nrmagsrc, :nrmagdst, :presence => true
   # Fare un validate con i valori ammessi

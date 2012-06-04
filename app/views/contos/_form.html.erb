@@ -21,14 +21,15 @@
   </div>
   <div class="field">
     <b> <%= f.label "Anagrafica" %> </b> <br />
-    <%= collection_select(:conto, :anagen_id, Anagen.all, :id, :denomin,
-                          {:include_blank => true},
-                           {:data => {:remote => true, :url => url_for(:controller => :contos,
-                                                                       :action => :scontoanagen)}})%>
+    <%= collection_select(:conto, :anagen_id, Anagen.all, :id, :denomin, {:include_blank => true})%>
+  </div>
+  <div class="field">
+    <b> <%= f.label "Riferimento" %> </b> <br />
+    <%= select(:conto, :tipoconto, Conto::TIPOCONTO.invert.sort, { :prompt => true }) %>
   </div>
   <div class="field">
     <b> <%= f.label "Tipologia conto" %> </b> <br />
-    <%= select(:conto, :tipoconto, Conto::TIPOCONTO.invert.sort, { :prompt => true }) %>
+    <%= select(:conto, :tipopeo, Conto::TIPOPEO.invert.sort, { :prompt => true }) %>
   </div>
   <div class="field">
     <b> <%= f.label "Contropartita" %> </b> <br />

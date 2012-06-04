@@ -38,6 +38,10 @@ CONTO:
     C: 'Cliente__'
     F: 'Fornitore'
     A: 'Altro____'
+  TIPOPEO:
+    P: 'Patrimoniale'
+    E: 'Economico'
+    O: 'd''Ordine'
 PAESE:
   TPEU:
     E: 'Europeo'
@@ -50,3 +54,10 @@ TESDOC:
 RIGDOC:
   PATHXLS: 'C:'
   FILEXLS: 'C:'
+CAUSALE:
+  TIPOREG:
+    S: 'Si'
+    N: 'No'
+  TIPOIVA:
+    S: 'Si'
+    N: 'No'

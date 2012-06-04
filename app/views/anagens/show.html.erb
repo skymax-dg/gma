@@ -7,7 +7,18 @@
   <b>Denominazione:</b>
   <%= @anagen.denomin %>
 </p>
-
+<p>
+  <b>Luogo di nascita:</b>
+  <%= @anagen.localita.descriz unless @anagen.localita.nil? %>
+</p>
+<p>
+  <b>Data di nascita:</b>
+  <%= @anagen.dtnas.strftime('%d-%m-%Y') unless @anagen.dtnas.nil? %>
+</p>
+<p>
+  <b>Sesso:</b>
+  <%= @anagen.sesso %>
+</p>
 <p>
   <b>Codfis:</b>
   <%= @anagen.codfis %>
@@ -27,8 +38,6 @@
   <%= @anagen.email %>
   <b>Sito Web:</b>
   <%= @anagen.web %>
-  <b>Sconto:</b>
-  <%= @anagen.sconto %>
 </p>
 
 <table>

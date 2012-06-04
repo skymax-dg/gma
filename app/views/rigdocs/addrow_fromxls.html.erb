@@ -1,7 +1,19 @@
-<h1>Errori FILE EXCEL </h1>
+<h1> REPORT caricamento automatico: </h1>
 <br /> <br /> <br />
+<% if @errors.count > 0 %>
+  <b>ELENCO ERRORI:</b> <br />
+  <%= render(:partial => 'shared/lineerror', :collection => @errors) %>
+<% end %>
+<% if @success.count > 0 %>
+  <b>ELENCO SUCCESSI:</b> <br />
+  <%= render(:partial => 'shared/linesuccess', :collection => @success) %>
+<% end %>
 
-<%= render(:partial => 'shared/lineerror', :collection => @errors) unless @errors.nil? %>
 
 <br /> <br /> <br />
-<%= link_to 'Indietro', @tesdoc %>
+<b> <% if @errors.count > 0 %>
+      "Nessun articolo caricato, correggere gli errori per poter procedere al caricamento."
+    <% end %>
+</b>
+<br /> <br /> <br />
+<%= link_to 'Indietro', :back %>

@@ -15,6 +15,14 @@ class AnagensController < ApplicationController
     @anagen = Anagen.find(params[:id])
   end
 
+  def chg_tipo
+    @anagen = Anagen.new
+    @anagen.tipo = params[:anagen][:tipo]
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def create
     @anagen = Anagen.new(params[:anagen])
     if @anagen.save

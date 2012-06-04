@@ -32,7 +32,7 @@ class RigdocsController < ApplicationController
       redirect_to @tesdoc, :notice => 'Riga documento aggiunta con successo.'
     else
       flash[:error] = "Il salvataggio della riga non e' andato a buon fine"
-      render :action => :new
+      render 'new'
     end
   end
 
@@ -43,45 +43,27 @@ class RigdocsController < ApplicationController
   end
 
   def addrow_fromxls
-    Spreadsheet.open "rigdocXLS.xls" do |book|
-      @tesdoc = Tesdoc.find(params[:id])
-
+    begin
       @errors = []
-      book.worksheet(0).each 1 do |row|
-        unless row[0].blank?
-          if not Article.find_by_codice(row[0].to_s.strip)
-            @errors << "L'articolo con codice: " + row[0].to_s.strip + " riportato sulla riga: " + (row.idx + 1).to_s + " non e' presente in banca dati."
+      @success = []
+      Spreadsheet.open "rigdocXLS.xls" do |book|
+        @tesdoc = Tesdoc.find(params[:id])
+        begin
+          @errors = Article.chk_art_xls(book, 0, 1, 0)
+          raise "I seguenti articoli non sono presenti sulla banca dati" if @errors.count > 0
+          @errors, @success = @tesdoc.rigdocbyxls(book, 0, 1, {:article_id => 0, :qta => 2, :prezzo => 3, :sconto => 4})   
+          if @errors.count == 0
+            flash[:notice] = "CARICAMENTO COMPLETATO con SUCCESSO."
+          else
+            flash[:error] = "Si sono verificati ERRORI durante il caricamento (CARICAMENTO PARZIALE)"
           end
+        rescue
+          flash[:error] = $!.message
         end
       end
-      if @errors.count > 0
-#        @rigdoc = @tesdoc.rigdocs.build
-      else
-        prgrig = 1
-        prgrig = @tesdoc.rigdocs.last.prgrig + 1 unless @tesdoc.rigdocs.empty?   
-        book.worksheet(0).each 1 do |row|
-          unless row[0].blank?
-            @rigdoc = @tesdoc.rigdocs.build # La Build valorizza automaticamente il campo rigdoc.tesdoc_id
-
-            @rigdoc.article_id = Article.find_by_codice(row[0].to_s.strip).id
-            @rigdoc.descriz = Article.find_by_codice(row[0].to_s.strip).descriz
-            @rigdoc.qta = row[2]
-            @rigdoc.prezzo = row[3]
-            @rigdoc.sconto = row[4]
-            @rigdoc.prgrig = prgrig
-
-            if @rigdoc.save
-              prgrig += 1
-    #            redirect_to @tesdoc, :notice => 'Riga documento aggiunta con successo.'
-            else
-    #            flash[:error] = "Il salvataggio della riga non e' andato a buon fine"
-    #            render :action => :new
-            end
-          end
-        end
-#        redirect_to :controller => 'tesdoc', :action => "show"
-        redirect_to @tesdoc
-      end
+    rescue Exception => e
+      flash[:error] = $!.message
+      @errors << "File bloccato da un'altra applicazione o non trovato: " + e #$?.exitstatus
     end
   end
 
@@ -99,7 +81,7 @@ class RigdocsController < ApplicationController
       redirect_to @rigdoc, :notice => 'Testata documento modificata con successo.'
     else
       flash[:error] = "Il salvataggio della riga non e' andato a buon fine"
-      render :action => "edit"
+      render 'edit'
     end
   end
 

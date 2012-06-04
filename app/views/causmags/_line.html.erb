@@ -8,6 +8,7 @@
   <td><%= Causmag::NRMAG[line.nrmagsrc] %></td>
   <td><%= Causmag::NRMAG[line.nrmagdst] %></td>
   <td><%= Causmag::CONTABILE[line.contabile] %></td>
+  <td><%= line.causale.descriz unless line.causale.nil? %></td>
   <td><%= line.modulo %></td>
   <td><%= link_to 'Visualizza', line %></td>
   <td><%= link_to 'Modifica', edit_causmag_path(line) %></td>

@@ -2,12 +2,14 @@
   <td><%= line.codice %></td>
   <td><%= Anagen::TIPO[line.tipo] %></td>
   <td><%= line.denomin %></td>
+  <td><%= line.localita.descriz unless line.localita.nil? %></td>
+  <td><%= line.dtnas.strftime('%d-%m-%Y') unless line.dtnas.nil? %> </td>
+  <td><%= line.sesso %></td>
   <td><%= line.codfis %></td>
   <td><%= line.pariva %></td>
   <td><%= line.telefono %></td>
   <td><%= line.email %></td>
   <td><%= line.fax %></td>
   <td><%= line.web %></td>
-  <td><%= line.sconto %></td>
   <td><%= link_to 'Dettaglio', line %></td>
 </tr>

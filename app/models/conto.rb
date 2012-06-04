@@ -3,12 +3,13 @@ class Conto < ActiveRecord::Base
   has_many :tesdocs
   belongs_to :anagen
 
-  attr_accessible :annoese, :azienda, :codice, :descriz, :anagen_id, :tipoconto, :cntrpartita, :sconto
+  attr_accessible :annoese, :azienda, :codice, :descriz, :anagen_id, :tipoconto, :tipopeo, :cntrpartita, :sconto
 
-  validates :annoese, :azienda, :codice, :descriz, :tipoconto, :sconto, :presence => true
+  validates :annoese, :azienda, :codice, :descriz, :tipoconto, :tipopeo, :sconto, :presence => true
   validates :descriz, :length => { :maximum => 150}
   
   TIPOCONTO = $ParAzienda['CONTO']['TIPOCONTO']
+  TIPOPEO = $ParAzienda['CONTO']['TIPOPEO']
 
   def magsavailable(inivalue)
     return Hash[*Anaind::NRMAG.select{|k,v| inivalue.index(k)}.flatten] if self.anagen.nil?

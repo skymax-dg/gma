@@ -7,7 +7,6 @@ class Rigdoc < ActiveRecord::Base
   attr_accessible :descriz, :prezzo, :qta, :sconto, :article_id, :tesdoc_id, :prgrig
   validates :descriz, :length => { :maximum => 150}
 
-  
   def move(dir)
     oldprg = self.prgrig
     tesdoc = Tesdoc.find(self.tesdoc_id)
@@ -22,5 +21,4 @@ class Rigdoc < ActiveRecord::Base
     self.update_attributes(:prgrig => newprg)
     return 1
   end
-  
 end

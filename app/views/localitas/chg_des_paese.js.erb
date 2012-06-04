@@ -13,10 +13,7 @@ if (cnt == 0)
   if (cnt == 1)
   {
     $("#paese_descriz").val("<%= @des_paese %>");
-//alert("sost:" + "<%= @paeses.first.id %>" + ":");
-//alert("vecchio:" + $("#localita_paese_id").val() + ":");
-    $("#localita_paese_id").val("<%= @paeses.first.id %>");
-//alert("nuovo:" + $("#localita_paese_id").val() + ":");
+    $("#localita_paese_id").val("<%= @id %>");
   } else 
   {
     if (cnt > 1)

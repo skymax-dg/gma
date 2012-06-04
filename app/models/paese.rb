@@ -2,7 +2,7 @@ class Paese < ActiveRecord::Base
   before_destroy :require_no_localitas
   has_many :localitas
 
-  attr_accessible :descriz, :tpeu, :prepiva
+  attr_accessible :descriz, :tpeu, :codfis, :prepiva
   
   validates :descriz, :tpeu, :presence => true
   validates :descriz, :length => { :maximum => 50}

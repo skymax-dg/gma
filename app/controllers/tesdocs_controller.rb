@@ -43,7 +43,6 @@ class TesdocsController < ApplicationController
       end
       format.js
     end
-  #render "new"
   end
 
   def choose_tipo_doc
@@ -52,7 +51,7 @@ class TesdocsController < ApplicationController
 
   def show
     @tesdoc = Tesdoc.find(params[:id])
-    @rigdocs = @tesdoc.rigdocs.paginate(:page => params[:page], :per_page => 2)
+    @rigdocs = @tesdoc.rigdocs.paginate(:page => params[:page], :per_page => 10)
     @rigdocs = @rigdocs.sort {|a,b|a.prgrig<=>b.prgrig}
   end
 
@@ -75,7 +74,7 @@ class TesdocsController < ApplicationController
       @tesdoc.conto_id = @conto.id
       @tesdoc.sconto = @conto.sconto
       flash[:error] = "Il salvataggio del documento non e' andato a buon fine"
-      render :action => "new"
+      render 'new'
     end
   end
 
@@ -85,7 +84,7 @@ class TesdocsController < ApplicationController
       redirect_to @tesdoc, :notice => 'Tesdoc was successfully updated.'
     else
       flash[:error] = "Il salvataggio del documento non e' andato a buon fine"
-      render :action => "edit" 
+      render 'edit' 
     end
   end
 

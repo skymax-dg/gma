@@ -4,21 +4,24 @@ class Anagen < ActiveRecord::Base
   before_destroy :require_no_contos
   has_many :contos
   has_many :anainds, :dependent => :destroy
+  belongs_to :localita, :foreign_key => "luogonas_id"
   
-  attr_accessible :codice, :tipo, :denomin, :codfis, :pariva, :telefono, :email, :fax, :web, :sconto
+  attr_accessible :codice, :tipo, :denomin, :codfis, :pariva, :dtnas, :luogonas_id, :sesso,
+                  :telefono, :email, :fax, :web, :sconto
 
   validates :codice, :tipo, :denomin, :presence => true
   validates :codice, :uniqueness => true
 
   # Fare un validate su :tipo con i valori ammessi
-  validates :tipo,  :length => { :maximum => 1}
-  validates :denomin, :length => { :maximum => 150}
-  validates :codfis, :length => { :maximum => 16}
-  validates :pariva, :length => { :maximum => 11}
+  validates :tipo,     :length => { :maximum => 1}
+  validates :denomin,  :length => { :maximum => 150}
+  validates :codfis,   :length => { :maximum => 16}
+  validates :pariva,   :length => { :maximum => 11}
+  validates :sesso,    :length => { :maximum => 1}
   validates :telefono, :length => { :maximum => 20}
-  validates :email, :length => { :maximum => 50}
-  validates :fax, :length => { :maximum => 20}
-  validates :web, :length => { :maximum => 50}
+  validates :email,    :length => { :maximum => 50}
+  validates :fax,      :length => { :maximum => 20}
+  validates :web,      :length => { :maximum => 50}
 
   TIPO = $ParAzienda['ANAGEN']['TIPO SOGGETTO']
 

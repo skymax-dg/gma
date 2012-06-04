@@ -1,4 +1,4 @@
-<h1>Mostra Causale</h1>
+<h1>Mostra Causale di magazzino</h1>
 <p>
   <b>Azienda:</b>
   <%= @causmag.azienda %>
@@ -41,6 +41,11 @@
 <p>
   <b>Movimento contabile:</b>
   <%= Causmag::CONTABILE[@causmag.contabile] %>
+</p>
+
+<p>
+  <b>Causale contabile:</b>
+  <%= @causmag.causale.descriz unless @causmag.causale.nil? %>
 </p>
 
 <p>
