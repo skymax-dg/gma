@@ -4,6 +4,7 @@ class LocalitasController < ApplicationController
     if @des_paese.empty? 
       @nr = -1
       @paeses = Paese.all
+@nr = @paeses.count
       @des_paese = ""
     else
       @nr, @paeses = Paese.findlike_des(params[:paese][:descriz])

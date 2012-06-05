@@ -1,6 +1,6 @@
 class CausmagsController < ApplicationController
   def index
-    @causmags = Causmag.paginate(:page => params[:page], :per_page => 10)
+    @causmags = Causmag.paginate(:page => params[:page], :per_page => 20)
   end
 
   def show
@@ -21,7 +21,7 @@ class CausmagsController < ApplicationController
   def create
     @causmag = Causmag.new(params[:causmag])
     if @causmag.save
-      redirect_to @causmag, :notice => 'Causmag was successfully created.'
+      redirect_to @causmag, :notice => 'Causale di magazzino inserita con successo.'
     else
       flash[:error] = "Il salvataggio della causale non e' andato a buon fine"
       render :action => "new"
@@ -31,7 +31,7 @@ class CausmagsController < ApplicationController
   def update
     @causmag = Causmag.find(params[:id])
     if @causmag.update_attributes(params[:causmag])
-      redirect_to @causmag, :notice => 'Causmag was successfully updated.'
+      redirect_to @causmag, :notice => 'Causale di magazzino aggiornata con successo.'
     else
       flash[:error] = "Il salvataggio della causale non e' andato a buon fine"
       render :action => "edit"

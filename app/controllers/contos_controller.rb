@@ -24,7 +24,7 @@ class ContosController < ApplicationController
       render :action => "new"
     else
       if @conto.save
-        redirect_to @conto, :notice => 'Conto was successfully created.'
+        redirect_to @conto, :notice => 'Piano dei conti inserita con successo.'
       else
         flash[:error] = "Il salvataggio del piano dei conti non e' andato a buon fine"
         render :action => "new"
@@ -35,7 +35,7 @@ class ContosController < ApplicationController
   def update
     @conto = Conto.find(params[:id])
     if @conto.update_attributes(params[:conto])
-      redirect_to @conto, :notice => 'Conto was successfully updated.'
+      redirect_to @conto, :notice => 'Piano dei conti aggiornato con successo.'
     else
       flash[:error] = "Il salvataggio del piano dei conti non e' andato a buon fine"
       render :action => "edit"

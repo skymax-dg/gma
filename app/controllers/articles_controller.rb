@@ -1,6 +1,14 @@
 class ArticlesController < ApplicationController
-  def index
+  def movmag
     @articles = Article.paginate(:page => params[:page], :per_page => 10)
+  end
+
+  def movmagall
+    @articles = Article.paginate(:page => params[:page], :per_page => 10)
+  end
+
+  def index
+    @articles = Article.paginate(:page => params[:page], :per_page => 25)
   end
 
   def show
@@ -19,7 +27,7 @@ class ArticlesController < ApplicationController
   def create
     @article = Article.new(params[:article])
     if @article.save
-      redirect_to @article, :notice => 'Article was successfully created.'
+      redirect_to @article, :notice => 'Articolo inserito con successo.'
     else
       flash[:error] = "Il salvataggio dell'articolo non e' andato a buon fine"
       render :action => "new"
@@ -29,7 +37,7 @@ class ArticlesController < ApplicationController
   def update
     @article = Article.find(params[:id])
     if @article.update_attributes(params[:article])
-      redirect_to @article, :notice => 'Article was successfully updated.'
+      redirect_to @article, :notice => 'Articolo aggiornato con successo.'
     else
       flash[:error] = "Il salvataggio dell'articolo non e' andato a buon fine"
       render :action => "edit"

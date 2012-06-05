@@ -9,6 +9,7 @@ class AnagensController < ApplicationController
 
   def new
     @anagen = Anagen.new
+    @anagen.codice = Anagen.newcod
   end
 
   def edit

@@ -64,7 +64,7 @@ class TesdocsController < ApplicationController
   def create
     @tesdoc = Tesdoc.new(params[:tesdoc])
     if @tesdoc.save
-      redirect_to @tesdoc, :notice => 'Tesdoc was successfully created.'
+      redirect_to @tesdoc, :notice => 'Testata documento inserita con successo.'
     else
       @causmag = Causmag.find(params[:tesdoc][:causmag_id])
       @conto = Conto.find(params[:tesdoc][:conto_id])
@@ -81,7 +81,7 @@ class TesdocsController < ApplicationController
   def update
     @tesdoc = Tesdoc.find(params[:id])
     if @tesdoc.update_attributes(params[:tesdoc])
-      redirect_to @tesdoc, :notice => 'Tesdoc was successfully updated.'
+      redirect_to @tesdoc, :notice => 'Testata docuemnto aggiornata con successo.'
     else
       flash[:error] = "Il salvataggio del documento non e' andato a buon fine"
       render 'edit' 

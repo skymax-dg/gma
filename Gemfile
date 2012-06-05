@@ -13,6 +13,8 @@ gem 'json'
 gem 'will_paginate', '~> 3.0.beta'
 
 gem 'spreadsheet'
+gem 'ruport'
+gem 'acts_as_reportable'
 
 # Gems used only for assets and not required
 # in production environments by default.

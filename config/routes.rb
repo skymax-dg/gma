@@ -17,7 +17,14 @@ Gma::Application.routes.draw do
 
   resources :paeses
 
-  resources :articles
+  resources :articles do
+    member do
+      get :movmag
+    end
+    collection do
+      get :movmagall
+    end
+  end
 
   resources :causmags
 

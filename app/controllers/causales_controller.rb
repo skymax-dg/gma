@@ -19,7 +19,7 @@ class CausalesController < ApplicationController
   def create
     @causale = Causale.new(params[:causale])
     if @causale.save
-      redirect_to @causale, :notice => 'Causale was successfully created.'
+      redirect_to @causale, :notice => 'Causale contabile inserita con successo.'
     else
       flash[:error] = "Il salvataggio della causale non e' andato a buon fine"
       render :action => "new"
@@ -29,7 +29,7 @@ class CausalesController < ApplicationController
   def update
     @causale = Causale.find(params[:id])
     if @causale.update_attributes(params[:causale])
-      redirect_to @causale, :notice => 'Causale was successfully updated.'
+      redirect_to @causale, :notice => 'Causale contabile aggiornata con successo.'
     else
       flash[:error] = "Il salvataggio della causale non e' andato a buon fine"
       render :action => "edit"

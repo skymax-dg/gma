@@ -15,5 +15,6 @@ class CreateTesdocs < ActiveRecord::Migration
     end
     add_index :tesdocs, :causmag_id
     add_index :tesdocs, :conto_id
+    add_index :tesdocs, [:data_doc, :num_doc], {:name => "idx_tesdocs_on_data_doc_num_doc"}
   end
 end

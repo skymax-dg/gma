@@ -180,6 +180,7 @@ ActiveRecord::Schema.define(:version => 20120604110247) do
 
   add_index "tesdocs", ["causmag_id"], :name => "index_tesdocs_on_causmag_id"
   add_index "tesdocs", ["conto_id"], :name => "index_tesdocs_on_conto_id"
+  add_index "tesdocs", ["data_doc", "num_doc"], :name => "idx_tesdocs_on_data_doc_num_doc"
 
   create_table "users", :force => true do |t|
     t.integer  "azienda",                  :null => false

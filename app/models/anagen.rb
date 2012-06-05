@@ -35,6 +35,10 @@ class Anagen < ActiveRecord::Base
     Hash[*Anaind::NRMAG.select{|k,v| (mags+inivalue).index(k)}.flatten]
   end
 
+  def self.newcod()
+    (select("max(codice) as maxcod")[0].maxcod.to_i||0) + 1
+  end
+
   private
 
   def require_no_contos
