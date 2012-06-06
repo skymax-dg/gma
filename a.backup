@@ -1,0 +1,1596 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.1.3
+-- Dumped by pg_dump version 9.1.3
+-- Started on 2012-06-06 17:33:19
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- TOC entry 2025 (class 1262 OID 16887)
+-- Dependencies: 2024
+-- Name: gma_dev; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON DATABASE gma_dev IS 'Database di sviluppo';
+
+
+--
+-- TOC entry 187 (class 3079 OID 11639)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2028 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 161 (class 1259 OID 16888)
+-- Dependencies: 6
+-- Name: anagens; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE anagens (
+    id integer NOT NULL,
+    codice integer NOT NULL,
+    tipo character varying(1) NOT NULL,
+    codfis character varying(16),
+    pariva character varying(11),
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    denomin character varying(150),
+    telefono character varying(20),
+    email character varying(50),
+    fax character varying(20),
+    web character varying(50),
+    dtnas date,
+    sesso character varying(1),
+    luogonas_id integer
+);
+
+
+ALTER TABLE public.anagens OWNER TO postgres;
+
+--
+-- TOC entry 162 (class 1259 OID 16892)
+-- Dependencies: 6 161
+-- Name: anagens_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE anagens_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.anagens_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2029 (class 0 OID 0)
+-- Dependencies: 162
+-- Name: anagens_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE anagens_id_seq OWNED BY anagens.id;
+
+
+--
+-- TOC entry 2030 (class 0 OID 0)
+-- Dependencies: 162
+-- Name: anagens_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('anagens_id_seq', 18, true);
+
+
+--
+-- TOC entry 179 (class 1259 OID 17072)
+-- Dependencies: 1944 1945 1946 6
+-- Name: anainds; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE anainds (
+    id integer NOT NULL,
+    anagen_id integer,
+    indir character varying(100),
+    desloc character varying(100),
+    cap character varying(5),
+    nrmag integer NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    localita_id integer,
+    flsl character varying(1) DEFAULT 'S'::character varying NOT NULL,
+    flsp character varying(1) DEFAULT 'S'::character varying NOT NULL,
+    flmg character varying(1) DEFAULT 'N'::character varying NOT NULL
+);
+
+
+ALTER TABLE public.anainds OWNER TO postgres;
+
+--
+-- TOC entry 178 (class 1259 OID 17070)
+-- Dependencies: 6 179
+-- Name: anainds_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE anainds_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.anainds_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2031 (class 0 OID 0)
+-- Dependencies: 178
+-- Name: anainds_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE anainds_id_seq OWNED BY anainds.id;
+
+
+--
+-- TOC entry 2032 (class 0 OID 0)
+-- Dependencies: 178
+-- Name: anainds_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('anainds_id_seq', 31, true);
+
+
+--
+-- TOC entry 163 (class 1259 OID 16894)
+-- Dependencies: 1924 6
+-- Name: articles; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE articles (
+    id integer NOT NULL,
+    azienda integer NOT NULL,
+    codice character varying(20) NOT NULL,
+    descriz character varying(100) NOT NULL,
+    prezzo numeric(8,2) DEFAULT 0 NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.articles OWNER TO postgres;
+
+--
+-- TOC entry 164 (class 1259 OID 16898)
+-- Dependencies: 163 6
+-- Name: articles_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE articles_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.articles_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2033 (class 0 OID 0)
+-- Dependencies: 164
+-- Name: articles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE articles_id_seq OWNED BY articles.id;
+
+
+--
+-- TOC entry 2034 (class 0 OID 0)
+-- Dependencies: 164
+-- Name: articles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('articles_id_seq', 650, true);
+
+
+--
+-- TOC entry 185 (class 1259 OID 17210)
+-- Dependencies: 6
+-- Name: causales; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE causales (
+    id integer NOT NULL,
+    azienda integer NOT NULL,
+    descriz character varying(100) NOT NULL,
+    tipoiva character varying(1) NOT NULL,
+    tiporeg character varying(1) NOT NULL,
+    contoiva integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.causales OWNER TO postgres;
+
+--
+-- TOC entry 184 (class 1259 OID 17208)
+-- Dependencies: 185 6
+-- Name: causales_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE causales_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.causales_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2035 (class 0 OID 0)
+-- Dependencies: 184
+-- Name: causales_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE causales_id_seq OWNED BY causales.id;
+
+
+--
+-- TOC entry 2036 (class 0 OID 0)
+-- Dependencies: 184
+-- Name: causales_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('causales_id_seq', 2, true);
+
+
+--
+-- TOC entry 165 (class 1259 OID 16900)
+-- Dependencies: 1927 1928 6
+-- Name: causmags; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE causmags (
+    id integer NOT NULL,
+    azienda integer NOT NULL,
+    descriz character varying(100) NOT NULL,
+    tipo character varying(1) NOT NULL,
+    movimpmag character varying(1) NOT NULL,
+    contabile character varying(1) NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    tipo_doc integer DEFAULT 0 NOT NULL,
+    des_caus character varying(100),
+    modulo character varying(50),
+    nrmagsrc integer NOT NULL,
+    nrmagdst integer NOT NULL,
+    causale_id integer,
+    magcli character varying(1) DEFAULT 'N'::character varying
+);
+
+
+ALTER TABLE public.causmags OWNER TO postgres;
+
+--
+-- TOC entry 166 (class 1259 OID 16903)
+-- Dependencies: 165 6
+-- Name: causmags_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE causmags_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.causmags_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2037 (class 0 OID 0)
+-- Dependencies: 166
+-- Name: causmags_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE causmags_id_seq OWNED BY causmags.id;
+
+
+--
+-- TOC entry 2038 (class 0 OID 0)
+-- Dependencies: 166
+-- Name: causmags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('causmags_id_seq', 18, true);
+
+
+--
+-- TOC entry 167 (class 1259 OID 16905)
+-- Dependencies: 1929 6
+-- Name: contos; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE contos (
+    id integer NOT NULL,
+    azienda integer NOT NULL,
+    annoese integer NOT NULL,
+    codice integer NOT NULL,
+    descriz character varying(150) NOT NULL,
+    tipoconto character varying(1) NOT NULL,
+    cntrpartita integer,
+    sconto numeric(5,2) DEFAULT 0 NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    anagen_id integer,
+    tipopeo character varying(1) NOT NULL
+);
+
+
+ALTER TABLE public.contos OWNER TO postgres;
+
+--
+-- TOC entry 168 (class 1259 OID 16912)
+-- Dependencies: 167 6
+-- Name: contos_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE contos_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.contos_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2039 (class 0 OID 0)
+-- Dependencies: 168
+-- Name: contos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE contos_id_seq OWNED BY contos.id;
+
+
+--
+-- TOC entry 2040 (class 0 OID 0)
+-- Dependencies: 168
+-- Name: contos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('contos_id_seq', 6, true);
+
+
+--
+-- TOC entry 183 (class 1259 OID 17095)
+-- Dependencies: 6
+-- Name: localitas; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE localitas (
+    id integer NOT NULL,
+    descriz character varying(50) NOT NULL,
+    prov character varying(2),
+    cap character varying(5),
+    paese_id integer,
+    codfis character varying(4),
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.localitas OWNER TO postgres;
+
+--
+-- TOC entry 182 (class 1259 OID 17093)
+-- Dependencies: 6 183
+-- Name: localitas_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE localitas_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.localitas_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2041 (class 0 OID 0)
+-- Dependencies: 182
+-- Name: localitas_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE localitas_id_seq OWNED BY localitas.id;
+
+
+--
+-- TOC entry 2042 (class 0 OID 0)
+-- Dependencies: 182
+-- Name: localitas_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('localitas_id_seq', 6, true);
+
+
+--
+-- TOC entry 171 (class 1259 OID 16924)
+-- Dependencies: 1932 1933 1935 6
+-- Name: rigdocs; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE rigdocs (
+    id integer NOT NULL,
+    tesdoc_id integer NOT NULL,
+    article_id integer,
+    descriz character varying(150),
+    qta integer,
+    prezzo numeric(8,2) DEFAULT 0 NOT NULL,
+    sconto numeric(5,2) DEFAULT 0 NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    prgrig integer DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE public.rigdocs OWNER TO postgres;
+
+--
+-- TOC entry 174 (class 1259 OID 16934)
+-- Dependencies: 1936 1938 1939 1940 1941 6
+-- Name: tesdocs; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tesdocs (
+    id integer NOT NULL,
+    azienda integer NOT NULL,
+    annoese integer NOT NULL,
+    num_doc integer NOT NULL,
+    data_doc date NOT NULL,
+    descriz character varying(150),
+    causmag_id integer,
+    conto_id integer,
+    sconto numeric(5,2) DEFAULT 0 NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    nrmagsrc integer DEFAULT 0 NOT NULL,
+    nrmagdst integer DEFAULT 0 NOT NULL,
+    seguefatt character varying(1) DEFAULT 'N'::character varying NOT NULL,
+    tipo_doc integer DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE public.tesdocs OWNER TO postgres;
+
+--
+-- TOC entry 186 (class 1259 OID 17232)
+-- Dependencies: 1922 6
+-- Name: movmagarticle; Type: VIEW; Schema: public; Owner: postgres
+--
+
+CREATE VIEW movmagarticle AS
+    SELECT articles.codice, articles.descriz, rigdocs.qta, tesdocs.num_doc, tesdocs.data_doc, causmags.descriz AS causale, causmags.tipo AS direz, causmags.movimpmag AS mag FROM (((articles JOIN rigdocs ON ((articles.id = rigdocs.article_id))) JOIN tesdocs ON ((rigdocs.tesdoc_id = tesdocs.id))) JOIN causmags ON ((tesdocs.causmag_id = causmags.id))) WHERE ((causmags.movimpmag)::text = ANY ((ARRAY['M'::character varying, 'I'::character varying])::text[])) ORDER BY tesdocs.data_doc, tesdocs.num_doc;
+
+
+ALTER TABLE public.movmagarticle OWNER TO postgres;
+
+--
+-- TOC entry 181 (class 1259 OID 17086)
+-- Dependencies: 6
+-- Name: paeses; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE paeses (
+    id integer NOT NULL,
+    descriz character varying(50) NOT NULL,
+    tpeu character varying(1) NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    prepiva character varying(2),
+    codfis character varying(4)
+);
+
+
+ALTER TABLE public.paeses OWNER TO postgres;
+
+--
+-- TOC entry 180 (class 1259 OID 17084)
+-- Dependencies: 6 181
+-- Name: paeses_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE paeses_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.paeses_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2043 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: paeses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE paeses_id_seq OWNED BY paeses.id;
+
+
+--
+-- TOC entry 2044 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: paeses_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('paeses_id_seq', 9, true);
+
+
+--
+-- TOC entry 169 (class 1259 OID 16919)
+-- Dependencies: 6
+-- Name: prezzoarticclis; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE prezzoarticclis (
+    id integer NOT NULL,
+    azienda integer NOT NULL,
+    anag_id integer,
+    artic_id integer,
+    prezzo numeric(8,2) NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.prezzoarticclis OWNER TO postgres;
+
+--
+-- TOC entry 170 (class 1259 OID 16922)
+-- Dependencies: 169 6
+-- Name: prezzoarticclis_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE prezzoarticclis_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.prezzoarticclis_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2045 (class 0 OID 0)
+-- Dependencies: 170
+-- Name: prezzoarticclis_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE prezzoarticclis_id_seq OWNED BY prezzoarticclis.id;
+
+
+--
+-- TOC entry 2046 (class 0 OID 0)
+-- Dependencies: 170
+-- Name: prezzoarticclis_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('prezzoarticclis_id_seq', 1, false);
+
+
+--
+-- TOC entry 172 (class 1259 OID 16929)
+-- Dependencies: 6 171
+-- Name: rigdocs_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE rigdocs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.rigdocs_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2047 (class 0 OID 0)
+-- Dependencies: 172
+-- Name: rigdocs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE rigdocs_id_seq OWNED BY rigdocs.id;
+
+
+--
+-- TOC entry 2048 (class 0 OID 0)
+-- Dependencies: 172
+-- Name: rigdocs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('rigdocs_id_seq', 232, true);
+
+
+--
+-- TOC entry 173 (class 1259 OID 16931)
+-- Dependencies: 6
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE schema_migrations (
+    version character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.schema_migrations OWNER TO postgres;
+
+--
+-- TOC entry 175 (class 1259 OID 16938)
+-- Dependencies: 174 6
+-- Name: tesdocs_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tesdocs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tesdocs_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2049 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: tesdocs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tesdocs_id_seq OWNED BY tesdocs.id;
+
+
+--
+-- TOC entry 2050 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: tesdocs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tesdocs_id_seq', 16, true);
+
+
+--
+-- TOC entry 177 (class 1259 OID 17051)
+-- Dependencies: 6
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE users (
+    id integer NOT NULL,
+    azienda integer NOT NULL,
+    login character varying(20) NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.users OWNER TO postgres;
+
+--
+-- TOC entry 176 (class 1259 OID 17049)
+-- Dependencies: 177 6
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2051 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE users_id_seq OWNED BY users.id;
+
+
+--
+-- TOC entry 2052 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('users_id_seq', 1, false);
+
+
+--
+-- TOC entry 1923 (class 2604 OID 16940)
+-- Dependencies: 162 161
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY anagens ALTER COLUMN id SET DEFAULT nextval('anagens_id_seq'::regclass);
+
+
+--
+-- TOC entry 1943 (class 2604 OID 17075)
+-- Dependencies: 179 178 179
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY anainds ALTER COLUMN id SET DEFAULT nextval('anainds_id_seq'::regclass);
+
+
+--
+-- TOC entry 1925 (class 2604 OID 16941)
+-- Dependencies: 164 163
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY articles ALTER COLUMN id SET DEFAULT nextval('articles_id_seq'::regclass);
+
+
+--
+-- TOC entry 1949 (class 2604 OID 17213)
+-- Dependencies: 184 185 185
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY causales ALTER COLUMN id SET DEFAULT nextval('causales_id_seq'::regclass);
+
+
+--
+-- TOC entry 1926 (class 2604 OID 16942)
+-- Dependencies: 166 165
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY causmags ALTER COLUMN id SET DEFAULT nextval('causmags_id_seq'::regclass);
+
+
+--
+-- TOC entry 1930 (class 2604 OID 16943)
+-- Dependencies: 168 167
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY contos ALTER COLUMN id SET DEFAULT nextval('contos_id_seq'::regclass);
+
+
+--
+-- TOC entry 1948 (class 2604 OID 17098)
+-- Dependencies: 183 182 183
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY localitas ALTER COLUMN id SET DEFAULT nextval('localitas_id_seq'::regclass);
+
+
+--
+-- TOC entry 1947 (class 2604 OID 17089)
+-- Dependencies: 181 180 181
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY paeses ALTER COLUMN id SET DEFAULT nextval('paeses_id_seq'::regclass);
+
+
+--
+-- TOC entry 1931 (class 2604 OID 16945)
+-- Dependencies: 170 169
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY prezzoarticclis ALTER COLUMN id SET DEFAULT nextval('prezzoarticclis_id_seq'::regclass);
+
+
+--
+-- TOC entry 1934 (class 2604 OID 16946)
+-- Dependencies: 172 171
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY rigdocs ALTER COLUMN id SET DEFAULT nextval('rigdocs_id_seq'::regclass);
+
+
+--
+-- TOC entry 1937 (class 2604 OID 16947)
+-- Dependencies: 175 174
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tesdocs ALTER COLUMN id SET DEFAULT nextval('tesdocs_id_seq'::regclass);
+
+
+--
+-- TOC entry 1942 (class 2604 OID 17054)
+-- Dependencies: 177 176 177
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+
+
+--
+-- TOC entry 2009 (class 0 OID 16888)
+-- Dependencies: 161
+-- Data for Name: anagens; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY anagens (id, codice, tipo, codfis, pariva, created_at, updated_at, denomin, telefono, email, fax, web, dtnas, sesso, luogonas_id) FROM stdin;
+9	1	G			2012-06-05 10:13:02.647996	2012-06-05 10:13:02.647996	EIFIS EDITORE					\N	\N	\N
+12	2	G			2012-06-05 10:17:59.022948	2012-06-05 10:17:59.022948	MESSAGGERIE					\N	\N	\N
+13	3	G			2012-06-05 10:18:26.437516	2012-06-05 10:18:26.437516	MACRO EDIZIONI GOLDEN BOOKS					\N	\N	\N
+14	4	G			2012-06-05 10:18:40.925344	2012-06-05 10:18:40.925344	LIBRERIA DELLE STELLE					\N	\N	\N
+15	5	G			2012-06-05 10:18:54.756136	2012-06-05 10:18:54.756136	PHYL					\N	\N	\N
+16	6	G			2012-06-05 10:23:59.987594	2012-06-05 10:23:59.987594	MONDADORI					\N	\N	\N
+17	7	G			2012-06-05 10:24:18.541655	2012-06-05 10:24:18.541655	CENTRO GRAFICO CERVESE					\N	\N	\N
+18	8	G			2012-06-05 10:24:32.364446	2012-06-05 10:24:32.364446	WAFRA					\N	\N	\N
+\.
+
+
+--
+-- TOC entry 2018 (class 0 OID 17072)
+-- Dependencies: 179
+-- Data for Name: anainds; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY anainds (id, anagen_id, indir, desloc, cap, nrmag, created_at, updated_at, localita_id, flsl, flsp, flmg) FROM stdin;
+31	9	VIA MALVA NORD, 28	CERVIA (RA) - ITALIA	48015	1	2012-06-05 10:13:26.135339	2012-06-05 10:14:03.657486	3	S	S	S
+\.
+
+
+--
+-- TOC entry 2010 (class 0 OID 16894)
+-- Dependencies: 163
+-- Data for Name: articles; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY articles (id, azienda, codice, descriz, prezzo, created_at, updated_at) FROM stdin;
+612	1	7517035-6	MIRACOLI POSSIBILI	11.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+613	1	7517036-3	L'ORIGINE DEL MODERNO P. H .ED ARHATIC YOGA	29.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+614	1	7517037-1	CHAKRA CABBALISTICI	25.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+615	1	7517038-X	SENSITIVI	24.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+616	1	7517039-8	RADIESTESIA-ELETTROMAGNETISMI-NATUROPATIA	24.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+617	1	7517040-1	L'ALBERO DELLA VITA	23.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+618	1	7517042-8	CIBO PER L' ANIMA	23.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+619	1	7517044-8	SGRANOCCHIO E LA STREGA CONTADINA	12.90	2012-06-05 00:00:00	2012-06-05 00:00:00
+620	1	7517045-5	ANTONIA – VITA TRA CIELO E TERRA	14.50	2012-06-05 00:00:00	2012-06-05 00:00:00
+621	1	7517046-0	DADA	12.90	2012-06-05 00:00:00	2012-06-05 00:00:00
+622	1	7517048-7	IL GUARDIANO DELLA CASA SUL COLLE	9.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+623	1	7517049-5	PRANIC HEALING CON I CRISTALLI	25.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+582	1	7517000-4	MEDITAZ. UNIVERS. E CABAL. SUL PADRE NOSTRO-ca	30.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+583	1	7517002-9	IL RESPIRO DELLA TERRA	18.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+584	1	7517003-7	GUERISON PRANIQUE	33.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+585	1	7517004-5	MIRACOLI CON IL PRANIC HEALING	30.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+586	1	7517005-3	PSICOTERAPIA CON IL PRANIC HEALING	26.50	2012-06-05 00:00:00	2012-06-05 00:00:00
+587	1	7517006-1	ERBE EROTICHE	12.50	2012-06-05 00:00:00	2012-06-05 00:00:00
+588	1	7517007-X	L'ESSENZA SPIRITUALE DELL' UOMO	30.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+589	1	7517008-8	AZIONI ISPIRATE	11.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+590	1	7517009-6	OLTRE LA MENTE	11.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+591	1	7517010-X	IRIDOLOGIA MANUALE PRATICO	13.50	2012-06-05 00:00:00	2012-06-05 00:00:00
+592	1	7517047-9	PRANIC HEALING AVANZATO	30.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+593	1	7517014-2	LE PIETRE DELLA CONSAPEVOLEZZA	25.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+594	1	7517015-0	LE TUE MANI POSSONO GUARIRTI	29.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+595	1	7517016-9	OMEOPATIA FAI DA TE	19.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+596	1	7517017-0	ASTROLOGIA	19.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+597	1	7517018-5	AUTODIFESA PSICHICA PER LA CASA E PER L'UFFICIO	24.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+598	1	7517019-3	OM MANI PADME HUM	39.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+599	1	7517020-2	INDUISMO RIVELATO	29.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+600	1	7517021-5	AYURVEDA: SATTVA E DHARMA, LA VIA DELLA REAL.	22.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+601	1	7517022-3	IL SEGRETO DI ROL	24.50	2012-06-05 00:00:00	2012-06-05 00:00:00
+602	1	7517023-1	RAGGIUNGERE L'ANIMA SUPERIORE	37.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+603	1	7517025-0	REALIZZARE L' IMPOSSIBILE	11.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+604	1	7517026-6	SPERIMENTARE L' ESSERE	11.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+605	1	7517027-4	OBBIETTIVITA' COMPASSIONEVOLE	11.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+606	1	7517028-2	TRASFORMAZIONE CREATIVA	11.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+607	1	7517029-0	I 72 NOMI DI DIO	28.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+608	1	7517030-4	AUTOSTIMA-MANUALE 	22.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+609	1	7517031-2	IL LIBRO DI ABRAMO	23.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+610	1	7517032-0	GUERISON PRANIQUE AVANCEE	33.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+611	1	7517033-9	SUPERBRAIN YOGA	29.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+624	1	7517050-9	IL CANTO DEGLI ALBERI	24.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+625	1	7517051-6	LA FONTE DELLA RICCHEZZA	19.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+626	1	7517052-3	ECORADIESTESIA	21.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+627	1	7517053-0	I GUERRIERI DI PSICHE	20.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+628	1	7517054-7	LEZIONI DI CABALA	28.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+629	1	7517055-4	CHAKRA	19.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+630	1	7517056-1	GAYATRI MANTRA	16.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+631	1	7517057-8	AMIN MANTRA	16.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+632	1	7517058-5	BELLEZZA BIO	25.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+633	1	7517059-2	LA RUOTA DEI CICLI CABALISTICI	22.50	2012-06-05 00:00:00	2012-06-05 00:00:00
+634	1	7517060-8	VAJRAGURU MANTRA	19.90	2012-06-05 00:00:00	2012-06-05 00:00:00
+635	1	7517061-5	RISCOPRI IL POTERE CHE E' IN TE	13.90	2012-06-05 00:00:00	2012-06-05 00:00:00
+636	1	7517062-2	MIGLIORA LA TUA VITA CON LA MEDITAZIONE	13.90	2012-06-05 00:00:00	2012-06-05 00:00:00
+637	1	7517063-9	IL DIAVOLO DALLA BOCCA	19.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+638	1	7517064-6	IL FASCINO DEL MALE	18.50	2012-06-05 00:00:00	2012-06-05 00:00:00
+639	1	7517065-3	UN ANNO CON LA LUNA	12.90	2012-06-05 00:00:00	2012-06-05 00:00:00
+640	1	7517066-0	POWER HEALING	19.50	2012-06-05 00:00:00	2012-06-05 00:00:00
+641	1	7517067-7	RITORNO A CASA	26.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+642	1	7517068-4	LE DINAMICHE DEL SUCCESSO	19.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+643	1	7517069-1	L'ESISTENZA DI DIO E' AUTOEVIDENTE	15.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+644	1	CD001	MEDITAZ. SUI CUORI GEMELLI PACE ED ILLUMIN. 	20.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+645	1	CD002	MEDITAZIONE SUI CUORI GEMELLI CON SELF HEALING	20.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+646	1	CD003	MEDITAZ. SUI CUORI GEMELLI  BENESSERE FIS.-PSICOL.	20.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+647	1	CD004	MEDITAZ. UNIVERSALE E CABALISTICA PADRE NOSTRO	20.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+648	1	CD005	OM – IL SUONO SACRO DELLA CREAZIONE	16.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+649	1	CD006	OM SHANTI – IL MANTRA DELLA PACE	16.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+650	1	CD007	OM MANI PADME HUM.	16.00	2012-06-05 00:00:00	2012-06-05 00:00:00
+\.
+
+
+--
+-- TOC entry 2021 (class 0 OID 17210)
+-- Dependencies: 185
+-- Data for Name: causales; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY causales (id, azienda, descriz, tipoiva, tiporeg, contoiva, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2011 (class 0 OID 16900)
+-- Dependencies: 165
+-- Data for Name: causmags; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY causmags (id, azienda, descriz, tipo, movimpmag, contabile, created_at, updated_at, tipo_doc, des_caus, modulo, nrmagsrc, nrmagdst, causale_id, magcli) FROM stdin;
+7	1	DDT IN C/ASSOLUTO	U	M	N	2012-06-05 10:27:52.6249	2012-06-06 10:26:27.746222	0	DDT IN C/ASSOLUTO		1	1	\N	N
+8	1	DDT RESO DA C/ASSOLUTO	E	M	N	2012-06-05 10:35:30.465087	2012-06-05 10:37:20.65939	0	DDT RESO DA C/ASSOLUTO		1	1	\N	N
+9	1	FATTURA RIEPILOGATIVA	U	N	S	2012-06-05 10:40:28.163114	2012-06-05 10:40:28.163114	0	FATTURA RIEPILOGATIVA		0	0	\N	N
+10	1	NOTA DI CREDITO RIEPILOGATIVA	E	N	S	2012-06-05 10:40:50.759407	2012-06-05 10:40:50.759407	0	NOTA DI CREDITO RIEPILOGATIVA		0	0	\N	N
+11	1	FATTURA IMMEDIATA	U	M	S	2012-06-05 10:42:38.68558	2012-06-05 10:42:38.68558	0	FATTURA IMMEDIATA		1	1	\N	N
+12	1	NOTA DI CREDITO IMMEDIATA	E	M	S	2012-06-05 10:43:22.389079	2012-06-05 10:43:22.389079	0	NOTA DI CREDITO IMMEDIATA		1	1	\N	N
+13	1	DDT IN C/VENDITA	U	M	N	2012-06-05 10:44:16.548177	2012-06-06 08:44:30.608718	0	DDT IN C/VENDITA		1	1	\N	C
+14	1	RESO DA C/VENDITA	E	M	N	2012-06-05 10:45:14.371484	2012-06-06 08:44:43.270442	0	RESO DA C/VENDITA		1	1	\N	S
+15	1	FATTURA DA RENDICONTO VENDITE	U	N	S	2012-06-05 10:46:26.301599	2012-06-06 08:43:05.84887	0	FATTURA DA RENDICONTO VENDITE		0	0	\N	S
+16	1	NOTA DI CREDITO DA RENDICONTO RESI	E	N	S	2012-06-05 10:47:27.434095	2012-06-06 08:44:03.613174	0	NOTA DI CREDITO DA RENDICONTO RESI		0	0	\N	C
+17	1	FORNITURA ARTICOLI	E	M	S	2012-06-05 10:49:25.378841	2012-06-05 10:49:25.378841	0	FORNITURA ARTICOLI		1	1	\N	N
+18	1	RESO SU FORNITURA ARTICOLI	U	M	S	2012-06-05 10:50:15.845728	2012-06-05 10:50:15.845728	0	RESO SU FORNITURA ARTICOLI		1	1	\N	N
+\.
+
+
+--
+-- TOC entry 2012 (class 0 OID 16905)
+-- Dependencies: 167
+-- Data for Name: contos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY contos (id, azienda, annoese, codice, descriz, tipoconto, cntrpartita, sconto, created_at, updated_at, anagen_id, tipopeo) FROM stdin;
+5	1	2012	123456789	conto MESSAGGERIE	C	\N	0.00	2012-06-05 12:55:34.536239	2012-06-05 12:55:34.536239	12	E
+6	1	2012	123456788	conto fornitore	C	\N	0.00	2012-06-06 10:16:47.483032	2012-06-06 10:16:47.483032	16	E
+\.
+
+
+--
+-- TOC entry 2020 (class 0 OID 17095)
+-- Dependencies: 183
+-- Data for Name: localitas; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY localitas (id, descriz, prov, cap, paese_id, codfis, created_at, updated_at) FROM stdin;
+1	CESENATICO	FC	47042	1	C574	2012-05-17 14:49:19.794323	2012-05-17 14:56:05.256514
+3	CERVIA	RA		1		2012-05-18 14:36:04.993197	2012-05-31 10:51:54.706515
+\.
+
+
+--
+-- TOC entry 2019 (class 0 OID 17086)
+-- Dependencies: 181
+-- Data for Name: paeses; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY paeses (id, descriz, tpeu, created_at, updated_at, prepiva, codfis) FROM stdin;
+1	ITALIA	E	2012-05-17 00:00:00	2012-05-17 00:00:00	IT	\N
+6	INGHILTERRA	E	2012-05-31 07:30:33.769095	2012-05-31 07:30:33.769095	EN	Zaaa
+7	FRANCIA	E	2012-05-31 08:04:09.372636	2012-05-31 08:04:09.372636	FR	Zbbb
+\.
+
+
+--
+-- TOC entry 2013 (class 0 OID 16919)
+-- Dependencies: 169
+-- Data for Name: prezzoarticclis; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY prezzoarticclis (id, azienda, anag_id, artic_id, prezzo, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2014 (class 0 OID 16924)
+-- Dependencies: 171
+-- Data for Name: rigdocs; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY rigdocs (id, tesdoc_id, article_id, descriz, qta, prezzo, sconto, created_at, updated_at, prgrig) FROM stdin;
+223	9	582	riga numero 1 doc 1	3	30.00	0.00	2012-06-05 13:12:34.72259	2012-06-05 13:12:34.72259	1
+224	10	582	riga numero 1 doc 2	88	12.00	0.00	2012-06-06 10:19:37.821775	2012-06-06 10:19:37.821775	1
+225	10	582	ddd	11	13.00	0.00	2012-06-06 10:20:20.582221	2012-06-06 10:20:20.582221	2
+226	10	619		18	7.00	0.00	2012-06-06 10:20:41.387411	2012-06-06 10:20:41.387411	3
+227	11	582		4	11.00	0.00	2012-06-06 10:22:15.227778	2012-06-06 10:22:15.227778	1
+228	12	582		3	30.00	0.00	2012-06-06 10:23:48.319103	2012-06-06 10:23:48.319103	1
+229	13	582		1	30.00	0.00	2012-06-06 10:24:34.652753	2012-06-06 10:24:34.652753	1
+230	14	582		1	30.00	0.00	2012-06-06 10:28:33.874436	2012-06-06 10:28:33.874436	1
+231	15	582		1	30.00	0.00	2012-06-06 10:29:24.312321	2012-06-06 10:29:24.312321	1
+232	16	582		1	30.00	0.00	2012-06-06 10:30:07.181773	2012-06-06 10:30:07.181773	1
+\.
+
+
+--
+-- TOC entry 2015 (class 0 OID 16931)
+-- Dependencies: 173
+-- Data for Name: schema_migrations; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY schema_migrations (version) FROM stdin;
+20120504130809
+20120504142807
+20120504150604
+20120504161156
+20120506220858
+20120506235719
+20120507075719
+20120507122426
+20120507215510
+20120507234249
+20120507234312
+20120508132703
+20120514123353
+20120514123408
+20120514130121
+20120514144637
+20120514213227
+20120514230627
+20120516075628
+20120516075648
+20120516082443
+20120516102324
+20120516143120
+20120517152528
+20120518120606
+20120529130351
+20120529130845
+20120529131344
+20120529131711
+20120601071143
+20120601071658
+20120601093206
+20120601114544
+20120604110107
+20120604110247
+20120605223647
+\.
+
+
+--
+-- TOC entry 2016 (class 0 OID 16934)
+-- Dependencies: 174
+-- Data for Name: tesdocs; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tesdocs (id, azienda, annoese, num_doc, data_doc, descriz, causmag_id, conto_id, sconto, created_at, updated_at, nrmagsrc, nrmagdst, seguefatt, tipo_doc) FROM stdin;
+9	1	2012	1	2012-06-05	doc prova	13	5	0.00	2012-06-05 13:04:51.292083	2012-06-05 13:04:51.292083	1	0	N	0
+10	1	2012	2	2012-06-03	fornitura 120 pezzi	17	6	0.00	2012-06-06 10:19:00.681651	2012-06-06 10:19:00.681651	0	1	N	0
+11	1	2012	3	2012-06-06	reso a fornitore	18	6	0.00	2012-06-06 10:21:56.065682	2012-06-06 10:21:56.065682	1	0	N	0
+12	1	2012	4	2012-06-06	fatt immediata	11	5	0.00	2012-06-06 10:23:34.611319	2012-06-06 10:23:34.611319	1	0	N	0
+13	1	2012	5	2012-06-06	dd	12	5	0.00	2012-06-06 10:24:18.207812	2012-06-06 10:24:18.207812	0	1	N	0
+14	1	2012	4	2012-06-06	reso da c/vendita	14	5	0.00	2012-06-06 10:28:15.290373	2012-06-06 10:28:15.290373	0	1	N	0
+15	1	2012	4	2012-06-06	fatt da rend.vendite	15	5	0.00	2012-06-06 10:29:16.116852	2012-06-06 10:29:16.116852	0	0	N	0
+16	1	2012	4	2012-06-06	nc da rendiconto resi	16	5	0.00	2012-06-06 10:29:58.881298	2012-06-06 10:29:58.881298	0	0	N	0
+\.
+
+
+--
+-- TOC entry 2017 (class 0 OID 17051)
+-- Dependencies: 177
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY users (id, azienda, login, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- TOC entry 1951 (class 2606 OID 16949)
+-- Dependencies: 161 161
+-- Name: anagens_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY anagens
+    ADD CONSTRAINT anagens_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1988 (class 2606 OID 17077)
+-- Dependencies: 179 179
+-- Name: anainds_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY anainds
+    ADD CONSTRAINT anainds_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1957 (class 2606 OID 16951)
+-- Dependencies: 163 163
+-- Name: articles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY articles
+    ADD CONSTRAINT articles_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1998 (class 2606 OID 17215)
+-- Dependencies: 185 185
+-- Name: causales_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY causales
+    ADD CONSTRAINT causales_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1961 (class 2606 OID 16953)
+-- Dependencies: 165 165
+-- Name: causmags_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY causmags
+    ADD CONSTRAINT causmags_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1964 (class 2606 OID 16955)
+-- Dependencies: 167 167
+-- Name: contos_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY contos
+    ADD CONSTRAINT contos_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1996 (class 2606 OID 17100)
+-- Dependencies: 183 183
+-- Name: localitas_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY localitas
+    ADD CONSTRAINT localitas_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1992 (class 2606 OID 17091)
+-- Dependencies: 181 181
+-- Name: paeses_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY paeses
+    ADD CONSTRAINT paeses_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1971 (class 2606 OID 16959)
+-- Dependencies: 169 169
+-- Name: prezzoarticclis_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY prezzoarticclis
+    ADD CONSTRAINT prezzoarticclis_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1977 (class 2606 OID 16961)
+-- Dependencies: 171 171
+-- Name: rigdocs_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY rigdocs
+    ADD CONSTRAINT rigdocs_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1983 (class 2606 OID 16963)
+-- Dependencies: 174 174
+-- Name: tesdocs_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tesdocs
+    ADD CONSTRAINT tesdocs_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1986 (class 2606 OID 17056)
+-- Dependencies: 177 177
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1952 (class 1259 OID 17150)
+-- Dependencies: 161
+-- Name: idx_anagens_on_codfis; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX idx_anagens_on_codfis ON anagens USING btree (codfis);
+
+
+--
+-- TOC entry 1953 (class 1259 OID 17065)
+-- Dependencies: 161
+-- Name: idx_anagens_on_codice; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX idx_anagens_on_codice ON anagens USING btree (codice);
+
+
+--
+-- TOC entry 1954 (class 1259 OID 17068)
+-- Dependencies: 161
+-- Name: idx_anagens_on_denomin; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX idx_anagens_on_denomin ON anagens USING btree (denomin);
+
+
+--
+-- TOC entry 1955 (class 1259 OID 17151)
+-- Dependencies: 161
+-- Name: idx_anagens_on_pariva; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX idx_anagens_on_pariva ON anagens USING btree (pariva);
+
+
+--
+-- TOC entry 1958 (class 1259 OID 17022)
+-- Dependencies: 163 163
+-- Name: idx_articles_on_codice; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX idx_articles_on_codice ON articles USING btree (azienda, codice);
+
+
+--
+-- TOC entry 1959 (class 1259 OID 16970)
+-- Dependencies: 163 163
+-- Name: idx_articles_on_descriz; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX idx_articles_on_descriz ON articles USING btree (azienda, descriz);
+
+
+--
+-- TOC entry 1962 (class 1259 OID 16971)
+-- Dependencies: 165 165
+-- Name: idx_causmags_on_descriz; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX idx_causmags_on_descriz ON causmags USING btree (azienda, descriz);
+
+
+--
+-- TOC entry 1965 (class 1259 OID 16972)
+-- Dependencies: 167 167 167
+-- Name: idx_contos_on_codice; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX idx_contos_on_codice ON contos USING btree (azienda, annoese, codice);
+
+
+--
+-- TOC entry 1966 (class 1259 OID 17042)
+-- Dependencies: 167 167 167
+-- Name: idx_contos_on_descriz; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX idx_contos_on_descriz ON contos USING btree (azienda, annoese, descriz);
+
+
+--
+-- TOC entry 1993 (class 1259 OID 17102)
+-- Dependencies: 183
+-- Name: idx_localitas_on_descriz; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX idx_localitas_on_descriz ON localitas USING btree (descriz);
+
+
+--
+-- TOC entry 1990 (class 1259 OID 17092)
+-- Dependencies: 181
+-- Name: idx_paeses_on_descriz; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX idx_paeses_on_descriz ON paeses USING btree (descriz);
+
+
+--
+-- TOC entry 1979 (class 1259 OID 17231)
+-- Dependencies: 174 174
+-- Name: idx_tesdocs_on_data_doc_num_doc; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX idx_tesdocs_on_data_doc_num_doc ON tesdocs USING btree (data_doc, num_doc);
+
+
+--
+-- TOC entry 1984 (class 1259 OID 17057)
+-- Dependencies: 177 177
+-- Name: idx_users_on_login; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX idx_users_on_login ON users USING btree (azienda, login);
+
+
+--
+-- TOC entry 1989 (class 1259 OID 17078)
+-- Dependencies: 179
+-- Name: index_anainds_on_anagen_id; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX index_anainds_on_anagen_id ON anainds USING btree (anagen_id);
+
+
+--
+-- TOC entry 1994 (class 1259 OID 17101)
+-- Dependencies: 183
+-- Name: index_localitas_on_paese_id; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX index_localitas_on_paese_id ON localitas USING btree (paese_id);
+
+
+--
+-- TOC entry 1967 (class 1259 OID 16978)
+-- Dependencies: 169 169
+-- Name: index_prezzoarticclis_on_azienda_and_anag_id; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX index_prezzoarticclis_on_azienda_and_anag_id ON prezzoarticclis USING btree (azienda, anag_id);
+
+
+--
+-- TOC entry 1968 (class 1259 OID 16979)
+-- Dependencies: 169 169 169
+-- Name: index_prezzoarticclis_on_azienda_and_anag_id_and_artic_id; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_prezzoarticclis_on_azienda_and_anag_id_and_artic_id ON prezzoarticclis USING btree (azienda, anag_id, artic_id);
+
+
+--
+-- TOC entry 1969 (class 1259 OID 16980)
+-- Dependencies: 169 169
+-- Name: index_prezzoarticclis_on_azienda_and_artic_id; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX index_prezzoarticclis_on_azienda_and_artic_id ON prezzoarticclis USING btree (azienda, artic_id);
+
+
+--
+-- TOC entry 1972 (class 1259 OID 16981)
+-- Dependencies: 171
+-- Name: index_rigdocs_on_article_id; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX index_rigdocs_on_article_id ON rigdocs USING btree (article_id);
+
+
+--
+-- TOC entry 1973 (class 1259 OID 16982)
+-- Dependencies: 171
+-- Name: index_rigdocs_on_descriz; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX index_rigdocs_on_descriz ON rigdocs USING btree (descriz);
+
+
+--
+-- TOC entry 1974 (class 1259 OID 16983)
+-- Dependencies: 171
+-- Name: index_rigdocs_on_tesdoc_id; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX index_rigdocs_on_tesdoc_id ON rigdocs USING btree (tesdoc_id);
+
+
+--
+-- TOC entry 1975 (class 1259 OID 17058)
+-- Dependencies: 171 171
+-- Name: index_rigdocs_on_tesdoc_id_and_prgrig; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_rigdocs_on_tesdoc_id_and_prgrig ON rigdocs USING btree (tesdoc_id, prgrig);
+
+
+--
+-- TOC entry 1980 (class 1259 OID 16984)
+-- Dependencies: 174
+-- Name: index_tesdocs_on_causmag_id; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX index_tesdocs_on_causmag_id ON tesdocs USING btree (causmag_id);
+
+
+--
+-- TOC entry 1981 (class 1259 OID 16985)
+-- Dependencies: 174
+-- Name: index_tesdocs_on_conto_id; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX index_tesdocs_on_conto_id ON tesdocs USING btree (conto_id);
+
+
+--
+-- TOC entry 1978 (class 1259 OID 16986)
+-- Dependencies: 173
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
+
+
+--
+-- TOC entry 1999 (class 2606 OID 17181)
+-- Dependencies: 183 1995 161
+-- Name: fk_anagens_luogonas_id_localitas; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY anagens
+    ADD CONSTRAINT fk_anagens_luogonas_id_localitas FOREIGN KEY (luogonas_id) REFERENCES localitas(id);
+
+
+--
+-- TOC entry 2006 (class 2606 OID 17079)
+-- Dependencies: 179 1950 161
+-- Name: fk_anainds_anagen_id_anagens; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY anainds
+    ADD CONSTRAINT fk_anainds_anagen_id_anagens FOREIGN KEY (anagen_id) REFERENCES anagens(id);
+
+
+--
+-- TOC entry 2007 (class 2606 OID 17157)
+-- Dependencies: 1995 183 179
+-- Name: fk_anainds_localita_id_localitas; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY anainds
+    ADD CONSTRAINT fk_anainds_localita_id_localitas FOREIGN KEY (localita_id) REFERENCES localitas(id);
+
+
+--
+-- TOC entry 2000 (class 2606 OID 17216)
+-- Dependencies: 165 1997 185
+-- Name: fk_causmags_causale_id_causales; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY causmags
+    ADD CONSTRAINT fk_causmags_causale_id_causales FOREIGN KEY (causale_id) REFERENCES causales(id);
+
+
+--
+-- TOC entry 2001 (class 2606 OID 17162)
+-- Dependencies: 1950 167 161
+-- Name: fk_contos_anagen_id_anagens; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY contos
+    ADD CONSTRAINT fk_contos_anagen_id_anagens FOREIGN KEY (anagen_id) REFERENCES anagens(id);
+
+
+--
+-- TOC entry 2008 (class 2606 OID 17152)
+-- Dependencies: 183 1991 181
+-- Name: fk_localitas_paese_id_paeses; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY localitas
+    ADD CONSTRAINT fk_localitas_paese_id_paeses FOREIGN KEY (paese_id) REFERENCES paeses(id);
+
+
+--
+-- TOC entry 2003 (class 2606 OID 17167)
+-- Dependencies: 1956 163 171
+-- Name: fk_rigdocs_article_id_articles; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY rigdocs
+    ADD CONSTRAINT fk_rigdocs_article_id_articles FOREIGN KEY (article_id) REFERENCES articles(id);
+
+
+--
+-- TOC entry 2002 (class 2606 OID 16997)
+-- Dependencies: 171 174 1982
+-- Name: fk_rigdocs_tesdoc_id_tesdocs; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY rigdocs
+    ADD CONSTRAINT fk_rigdocs_tesdoc_id_tesdocs FOREIGN KEY (tesdoc_id) REFERENCES tesdocs(id);
+
+
+--
+-- TOC entry 2004 (class 2606 OID 17002)
+-- Dependencies: 174 1960 165
+-- Name: fk_tesdocs_causmag_id_causmags; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tesdocs
+    ADD CONSTRAINT fk_tesdocs_causmag_id_causmags FOREIGN KEY (causmag_id) REFERENCES causmags(id);
+
+
+--
+-- TOC entry 2005 (class 2606 OID 17007)
+-- Dependencies: 1963 174 167
+-- Name: fk_tesdocs_conto_id_contos; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tesdocs
+    ADD CONSTRAINT fk_tesdocs_conto_id_contos FOREIGN KEY (conto_id) REFERENCES contos(id);
+
+
+--
+-- TOC entry 2027 (class 0 OID 0)
+-- Dependencies: 6
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2012-06-06 17:33:19
+
+--
+-- PostgreSQL database dump complete
+--
+
