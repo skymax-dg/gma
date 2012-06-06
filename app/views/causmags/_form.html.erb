@@ -27,6 +27,10 @@
     <%= select(:causmag, :movimpmag, Causmag::MOVIMPMAG.invert.sort, { :prompt => true }) %>
   </div>
   <div class="field">
+    <b> <%= f.label "Movimenta Magazzino cliente" %> </b> <br />
+    <%= select(:causmag, :magcli, Causmag::MAGCLI.invert) %>
+  </div>
+  <div class="field">
     <b> <%= f.label "Magazzino origine (default)" %> </b> <br />
     <%= select(:causmag, :nrmagsrc, Causmag::NRMAG.invert.sort) %>
   </div>

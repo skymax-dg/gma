@@ -3,14 +3,17 @@ class Causmag < ActiveRecord::Base
   has_many :tesdocs
   belongs_to :causale
 
-  attr_accessible :azienda, :tipo_doc, :descriz, :des_caus, :tipo, :movimpmag, :nrmagsrc, :nrmagdst, :contabile, :causale_id, :modulo
+  attr_accessible :azienda,  :tipo_doc, :descriz, :des_caus,  :tipo,       :movimpmag,
+                  :nrmagsrc, :nrmagdst, :magcli,  :contabile, :causale_id, :modulo
 
-  validates :azienda, :descriz, :contabile, :tipo, :movimpmag, :nrmagsrc, :nrmagdst, :presence => true
+  validates :azienda,   :descriz,  :contabile, :tipo,
+            :movimpmag, :nrmagsrc, :nrmagdst,  :magcli, :presence => true
   validates :descriz, :des_caus, :length => { :maximum => 100}
 
   TIPO_DOC = $ParAzienda['CAUSMAG']['TIPO_DOC']
   TIPO = $ParAzienda['CAUSMAG']['TIPO']
   MOVIMPMAG = $ParAzienda['CAUSMAG']['MOVIMPMAG']
+  MAGCLI = $ParAzienda['CAUSMAG']['MAGCLI']
   CONTABILE = $ParAzienda['CAUSMAG']['CONTABILE']
   NRMAG = $ParAzienda['ANAIND']['NRMAG']
 

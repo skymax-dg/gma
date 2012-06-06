@@ -30,6 +30,10 @@ CAUSMAG:
     M: 'Movimenta Mag.'
     I: 'Impegna Mag.'
     N: 'Nessun impatto Mag.'
+  MAGCLI:
+    C: 'Carico'
+    S: 'Scarico'
+    N: 'Nessuna'
   CONTABILE:
     S: 'Si'
     N: 'No'
