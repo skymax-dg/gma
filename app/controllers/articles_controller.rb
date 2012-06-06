@@ -1,10 +1,16 @@
 class ArticlesController < ApplicationController
   def movmag
-    @articles = Article.paginate(:page => params[:page], :per_page => 10)
+    table = Article.movmag(params[:id])
+    send_data table.to_pdf, :type => "application/pdf",
+                            :disposition => "inline",
+                            :filename => "RpMovMagArt.pdf"
   end
 
   def movmagall
-    @articles = Article.paginate(:page => params[:page], :per_page => 10)
+    table = Article.movmag(:all)
+    send_data table.to_pdf, :type => "application/pdf",
+                            :disposition => "inline",
+                            :filename => "RpMovMagArt.pdf"
   end
 
   def index
