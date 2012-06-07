@@ -51,7 +51,7 @@ class RigdocsController < ApplicationController
         begin
           @errors = Article.chk_art_xls(book, 0, 1, 0)
           raise "I seguenti articoli non sono presenti sulla banca dati" if @errors.count > 0
-          @errors, @success = @tesdoc.rigdocbyxls(book, 0, 1, {:article_id => 0, :qta => 2, :prezzo => 3, :sconto => 4})   
+          @errors, @success = @tesdoc.rigdocbyxls(book, 0, 1, {:article_id_bycod => 0, :qta => 1, :prezzo => 2, :sconto => 3})
           if @errors.count == 0
             flash[:notice] = "CARICAMENTO COMPLETATO con SUCCESSO."
           else

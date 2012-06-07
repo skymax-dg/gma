@@ -13,6 +13,7 @@ gem 'json'
 gem 'will_paginate', '~> 3.0.beta'
 
 gem 'spreadsheet'
+
 gem 'ruport'
 gem 'acts_as_reportable'
 

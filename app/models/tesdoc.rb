@@ -20,10 +20,10 @@ class Tesdoc < ActiveRecord::Base
     prgrig = 1
     prgrig = self.rigdocs.last.prgrig + 1 unless self.rigdocs.empty?
     xls.worksheet(wks).each rownr do |row|
-      unless row[hshcol[:article_id]].blank?
+      unless row[hshcol[:article_id_bycod]].blank? || row[hshcol[:qta]].blank? 
         @rigdoc = self.rigdocs.build # La Build valorizza automaticamente il campo rigdoc.tesdoc_id
-        @rigdoc.article_id = Article.find_by_codice(row[hshcol[:article_id]].to_s.strip).id
-        @rigdoc.descriz = Article.find_by_codice(row[hshcol[:article_id]].to_s.strip).descriz
+        @rigdoc.article_id = Article.find_by_codice(row[hshcol[:article_id_bycod]].to_s.strip).id
+        @rigdoc.descriz = Article.find_by_codice(row[hshcol[:article_id_bycod]].to_s.strip).descriz
         @rigdoc.qta = row[hshcol[:qta]]||0
         @rigdoc.prezzo = row[hshcol[:prezzo]]||0
         @rigdoc.sconto = row[hshcol[:sconto]]||0
@@ -31,10 +31,10 @@ class Tesdoc < ActiveRecord::Base
         if @rigdoc.qta > 0
           if @rigdoc.save
             prgrig += 1
-            success << "Caricato articolo:" + row[hshcol[:article_id]].to_s.strip + " " + @rigdoc.descriz +
+            success << "Caricato articolo:" + row[hshcol[:article_id_bycod]].to_s.strip + " " + @rigdoc.descriz +
                        " qta:" + @rigdoc.qta.to_s + " prezzo:" + @rigdoc.prezzo.to_s + " sconto:" + @rigdoc.sconto.to_s
           else
-            errors << "Articolo:" + row[hshcol[:article_id]].to_s.strip + " " + @rigdoc.descriz +
+            errors << "Articolo:" + row[hshcol[:article_id_bycod]].to_s.strip + " " + @rigdoc.descriz +
                       " qta:" + @rigdoc.qta.to_s + " prezzo:" + @rigdoc.prezzo.to_s + " sconto:" + @rigdoc.sconto.to_s
           end
         end
