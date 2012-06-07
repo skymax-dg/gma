@@ -1,9 +1,23 @@
 class ArticlesController < ApplicationController
   def movmag
-    table = Article.movmag(params[:id])
-    send_data table.to_pdf, :type => "application/pdf",
-                            :disposition => "inline",
-                            :filename => "RpMovMagArt.pdf"
+    pdf = MovtitleController.render_pdf
+    send_data pdf, :type => "application/pdf",
+                   :filename => "RpMovMagArt.pdf" 
+#    table = Article.movmag(params[:id])
+#    send_data table.to_pdf, :type => "application/pdf",
+#                            :disposition => "inline",
+#                            :filename => "RpMovMagArt.pdf"
+  end
+
+  def movmagallold
+    pdf = MovtitleController.render_pdf
+    send_data pdf, :type => "application/pdf",
+                   :filename => "RpMovMagArt.pdf" 
+
+#    send_data(pdf,
+#              :type => "application/pdf",
+#              :disposition => "inline",
+#              :filename => "PDFRpMovMagArt.pdf")
   end
 
   def movmagall

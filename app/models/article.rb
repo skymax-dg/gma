@@ -22,63 +22,40 @@ class Article < ActiveRecord::Base
     return errors
   end
 
-        
-        
+  def self.movimentati
+    Article.find_by_sql("SELECT DISTINCT articles.id, articles.codice, articles.descriz
+                           FROM articles INNER JOIN rigdocs ON (articles.id = rigdocs.article_id)
+                                         INNER JOIN tesdocs ON (rigdocs.tesdoc_id = tesdocs.id)
+                                         INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
+                                         WHERE causmags.movimpmag IN ('M') ")
+  end
+
   def self.movmag(id)
-        Ruport::Formatter::Template.create(:simple) do |t|
-          t.page_format = {
-            :size   => "LETTER",
-            :layout => :landscape
-          }
-          t.text_format = {
-            :font_size => 6
-          }
-          t.table_format = {
-            :font_size      => 6,
-            :show_headings  => false
-          }
-          t.column_format = {
-            :alignment => :center,
-            :heading => { :justification => :right }
-          }
-          t.grouping_format = {
-            :style => :separated
-          }
-        end
-    id == :all ? add = "" : add = " AND articles.id = " + id.to_s 
-    sql = "SELECT 'ARTICOLO: ' || articles.codice || '    ' || articles.descriz AS Articolo,
-                  tesdocs.data_doc AS Data_documento, tesdocs.num_doc AS Numero,
+    sql = "SELECT tesdocs.data_doc AS Data_doc, tesdocs.num_doc AS Numero,
                   causmags.descriz AS Causale, causmags.tipo AS Mov, rigdocs.qta AS Qta,
                   causmags.movimpmag AS Mag
              FROM articles INNER JOIN rigdocs ON (articles.id = rigdocs.article_id)
                            INNER JOIN tesdocs ON (rigdocs.tesdoc_id = tesdocs.id)
                            INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
-            WHERE causmags.movimpmag IN ('M') " + add +
-         " ORDER BY articles.id, tesdocs.data_doc, tesdocs.num_doc"
+            WHERE causmags.movimpmag IN ('M') AND articles.id = " + id.to_s +
+         " ORDER BY tesdocs.data_doc, tesdocs.num_doc"
     table = Ruport::Data::Table.new
-    col_head = ["Articolo", "Data_documento", "Numero", "Causale", "Carico", "Scarico", "Progr"]
-    art = ""
-    prg = 0
+    col_head = ["Data_doc", "Numero", "Causale", "Carico", "Scar.", "Giac."]
+    giac = 0
     Article.find_by_sql(sql).each do |r|
-      car = ""
-      sca = ""
-      if art == "" or art != r.attributes["articolo"]
-        prg = 0
-      end
-      art = r.attributes["articolo"]
-      data = r.attributes["data_documento"]
+      data = r.attributes["data_doc"]
       num = r.attributes["numero"]
       cau = r.attributes["causale"]
       mov = r.attributes["mov"]
       qta = r.attributes["qta"]
       mov == "E" ? car=qta : car=""
       mov == "U" ? sca=qta : sca=""
-      prg = prg + car.to_i - sca.to_i
-      table << Ruport::Data::Record.new([art, data, num, cau, car, sca, prg.to_s],
+      giac = giac + car.to_i - sca.to_i
+      table << Ruport::Data::Record.new([data, num, cau, car, sca, giac.to_s],
                                         :attributes => col_head)
     end
     table.column_names = col_head
-    table = Grouping(table, :by => ["Articolo"])
+    table# = Grouping(table, :by => ["Articolo"])
   end
 
   private
