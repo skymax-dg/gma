@@ -22,40 +22,60 @@ class Article < ActiveRecord::Base
     return errors
   end
 
-  def self.movimentati
+  def self.movimentati(id)
+    id == "all" ? filter_art = "" : filter_art = " AND articles.id = " + id.to_s
     Article.find_by_sql("SELECT DISTINCT articles.id, articles.codice, articles.descriz
                            FROM articles INNER JOIN rigdocs ON (articles.id = rigdocs.article_id)
                                          INNER JOIN tesdocs ON (rigdocs.tesdoc_id = tesdocs.id)
                                          INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
-                                         WHERE causmags.movimpmag IN ('M') ")
+                                         WHERE causmags.movimpmag IN ('M') " + filter_art + 
+                     " ORDER BY articles.descriz")
   end
 
   def self.movmag(id)
-    sql = "SELECT tesdocs.data_doc AS Data_doc, tesdocs.num_doc AS Numero,
-                  causmags.descriz AS Causale, causmags.tipo AS Mov, rigdocs.qta AS Qta,
-                  causmags.movimpmag AS Mag
-             FROM articles INNER JOIN rigdocs ON (articles.id = rigdocs.article_id)
-                           INNER JOIN tesdocs ON (rigdocs.tesdoc_id = tesdocs.id)
-                           INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
-            WHERE causmags.movimpmag IN ('M') AND articles.id = " + id.to_s +
-         " ORDER BY tesdocs.data_doc, tesdocs.num_doc"
-    table = Ruport::Data::Table.new
-    col_head = ["Data_doc", "Numero", "Causale", "Carico", "Scar.", "Giac."]
-    giac = 0
-    Article.find_by_sql(sql).each do |r|
-      data = r.attributes["data_doc"]
-      num = r.attributes["numero"]
-      cau = r.attributes["causale"]
-      mov = r.attributes["mov"]
-      qta = r.attributes["qta"]
-      mov == "E" ? car=qta : car=""
-      mov == "U" ? sca=qta : sca=""
-      giac = giac + car.to_i - sca.to_i
-      table << Ruport::Data::Record.new([data, num, cau, car, sca, giac.to_s],
-                                        :attributes => col_head)
-    end
-    table.column_names = col_head
-    table# = Grouping(table, :by => ["Articolo"])
+    Article.find_by_sql("SELECT tesdocs.data_doc AS Data_doc, tesdocs.num_doc AS Numero,
+                                causmags.descriz AS Causale, causmags.tipo AS Mov, rigdocs.qta AS Qta,
+                                causmags.movimpmag AS Mag
+                           FROM articles INNER JOIN rigdocs ON (articles.id = rigdocs.article_id)
+                                         INNER JOIN tesdocs ON (rigdocs.tesdoc_id = tesdocs.id)
+                                         INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
+                          WHERE causmags.movimpmag IN ('M') AND articles.id = " + id.to_s +
+                       " ORDER BY tesdocs.data_doc, tesdocs.num_doc")
+  end
+
+  def self.titcvend(id)
+    id == "all" ? filter_art = "" : filter_art = " AND articles.id = " + id.to_s
+    Article.find_by_sql("SELECT DISTINCT articles.id, articles.codice, articles.descriz
+                           FROM articles INNER JOIN rigdocs ON (articles.id = rigdocs.article_id)
+                                         INNER JOIN tesdocs ON (rigdocs.tesdoc_id = tesdocs.id)
+                                         INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
+                                         WHERE causmags.magcli IN ('C', 'S') " + filter_art +
+                     " ORDER BY articles.descriz")
+  end
+
+  def self.distit(id)
+    Article.find_by_sql("SELECT DISTINCT anagens.id, anagens.codice, anagens.denomin
+                           FROM articles INNER JOIN rigdocs ON (articles.id = rigdocs.article_id)
+                                         INNER JOIN tesdocs ON (rigdocs.tesdoc_id = tesdocs.id)
+                                         INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
+                                         INNER JOIN contos ON (tesdocs.conto_id = contos.id)
+                                         INNER JOIN anagens ON (contos.anagen_id = anagens.id)
+                                         WHERE causmags.magcli IN ('C', 'S') AND articles.id = " + id.to_s +
+                     " ORDER BY anagens.denomin")
+  end
+
+  def self.vendtitdist(tit_id, dis_id)
+    Article.find_by_sql("SELECT tesdocs.data_doc AS Data_doc, tesdocs.num_doc AS Numero,
+                                causmags.descriz AS Causale,
+                                causmags.magcli AS Magcli, causmags.movimpmag AS Movmag, rigdocs.qta AS Qta
+                           FROM articles INNER JOIN rigdocs ON (articles.id = rigdocs.article_id)
+                                         INNER JOIN tesdocs ON (rigdocs.tesdoc_id = tesdocs.id)
+                                         INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
+                                         INNER JOIN contos ON (tesdocs.conto_id = contos.id)
+                                         WHERE causmags.magcli IN ('C', 'S') 
+                                           AND articles.id = " + tit_id.to_s +
+                                         " AND contos.anagen_id = " + dis_id.to_s +
+                                    " ORDER BY tesdocs.data_doc, tesdocs.num_doc")
   end
 
   private

@@ -1,30 +1,42 @@
 class ArticlesController < ApplicationController
   def movmag
-    pdf = MovtitleController.render_pdf
-    send_data pdf, :type => "application/pdf",
-                   :filename => "RpMovMagArt.pdf" 
-#    table = Article.movmag(params[:id])
-#    send_data table.to_pdf, :type => "application/pdf",
-#                            :disposition => "inline",
-#                            :filename => "RpMovMagArt.pdf"
+    if Article.movimentati(params[:id]).count == 0
+      render 'movnotfound'
+    else
+      pdf = MovtitleController.render_pdf(:data => params[:id])
+      send_data pdf, :type => "application/pdf",
+                     :filename => "RpMovMagArt.pdf" 
+    end
   end
 
-  def movmagallold
-    pdf = MovtitleController.render_pdf
-    send_data pdf, :type => "application/pdf",
-                   :filename => "RpMovMagArt.pdf" 
-
-#    send_data(pdf,
-#              :type => "application/pdf",
-#              :disposition => "inline",
-#              :filename => "PDFRpMovMagArt.pdf")
+  def cvendis
+    if Article.titcvend(params[:id]).count == 0
+      render 'cvenddistnotfound'
+    else
+      pdf = CvendistitleController.render_pdf(:data => params[:id])
+      send_data pdf, :type => "application/pdf",
+                     :filename => "RpCVenDistArt.pdf" 
+    end
   end
 
   def movmagall
-    table = Article.movmag(:all)
-    send_data table.to_pdf, :type => "application/pdf",
-                            :disposition => "inline",
-                            :filename => "RpMovMagArt.pdf"
+    if Article.movimentati("all").count == 0
+      render 'movnotfound'
+    else
+      pdf = MovtitleController.render_pdf(:data => "all")
+      send_data pdf, :type => "application/pdf",
+                     :filename => "RpMovMagArt.pdf" 
+    end
+  end
+
+  def cvendisall
+    if Article.titcvend("all").count == 0
+      render 'cvenddistnotfound'
+    else
+      pdf = CvendistitleController.render_pdf(:data => "all")
+      send_data pdf, :type => "application/pdf",
+                     :filename => "RpCVenDistArt.pdf" 
+    end
   end
 
   def index

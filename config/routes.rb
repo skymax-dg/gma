@@ -20,9 +20,11 @@ Gma::Application.routes.draw do
   resources :articles do
     member do
       get :movmag
+      get :cvendis
     end
     collection do
       get :movmagall
+      get :cvendisall
     end
   end
 
