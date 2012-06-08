@@ -28,7 +28,7 @@ class Article < ActiveRecord::Base
                            FROM articles INNER JOIN rigdocs ON (articles.id = rigdocs.article_id)
                                          INNER JOIN tesdocs ON (rigdocs.tesdoc_id = tesdocs.id)
                                          INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
-                                         WHERE causmags.movimpmag IN ('M') " + filter_art + 
+                                         WHERE causmags.movimpmag IN ('M', 'I') " + filter_art + 
                      " ORDER BY articles.descriz")
   end
 
@@ -39,7 +39,7 @@ class Article < ActiveRecord::Base
                            FROM articles INNER JOIN rigdocs ON (articles.id = rigdocs.article_id)
                                          INNER JOIN tesdocs ON (rigdocs.tesdoc_id = tesdocs.id)
                                          INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
-                          WHERE causmags.movimpmag IN ('M') AND articles.id = " + id.to_s +
+                          WHERE causmags.movimpmag IN ('M', 'I') AND articles.id = " + id.to_s +
                        " ORDER BY tesdocs.data_doc, tesdocs.num_doc")
   end
 

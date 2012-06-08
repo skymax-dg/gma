@@ -8,28 +8,22 @@ ANAGEN:
     I: 'Ditta individuale'  
 ANAIND:
   NRMAG:
-    0: 'Nessun magazzino'
-    1: 'Magazzino 1'
-    2: 'Magazzino 2'
-    3: 'Magazzino 3'
-    4: 'Magazzino 4'
-    5: 'Magazzino 5'
-
+    0: 'Nessuno'
+    1: 'Mag.1'
+    2: 'Mag.2'
 CAUSMAG:
   TIPO_DOC:
-    0: 'Gruppo generico'
-    1: 'Gruppo ddt'
-    2: 'Gruppo contabile'
-    3: 'Gruppo tre'
-    4: 'Gruppo quattro'
+    0: 'generico'
+    1: 'ddt'
+    2: 'contabile'
   TIPO:
     E: 'Entrata'
     U: 'Uscita'
     T: 'Trasferimento'
   MOVIMPMAG:
-    M: 'Movimenta Mag.'
-    I: 'Impegna Mag.'
-    N: 'Nessun impatto Mag.'
+    M: 'Movimenta'
+    I: 'Impegna'
+    N: 'Non impatta'
   MAGCLI:
     C: 'Carico'
     S: 'Scarico'

@@ -31,10 +31,12 @@ class MovtitleController < Ruport::Controller
         draw_table(table, :title => des, :title_font_size => 14, :protect_rows => 4,
                    :column_options => {'Data_doc' => {:width => 80},
                                        'Numero' => {:width => 60},
-                                       'Causale' => {:width => 250},
-                                       'Carico' => {:width => 50, :justification => :right},
-                                       'Scar.' => {:width => 50, :justification => :right},
-                                       'Giac.' => {:width => 50, :justification => :right}
+                                       'Causale' => {:width => 210},
+                                       'Car.' => {:width => 40, :justification => :right},
+                                       'Scar.' => {:width => 40, :justification => :right},
+                                       'Giac.' => {:width => 40, :justification => :right},
+                                       'Impe.' => {:width => 40, :justification => :right},
+                                       'Disp.' => {:width => 40, :justification => :right}
                                        })
         pad(20) { hr }
       end
@@ -49,20 +51,31 @@ class MovtitleController < Ruport::Controller
 
     def buildtab(id)
       table = Ruport::Data::Table.new
-      col_head = ["Data_doc", "Numero", "Causale", "Carico", "Scar.", "Giac."]
+      col_head = ["Data_doc", "Numero", "Causale", "Car.", "Scar.", "Giac.", "Impe.", "Disp."]
       giac = 0
+      tcar = 0
+      tsca = 0
+      timp = 0
       Article.movmag(id).each do |r|
         dt_doc = r.attributes["data_doc"]
         num = r.attributes["numero"]
         cau = r.attributes["causale"]
         mov = r.attributes["mov"]
         qta = r.attributes["qta"]
-        mov == "E" ? car=qta : car=""
-        mov == "U" ? sca=qta : sca=""
+        mag = r.attributes["mag"]
+        mov == "E" and mag == 'M' ? car=qta : car=""
+        mov == "U" and mag == 'M' ? sca=qta : sca=""
+        mov == "E" and mag == 'I' ? imp=-qta : imp=""
+        mov == "U" and mag == 'I' ? imp= qta : imp=""
         giac = giac + car.to_i - sca.to_i
-        table << Ruport::Data::Record.new([dt_doc, num, cau, car, sca, giac.to_s],
+        tcar += car.to_i
+        tsca += sca.to_i
+        timp += imp.to_i
+        table << Ruport::Data::Record.new([dt_doc, num, cau, car, sca, giac.to_s, imp, giac-imp.to_i],
                                           :attributes => col_head)
       end
+      table << Ruport::Data::Record.new(["TOTALI:", "", "", tcar, tsca, giac, timp, giac-timp],
+                                          :attributes => col_head)
       table.column_names = col_head
       table
     end  
