@@ -20,21 +20,33 @@ class CausmagsController < ApplicationController
 
   def create
     @causmag = Causmag.new(params[:causmag])
-    if @causmag.save
-      redirect_to @causmag, :notice => 'Causale di magazzino inserita con successo.'
-    else
-      flash[:error] = "Il salvataggio della causale non e' andato a buon fine"
+    if (@causmag.contabile == "S" and @causmag.causale_id.nil?) or
+       (@causmag.contabile == "N" and !@causmag.causale_id.nil?)
+      flash[:error_explanation] = "incoerenza fra 'causale contabile' e flag 'contabile'"
       render :action => "new"
+    else    
+      if @causmag.save
+        redirect_to @causmag, :notice => 'Causale di magazzino inserita con successo.'
+      else
+        flash[:error] = "Il salvataggio della causale non e' andato a buon fine"
+        render :action => "new"
+      end
     end
   end
 
   def update
     @causmag = Causmag.find(params[:id])
-    if @causmag.update_attributes(params[:causmag])
-      redirect_to @causmag, :notice => 'Causale di magazzino aggiornata con successo.'
-    else
-      flash[:error] = "Il salvataggio della causale non e' andato a buon fine"
+    if (params[:causmag][:contabile] == "S" and params[:causmag][:causale_id] == "") or
+       (params[:causmag][:contabile] == "N" and !params[:causmag][:causale_id] == "")
+      flash[:error_explanation] = "ERRORE!!! Incoerenza fra 'causale contabile' e flag 'contabile'"
       render :action => "edit"
+    else    
+      if @causmag.update_attributes(params[:causmag])
+        redirect_to @causmag, :notice => 'Causale di magazzino aggiornata con successo.'
+      else
+        flash[:error] = "Il salvataggio della causale non e' andato a buon fine"
+        render :action => "edit"
+      end
     end
   end
 
