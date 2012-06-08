@@ -1,6 +1,6 @@
 class CvendistitleController < Ruport::Controller
   stage :mov_header, :mov_body, :mov_footer
-  
+
   class PDF < Ruport::Formatter::PDF
     renders :pdf, :for => CvendistitleController
 
@@ -9,12 +9,12 @@ class CvendistitleController < Ruport::Controller
       options.text_format = { :font_size => 14, :justification => :right } 
       add_text "<i>" + Anagen.find(StaticData::ANARIF).denomin + "</i>" 
       add_text "Creato alle #{Time.now.strftime('%H:%M del %d-%m-%Y')}" 
-#    center_image_in_box "ruport.png", :x => left_boundary,  
-#                                      :y => top_boundary - 50, 
-#                                      :width => 275, 
-#                                      :height => 70 
+  #    center_image_in_box "ruport.png", :x => left_boundary,  
+  #                                      :y => top_boundary - 50, 
+  #                                      :width => 275, 
+  #                                      :height => 70 
       move_cursor_to top_boundary - 80 
-#      pad_bottom(20) { hr } 
+  #      pad_bottom(20) { hr } 
       options.text_format = { :font_size => 18, :justification => :center, :bold => true }
       
       add_text "VENDITE PER TITOLO E DISTRIBUTORE"
@@ -57,18 +57,18 @@ class CvendistitleController < Ruport::Controller
       col_head = ["Data_doc", "Numero", "Causale", "Carico", "Vendite", "Giac."]
       giac = 0
       Article.vendtitdist(art_id, dis_id).each do |r|
-        data = r.attributes["data_doc"]
+        dt_doc = r.attributes["data_doc"]
         num = r.attributes["numero"]
         cau = r.attributes["causale"]
         mov = r.attributes["magcli"]
-magint = r.attributes["movmag"]
+  magint = r.attributes["movmag"]
         qta = r.attributes["qta"]
-magint == "M" and mov == "C" ? car=qta  : car=""
-magint == "M" and mov == "S" ? car=-(qta.to_i) : car=car
-magint != "M"  and mov == "S" ? sca=qta  : sca=""
-magint != "M"  and mov == "C" ? sca=-(qta.to_i) : sca=sca
+  magint == "M" and mov == "C" ? car=qta  : car=""
+  magint == "M" and mov == "S" ? car=-(qta.to_i) : car=car
+  magint != "M"  and mov == "S" ? sca=qta  : sca=""
+  magint != "M"  and mov == "C" ? sca=-(qta.to_i) : sca=sca
         giac = giac + car.to_i - sca.to_i
-        table << Ruport::Data::Record.new([data, num, cau, car, sca, giac.to_s],
+        table << Ruport::Data::Record.new([dt_doc, num, cau, car, sca, giac.to_s],
                                           :attributes => col_head)
       end
       table.column_names = col_head

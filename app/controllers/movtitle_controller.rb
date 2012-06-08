@@ -1,9 +1,8 @@
 class MovtitleController < Ruport::Controller
   stage :mov_header, :mov_body, :mov_footer
-  
+
   class PDF < Ruport::Formatter::PDF
     renders :pdf, :for => MovtitleController
-
     build :mov_header do
       pdf_writer.select_font("Times-Roman") 
       options.text_format = { :font_size => 14, :justification => :right } 
@@ -53,7 +52,7 @@ class MovtitleController < Ruport::Controller
       col_head = ["Data_doc", "Numero", "Causale", "Carico", "Scar.", "Giac."]
       giac = 0
       Article.movmag(id).each do |r|
-        data = r.attributes["data_doc"]
+        dt_doc = r.attributes["data_doc"]
         num = r.attributes["numero"]
         cau = r.attributes["causale"]
         mov = r.attributes["mov"]
@@ -61,7 +60,7 @@ class MovtitleController < Ruport::Controller
         mov == "E" ? car=qta : car=""
         mov == "U" ? sca=qta : sca=""
         giac = giac + car.to_i - sca.to_i
-        table << Ruport::Data::Record.new([data, num, cau, car, sca, giac.to_s],
+        table << Ruport::Data::Record.new([dt_doc, num, cau, car, sca, giac.to_s],
                                           :attributes => col_head)
       end
       table.column_names = col_head

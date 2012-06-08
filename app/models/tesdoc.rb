@@ -25,7 +25,7 @@ class Tesdoc < ActiveRecord::Base
         @rigdoc.article_id = Article.find_by_codice(row[hshcol[:article_id_bycod]].to_s.strip).id
         @rigdoc.descriz = Article.find_by_codice(row[hshcol[:article_id_bycod]].to_s.strip).descriz
         @rigdoc.qta = row[hshcol[:qta]]||0
-        @rigdoc.prezzo = row[hshcol[:prezzo]]||0
+        @rigdoc.prezzo = row[hshcol[:prezzo]].to_s.sub(",",".")||0
         @rigdoc.sconto = row[hshcol[:sconto]]||0
         @rigdoc.prgrig = prgrig
         if @rigdoc.qta > 0
@@ -34,8 +34,8 @@ class Tesdoc < ActiveRecord::Base
             success << "Caricato articolo:" + row[hshcol[:article_id_bycod]].to_s.strip + " " + @rigdoc.descriz +
                        " qta:" + @rigdoc.qta.to_s + " prezzo:" + @rigdoc.prezzo.to_s + " sconto:" + @rigdoc.sconto.to_s
           else
-            errors << "Articolo:" + row[hshcol[:article_id_bycod]].to_s.strip + " " + @rigdoc.descriz +
-                      " qta:" + @rigdoc.qta.to_s + " prezzo:" + @rigdoc.prezzo.to_s + " sconto:" + @rigdoc.sconto.to_s
+            errors  << "Errore articolo:" + row[hshcol[:article_id_bycod]].to_s.strip + " " + @rigdoc.descriz +
+                       " qta:" + @rigdoc.qta.to_s + " prezzo:" + @rigdoc.prezzo.to_s + " sconto:" + @rigdoc.sconto.to_s
           end
         end
       end
