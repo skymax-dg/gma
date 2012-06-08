@@ -12,6 +12,7 @@ class Conto < ActiveRecord::Base
   TIPOPEO = $ParAzienda['CONTO']['TIPOPEO']
 
   def magsavailable(inivalue)
+    #trova i magazzini disponibili (per popolare una combo)
     return Hash[*Anaind::NRMAG.select{|k,v| inivalue.index(k)}.flatten] if self.anagen.nil?
     return self.anagen.magsavailable(inivalue)
   end
@@ -21,6 +22,8 @@ class Conto < ActiveRecord::Base
   end
   
   def self.find4docfilter(cfa, tpf, des)
+    # Filtra i conti referenziati dalle anagrafiche (anagen) in like sul dato CodFis/ParIva/Denomin
+
     hsh = {"RS" => "denomin", "CF" => "codfis", "PI" => "pariva"}
     hsh.default = "denomin"
     whana = "anagens." + hsh[tpf] + " like '%" + des + "%' and "

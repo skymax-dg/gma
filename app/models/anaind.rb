@@ -18,9 +18,13 @@ class Anaind < ActiveRecord::Base
   end
 
   def self.nrmagexist(id, anagen_id, nrmag)
+    # Controlla se lo stesso magazzino è già associato ad un indirizzo
+
+    # Controllo per la action edit
     nr = Anaind.count(:conditions => ['anagen_id = :v1 and nrmag = :v2 and id != :v3',
                                        {:v1 => anagen_id, :v2 => nrmag, :v3 => id}
                                      ]) unless id.nil?
+    # Controllo per la action new
     nr = Anaind.count(:conditions => ["anagen_id = :v1 and nrmag = :v2",
                                        {:v1 => anagen_id, :v2 => nrmag}
                                      ]) if id.nil?

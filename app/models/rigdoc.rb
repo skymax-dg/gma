@@ -8,6 +8,8 @@ class Rigdoc < ActiveRecord::Base
   validates :descriz, :length => { :maximum => 150}
 
   def move(dir)
+    # sposta su/giu la riga documento (tramite il campo prgrig)
+    
     oldprg = self.prgrig
     tesdoc = Tesdoc.find(self.tesdoc_id)
     oldidx = tesdoc.rigdocs.index(self)

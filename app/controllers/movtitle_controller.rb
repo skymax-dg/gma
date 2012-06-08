@@ -2,18 +2,11 @@ class MovtitleController < Ruport::Controller
   stage :mov_header, :mov_body, :mov_footer
 
   class PDF < Ruport::Formatter::PDF
+    include Helper_pdf
+
     renders :pdf, :for => MovtitleController
     build :mov_header do
-      pdf_writer.select_font("Times-Roman") 
-      options.text_format = { :font_size => 14, :justification => :right } 
-      add_text "<i>" + Anagen.find(StaticData::ANARIF).denomin + "</i>" 
-      add_text "Creato alle #{Time.now.strftime('%H:%M del %d-%m-%Y')}" 
-#    center_image_in_box "ruport.png", :x => left_boundary,  
-#                                      :y => top_boundary - 50, 
-#                                      :width => 275, 
-#                                      :height => 70 
-      move_cursor_to top_boundary - 80 
-#      pad_bottom(20) { hr } 
+      main_pdf_header # Metodo per intestazione std
       options.text_format = { :font_size => 18, :justification => :center, :bold => true }
       
       add_text "MOVIMENTAZIONI PER TITOLO"
@@ -25,7 +18,6 @@ class MovtitleController < Ruport::Controller
       options.text_format = { :font_size => 14, :justification => :left }
       Article.movimentati(data).each do |art|
         des = 'ARTICOLO: ' + art.codice + '    ' + art.descriz
-#        pad_bottom(25) { add_text(des)}
         options.table_format = {:width => 530, :bold_headings => true}
         table = buildtab(art.id)
         draw_table(table, :title => des, :title_font_size => 14, :protect_rows => 4,
@@ -67,7 +59,7 @@ class MovtitleController < Ruport::Controller
         mov == "U" and mag == 'M' ? sca=qta : sca=""
         mov == "E" and mag == 'I' ? imp=-qta : imp=""
         mov == "U" and mag == 'I' ? imp= qta : imp=""
-        giac = giac + car.to_i - sca.to_i
+        giac += car.to_i - sca.to_i
         tcar += car.to_i
         tsca += sca.to_i
         timp += imp.to_i

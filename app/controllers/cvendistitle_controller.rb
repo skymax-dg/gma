@@ -2,19 +2,11 @@ class CvendistitleController < Ruport::Controller
   stage :mov_header, :mov_body, :mov_footer
 
   class PDF < Ruport::Formatter::PDF
-    renders :pdf, :for => CvendistitleController
+    include Helper_pdf
 
+    renders :pdf, :for => CvendistitleController
     build :mov_header do
-      pdf_writer.select_font("Times-Roman") 
-      options.text_format = { :font_size => 14, :justification => :right } 
-      add_text "<i>" + Anagen.find(StaticData::ANARIF).denomin + "</i>" 
-      add_text "Creato alle #{Time.now.strftime('%H:%M del %d-%m-%Y')}" 
-  #    center_image_in_box "ruport.png", :x => left_boundary,  
-  #                                      :y => top_boundary - 50, 
-  #                                      :width => 275, 
-  #                                      :height => 70 
-      move_cursor_to top_boundary - 80 
-  #      pad_bottom(20) { hr } 
+      main_pdf_header # Metodo per intestazione std
       options.text_format = { :font_size => 18, :justification => :center, :bold => true }
       
       add_text "VENDITE PER TITOLO E DISTRIBUTORE"
@@ -61,12 +53,12 @@ class CvendistitleController < Ruport::Controller
         num = r.attributes["numero"]
         cau = r.attributes["causale"]
         mov = r.attributes["magcli"]
-  magint = r.attributes["movmag"]
+        magint = r.attributes["movmag"]
         qta = r.attributes["qta"]
-  magint == "M" and mov == "C" ? car=qta  : car=""
-  magint == "M" and mov == "S" ? car=-(qta.to_i) : car=car
-  magint != "M"  and mov == "S" ? sca=qta  : sca=""
-  magint != "M"  and mov == "C" ? sca=-(qta.to_i) : sca=sca
+        magint == "M" and mov == "C" ? car=qta  : car=""
+        magint == "M" and mov == "S" ? car=-(qta.to_i) : car=car
+        magint != "M"  and mov == "S" ? sca=qta  : sca=""
+        magint != "M"  and mov == "C" ? sca=-(qta.to_i) : sca=sca
         giac = giac + car.to_i - sca.to_i
         table << Ruport::Data::Record.new([dt_doc, num, cau, car, sca, giac.to_s],
                                           :attributes => col_head)

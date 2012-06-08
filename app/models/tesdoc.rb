@@ -15,6 +15,9 @@ class Tesdoc < ActiveRecord::Base
   TIPO_DOC = $ParAzienda['CAUSMAG']['TIPO_DOC']
 
   def rigdocbyxls(xls, wks, rownr, hshcol)
+    # Carica una riga documento per ogni riga presente nel file excel xls nello sheet wks(0base),
+    # partendo dalla riga rownr 
+
     success = []
     errors = []
     prgrig = 1
@@ -44,6 +47,8 @@ class Tesdoc < ActiveRecord::Base
   end
 
   def self.filter (tp, des, tpc, tipo_doc, causmag, conto, page)
+    # Esegure la ricerca nei documenti in base ai filtri impsotati
+
     hsh = {"RS" => "denomin", "CF" => "codfis", "PI" => "pariva"}
     hshvar = Hash.new
 

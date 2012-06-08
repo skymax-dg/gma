@@ -4,15 +4,11 @@ class LocalitasController < ApplicationController
     if @des_paese.empty? 
       @nr = -1
       @paeses = Paese.all
-@nr = @paeses.count
+      @nr = @paeses.count
       @des_paese = ""
     else
       @nr, @paeses = Paese.findlike_des(params[:paese][:descriz])
-      #@paeses = Paese.where("descriz like ?", "%" + @des_paese + "%")
-      #@nr = @paeses.count
       if @nr == 1
-        #@des_paese = @paeses.descriz
-        #@id = @paeses.first.id
         @des_paese = @paeses.first.descriz
         @id = @paeses.id
       end
@@ -45,7 +41,6 @@ class LocalitasController < ApplicationController
   def new
     @localita = Localita.new
     @localita.paese = Paese.new
-#    @paeses = Paese.all
   end
 
   def edit
