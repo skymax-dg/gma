@@ -19,7 +19,8 @@ Gma::Application.routes.draw do
 
   resources :articles do
     member do
-      get :movmag
+      get :stp_movmag
+      get :filter_movmag
       get :cvendis
     end
     collection do

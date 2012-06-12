@@ -21,6 +21,10 @@ class Conto < ActiveRecord::Base
     self.codice.to_s + " " + Conto::TIPOCONTO[self.tipoconto] + " " + self.anagen.denomin
   end
   
+  def self.findbytipoconto(azienda, annoese, tipoconto)
+    where(["azienda = :az and annoese = :ae and tipoconto = :tpc", {:az => azienda, :ae => annoese, :tpc => tipoconto}])
+  end
+
   def self.find4docfilter(cfa, tpf, des)
     # Filtra i conti referenziati dalle anagrafiche (anagen) in like sul dato CodFis/ParIva/Denomin
 

@@ -1,0 +1,25 @@
+<h1>Stampa Movimenti di magazzino</h1>
+<br/>
+<%= form_tag(:stp_movmag_article, :method => :get) do %>
+  <div class="field">
+    Articolo: <%= @article.desest1 %>
+  </div>
+  <div class="field">
+    <b> <%= label_tag "Cliente: " %> </b> <br />
+    <%= select_tag(:idconto,
+                   options_from_collection_for_select(@contos, :id, :desest1),
+                   {:include_blank => ""}) unless @contos.nil?%>
+    Le movimentazioni di: <%= Anagen.find(StaticData::ANARIF).denomin %> 
+    <%= check_box_tag 'anarif', 'S' %>
+  </div>
+  <div class="field">
+    <b> <%= label_tag "Magazzino: " %> </b> <br />
+    <% mag = Anaind::NRMAG %>
+    <% mag.delete(0) %>
+    <%= select_tag(:nrmag, options_for_select(mag.invert.sort), {:include_blank => "", :selected => ""}) %>
+    raggruppati:
+    <%= check_box_tag 'group_mag', 'S' %>
+  </div>
+
+  <%= submit_tag 'STAMPA' %>
+<% end %>

@@ -20,6 +20,8 @@ CAUSMAG:
     E: 'Entrata'
     U: 'Uscita'
     T: 'Trasferimento'
+    V: 'Rend.Vendite'
+    R: 'Rend.Resi'
   MOVIMPMAG:
     M: 'Movimenta'
     I: 'Impegna'

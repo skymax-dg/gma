@@ -24,16 +24,36 @@ class Article < ActiveRecord::Base
     return errors
   end
 
-  def self.movimentati(id)
-    # Articoli collegati ad un movimento di magazzino
-    id == "all" ? filter_art = "" : filter_art = " AND articles.id = " + id.to_s
-    Article.find_by_sql("SELECT DISTINCT articles.id, articles.codice, articles.descriz
-                           FROM articles INNER JOIN rigdocs ON (articles.id = rigdocs.article_id)
-                                         INNER JOIN tesdocs ON (rigdocs.tesdoc_id = tesdocs.id)
-                                         INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
-                                         WHERE causmags.movimpmag IN ('M', 'I') " + filter_art + 
-                     " ORDER BY articles.descriz")
+  def desest1
+    self.codice.to_s + " " + self.descriz
   end
+
+#  def self.movimentati(id)
+    # Articoli collegati ad un movimento di magazzino
+#    id == "all" ? filter_art = "" : filter_art = " AND articles.id = " + id.to_s
+#    Article.find_by_sql("SELECT DISTINCT articles.id, articles.codice, articles.descriz
+#                           FROM articles INNER JOIN rigdocs ON (articles.id = rigdocs.article_id)
+#                                         INNER JOIN tesdocs ON (rigdocs.tesdoc_id = tesdocs.id)
+#                                         INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
+#                                         WHERE causmags.movimpmag IN ('M', 'I') " + filter_art + 
+#                     " ORDER BY articles.descriz")
+#  end
+
+#  def self.movimentati(idart, idconto, nrmag)
+#    # Articoli collegati ad un movimento di magazzino su un determinato conto in un determinato magazzino
+#    idart == "all" ? filter_art = "" : filter_art = " AND articles.id = " + idart.to_s
+#    idconto == "" ? filter_conto = "" : filter_conto = " AND conto.id = " + idconto.to_s
+#    nrmag == "" ? filter_nrmag = "" : filter_nrmag = " AND (tesdoc.nrmagsrc = " + nrmag.to_s +
+#                                                     " OR   tesdoc.nrmagdst = " + nrmag.to_s + ")"
+#    Article.find_by_sql("SELECT DISTINCT articles.id, articles.codice, articles.descriz
+#                           FROM articles INNER JOIN rigdocs ON (articles.id = rigdocs.article_id)
+#                                         INNER JOIN tesdocs ON (rigdocs.tesdoc_id = tesdocs.id)
+#                                         INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
+#                                         INNER JOIN contos ON (tesdocs.conto_id = contos.id)
+#                                         WHERE causmags.movimpmag IN ('M', 'I') " + filter_art +
+#                                         filter_conto + filter_nrmag 
+#                     " ORDER BY articles.descriz")
+#  end
 
   def self.movmag(id)
     # Tutti i movimenti di magazzino di un articolo (titolo)

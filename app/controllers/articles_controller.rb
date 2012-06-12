@@ -1,9 +1,31 @@
 class ArticlesController < ApplicationController
-  def movmag
+  def movmagOLD
     if Article.movimentati(params[:id]).count == 0
       render 'movnotfound'
     else
       pdf = MovtitleController.render_pdf(:data => params[:id])
+      send_data pdf, :type => "application/pdf",
+                     :filename => "RpMovMagArt.pdf" 
+    end
+  end
+
+  def filter_movmag
+    @article = Article.find(params[:id])
+    @contos = Conto.findbytipoconto(StaticData::AZIENDA, StaticData::ANNOESE, "C")
+    if @contos.empty?
+      flash[:error] = "Nessun conto cliente presente"
+      render :action => "show"
+    end
+  end
+
+  def stp_movmag
+    pdfdata = Tesdoc.art_mov(params[:id], params[:idconto], params[:nrmag], params[:anarif])
+    if pdfdata.count == 0
+      render 'movnotfound'
+    else
+      pdf = MovtitleController.render_pdf(:data => pdfdata, 
+                                          :idconto => params[:idconto]||"", :nrmag => params[:nrmag]||"",
+                                          :anarif  => params[:anarif]||"",  :groupmag => params[:groupmag]||"")
       send_data pdf, :type => "application/pdf",
                      :filename => "RpMovMagArt.pdf" 
     end

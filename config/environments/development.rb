@@ -34,4 +34,7 @@ Gma::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+#by alex
+#config.log_level = :info
 end

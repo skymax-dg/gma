@@ -69,4 +69,180 @@ class Tesdoc < ActiveRecord::Base
     includes(:causmag, :conto =>[:anagen]).where([whcausmag + whconto + whana,
                                                   hshvar]).paginate(:page => page, :per_page => 10) unless hsh[tp].nil?
   end
+
+  def self.art_mov(idart, idconto, nrmag, anarif)
+    # Documenti che movimentano uno o più articoli per uno o più conti per uno o più magazzini
+    idart == "all" ? filter_art = "" : filter_art = " AND articles.id = " + idart.to_s
+    if anarif == "S"
+      filter_conto = ""
+      # Movimenti per l'anagrafica interna di riferimento
+      filter_tpmov = " AND causmags.tipo IN ('U','E','T')"
+    else 
+      idconto == "" ? filter_conto = "" : filter_conto = " AND contos.id = " + idconto.to_s
+      filter_tpmov = " AND causmags.tipo IN ('U','E','V','R')"
+    end 
+    nrmag == "" ? filter_nrmag = "" : filter_nrmag = " AND (tesdocs.nrmagsrc = " + nrmag.to_s +
+                                                     " OR   tesdocs.nrmagdst = " + nrmag.to_s + ")"
+    Tesdoc.find_by_sql("SELECT DISTINCT articles.id
+                          FROM tesdocs INNER JOIN rigdocs  ON (rigdocs.tesdoc_id = tesdocs.id)
+                                       INNER JOIN articles ON (articles.id = rigdocs.article_id)
+                                       INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
+                                       INNER JOIN contos   ON (tesdocs.conto_id = contos.id)
+                                       WHERE causmags.movimpmag IN ('M', 'I') " + filter_art +
+                                       filter_conto + filter_tpmov + filter_nrmag +
+                     " ORDER BY articles.id")
+  end
+  
+  def self.conti_mov_artic(idart, idconto, nrmag, anarif)
+    # Elenco conti movimentati da un articolo per uno o più magazzini
+    if anarif == "S"
+      filter_conto = ""
+      # Movimenti per l'anagrafica interna di riferimento
+      filter_tpmov = " AND causmags.tipo IN ('U','E','T')"
+      select = "'FISSO' AS idconto"
+    else 
+      idconto == "" ? filter_conto = "" : filter_conto = " AND contos.id = " + idconto.to_s
+      filter_tpmov = " AND causmags.tipo IN ('U','E','V','R')"
+      select = "contos.id AS idconto"
+    end
+    nrmag == "" ? filter_nrmag = "" : filter_nrmag = " AND (tesdocs.nrmagsrc = " + nrmag.to_s +
+                                                     " OR   tesdocs.nrmagdst = " + nrmag.to_s + ")"
+    Tesdoc.find_by_sql("SELECT DISTINCT " + select +
+                        " FROM tesdocs INNER JOIN rigdocs  ON (rigdocs.tesdoc_id = tesdocs.id)
+                                       INNER JOIN articles ON (articles.id = rigdocs.article_id)
+                                       INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
+                                       INNER JOIN contos   ON (tesdocs.conto_id = contos.id)
+                                       WHERE causmags.movimpmag IN ('M', 'I') 
+                                         AND articles.id = " + idart.to_s +
+                                       filter_conto + filter_tpmov + filter_nrmag +
+                    " ORDER BY idconto")
+  end
+
+  def self.mag_mov_artic_conto(idart, idconto, nrmag, anarif)
+    # Elenco magazzini movimentati da un articolo su un conto
+    if anarif == "S"
+      filter_conto = ""
+      # Movimenti per l'anagrafica interna di riferimento
+      filter_magsrc = " AND  (   
+                                  (causmags.movimpmag = 'M' and causmags.tipo IN ('T','U'))
+                               OR (causmags.movimpmag = 'I' and causmags.tipo IN ('E'))
+                             )"
+      filter_magdst = " AND  (   
+                                  (causmags.movimpmag = 'M' and causmags.tipo IN ('T','E'))
+                               OR (causmags.movimpmag = 'I' and causmags.tipo IN ('U'))
+                             )"
+    else 
+      filter_conto = " AND contos.id = " + idconto.to_s
+      filter_magsrc = " AND  (   
+                                  (causmags.movimpmag = 'M' and causmags.tipo IN ('R','V','E'))
+                               OR (causmags.movimpmag = 'I' and causmags.tipo IN ('U'))
+                             )"
+      filter_magdst = " AND  (   
+                                  (causmags.movimpmag = 'M' and causmags.tipo IN ('R','V','U'))
+                               OR (causmags.movimpmag = 'I' and causmags.tipo IN ('E'))
+                             )"
+    end
+    Tesdoc.find_by_sql("SELECT DISTINCT tesdocs.nrmagsrc AS nrmag
+                          FROM tesdocs INNER JOIN rigdocs  ON (rigdocs.tesdoc_id = tesdocs.id)
+                                       INNER JOIN articles ON (articles.id = rigdocs.article_id)
+                                       INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
+                                       INNER JOIN contos   ON (tesdocs.conto_id = contos.id)
+                                       WHERE causmags.movimpmag IN ('M', 'I') 
+                                         AND articles.id = " + idart.to_s +
+                                         filter_conto + filter_magsrc +
+                        " UNION " +
+                        "SELECT DISTINCT tesdocs.nrmagdst AS nrmag
+                          FROM tesdocs INNER JOIN rigdocs  ON (rigdocs.tesdoc_id = tesdocs.id)
+                                       INNER JOIN articles ON (articles.id = rigdocs.article_id)
+                                       INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
+                                       INNER JOIN contos   ON (tesdocs.conto_id = contos.id)
+                                       WHERE causmags.movimpmag IN ('M', 'I') 
+                                         AND articles.id = " + idart.to_s +
+                                         filter_conto + filter_magdst +
+                    " ORDER BY nrmag")
+  end
+
+  def self.mov_artcontomag(idart, idconto, nrmag, anarif)
+    # Elenco movimenti per un articolo per un conto e per un magazzino
+    if anarif == "S"
+      filter_conto = ""
+      # Movimenti per l'anagrafica interna di riferimento
+      filter_magsrc = " AND  (   
+                                  (causmags.movimpmag = 'M' and causmags.tipo IN ('T','U'))
+                               OR (causmags.movimpmag = 'I' and causmags.tipo IN ('E'))
+                             )"
+      filter_magdst = " AND  (   
+                                  (causmags.movimpmag = 'M' and causmags.tipo IN ('T','E'))
+                               OR (causmags.movimpmag = 'I' and causmags.tipo IN ('U'))
+                             )"
+    else 
+      filter_conto = " AND contos.id = " + idconto.to_s
+      filter_magsrc = " AND  (   
+                                  (causmags.movimpmag = 'M' and causmags.tipo IN ('R','V','E'))
+                               OR (causmags.movimpmag = 'I' and causmags.tipo IN ('U'))
+                             )"
+      filter_magdst = " AND  (   
+                                  (causmags.movimpmag = 'M' and causmags.tipo IN ('R','V','U')
+                               OR (causmags.movimpmag = 'I' and causmags.tipo IN ('E') 
+                             )"
+    end
+    Tesdoc.find_by_sql("SELECT tesdocs.data_doc  AS Data_doc, tesdocs.num_doc  AS Numero,
+                               causmags.descriz  AS Causale,  tesdocs.nrmagsrc AS Nrmag,
+                               tesdocs.movimpmag AS Movmag,   causmags.tipo    AS Tipomov,
+                               rigdocs.qta       AS Qta,      'SRC'            AS Tipomag
+                          FROM tesdocs INNER JOIN rigdocs  ON (rigdocs.tesdoc_id = tesdocs.id)
+                                       INNER JOIN articles ON (articles.id = rigdocs.article_id)
+                                       INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
+                                       INNER JOIN contos   ON (tesdocs.conto_id = contos.id)
+                                       WHERE causmags.movimpmag IN ('M', 'I') 
+                                         AND articles.id = " + idart.to_s +
+                                         filter_conto + filter_magsrc +
+                                       " AND tesdocs.nrmagsrc = " + nrmag.to_i +
+                       " UNION " +
+                       "SELECT tesdocs.data_doc  AS Data_doc, tesdocs.num_doc  AS Numero,
+                               causmags.descriz  AS Causale,  tesdocs.nrmagsrc AS Nrmag,
+                               tesdocs.movimpmag AS Movmag,   causmags.tipo    AS Tipomov,
+                               rigdocs.qta       AS Qta,      'DST'            AS Tipomag
+                          FROM tesdocs INNER JOIN rigdocs  ON (rigdocs.tesdoc_id = tesdocs.id)
+                                       INNER JOIN articles ON (articles.id = rigdocs.article_id)
+                                       INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
+                                       INNER JOIN contos   ON (tesdocs.conto_id = contos.id)
+                                       WHERE causmags.movimpmag IN ('M', 'I') 
+                                         AND articles.id = " + idart.to_s +
+                                         filter_conto + filter_magdst +
+                                       " AND tesdocs.nrmagdst = " + nrmag.to_i +
+                    " ORDER BY data_doc")
+  end
+
+  def self.art_mov222(idart, idconto, nrmag, anarif)
+    # Documenti che movimentano uno o più articoli per uno o più conti per uno o più magazzini
+    idart == "all" ? filter_art = "" : filter_art = " AND articles.id = " + idart.to_s
+    if anarif == "S"
+      filter_conto = ""
+      # Movimenti per l'anagrafica interna di riferimento
+      filter_tpmov = " AND causmags.tipo IN ('U','E','T')"
+      order = " articles.id"
+    else 
+      idconto == "" ? filter_conto = "" : filter_conto = " AND contos.id = " + idconto.to_s
+      filter_tpmov = " AND causmags.tipo IN ('U','E','V','R')"
+      order = " articles.id, contos.id"
+    end 
+    nrmag == "" ? filter_nrmag = "" : filter_nrmag = " AND (tesdocs.nrmagsrc = " + nrmag.to_s +
+                                                     " OR   tesdocs.nrmagdst = " + nrmag.to_s + ")"
+    Tesdoc.find_by_sql("SELECT articles.id         AS Article_id, articles.descriz AS Desart,
+                               contos.id           AS Conto_id,   contos.descriz   AS Desconto,   
+                               tesdocs.nrmagsrc    AS Magsrc,     tesdocs.nrmagdst AS Magdst,
+                               causmags.movimpmag  AS Mag,
+                               tesdocs.data_doc    AS Data_doc,   tesdocs.num_doc  AS Numero,
+                               causmags.descriz    AS Causale,    causmags.tipo    AS Mov,
+                               rigdocs.qta         AS Qta
+                          FROM tesdocs INNER JOIN rigdocs  ON (rigdocs.tesdoc_id = tesdocs.id)
+                                       INNER JOIN articles ON (articles.id = rigdocs.article_id)
+                                       INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
+                                       INNER JOIN contos   ON (tesdocs.conto_id = contos.id)
+                                       WHERE causmags.movimpmag IN ('M', 'I') " + filter_art +
+                                       filter_conto + filter_tpmov + filter_nrmag +
+                     " ORDER BY " + order)
+  end
+
 end
