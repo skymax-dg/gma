@@ -1,7 +1,45 @@
+require 'spreadsheet'
+Spreadsheet.client_encoding = 'UTF-8'
+
 class TesdocsController < ApplicationController
   def index
     store_tipo_doc(params[:tipo_doc])
     init_filter()
+  end
+
+  def addtesrigdoc_fromxls
+    begin
+      @errors = []
+      @success = []
+      Spreadsheet.open "tesrigdocMESS.xls" do |book|
+#        @tesdoc = Tesdoc.find(params[:id])
+        begin
+          #@errors = Tesdoc.chk_tesrigdoc_xls(book, ...)
+          #raise "Errore su alcune testate e righe documento" if @errors.count > 0
+          rowini = 4
+          sheet = 0
+          coltes = {:col_azienda      => 1, :col_annoese  => 2,  :col_num_doc => 4,
+                    :col_data_doc     => 5, :col_descriz  => 6,  :col_causmag_id => 3,
+                    :col_conto_codice => 8, :col_nrmagsrc => 10, :col_nrmagdst => 11}
+          colrig = {:col_article_codice => 12, :col_descriz => 15, :col_qta => 16,
+                    :col_prezzo         => 13, :col_prgrig  => 9}
+          #col_sconto => 0
+          #col_seguefatt =>
+          #col_tipo_doc =>
+          @errors, @success = @tesdoc.tesrigdocbyxls(book, sheet, rowini, coltes, colrig)
+          if @errors.count == 0
+            flash[:notice] = "CARICAMENTO COMPLETATO con SUCCESSO."
+          else
+            flash[:error] = "Si sono verificati ERRORI durante il caricamento (CARICAMENTO PARZIALE)"
+          end
+        rescue
+          flash[:error] = $!.message
+        end
+      end
+    rescue Exception => e
+      flash[:error] = $!.message
+      @errors << "File bloccato da un'altra applicazione o non trovato: " + e #$?.exitstatus
+    end
   end
 
   def filter

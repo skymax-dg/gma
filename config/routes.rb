@@ -52,6 +52,7 @@ Gma::Application.routes.draw do
     collection do
       get :filter
       get :choose_tipo_doc
+      get :addtesrigdoc_fromxls
     end
   end
 
