@@ -5,12 +5,12 @@ ANAGEN:
   TIPO SOGGETTO:
     F: 'Persona fisica'
     G: 'Persona giuridica'
-    I: 'Ditta individuale'  
+    I: 'Ditta individuale'
 ANAIND:
   NRMAG:
     0: 'Nessuno'
-    1: 'Mag.1'
-    2: 'Mag.2'
+    1: 'Principale'
+    2: 'Secondario'
 CAUSMAG:
   TIPO_DOC:
     0: 'generico'

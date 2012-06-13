@@ -25,7 +25,7 @@ class ArticlesController < ApplicationController
     else
       pdf = MovtitleController.render_pdf(:data => pdfdata, 
                                           :idconto => params[:idconto]||"", :nrmag => params[:nrmag]||"",
-                                          :anarif  => params[:anarif]||"",  :groupmag => params[:groupmag]||"")
+                                          :anarif  => params[:anarif]||"",  :grpmag => params[:grpmag]||"")
       send_data pdf, :type => "application/pdf",
                      :filename => "RpMovMagArt.pdf" 
     end

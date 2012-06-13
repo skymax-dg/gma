@@ -83,7 +83,7 @@ class Tesdoc < ActiveRecord::Base
     end 
     nrmag == "" ? filter_nrmag = "" : filter_nrmag = " AND (tesdocs.nrmagsrc = " + nrmag.to_s +
                                                      " OR   tesdocs.nrmagdst = " + nrmag.to_s + ")"
-    Tesdoc.find_by_sql("SELECT DISTINCT articles.id
+    Tesdoc.find_by_sql("SELECT DISTINCT articles.id AS artid
                           FROM tesdocs INNER JOIN rigdocs  ON (rigdocs.tesdoc_id = tesdocs.id)
                                        INNER JOIN articles ON (articles.id = rigdocs.article_id)
                                        INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
@@ -95,20 +95,14 @@ class Tesdoc < ActiveRecord::Base
   
   def self.conti_mov_artic(idart, idconto, nrmag, anarif)
     # Elenco conti movimentati da un articolo per uno o più magazzini
-    if anarif == "S"
-      filter_conto = ""
-      # Movimenti per l'anagrafica interna di riferimento
-      filter_tpmov = " AND causmags.tipo IN ('U','E','T')"
-      select = "'FISSO' AS idconto"
-    else 
-      idconto == "" ? filter_conto = "" : filter_conto = " AND contos.id = " + idconto.to_s
-      filter_tpmov = " AND causmags.tipo IN ('U','E','V','R')"
-      select = "contos.id AS idconto"
-    end
+    return Tesdoc.find_by_sql("SELECT '' AS idconto") if anarif == "S"
+
+    idconto == "" ? filter_conto = "" : filter_conto = " AND contos.id = " + idconto.to_s
+    filter_tpmov = " AND causmags.tipo IN ('U','E','V','R')"
     nrmag == "" ? filter_nrmag = "" : filter_nrmag = " AND (tesdocs.nrmagsrc = " + nrmag.to_s +
                                                      " OR   tesdocs.nrmagdst = " + nrmag.to_s + ")"
-    Tesdoc.find_by_sql("SELECT DISTINCT " + select +
-                        " FROM tesdocs INNER JOIN rigdocs  ON (rigdocs.tesdoc_id = tesdocs.id)
+    Tesdoc.find_by_sql("SELECT DISTINCT contos.id AS idconto
+                          FROM tesdocs INNER JOIN rigdocs  ON (rigdocs.tesdoc_id = tesdocs.id)
                                        INNER JOIN articles ON (articles.id = rigdocs.article_id)
                                        INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
                                        INNER JOIN contos   ON (tesdocs.conto_id = contos.id)
@@ -118,10 +112,12 @@ class Tesdoc < ActiveRecord::Base
                     " ORDER BY idconto")
   end
 
-  def self.mag_mov_artic_conto(idart, idconto, nrmag, anarif)
+  def self.mag_mov_artic_conto(idart, idconto, nrmag, anarif, grpmag)
     # Elenco magazzini movimentati da un articolo su un conto
+    return Tesdoc.find_by_sql("SELECT '' AS nrmag") if grpmag == "S"
+
+    filter_conto = ""
     if anarif == "S"
-      filter_conto = ""
       # Movimenti per l'anagrafica interna di riferimento
       filter_magsrc = " AND  (   
                                   (causmags.movimpmag = 'M' and causmags.tipo IN ('T','U'))
@@ -131,8 +127,8 @@ class Tesdoc < ActiveRecord::Base
                                   (causmags.movimpmag = 'M' and causmags.tipo IN ('T','E'))
                                OR (causmags.movimpmag = 'I' and causmags.tipo IN ('U'))
                              )"
-    else 
-      filter_conto = " AND contos.id = " + idconto.to_s
+    else
+      filter_conto = " AND contos.id = " + idconto.to_s unless idconto == ""
       filter_magsrc = " AND  (   
                                   (causmags.movimpmag = 'M' and causmags.tipo IN ('R','V','E'))
                                OR (causmags.movimpmag = 'I' and causmags.tipo IN ('U'))
@@ -162,10 +158,10 @@ class Tesdoc < ActiveRecord::Base
                     " ORDER BY nrmag")
   end
 
-  def self.mov_artcontomag(idart, idconto, nrmag, anarif)
+  def self.mov_artcontomag(idart, idconto, nrmag, anarif, grpmag)
     # Elenco movimenti per un articolo per un conto e per un magazzino
+    filter_conto = ""
     if anarif == "S"
-      filter_conto = ""
       # Movimenti per l'anagrafica interna di riferimento
       filter_magsrc = " AND  (   
                                   (causmags.movimpmag = 'M' and causmags.tipo IN ('T','U'))
@@ -176,42 +172,47 @@ class Tesdoc < ActiveRecord::Base
                                OR (causmags.movimpmag = 'I' and causmags.tipo IN ('U'))
                              )"
     else 
-      filter_conto = " AND contos.id = " + idconto.to_s
+      filter_conto = " AND contos.id = " + idconto.to_s unless idconto == ""
       filter_magsrc = " AND  (   
                                   (causmags.movimpmag = 'M' and causmags.tipo IN ('R','V','E'))
                                OR (causmags.movimpmag = 'I' and causmags.tipo IN ('U'))
                              )"
       filter_magdst = " AND  (   
-                                  (causmags.movimpmag = 'M' and causmags.tipo IN ('R','V','U')
-                               OR (causmags.movimpmag = 'I' and causmags.tipo IN ('E') 
+                                  (causmags.movimpmag = 'M' and causmags.tipo IN ('R','V','U'))
+                               OR (causmags.movimpmag = 'I' and causmags.tipo IN ('E'))
                              )"
     end
-    Tesdoc.find_by_sql("SELECT tesdocs.data_doc  AS Data_doc, tesdocs.num_doc  AS Numero,
-                               causmags.descriz  AS Causale,  tesdocs.nrmagsrc AS Nrmag,
-                               tesdocs.movimpmag AS Movmag,   causmags.tipo    AS Tipomov,
-                               rigdocs.qta       AS Qta,      'SRC'            AS Tipomag
+    if grpmag == "S"
+      filter_nrmagsrc = ""
+      filter_nrmagdst = ""
+    else
+      filter_nrmagsrc = " AND tesdocs.nrmagsrc = " + nrmag.to_s
+      filter_nrmagdst = " AND tesdocs.nrmagdst = " + nrmag.to_s
+    end
+    Tesdoc.find_by_sql("SELECT tesdocs.data_doc   AS Data_doc, tesdocs.num_doc  AS Numero,
+                               causmags.descriz   AS Causale,  tesdocs.nrmagsrc AS Nrmag,
+                               causmags.movimpmag AS Movmag,   causmags.tipo    AS Tipomov,
+                               rigdocs.qta        AS Qta,      'SRC'            AS Tipomag
                           FROM tesdocs INNER JOIN rigdocs  ON (rigdocs.tesdoc_id = tesdocs.id)
                                        INNER JOIN articles ON (articles.id = rigdocs.article_id)
                                        INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
                                        INNER JOIN contos   ON (tesdocs.conto_id = contos.id)
                                        WHERE causmags.movimpmag IN ('M', 'I') 
                                          AND articles.id = " + idart.to_s +
-                                         filter_conto + filter_magsrc +
-                                       " AND tesdocs.nrmagsrc = " + nrmag.to_i +
+                                         filter_conto + filter_magsrc + filter_nrmagsrc +
                        " UNION " +
-                       "SELECT tesdocs.data_doc  AS Data_doc, tesdocs.num_doc  AS Numero,
-                               causmags.descriz  AS Causale,  tesdocs.nrmagsrc AS Nrmag,
-                               tesdocs.movimpmag AS Movmag,   causmags.tipo    AS Tipomov,
-                               rigdocs.qta       AS Qta,      'DST'            AS Tipomag
+                       "SELECT tesdocs.data_doc   AS Data_doc, tesdocs.num_doc  AS Numero,
+                               causmags.descriz   AS Causale,  tesdocs.nrmagdst AS Nrmag,
+                               causmags.movimpmag AS Movmag,   causmags.tipo    AS Tipomov,
+                               rigdocs.qta        AS Qta,      'DST'            AS Tipomag
                           FROM tesdocs INNER JOIN rigdocs  ON (rigdocs.tesdoc_id = tesdocs.id)
                                        INNER JOIN articles ON (articles.id = rigdocs.article_id)
                                        INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
                                        INNER JOIN contos   ON (tesdocs.conto_id = contos.id)
                                        WHERE causmags.movimpmag IN ('M', 'I') 
                                          AND articles.id = " + idart.to_s +
-                                         filter_conto + filter_magdst +
-                                       " AND tesdocs.nrmagdst = " + nrmag.to_i +
-                    " ORDER BY data_doc")
+                                         filter_conto + filter_magdst + filter_nrmagdst +
+                    " ORDER BY data_doc, Numero")
   end
 
   def self.art_mov222(idart, idconto, nrmag, anarif)
