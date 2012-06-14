@@ -12,21 +12,20 @@ class TesdocsController < ApplicationController
       @errors = []
       @success = []
       Spreadsheet.open "tesrigdocMESS.xls" do |book|
-#        @tesdoc = Tesdoc.find(params[:id])
         begin
           #@errors = Tesdoc.chk_tesrigdoc_xls(book, ...)
           #raise "Errore su alcune testate e righe documento" if @errors.count > 0
-          rowini = 4
+          rowini = 3
           sheet = 0
-          coltes = {:col_azienda      => 1, :col_annoese  => 2,  :col_num_doc => 4,
-                    :col_data_doc     => 5, :col_descriz  => 6,  :col_causmag_id => 3,
-                    :col_conto_codice => 8, :col_nrmagsrc => 10, :col_nrmagdst => 11}
-          colrig = {:col_article_codice => 12, :col_descriz => 15, :col_qta => 16,
-                    :col_prezzo         => 13, :col_prgrig  => 9}
+          coltes = {:col_azienda      => 0, :col_annoese  => 1,  :col_num_doc => 3,
+                    :col_data_doc     => 4, :col_descriz  => 5,  :col_causmag_id => 2,
+                    :col_conto_codice => 7, :col_nrmagsrc => 9, :col_nrmagdst => 10}
+          colrig = {:col_article_codice => 11, :col_descriz => 14, :col_qta => 15,
+                    :col_prezzo         => 12, :col_prgrig  => 8}
           #col_sconto => 0
           #col_seguefatt =>
           #col_tipo_doc =>
-          @errors, @success = @tesdoc.tesrigdocbyxls(book, sheet, rowini, coltes, colrig)
+          @errors, @success = Tesdoc.tesrigdocbyxls(book, sheet, rowini, coltes, colrig)
           if @errors.count == 0
             flash[:notice] = "CARICAMENTO COMPLETATO con SUCCESSO."
           else

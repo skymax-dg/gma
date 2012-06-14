@@ -12,3 +12,11 @@ FATTO: In inserimento di una nuova riga documento
 
 FATTO: in views\tesdocs\new.js.erb la var url = "http://localhost:3000/tesdocs/new?causmag=" + v1 + "&conto=" + v2
        va bene solo per prove locali
+       
+SE IN INSERIMENTO NUOVA CITTA DIGITI DIRETTAMENTE LA NAZIONE SENZA PASSARE PER LA COMBO DA ERRORE IN SALVATAGGIO
+Su ARTICLES, CAUSALES e CAUSMAGS aggiungere il filtro AZIENDA sulle query
+Su CONTOS e TESDOCS aggiungere il filtro AZIENDA e ANNOESE sulle query
+
+Caricare le giacenze iniziali
+Caricare i resi
+In Crea nuova riga doc mettere gli articoli ordinati per codice almeno

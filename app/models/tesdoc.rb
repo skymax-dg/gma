@@ -46,64 +46,74 @@ class Tesdoc < ActiveRecord::Base
     return errors, success
   end
 
-  def tesrigdocbyxls(xls, wks, rowini, coltes, colrig)
+  def self.tesrigdocbyxls(xls, wks, rowini, coltes, colrig)
     # Carica i documenti (ogni riga contiene sia testata che dettaglio riga),
     # ogni riga del file excel xls nello sheet wks(0base), partendo dalla riga rowini
 
     success = []
     errors = []
     xls.worksheet(wks).each rowini do |row|
-      #if check_info_riga_ok
-          coltes = {:col_azienda      => 1, :col_annoese  => 2,  :col_num_doc => 4,
-                    :col_data_doc     => 5, :col_descriz  => 6,  :col_causmag_id => 3,
-                    :col_conto_codice => 8, :col_nrmagsrc => 10, :col_nrmagdst => 11}
-          colrig = {:col_article_codice => 12, :col_descriz => 15, :col_qta => 16,
-                    :col_prezzo         => 13, :col_prgrig  => 9}
-        if row.index = rowini or
-          (  row[coltes[:col_azienda]].to_s.strip    != prow[coltes[:col_azienda]].to_s.strip    or
-             row[coltes[:col_annoese]].to_s.strip    != prow[coltes[:col_annoese]].to_s.strip    or
-             row[coltes[:col_causmag_id]].to_s.strip != prow[coltes[:col_causmag_id]].to_s.strip or
-             row[coltes[:col_num_doc]].to_s.strip    != prow[coltes[:col_num_doc]].to_s.strip)
+#if check_info_riga_ok
+        if row.idx == rowini or
+           row[coltes[:col_azienda]].to_i    != @tesdoc.azienda or
+           row[coltes[:col_annoese]].to_i    != @tesdoc.annoese or
+           row[coltes[:col_causmag_id]].to_i != @tesdoc.causmag_id or
+           row[coltes[:col_num_doc]].to_i    != @tesdoc.num_doc
+#          (  row[coltes[:col_azienda]].to_s.strip    != prow[coltes[:col_azienda]].to_s.strip    or
+#             row[coltes[:col_annoese]].to_s.strip    != prow[coltes[:col_annoese]].to_s.strip    or
+#             row[coltes[:col_causmag_id]].to_s.strip != prow[coltes[:col_causmag_id]].to_s.strip or
+#             row[coltes[:col_num_doc]].to_s.strip    != prow[coltes[:col_num_doc]].to_s.strip)
           @tesdoc = Tesdoc.new
-          @tesdoc.azienda = row[coltes[:azienda]].to_s.strip
-          @tesdoc.annoese = row[coltes[:annoese]].to_s.strip
-          @tesdoc.num_doc = row[coltes[:num_doc]].to_s.strip
-          @tesdoc.data_doc = row[coltes[:data_doc]].to_s.strip
-          @tesdoc.descriz = row[coltes[:descriz]].to_s.strip
-          @tesdoc.causmag_id = row[coltes[:col_causmag_id]].to_s.strip
-          @tesdoc.conto_id = Conto.find_by_azienda_and_annoese_and_codice(
-                                   @tesdoc.azienda, @tesdoc.annoese,
-                                   row[coltes[:col_conto_codice]].to_s.strip).id
-          @tesdoc.nrmagsrc = row[coltes[:nrmagsrc]].to_s.strip
-          @tesdoc.nrmagdst = row[coltes[:nrmagdst]].to_s.strip
+          @tesdoc.azienda = row[coltes[:col_azienda]].to_i
+          @tesdoc.annoese = row[coltes[:col_annoese]].to_i
+          @tesdoc.num_doc = row[coltes[:col_num_doc]].to_i
+          @tesdoc.tipo_doc = 1
+          @tesdoc.data_doc = row[coltes[:col_data_doc]].to_s.strip
+          @tesdoc.descriz = row[coltes[:col_descriz]].to_s.strip
+          @tesdoc.causmag_id = row[coltes[:col_causmag_id]].to_i
+          conto = Conto.find_by_azienda_and_annoese_and_codice(
+                         @tesdoc.azienda, @tesdoc.annoese, row[coltes[:col_conto_codice]].to_i)
+          if conto.nil?
+            contonullo
+          else
+            @tesdoc.conto_id = conto.id
+          end
+          @tesdoc.nrmagsrc = row[coltes[:col_nrmagsrc]].to_i
+          @tesdoc.nrmagdst = row[coltes[:col_nrmagdst]].to_i
           if @tesdoc.save
 success << "Caricata testata:" #+ row[hshcol[:article_id_bycod]].to_s.strip + " " + @rigdoc.descriz +
            #" qta:" + @rigdoc.qta.to_s + " prezzo:" + @rigdoc.prezzo.to_s + " sconto:" + @rigdoc.sconto.to_s
           else
+errore1
 errors  << "Errore testata:"# + row[hshcol[:article_id_bycod]].to_s.strip + " " + @rigdoc.descriz +
            #" qta:" + @rigdoc.qta.to_s + " prezzo:" + @rigdoc.prezzo.to_s + " sconto:" + @rigdoc.sconto.to_s
           end
         end
-        @rigdoc = self.rigdocs.build # La Build valorizza automaticamente il campo rigdoc.tesdoc_id
-        @rigdoc.article_id = Article.find_by_azienda_and_codice(
-                                     @tesdoc.azienda,
-                                     row[colrig[:col_article_codice]].to_s.strip).id
-        @rigdoc.descriz = row[colrig[:descriz]].to_s.strip
-        @rigdoc.qta = row[colrig[:col_qta]].to_s.strip
-        @rigdoc.prezzo = row[colrig[:col_prezzo]].to_s.strip
-        @rigdoc.prgrig = row[colrig[:col_prgrig]].to_s.strip
+        @rigdoc = @tesdoc.rigdocs.build # La Build valorizza automaticamente il campo rigdoc.tesdoc_id
+        article = Article.find_by_azienda_and_codice(
+                          @tesdoc.azienda,
+                          row[colrig[:col_article_codice]].to_s.strip)
+        if article.nil?
+articolonontrovato
+        else
+          @rigdoc.article_id = article.id
+        end
+        @rigdoc.descriz = row[colrig[:col_descriz]].to_s.strip
+        @rigdoc.qta = row[colrig[:col_qta]].to_i
+        @rigdoc.prezzo = row[colrig[:col_prezzo]]
+        @rigdoc.prgrig = row[colrig[:col_prgrig]].to_i
         @rigdoc.sconto = 0
         if @rigdoc.qta > 0
           if @rigdoc.save
-            success << "Caricato articolo:" + row[hshcol[:article_id_bycod]].to_s.strip + " " + @rigdoc.descriz +
-                       " qta:" + @rigdoc.qta.to_s + " prezzo:" + @rigdoc.prezzo.to_s + " sconto:" + @rigdoc.sconto.to_s
+success << "Caricato articolo:"# + row[hshcol[:article_id_bycod]].to_s.strip + " " + @rigdoc.descriz +
+                       #" qta:" + @rigdoc.qta.to_s + " prezzo:" + @rigdoc.prezzo.to_s + " sconto:" + @rigdoc.sconto.to_s
           else
-            errors  << "Errore articolo:" + row[hshcol[:article_id_bycod]].to_s.strip + " " + @rigdoc.descriz +
-                       " qta:" + @rigdoc.qta.to_s + " prezzo:" + @rigdoc.prezzo.to_s + " sconto:" + @rigdoc.sconto.to_s
+errore2
+errors  << "Errore articolo:"# + row[hshcol[:article_id_bycod]].to_s.strip + " " + @rigdoc.descriz +
+                       #" qta:" + @rigdoc.qta.to_s + " prezzo:" + @rigdoc.prezzo.to_s + " sconto:" + @rigdoc.sconto.to_s
           end
         end
-        prow = row # memorizzo la riga che diventerà precedente
-      #end
+#end
     end
     return errors, success
   end

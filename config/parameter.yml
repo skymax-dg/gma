@@ -10,7 +10,9 @@ ANAIND:
   NRMAG:
     0: 'Nessuno'
     1: 'Principale'
-    2: 'Secondario'
+    2: 'Secondario1'
+    3: 'Secondario2'
+    4: 'Secondario3'
 CAUSMAG:
   TIPO_DOC:
     0: 'generico'

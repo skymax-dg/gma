@@ -9,6 +9,8 @@ class Article < ActiveRecord::Base
   validates :codice, :descriz, :uniqueness => true
   validates :codice,  :length => { :maximum => 10}
   validates :descriz, :length => { :maximum => 50}
+  
+  #scope: azienda, lambda {|azd| :conditions => ['azienda=  ?', azd]}
 
   def self.chk_art_xls(xls, wks, rownr, colnr)
     # Controlla che nel file excel xls nello sheet wks(0base), partendo dalla riga rownr,
