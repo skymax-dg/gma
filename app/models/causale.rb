@@ -7,6 +7,8 @@ class Causale < ActiveRecord::Base
   validates :azienda, :descriz, :tipoiva, :tiporeg, :presence => true
   validates :descriz, :length => { :maximum => 100}
 
+  scope :azienda, lambda { |azd| {:conditions => ['causales.azienda = ?', azd]}}
+
   TIPOIVA = $ParAzienda['CAUSALE']['TIPOIVA']
   TIPOREG = $ParAzienda['CAUSALE']['TIPOREG']
 

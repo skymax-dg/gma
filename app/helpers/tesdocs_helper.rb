@@ -4,7 +4,7 @@ module TesdocsHelper
     @clifilter = "C"
     @forfilter = "F"
     @altfilter = "A"
-    @causmags = Causmag.find(:all, :conditions => ["tipo_doc = :tpd", {:tpd => se_tipo_doc}])
+    @causmags = Causmag.find(:all, :conditions => ["tipo_doc = :tpd and azienda = :azd", {:tpd => se_tipo_doc, :azd => StaticData::AZIENDA}])
     @contos = Conto.find4docfilter([@clifilter, @forfilter, @altfilter], @tpfilter||"", @desfilter||"")
 #    render "index"
   end
@@ -32,5 +32,10 @@ module TesdocsHelper
     else
       mags = Anagen.find(StaticData::ANARIF).magsavailable([0])
     end
+  end
+  
+  def lastprgrig
+    return self.rigdocs.last.prgrig unless self.rigdocs.empty?
+    return 0
   end
 end

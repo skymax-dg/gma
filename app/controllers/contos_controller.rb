@@ -1,6 +1,6 @@
 class ContosController < ApplicationController
   def index
-    @contos = Conto.paginate(:page => params[:page], :per_page => 10)
+    @contos = Conto.azdanno(StaticData::AZIENDA, StaticData::ANNOESE).paginate(:page => params[:page], :per_page => 10)
   end
 
   def show

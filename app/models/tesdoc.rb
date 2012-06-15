@@ -10,6 +10,8 @@ class Tesdoc < ActiveRecord::Base
             :causmag_id, :conto_id, :nrmagsrc, :nrmagdst, :seguefatt, :sconto, :presence => true
   validates :descriz,  :length => { :maximum => 150}
 
+  scope :azdanno, lambda { |azd, anno| {:conditions => ['tesdocs.azienda = ? and tesdocs.annoese = ?', azd, anno]}}
+
   NRMAG = $ParAzienda['ANAIND']['NRMAG']
   SEGUEFATT = $ParAzienda['TESDOC']['SEGUEFATT']
   TIPO_DOC = $ParAzienda['CAUSMAG']['TIPO_DOC']
@@ -20,8 +22,7 @@ class Tesdoc < ActiveRecord::Base
 
     success = []
     errors = []
-    prgrig = 1
-    prgrig = self.rigdocs.last.prgrig + 1 unless self.rigdocs.empty?
+    prgrig = self.lastprgrig + 1
     xls.worksheet(wks).each rownr do |row|
       unless row[hshcol[:article_id_bycod]].blank? || row[hshcol[:qta]].blank? 
         @rigdoc = self.rigdocs.build # La Build valorizza automaticamente il campo rigdoc.tesdoc_id
@@ -54,65 +55,65 @@ class Tesdoc < ActiveRecord::Base
     errors = []
     xls.worksheet(wks).each rowini do |row|
 #if check_info_riga_ok
-        if row.idx == rowini or
-           row[coltes[:col_azienda]].to_i    != @tesdoc.azienda or
-           row[coltes[:col_annoese]].to_i    != @tesdoc.annoese or
-           row[coltes[:col_causmag_id]].to_i != @tesdoc.causmag_id or
-           row[coltes[:col_num_doc]].to_i    != @tesdoc.num_doc
-#          (  row[coltes[:col_azienda]].to_s.strip    != prow[coltes[:col_azienda]].to_s.strip    or
-#             row[coltes[:col_annoese]].to_s.strip    != prow[coltes[:col_annoese]].to_s.strip    or
-#             row[coltes[:col_causmag_id]].to_s.strip != prow[coltes[:col_causmag_id]].to_s.strip or
-#             row[coltes[:col_num_doc]].to_s.strip    != prow[coltes[:col_num_doc]].to_s.strip)
-          @tesdoc = Tesdoc.new
-          @tesdoc.azienda = row[coltes[:col_azienda]].to_i
-          @tesdoc.annoese = row[coltes[:col_annoese]].to_i
-          @tesdoc.num_doc = row[coltes[:col_num_doc]].to_i
-          @tesdoc.tipo_doc = 1
-          @tesdoc.data_doc = row[coltes[:col_data_doc]].to_s.strip
-          @tesdoc.descriz = row[coltes[:col_descriz]].to_s.strip
-          @tesdoc.causmag_id = row[coltes[:col_causmag_id]].to_i
-          conto = Conto.find_by_azienda_and_annoese_and_codice(
-                         @tesdoc.azienda, @tesdoc.annoese, row[coltes[:col_conto_codice]].to_i)
-          if conto.nil?
-            contonullo
-          else
-            @tesdoc.conto_id = conto.id
-          end
-          @tesdoc.nrmagsrc = row[coltes[:col_nrmagsrc]].to_i
-          @tesdoc.nrmagdst = row[coltes[:col_nrmagdst]].to_i
-          if @tesdoc.save
-success << "Caricata testata:" #+ row[hshcol[:article_id_bycod]].to_s.strip + " " + @rigdoc.descriz +
-           #" qta:" + @rigdoc.qta.to_s + " prezzo:" + @rigdoc.prezzo.to_s + " sconto:" + @rigdoc.sconto.to_s
-          else
-errore1
-errors  << "Errore testata:"# + row[hshcol[:article_id_bycod]].to_s.strip + " " + @rigdoc.descriz +
-           #" qta:" + @rigdoc.qta.to_s + " prezzo:" + @rigdoc.prezzo.to_s + " sconto:" + @rigdoc.sconto.to_s
-          end
-        end
-        @rigdoc = @tesdoc.rigdocs.build # La Build valorizza automaticamente il campo rigdoc.tesdoc_id
-        article = Article.find_by_azienda_and_codice(
-                          @tesdoc.azienda,
-                          row[colrig[:col_article_codice]].to_s.strip)
-        if article.nil?
-articolonontrovato
+      if row.idx == rowini or
+         row[coltes[:col_azienda]].to_i    != @tesdoc.azienda or
+         row[coltes[:col_annoese]].to_i    != @tesdoc.annoese or
+         row[coltes[:col_causmag_id]].to_i != @tesdoc.causmag_id or
+         row[coltes[:col_num_doc]].to_i    != @tesdoc.num_doc
+        @tesdoc = Tesdoc.new
+        @tesdoc.azienda = row[coltes[:col_azienda]].to_i
+        @tesdoc.annoese = row[coltes[:col_annoese]].to_i
+        @tesdoc.num_doc = row[coltes[:col_num_doc]].to_i
+        @tesdoc.tipo_doc = 1
+        @tesdoc.data_doc = row[coltes[:col_data_doc]].to_s.strip
+        @tesdoc.descriz = row[coltes[:col_descriz]].to_s.strip
+        @tesdoc.causmag_id = row[coltes[:col_causmag_id]].to_i
+        conto = Conto.find_by_azienda_and_annoese_and_codice(
+                       @tesdoc.azienda, @tesdoc.annoese, row[coltes[:col_conto_codice]].to_i)
+        if conto.nil?
+          errors << "conto non valido o nullo. Doc: " + @tesdoc.num_doc + " del " + @tesdoc.data_doc
         else
-          @rigdoc.article_id = article.id
+          @tesdoc.conto_id = conto.id
         end
-        @rigdoc.descriz = row[colrig[:col_descriz]].to_s.strip
-        @rigdoc.qta = row[colrig[:col_qta]].to_i
-        @rigdoc.prezzo = row[colrig[:col_prezzo]]
-        @rigdoc.prgrig = row[colrig[:col_prgrig]].to_i
-        @rigdoc.sconto = 0
-        if @rigdoc.qta > 0
-          if @rigdoc.save
-success << "Caricato articolo:"# + row[hshcol[:article_id_bycod]].to_s.strip + " " + @rigdoc.descriz +
-                       #" qta:" + @rigdoc.qta.to_s + " prezzo:" + @rigdoc.prezzo.to_s + " sconto:" + @rigdoc.sconto.to_s
-          else
-errore2
-errors  << "Errore articolo:"# + row[hshcol[:article_id_bycod]].to_s.strip + " " + @rigdoc.descriz +
-                       #" qta:" + @rigdoc.qta.to_s + " prezzo:" + @rigdoc.prezzo.to_s + " sconto:" + @rigdoc.sconto.to_s
-          end
+        @tesdoc.nrmagsrc = row[coltes[:col_nrmagsrc]].to_i
+        @tesdoc.nrmagdst = row[coltes[:col_nrmagdst]].to_i
+        if @tesdoc.save
+          success << "Caricata testata. Azienda: " + @tesdoc.azienda.to_s + " Annoese: " + @tesdoc.annoese.to_s +
+                     " num_doc: " + @tesdoc.num_doc.to_s + " data_doc: " + @tesdoc.data_doc.to_s +
+                     " causale_id: " + @tesdoc.causmag_id.to_s + " descriz: " + @tesdoc.descriz
+        else
+          errors  << "Errore testata. Azienda: " + @tesdoc.azienda.to_s + " Annoese: " + @tesdoc.annoese.to_s +
+                     " num_doc: " + @tesdoc.num_doc.to_s + " data_doc: " + @tesdoc.data_doc.to_s
         end
+      end
+      @rigdoc = @tesdoc.rigdocs.build # La Build valorizza automaticamente il campo rigdoc.tesdoc_id
+      article = Article.find_by_azienda_and_codice(
+                        @tesdoc.azienda,
+                        row[colrig[:col_article_codice]].to_s.strip)
+      if article.nil?
+        errors << "Articolo non valido, non trovato o nullo. Doc: " + @tesdoc.num_doc +
+                  " del " + @tesdoc.data_doc + " codice articolo: " + row[colrig[:col_article_codice]].to_s.strip
+      else
+        @rigdoc.article_id = article.id
+      end
+      @rigdoc.descriz = row[colrig[:col_descriz]].to_s.strip
+      @rigdoc.qta = row[colrig[:col_qta]].to_i
+      @rigdoc.prezzo = row[colrig[:col_prezzo]]
+      @rigdoc.prgrig = row[colrig[:col_prgrig]].to_i
+      @rigdoc.sconto = 0
+      if @rigdoc.qta > 0
+        if @rigdoc.save
+          success << "Caricata riga. Azienda: " + @tesdoc.azienda.to_s + " num_doc: " + @tesdoc.num_doc.to_s +
+                     " data_doc: " + @tesdoc.data_doc.to_s + " idarticolo: " + @rigdoc.article_id.to_s +
+                     " descriz: " + @rigdoc.descriz + " qta: " + @rigdoc.qta.to_s +
+                     " prezzo: " + @rigdoc.prezzo.to_s + " prg_rig: " + @rigdoc.prg_rig.to_s
+        else
+          errors  << "Errore articolo. Azienda" + @tesdoc.azienda.to_s + " num_doc: " + @tesdoc.num_doc.to_s +
+                     " data_doc: " + @tesdoc.data_doc.to_s + " idarticolo: " + @rigdoc.article_id.to_s +
+                     " descriz: " + @rigdoc.descriz + " qta: " + @rigdoc.qta.to_s +
+                     " prezzo: " + @rigdoc.prezzo.to_s + " prg_rig: " + @rigdoc.prg_rig.to_s
+        end
+      end
 #end
     end
     return errors, success
@@ -139,12 +140,12 @@ errors  << "Errore articolo:"# + row[hshcol[:article_id_bycod]].to_s.strip + " "
     hshvar[:d] = "%#{des}%" unless des == ""
     
     includes(:causmag, :conto =>[:anagen]).where([whcausmag + whconto + whana,
-                                                  hshvar]).paginate(:page => page, :per_page => 10) unless hsh[tp].nil?
+                                                  hshvar]).azdanno(StaticData::AZIENDA, StaticData::ANNOESE).paginate(:page => page, :per_page => 10) unless hsh[tp].nil?
   end
 
   def self.art_mov(idart, idconto, nrmag, anarif)
     # Documenti che movimentano uno o più articoli per uno o più conti per uno o più magazzini
-    idart == "all" ? filter_art = "" : filter_art = " AND articles.id = " + idart.to_s
+    idart == "all" ? filter_art = " AND articles.azienda = " + StaticData::AZIENDA.to_s : filter_art = " AND articles.id = " + idart.to_s
     if anarif == "S"
       filter_conto = ""
       # Movimenti per l'anagrafica interna di riferimento
@@ -286,36 +287,4 @@ errors  << "Errore articolo:"# + row[hshcol[:article_id_bycod]].to_s.strip + " "
                                          filter_conto + filter_magdst + filter_nrmagdst +
                     " ORDER BY data_doc, Numero")
   end
-
-  def self.art_mov222(idart, idconto, nrmag, anarif)
-    # Documenti che movimentano uno o più articoli per uno o più conti per uno o più magazzini
-    idart == "all" ? filter_art = "" : filter_art = " AND articles.id = " + idart.to_s
-    if anarif == "S"
-      filter_conto = ""
-      # Movimenti per l'anagrafica interna di riferimento
-      filter_tpmov = " AND causmags.tipo IN ('U','E','T')"
-      order = " articles.id"
-    else 
-      idconto == "" ? filter_conto = "" : filter_conto = " AND contos.id = " + idconto.to_s
-      filter_tpmov = " AND causmags.tipo IN ('U','E','V','R')"
-      order = " articles.id, contos.id"
-    end 
-    nrmag == "" ? filter_nrmag = "" : filter_nrmag = " AND (tesdocs.nrmagsrc = " + nrmag.to_s +
-                                                     " OR   tesdocs.nrmagdst = " + nrmag.to_s + ")"
-    Tesdoc.find_by_sql("SELECT articles.id         AS Article_id, articles.descriz AS Desart,
-                               contos.id           AS Conto_id,   contos.descriz   AS Desconto,   
-                               tesdocs.nrmagsrc    AS Magsrc,     tesdocs.nrmagdst AS Magdst,
-                               causmags.movimpmag  AS Mag,
-                               tesdocs.data_doc    AS Data_doc,   tesdocs.num_doc  AS Numero,
-                               causmags.descriz    AS Causale,    causmags.tipo    AS Mov,
-                               rigdocs.qta         AS Qta
-                          FROM tesdocs INNER JOIN rigdocs  ON (rigdocs.tesdoc_id = tesdocs.id)
-                                       INNER JOIN articles ON (articles.id = rigdocs.article_id)
-                                       INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
-                                       INNER JOIN contos   ON (tesdocs.conto_id = contos.id)
-                                       WHERE causmags.movimpmag IN ('M', 'I') " + filter_art +
-                                       filter_conto + filter_tpmov + filter_nrmag +
-                     " ORDER BY " + order)
-  end
-
 end

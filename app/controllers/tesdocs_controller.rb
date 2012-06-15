@@ -7,6 +7,31 @@ class TesdocsController < ApplicationController
     init_filter()
   end
 
+  def add1row4article
+
+    tesdoc = Tesdoc.find(params[:id])
+    newprg = tesdoc.lastprg + 1
+    Articles.azienda(StaticData::AZIENDA).find(:all).each |art| do
+      @rigdoc = tesdoc.rigdocs.build
+      @rigdoc.prgrig = newprg
+      @rigdoc.article_id = art.id
+      @rigdoc.descriz = art.descriz
+      @rigdoc.qta = 0
+      @rigdoc.sconto = tesdoc.sconto
+      @rigdoc.prezzo = art.prezzo * (1 - @rigdoc.sconto / 100)
+      newprg += newprg
+      if @rigdoc.save
+#        redirect_to @tesdoc, :notice => 'Riga documento aggiunta con successo.'
+      else
+#        flash[:error] = "Il salvataggio della riga non e' andato a buon fine"
+#        render 'new'
+      end
+    end
+  end
+
+  def delrowqta0
+  end
+
   def addtesrigdoc_fromxls
     begin
       @errors = []
@@ -49,7 +74,7 @@ class TesdocsController < ApplicationController
     @altfilter = params[:altfilter]
     @causmagfilter = params[:causmagfilter]
     @contofilter = params[:contofilter]
-    @causmags = Causmag.find(:all, :conditions => ["tipo_doc = :tpd", {:tpd => se_tipo_doc}])
+    @causmags = Causmag.find(:all, :conditions => ["tipo_doc = :tpd and azienda = :azd", {:tpd => se_tipo_doc, :azd => StaticData::AZIENDA}])
     @contos = Conto.find4docfilter([@clifilter, @forfilter, @altfilter], @tpfilter||"", @desfilter||"")
     @tesdocs = Tesdoc.filter(@tpfilter, @desfilter,
                              [@clifilter, @forfilter, @altfilter],

@@ -1,6 +1,6 @@
 class CausalesController < ApplicationController
   def index
-    @causales = Causale.paginate(:page => params[:page], :per_page => 10)
+    @causales = Causale.azienda(StaticData::AZIENDA).paginate(:page => params[:page], :per_page => 10)
   end
 
   def show

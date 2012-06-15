@@ -1,6 +1,6 @@
 class CausmagsController < ApplicationController
   def index
-    @causmags = Causmag.paginate(:page => params[:page], :per_page => 20)
+    @causmags = Causmag.azienda(StaticData::AZIENDA).paginate(:page => params[:page], :per_page => 20)
   end
 
   def show

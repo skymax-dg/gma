@@ -62,7 +62,7 @@ class ArticlesController < ApplicationController
   end
 
   def index
-    @articles = Article.paginate(:page => params[:page], :per_page => 25)
+    @articles = Article.azienda(StaticData::AZIENDA).paginate(:page => params[:page], :per_page => 25)
   end
 
   def show

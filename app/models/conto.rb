@@ -8,6 +8,8 @@ class Conto < ActiveRecord::Base
   validates :annoese, :azienda, :codice, :descriz, :tipoconto, :tipopeo, :sconto, :presence => true
   validates :descriz, :length => { :maximum => 150}
   
+  scope :azdanno, lambda { |azd, anno| {:conditions => ['contos.azienda = ? and contos.annoese = ?', azd, anno]}}
+
   TIPOCONTO = $ParAzienda['CONTO']['TIPOCONTO']
   TIPOPEO = $ParAzienda['CONTO']['TIPOPEO']
 
@@ -31,7 +33,8 @@ class Conto < ActiveRecord::Base
     hsh = {"RS" => "denomin", "CF" => "codfis", "PI" => "pariva"}
     hsh.default = "denomin"
     whana = "anagens." + hsh[tpf] + " like '%" + des + "%' and "
-    includes(:anagen).where([whana + "contos.tipoconto IN (:tpc)", {:tpc => cfa}])
+    includes(:anagen).where([whana + "contos.tipoconto IN (:tpc) and azienda = :azd and annoese = :anno",
+                                        {:tpc => cfa, :azd => StaticData::AZIENDA, :anno => StaticData::ANNOESE}])
   end
 
   private

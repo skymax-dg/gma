@@ -14,8 +14,16 @@ class RigdocsController < ApplicationController
     redirect_to @rigdoc.tesdoc
   end
 
-  def prezzoarticle
+  def article_exit
     @prezzo = Article.find(params[:rigdoc][:article_id]).prezzo unless params[:rigdoc][:article_id].empty? 
+    @descriz = Article.find(params[:rigdoc][:article_id]).descriz unless params[:rigdoc][:article_id].empty? 
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def descrizriga
+    @desriga = Article.find(params[:rigdoc][:article_id]).descriz unless params[:rigdoc][:article_id].empty? 
     @descriz = Article.find(params[:rigdoc][:article_id]).descriz unless params[:rigdoc][:article_id].empty? 
     respond_to do |format|
       format.js
@@ -24,8 +32,7 @@ class RigdocsController < ApplicationController
 
   def create
     @tesdoc = Tesdoc.find(params[:rigdoc][:tesdoc_id])
-    newprg = 1
-    newprg = @tesdoc.rigdocs.last.prgrig + 1 unless  @tesdoc.rigdocs.empty?   
+    newprg = @tesdoc.lastprgrig + 1
     @rigdoc = @tesdoc.rigdocs.build(params[:rigdoc])
     @rigdoc.prgrig = newprg
     if @rigdoc.save

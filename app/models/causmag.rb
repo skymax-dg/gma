@@ -10,6 +10,8 @@ class Causmag < ActiveRecord::Base
             :movimpmag, :nrmagsrc, :nrmagdst,  :magcli, :presence => true
   validates :descriz, :des_caus, :length => { :maximum => 100}
 
+  scope :azienda, lambda { |azd| {:conditions => ['causmags.azienda = ?', azd]}}
+
   TIPO_DOC = $ParAzienda['CAUSMAG']['TIPO_DOC']
   TIPO = $ParAzienda['CAUSMAG']['TIPO']
   MOVIMPMAG = $ParAzienda['CAUSMAG']['MOVIMPMAG']

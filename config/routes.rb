@@ -53,12 +53,14 @@ Gma::Application.routes.draw do
       get :filter
       get :choose_tipo_doc
       get :addtesrigdoc_fromxls
+      get :add1row4article
+      get :delrowqta0
     end
   end
 
   resources :rigdocs do
     collection do
-      get :prezzoarticle
+      get :article_exit
       get :addrow_fromxls
     end
     member do

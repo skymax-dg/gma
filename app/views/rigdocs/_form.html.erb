@@ -8,7 +8,7 @@
     <%= collection_select(:rigdoc, :article_id, Article.all, :id, :codice,
                            {:include_blank => true},
                             {:data => {:remote => true, :url => url_for(:controller => :rigdocs,
-                                                                        :action => :prezzoarticle)}})%>
+                                                                        :action => :article_exit)}})%>
     <span id="article_descriz">
         <%= @rigdoc.article.descriz unless @rigdoc.article.nil? %>
     </span>
