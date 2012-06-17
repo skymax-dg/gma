@@ -7,11 +7,20 @@ class TesdocsController < ApplicationController
     init_filter()
   end
 
-  def add1row4article
-
+  def delrowqta0
     tesdoc = Tesdoc.find(params[:id])
-    newprg = tesdoc.lastprg + 1
-    Articles.azienda(StaticData::AZIENDA).find(:all).each |art| do
+    Rigdoc.find_by_sql("SELECT * 
+                          FROM rigdocs 
+                         WHERE rigdocs.tesdoc_id = " + tesdoc.id.to_s + 
+                         " AND rigdocs.qta = 0").each {|rigdoc| rigdoc.destroy}
+    redirect_to tesdoc
+  end
+
+  def add1row4article
+    tesdoc = Tesdoc.find(params[:id])
+    newprg = tesdoc.lastprgrig + 1
+    error = 0
+    Article.azienda(StaticData::AZIENDA).find(:all).each do |art|
       @rigdoc = tesdoc.rigdocs.build
       @rigdoc.prgrig = newprg
       @rigdoc.article_id = art.id
@@ -19,17 +28,20 @@ class TesdocsController < ApplicationController
       @rigdoc.qta = 0
       @rigdoc.sconto = tesdoc.sconto
       @rigdoc.prezzo = art.prezzo * (1 - @rigdoc.sconto / 100)
-      newprg += newprg
+      newprg += 1
       if @rigdoc.save
 #        redirect_to @tesdoc, :notice => 'Riga documento aggiunta con successo.'
       else
+        error = 1
 #        flash[:error] = "Il salvataggio della riga non e' andato a buon fine"
 #        render 'new'
       end
     end
-  end
-
-  def delrowqta0
+    if error == 1
+      redirect_to tesdoc, :notice => 'Errori in inserimento Righe.'
+    else
+      redirect_to tesdoc, :notice => 'Righe documento aggiunte con successo.'
+    end
   end
 
   def addtesrigdoc_fromxls

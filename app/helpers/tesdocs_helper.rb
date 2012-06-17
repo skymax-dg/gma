@@ -34,8 +34,4 @@ module TesdocsHelper
     end
   end
   
-  def lastprgrig
-    return self.rigdocs.last.prgrig unless self.rigdocs.empty?
-    return 0
-  end
 end

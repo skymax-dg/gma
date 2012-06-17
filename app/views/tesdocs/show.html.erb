@@ -58,11 +58,13 @@
 </table>
 
 <%#= link_to 'Indietro', :tesdocs %>
-<%= link_to 'Indietro', {:controller => 'tesdocs', :action => 'index', :tipo_doc => se_tipo_doc} %>
+<%= link_to 'Indietro', :controller => :tesdocs, :action => 'index', :tipo_doc => se_tipo_doc %>
 <%= link_to 'Elimina documento', @tesdoc, :confirm => 'Confermi eliminazione?', :method => :delete %>
 <%= link_to 'Modifica testata', :edit_tesdoc %>
 <%= link_to 'Aggiungi riga', :controller => :rigdocs, :action => :new, :id => @tesdoc.id %>
-<%= link_to 'Carica righe da file', :controller => :rigdocs, :action => :addrow_fromxls, :id => @tesdoc.id %>
+<%= link_to 'Carica righe da file', {:controller => :rigdocs, :action => :addrow_fromxls, :id => @tesdoc.id}, :confirm => 'Confermi caricamento da file?' %>
+<%= link_to '1 riga per articolo', :controller => :tesdocs, :action => :add1row4article, :id => @tesdoc.id %>
+<%= link_to 'Canc. righe con qta=0', :controller => :tesdocs, :action => :delrowqta0, :id => @tesdoc.id %>
 <br />
 <%= link_to 'Aggiungi documento', {:action => 'new',
                                    :causmag => @tesdoc.causmag_id||"",

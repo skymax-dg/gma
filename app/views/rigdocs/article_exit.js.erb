@@ -1,5 +1,17 @@
-$("#rigdoc_prezzo").val("<%=@prezzo%>");
+//alert($("#rigdoc_prezzo").val());
+//if ($("#rigdoc_prezzo").val()==0)
+//{
+	prz = "<%=@prezzo%>";
+	scn = $("#rigdoc_sconto").val();
+  if (scn != 0)
+  {
+	  prz = prz * (1 - scn / 100);
+  }
+	$("#rigdoc_prezzo").val(prz);
+//}
+
 $("#article_descriz").html("<%=@descriz%>");
+
 if ($("#rigdoc_descriz").val().trim().length==0)
 {
 	$("#rigdoc_descriz").val("<%=@descriz%>");

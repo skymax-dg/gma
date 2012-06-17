@@ -16,6 +16,11 @@ class Tesdoc < ActiveRecord::Base
   SEGUEFATT = $ParAzienda['TESDOC']['SEGUEFATT']
   TIPO_DOC = $ParAzienda['CAUSMAG']['TIPO_DOC']
 
+  def lastprgrig
+    return self.rigdocs.last.prgrig unless self.rigdocs.empty?
+    return 0
+  end
+
   def rigdocbyxls(xls, wks, rownr, hshcol)
     # Carica una riga documento per ogni riga presente nel file excel xls nello sheet wks(0base),
     # partendo dalla riga rownr 
