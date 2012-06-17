@@ -36,4 +36,4 @@
                                   :conto => @contofilter||""}, :remote => true
                                    %>
 - <%= link_to 'Menu tipo-documenti', :action => "choose_tipo_doc" %>
-- <%= link_to 'Carica Testate e righe doc', :action => "addtesrigdoc_fromxls" %>
+- <%= link_to 'Carica Testate e righe doc', {:action => "addtesrigdoc_fromxls"}, :confirm => 'Confermi caricamento da Exel?' %>

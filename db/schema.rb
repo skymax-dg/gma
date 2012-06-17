@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120605223647) do
+ActiveRecord::Schema.define(:version => 20120617161800) do
 
   create_table "anagens", :force => true do |t|
     t.integer  "codice",                     :null => false
@@ -188,6 +188,8 @@ ActiveRecord::Schema.define(:version => 20120605223647) do
     t.string   "login",      :limit => 20, :null => false
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
+    t.string   "salt",       :limit => 50, :null => false
+    t.string   "pwdcript",   :limit => 20, :null => false
   end
 
   add_index "users", ["azienda", "login"], :name => "idx_users_on_login", :unique => true
