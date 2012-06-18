@@ -1,24 +1,45 @@
 class ArticlesController < ApplicationController
-  def movmagOLD
-    if Article.movimentati(params[:id]).count == 0
-      render 'movnotfound'
-    else
-      pdf = MovtitleController.render_pdf(:data => params[:id])
-      send_data pdf, :type => "application/pdf",
-                     :filename => "RpMovMagArt.pdf" 
-    end
-  end
-
   def filter_movmag
-    @article = Article.find(params[:id])
+    @article = Article.find(params[:id]) unless params[:id].nil?
+@anagens = Anagen.find_by_sql("SELECT DISTINCT anagens.id, anagens.denomin 
+                                 FROM anagens INNER JOIN contos ON (anagens.id = contos.anagen_id)
+                                WHERE contos.tipoconto = 'C' 
+                                  AND contos.azienda = " + StaticData::AZIENDA.to_s +
+                               " ORDER BY anagens.denomin")
     @contos = Conto.findbytipoconto(StaticData::AZIENDA, StaticData::ANNOESE, "C")
-    if @contos.empty?
+    if @anagens.empty?
       flash[:error] = "Nessun conto cliente presente"
       render :action => "show"
     end
   end
 
+  def filter_movmagall
+@anagens = Anagen.find_by_sql("SELECT DISTINCT anagens.id, anagens.denomin 
+                                 FROM anagens INNER JOIN contos ON (anagens.id = contos.anagen_id)
+                                WHERE contos.tipoconto = 'C' 
+                                  AND contos.azienda = " + StaticData::AZIENDA.to_s +
+                               " ORDER BY anagens.denomin")
+    @contos = Conto.findbytipoconto(StaticData::AZIENDA, StaticData::ANNOESE, "C")
+    if @anagens.empty?
+      flash[:error] = "Nessun conto cliente presente"
+      render :action => "index"
+    end
+  end
+
   def stp_movmag
+    pdfdata = Tesdoc.art_mov(params[:id], params[:idanagen], params[:nrmag], params[:anarif])
+    if pdfdata.count == 0
+      render 'movnotfound'
+    else
+      pdf = MovtitleController.render_pdf(:data => pdfdata, 
+                                          :idanagen => params[:idanagen]||"", :nrmag => params[:nrmag]||"",
+                                          :anarif  => params[:anarif]||"",  :grpmag => params[:grpmag]||"")
+      send_data pdf, :type => "application/pdf",
+                     :filename => "RpMovMagArt.pdf"
+    end
+  end
+
+  def stp_movmagOLD
     pdfdata = Tesdoc.art_mov(params[:id], params[:idconto], params[:nrmag], params[:anarif])
     if pdfdata.count == 0
       render 'movnotfound'
@@ -31,6 +52,19 @@ class ArticlesController < ApplicationController
     end
   end
 
+  def stp_movmagall
+    pdfdata = Tesdoc.art_mov("all", params[:idanagen], params[:nrmag], params[:anarif])
+    if pdfdata.count == 0
+      render 'movnotfound'
+    else
+      pdf = MovtitleController.render_pdf(:data => pdfdata, 
+                                          :idanagen => params[:idanagen]||"", :nrmag => params[:nrmag]||"",
+                                          :anarif  => params[:anarif]||"",  :grpmag => params[:grpmag]||"")
+      send_data pdf, :type => "application/pdf",
+                     :filename => "RpMovMagAllArt.pdf" 
+    end
+  end
+
   def cvendis
     if Article.titcvend(params[:id]).count == 0
       render 'cvenddistnotfound'
@@ -38,16 +72,6 @@ class ArticlesController < ApplicationController
       pdf = CvendistitleController.render_pdf(:data => params[:id])
       send_data pdf, :type => "application/pdf",
                      :filename => "RpCVenDistArt.pdf" 
-    end
-  end
-
-  def movmagall
-    if Article.movimentati("all").count == 0
-      render 'movnotfound'
-    else
-      pdf = MovtitleController.render_pdf(:data => "all")
-      send_data pdf, :type => "application/pdf",
-                     :filename => "RpMovMagArt.pdf" 
     end
   end
 

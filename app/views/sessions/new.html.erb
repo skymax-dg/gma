@@ -1,0 +1,23 @@
+<h1><%= @title %></h1>
+
+<%= form_for(:session, :url => sessions_path) do |f| %>
+  <div class="field">
+	  <%= f.label :login %>
+	  <br />
+	  <%= f.text_field :login %>
+  </div>
+  <div class="field">
+	  <%= f.label :pwd %>
+	  <br />
+	  <%= f.password_field :pwd %>
+	  <br />
+	  <%= f.number_field :azienda %>
+	  <br />
+	  <%= f.number_field :annese "Anno di lavoro" %>
+	  <br />
+  </div>
+  <div class="actions">
+	  <%= f.submit "ENTRA" %>
+  </div>
+<% end %>
+<p>New user? <%= link_to "Nuovo Utente", signup_path %></p>

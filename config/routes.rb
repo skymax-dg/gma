@@ -1,5 +1,9 @@
 Gma::Application.routes.draw do
 
+  get "sessions/new"
+
+  get "users/new"
+
   get "menu/home"
 
   get "menu/contact"
@@ -24,6 +28,8 @@ Gma::Application.routes.draw do
       get :cvendis
     end
     collection do
+      get :stp_movmagall
+      get :filter_movmagall
       get :movmagall
       get :cvendisall
     end

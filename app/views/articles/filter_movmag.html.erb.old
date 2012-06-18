@@ -6,9 +6,9 @@
   </div>
   <div class="field">
     <b> <%= label_tag "Cliente: " %> </b> <br />
-    <%= select_tag(:idanagen,
-                   options_from_collection_for_select(@anagens, :id, :denomin),
-                   {:include_blank => ""}) unless @anagens.nil?%>
+    <%= select_tag(:idconto,
+                   options_from_collection_for_select(@contos, :id, :desest1),
+                   {:include_blank => ""}) unless @contos.nil?%>
     Le movimentazioni di: <%= Anagen.find(StaticData::ANARIF).denomin %> 
     <%= check_box_tag :anarif, 'S' %>
   </div>
