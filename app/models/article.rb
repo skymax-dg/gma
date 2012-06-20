@@ -43,44 +43,6 @@ class Article < ActiveRecord::Base
                        " ORDER BY tesdocs.data_doc, tesdocs.num_doc")
   end
 
-  def self.titcvend(id)
-    # Articoli (titoli) collegati ad un movimento magazzino del cliente (rivenditore)
-    id == "all" ? filter_art = " AND articles.azienda = " + current_user.azienda.to_s : filter_art = " AND articles.id = " + id.to_s
-    Article.find_by_sql("SELECT DISTINCT articles.id, articles.codice, articles.descriz
-                           FROM articles INNER JOIN rigdocs ON (articles.id = rigdocs.article_id)
-                                         INNER JOIN tesdocs ON (rigdocs.tesdoc_id = tesdocs.id)
-                                         INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
-                          WHERE causmags.magcli IN ('C', 'S') " + filter_art +
-                     " ORDER BY articles.descriz")
-  end
-
-  def self.distit(id)
-    # Clienti (Rivenditori) il cui articolo (titolo) ha movimentato il magazzino (cliente)
-    Article.find_by_sql("SELECT DISTINCT anagens.id, anagens.codice, anagens.denomin
-                           FROM articles INNER JOIN rigdocs ON (articles.id = rigdocs.article_id)
-                                         INNER JOIN tesdocs ON (rigdocs.tesdoc_id = tesdocs.id)
-                                         INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
-                                         INNER JOIN contos ON (tesdocs.conto_id = contos.id)
-                                         INNER JOIN anagens ON (contos.anagen_id = anagens.id)
-                          WHERE causmags.magcli IN ('C', 'S') AND articles.id = " + id.to_s +
-                     " ORDER BY anagens.denomin")
-  end
-
-  def self.vendtitdist(tit_id, dis_id)
-    # Tutti i movimenti generati sul magazzino di uno specifico cliente (rivenditore) da un articolo (titolo)
-    Article.find_by_sql("SELECT tesdocs.data_doc AS Data_doc, tesdocs.num_doc AS Numero,
-                                causmags.descriz AS Causale,
-                                causmags.magcli AS Magcli, causmags.movimpmag AS Movmag, rigdocs.qta AS Qta
-                           FROM articles INNER JOIN rigdocs ON (articles.id = rigdocs.article_id)
-                                         INNER JOIN tesdocs ON (rigdocs.tesdoc_id = tesdocs.id)
-                                         INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
-                                         INNER JOIN contos ON (tesdocs.conto_id = contos.id)
-                          WHERE causmags.magcli IN ('C', 'S') 
-                                           AND articles.id = " + tit_id.to_s +
-                                         " AND contos.anagen_id = " + dis_id.to_s +
-                                    " ORDER BY tesdocs.data_doc, tesdocs.num_doc")
-  end
-
   private
     def require_no_rigdocs
       self.errors.add :base, "Almeno una riga documento fa riferimento all'articolo che si desidera eliminare."

@@ -1,4 +1,4 @@
-<h1>Stampa Movimenti di magazzino</h1>
+<h1> <%= @title %> </h1>
 <br/>
 <%= form_tag(:stp_movmagall_articles, :method => :get) do %>
   <div class="field">
@@ -9,7 +9,8 @@
     <%= select_tag(:idanagen,
                    options_from_collection_for_select(@anagens, :id, :denomin),
                    {:include_blank => ""}) unless @anagens.nil?%>
-    Le movimentazioni di: <%= Anagen.find(current_user.azienda).denomin %> 
+    <%= @tp == "M" ? "Le movimentazioni di " : "Le vendite di " %>
+    <%= Anagen.find(current_user.azienda).denomin %> 
     <%= check_box_tag :anarif, 'S' %>
   </div>
   <div class="field">
@@ -19,6 +20,7 @@
     <%= select_tag(:nrmag, options_for_select(mag.invert.sort), {:include_blank => "", :selected => ""}) %>
     raggruppati:
     <%= check_box_tag :grpmag, 'S' %>
+    <%= hidden_field_tag :tp, @tp %>
   </div>
 
   <%= submit_tag 'STAMPA' %>

@@ -1,5 +1,6 @@
 class ArticlesController < ApplicationController
   def filter_movmag
+    @tp = params[:tp]
     @article = Article.find(params[:id]) unless params[:id].nil?
     @anagens = Anagen.findbytpconto(current_user.azienda, 'C')
     @contos = Conto.findbytipoconto(current_user.azienda, current_annoese, "C")
@@ -7,75 +8,58 @@ class ArticlesController < ApplicationController
       flash[:error] = "Nessun conto cliente presente"
       render :action => "show"
     end
+    @tp == "M" ? @title = "Stampa Movimenti di magazzino" : @title = "Stampa Vendite per titolo"
   end
 
   def filter_movmagall
+    @tp = params[:tp]
     @anagens = Anagen.findbytpconto(current_user.azienda, 'C')
     @contos = Conto.findbytipoconto(current_user.azienda, current_annoese, "C")
     if @anagens.empty?
       flash[:error] = "Nessun conto cliente presente"
       render :action => "index"
     end
+    @tp == "M" ? @title = "Stampa Movimenti di magazzino" : @title = "Stampa Vendite per titolo"
   end
 
   def stp_movmag
-    pdfdata = Tesdoc.art_mov(params[:id], params[:idanagen], params[:nrmag], params[:anarif], current_user.azienda)
+    @tp = params[:tp]
+    pdfdata = Tesdoc.art_mov_vend(params[:id],     params[:idanagen],    params[:nrmag],
+                                  params[:anarif], current_user.azienda, @tp)
     if pdfdata.count == 0
-      render 'movnotfound'
+      render 'mov_vend_notfound'
     else
       pdf = MovtitleController.render_pdf(:data     => pdfdata, 
                                           :idanagen => params[:idanagen]||"", :nrmag  => params[:nrmag]||"",
                                           :anarif   => params[:anarif]||"",   :grpmag => params[:grpmag]||"",
-                                          :azienda  => current_user.azienda)
-      send_data pdf, :type => "application/pdf",
-                     :filename => "RpMovMagArt.pdf"
-    end
-  end
-
-  def stp_movmagOLD
-    pdfdata = Tesdoc.art_mov(params[:id], params[:idconto], params[:nrmag], params[:anarif])
-    if pdfdata.count == 0
-      render 'movnotfound'
-    else
-      pdf = MovtitleController.render_pdf(:data    => pdfdata, 
-                                          :idconto => params[:idconto]||"", :nrmag  => params[:nrmag]||"",
-                                          :anarif  => params[:anarif]||"",  :grpmag => params[:grpmag]||"")
-      send_data pdf, :type => "application/pdf",
-                     :filename => "RpMovMagArt.pdf" 
+                                          :azienda  => current_user.azienda,  :tp => @tp)
+      if @tp == "M"
+        send_data pdf, :type => "application/pdf",
+                       :filename => "RpMovArt.pdf"
+      else
+        send_data pdf, :type => "application/pdf",
+                       :filename => "RpVendArt.pdf"
+      end
     end
   end
 
   def stp_movmagall
-    pdfdata = Tesdoc.art_mov("all", params[:idanagen], params[:nrmag], params[:anarif], current_user.azienda)
+    @tp = params[:tp]
+    pdfdata = Tesdoc.art_mov_vend("all", params[:idanagen], params[:nrmag], params[:anarif], current_user.azienda, @tp)
     if pdfdata.count == 0
-      render 'movnotfound'
+      render 'mov_vend_notfound'
     else
       pdf = MovtitleController.render_pdf(:data     => pdfdata, 
                                           :idanagen => params[:idanagen]||"", :nrmag  => params[:nrmag]||"",
                                           :anarif   => params[:anarif]||"",   :grpmag => params[:grpmag]||"",
-                                          :azienda  => current_user.azienda)
-      send_data pdf, :type => "application/pdf",
-                     :filename => "RpMovMagAllArt.pdf" 
-    end
-  end
-
-  def cvendis
-    if Article.titcvend(params[:id]).count == 0
-      render 'cvenddistnotfound'
-    else
-      pdf = CvendistitleController.render_pdf(:data => params[:id])
-      send_data pdf, :type => "application/pdf",
-                     :filename => "RpCVenDistArt.pdf" 
-    end
-  end
-
-  def cvendisall
-    if Article.titcvend("all").count == 0
-      render 'cvenddistnotfound'
-    else
-      pdf = CvendistitleController.render_pdf(:data => "all")
-      send_data pdf, :type => "application/pdf",
-                     :filename => "RpCVenDistArt.pdf" 
+                                          :azienda  => current_user.azienda,  :tp => @tp)
+      if @tp == "M"
+        send_data pdf, :type => "application/pdf",
+                       :filename => "RpMovAllArt.pdf" 
+      else
+        send_data pdf, :type => "application/pdf",
+                       :filename => "RpVendAllArt.pdf"
+      end
     end
   end
 

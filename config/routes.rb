@@ -13,12 +13,7 @@ Gma::Application.routes.draw do
   match '/signout', :to => 'sessions#destroy'
   root :to => 'menu#home'
 
-  resources :localitas do
-    collection do
-      get :chg_des_paese
-      get :chg_cmb_paese
-    end
-  end
+  resources :localitas
 
   resources :paeses
 
@@ -26,13 +21,10 @@ Gma::Application.routes.draw do
     member do
       get :stp_movmag
       get :filter_movmag
-      get :cvendis
     end
     collection do
       get :stp_movmagall
       get :filter_movmagall
-      get :movmagall
-      get :cvendisall
     end
   end
 
