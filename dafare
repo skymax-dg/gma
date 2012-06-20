@@ -37,4 +37,3 @@ FATTO: Inserire il login utente con : (nome utente e password)
 
 FATTO: Richiedere l'azienda di lavoro e l'anno.
        
-       Il metodo lastprgrig spostato da tesdoc.rb a tesdoc_helper.rb non viene visto

@@ -19,7 +19,7 @@ class ArticlesController < ApplicationController
   end
 
   def stp_movmag
-    pdfdata = Tesdoc.art_mov(params[:id], params[:idanagen], params[:nrmag], params[:anarif])
+    pdfdata = Tesdoc.art_mov(params[:id], params[:idanagen], params[:nrmag], params[:anarif], current_user.azienda)
     if pdfdata.count == 0
       render 'movnotfound'
     else
@@ -46,7 +46,7 @@ class ArticlesController < ApplicationController
   end
 
   def stp_movmagall
-    pdfdata = Tesdoc.art_mov("all", params[:idanagen], params[:nrmag], params[:anarif])
+    pdfdata = Tesdoc.art_mov("all", params[:idanagen], params[:nrmag], params[:anarif], current_user.azienda)
     if pdfdata.count == 0
       render 'movnotfound'
     else

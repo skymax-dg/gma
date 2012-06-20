@@ -1,3 +1,4 @@
+include TesdocsHelper
 class Tesdoc < ActiveRecord::Base
   belongs_to :causmag
   belongs_to :conto
@@ -177,9 +178,9 @@ class Tesdoc < ActiveRecord::Base
 #      current_user.azienda, current_annoese).paginate(:page => page, :per_page => 10) unless hsh[tp].nil?
   end
 
-  def self.art_mov(idart, idanagen, nrmag, anarif)
+  def self.art_mov(idart, idanagen, nrmag, anarif, azienda)
     # Documenti che movimentano uno o più articoli per uno o più conti per uno o più magazzini
-    idart == "all" ? filter_art = " AND articles.azienda = " + current_user.azienda.to_s : filter_art = " AND articles.id = " + idart.to_s
+    idart == "all" ? filter_art = " AND articles.azienda = " + azienda.to_s : filter_art = " AND articles.id = " + idart.to_s
     if anarif == "S"
       filter_anagen = ""
       # Movimenti per l'anagrafica interna di riferimento

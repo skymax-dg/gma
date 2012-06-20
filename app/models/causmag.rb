@@ -1,3 +1,4 @@
+include CausmagsHelper
 class Causmag < ActiveRecord::Base
   before_destroy :require_no_tesdocs
   has_many :tesdocs

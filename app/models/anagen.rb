@@ -42,8 +42,8 @@ class Anagen < ActiveRecord::Base
   def self.findbytpconto(azienda, tipoconto)
     find_by_sql("SELECT DISTINCT anagens.id, anagens.denomin 
                    FROM anagens INNER JOIN contos ON (anagens.id = contos.anagen_id)
-                  WHERE contos.tipoconto = " + tipoconto +
-                   "AND contos.azienda = "   + azienda.to_s +
+                  WHERE contos.tipoconto = '" + tipoconto.to_s +
+                  "' AND contos.azienda = "   + azienda.to_s +
                 " ORDER BY anagens.denomin")
   end
   private

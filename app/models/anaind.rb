@@ -1,3 +1,4 @@
+include AnaindsHelper
 class Anaind < ActiveRecord::Base
   belongs_to :anagen
   belongs_to :localita
