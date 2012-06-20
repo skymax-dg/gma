@@ -1,8 +1,7 @@
 class MovtitleController < Ruport::Controller
   prepare :std_report
   stage :company_header, :Movtitle_header, :Movtitle_body, :Movtitle_footer
-#  required_option :idconto, :nrmag, :anarif, :grpmag
-  required_option :idanagen, :nrmag, :anarif, :grpmag
+  required_option :idanagen, :nrmag, :anarif, :grpmag, :azienda
   finalize :std_report
 end
 

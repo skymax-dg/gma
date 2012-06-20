@@ -20,10 +20,8 @@ class Causmag < ActiveRecord::Base
   NRMAG = $ParAzienda['ANAIND']['NRMAG']
 
   private
-
-  def require_no_tesdocs
-    self.errors.add :base, "Almeno un documento fa riferimento alla causale che si desidera eliminare."
-    raise ActiveRecord::RecordInvalid.new self unless tesdocs.count == 0
-  end
-
+    def require_no_tesdocs
+      self.errors.add :base, "Almeno un documento fa riferimento alla causale che si desidera eliminare."
+      raise ActiveRecord::RecordInvalid.new self unless tesdocs.count == 0
+    end
 end

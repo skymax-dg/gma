@@ -3,27 +3,27 @@ class User < ActiveRecord::Base
   attr_accessible :azienda, :login, :pwd, :pwd_confirmation
 
   validates :login, :presence => true,
-                    :uniqueness => {:case_sensitive => false}
+                    :uniqueness => {:case_sensitive => false},
                     :length => { :maximum => 20, :too_long  => "Lunghezza massima permessa: 20 caratteri" }
   validates :pwd, :presence => true,
   				  :confirmation => true,
-				  :length => {:within => 6..20}
+				    :length => {:within => 6..20}
 
   before_save :encrypt_password
   
-  def signed_in?
-    true
-  end
+#  def signed_in?
+#    true
+#  end
 
   # Return true if the user's password matches the submitted password.
   def has_password?(submitted_password)
-  	encrypted_password == encrypt(submitted_password)
+  	pwdcript == encrypt(submitted_password)
   	#Compare encrypted_password with the encrypted version of submitted_password
   end
   
   # Return user if the submitted password and email match with db information.
-  def self.authenticate(login, submitted_password)
-    user = find_by_login(login)
+  def self.authenticate(login, submitted_password, azienda)
+    user = find_by_login_and_azienda(login, azienda)
     return nil if user.nil? # user not found 
     return user if user.has_password?(submitted_password) # Password match
     # return nil otherwise
@@ -46,7 +46,7 @@ class User < ActiveRecord::Base
   private
     def encrypt_password
       self.salt = make_salt if new_record?
-      self.encrypted_password = encrypt(password)
+      self.pwdcript = encrypt(pwd)
 	  end
     
     def encrypt(string)
@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
     end
 
     def make_salt
-      secure_hash("#{Time.now.utc}--#{password}")
+      secure_hash("#{Time.now.utc}--#{pwd}")
     end
 
     def secure_hash(string)

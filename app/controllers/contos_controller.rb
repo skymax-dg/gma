@@ -1,6 +1,6 @@
 class ContosController < ApplicationController
   def index
-    @contos = Conto.azdanno(StaticData::AZIENDA, StaticData::ANNOESE).paginate(:page => params[:page], :per_page => 10)
+    @contos = Conto.azdanno(current_user.azienda, current_annoese).paginate(:page => params[:page], :per_page => 10)
   end
 
   def show
@@ -9,8 +9,8 @@ class ContosController < ApplicationController
 
   def new
     @conto = Conto.new
-    @conto.azienda = StaticData::AZIENDA
-    @conto.annoese = StaticData::ANNOESE
+    @conto.azienda = current_user.azienda
+    @conto.annoese = current_annoese
   end
 
   def edit
@@ -19,8 +19,9 @@ class ContosController < ApplicationController
 
   def create
     @conto = Conto.new(params[:conto])
-    if (@conto.tipoconto = "C" or @conto.tipoconto = "F") and @conto.anagen_id.nil?
-      flash.alert = "Per la tipologia " + Conto::TIPOCONTO["C"] + "/" + Conto::TIPOCONTO["F"] + " e' obbligatorio specificare una anagrafica soggetto"
+    if not compat_tipoconto(@conto.tipoconto, @conto.anagen_id.nil?)
+      flash.alert = "Per la tipologia " + Conto::TIPOCONTO["C"] + "/" + Conto::TIPOCONTO["F"] +
+                    " e' obbligatorio specificare una anagrafica soggetto"
       render :action => "new"
     else
       if @conto.save
@@ -34,11 +35,17 @@ class ContosController < ApplicationController
 
   def update
     @conto = Conto.find(params[:id])
-    if @conto.update_attributes(params[:conto])
-      redirect_to @conto, :notice => 'Piano dei conti aggiornato con successo.'
+
+    if not compat_tipoconto(params[:conto][:tipoconto], params[:conto][:anagen_id].nil?)
+      flash.alert = "Per la tipologia " + Conto::TIPOCONTO["C"] + "/" + Conto::TIPOCONTO["F"] +
+                    " e' obbligatorio specificare una anagrafica soggetto"
     else
-      flash[:error] = "Il salvataggio del piano dei conti non e' andato a buon fine"
-      render :action => "edit"
+      if @conto.update_attributes(params[:conto])
+        redirect_to @conto, :notice => 'Piano dei conti aggiornato con successo.'
+      else
+        flash[:error] = "Il salvataggio del piano dei conti non e' andato a buon fine"
+        render :action => "edit"
+      end
     end
   end
 

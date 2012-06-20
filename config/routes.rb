@@ -1,8 +1,8 @@
 Gma::Application.routes.draw do
 
-  get "sessions/new"
-
-  get "users/new"
+  resources :sessions, :only => [:new, :create, :destroy]
+  
+  resources :users
 
   get "menu/home"
 
@@ -10,6 +10,7 @@ Gma::Application.routes.draw do
 
   get "menu/help"
 
+  match '/signout', :to => 'sessions#destroy'
   root :to => 'menu#home'
 
   resources :localitas do

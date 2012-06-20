@@ -16,6 +16,34 @@ class Tesdoc < ActiveRecord::Base
   SEGUEFATT = $ParAzienda['TESDOC']['SEGUEFATT']
   TIPO_DOC = $ParAzienda['CAUSMAG']['TIPO_DOC']
 
+  def add1row4article(azienda)
+    newprg = self.lastprgrig + 1
+    error = 0
+    Article.azienda(azienda).find(:all).each do |art|
+      rigdoc = self.rigdocs.build
+      rigdoc.prgrig = newprg
+      rigdoc.article_id = art.id
+      rigdoc.descriz = art.descriz
+      rigdoc.qta = 0
+      rigdoc.sconto = self.sconto
+      rigdoc.prezzo = art.prezzo * (1 - rigdoc.sconto / 100)
+      newprg += 1
+      if rigdoc.save
+      else
+        error = 1
+      end
+    end
+    return false if error == 1
+    return true
+  end
+
+  def delrowqta0
+    Rigdoc.find_by_sql("SELECT * FROM rigdocs 
+                         WHERE rigdocs.tesdoc_id = " + self.id.to_s + 
+                         " AND rigdocs.qta = 0").each {|rigdoc| rigdoc.destroy}
+    return true
+  end
+
   def lastprgrig
     return self.rigdocs.last.prgrig unless self.rigdocs.empty?
     return 0
@@ -124,7 +152,7 @@ class Tesdoc < ActiveRecord::Base
     return errors, success
   end
 
-  def self.filter (tp, des, tpc, tipo_doc, causmag, conto, page)
+  def self.filter (tp, des, tpc, tipo_doc, causmag, conto, azienda, annoese, page)
     # Esegure la ricerca nei documenti in base ai filtri impsotati
 
     hsh = {"RS" => "denomin", "CF" => "codfis", "PI" => "pariva"}
@@ -144,13 +172,14 @@ class Tesdoc < ActiveRecord::Base
     whana = " and anagens.#{hsh[tp]} like :d" unless des == ""
     hshvar[:d] = "%#{des}%" unless des == ""
     
-    includes(:causmag, :conto =>[:anagen]).where([whcausmag + whconto + whana,
-                                                  hshvar]).azdanno(StaticData::AZIENDA, StaticData::ANNOESE).paginate(:page => page, :per_page => 10) unless hsh[tp].nil?
+    includes(:causmag, :conto =>[:anagen]).where([whcausmag + whconto + whana, hshvar]).azdanno(
+      azienda, annoese).paginate(:page => page, :per_page => 10) unless hsh[tp].nil?
+#      current_user.azienda, current_annoese).paginate(:page => page, :per_page => 10) unless hsh[tp].nil?
   end
 
   def self.art_mov(idart, idanagen, nrmag, anarif)
     # Documenti che movimentano uno o più articoli per uno o più conti per uno o più magazzini
-    idart == "all" ? filter_art = " AND articles.azienda = " + StaticData::AZIENDA.to_s : filter_art = " AND articles.id = " + idart.to_s
+    idart == "all" ? filter_art = " AND articles.azienda = " + current_user.azienda.to_s : filter_art = " AND articles.id = " + idart.to_s
     if anarif == "S"
       filter_anagen = ""
       # Movimenti per l'anagrafica interna di riferimento

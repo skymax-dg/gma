@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     if @user.save
-      sign_in @user
+      sign_in @user, Time.now.year
       flash[:success] = "Benvenuto in GMA!"
       redirect_to @user
     else
@@ -20,6 +20,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @title = @user.login
     store_location
+    redirect_to menu_home_path
   end
 
   def edit

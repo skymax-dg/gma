@@ -9,7 +9,7 @@
     <%= select_tag(:idanagen,
                    options_from_collection_for_select(@anagens, :id, :denomin),
                    {:include_blank => ""}) unless @anagens.nil?%>
-    Le movimentazioni di: <%= Anagen.find(StaticData::ANARIF).denomin %> 
+    Le movimentazioni di: <%= Anagen.find(current_user.azienda).denomin %> 
     <%= check_box_tag :anarif, 'S' %>
   </div>
   <div class="field">

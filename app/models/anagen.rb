@@ -39,11 +39,16 @@ class Anagen < ActiveRecord::Base
     (select("max(codice) as maxcod")[0].maxcod.to_i||0) + 1
   end
 
-  private
-
-  def require_no_contos
-    self.errors.add :base, "Almeno un conto fa riferimento all' anagrafica che si desidera eliminare."
-    raise ActiveRecord::RecordInvalid.new self unless contos.count == 0
+  def self.findbytpconto(azienda, tipoconto)
+    find_by_sql("SELECT DISTINCT anagens.id, anagens.denomin 
+                   FROM anagens INNER JOIN contos ON (anagens.id = contos.anagen_id)
+                  WHERE contos.tipoconto = " + tipoconto +
+                   "AND contos.azienda = "   + azienda.to_s +
+                " ORDER BY anagens.denomin")
   end
-
+  private
+    def require_no_contos
+      self.errors.add :base, "Almeno un conto fa riferimento all' anagrafica che si desidera eliminare."
+      raise ActiveRecord::RecordInvalid.new self unless contos.count == 0
+    end
 end

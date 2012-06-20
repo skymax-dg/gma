@@ -2,7 +2,7 @@
 <br />
 <br />
 <ul>
-<h2>
+<h3>
 <% Tesdoc::TIPO_DOC.each {|k, v| %>
 <li> <%= link_to v.upcase, {:controller => 'tesdocs', :action => 'index', :tipo_doc => k} %> </li>
 <br />
@@ -10,5 +10,8 @@
 <br />
 <br />
 <% } %>
-<li> <%= link_to 'MENU PRINCIPALE', :controller => "menu", :action => "home" %> </li>
-</h2></ul>
+</h3></ul>
+<h2>
+<b> <%= link_to 'MENU PRINCIPALE', :controller => "menu", :action => "home" %> </b>
+</h2>
+

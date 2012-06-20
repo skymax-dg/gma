@@ -1,11 +1,10 @@
 module SessionsHelper
-  def sign_in(user)
-    cookies.permanent.signed[:remember_token] = [user.id, user.salt]
-	  current_user = user
-  end
-  
   def current_user
     @current_user ||= user_from_remember_token
+  end
+
+  def current_annoese
+    @current_annoese ||= cookies.signed[:var_se_annoese] || [nil]
   end
 
   def current_user?(user)
@@ -16,11 +15,26 @@ module SessionsHelper
     !current_user.nil?
   end
 
-  def sign_out
-    cookies.delete(:remember_token)
-    current_user = nil
+  def store_location
+    session[:return_to] = request.fullpath
+  end
+    
+  def redirect_back_or(default)
+    redirect_to(session[:return_to] || default)
+    clear_return_to
   end
 
+  def clear_return_to
+    session[:return_to] = nil
+  end
+
+  def sign_in(user, annoese)
+    cookies.permanent.signed[:remember_token] = [user.id, user.salt]
+    cookies.permanent.signed[:var_se_annoese] = [annoese]
+	  current_user = user
+    current_annoese = annoese
+  end
+  
   def sign_out
     cookies.delete(:remember_token)
     current_user = nil
@@ -36,21 +50,7 @@ module SessionsHelper
     redirect_to signin_path, :notice => "Accesso negato, effettuare il LOGIN per accedere a questa pagina"
   end
 
-  def store_location
-    session[:return_to] = request.fullpath
-  end
-    
-  def redirect_back_or(default)
-    redirect_to(session[:return_to] || default)
-    clear_return_to
-  end
-  
-  def clear_return_to
-    session[:return_to] = nil
-  end
-
   private
-
 	  def user_from_remember_token
 	  	User.authenticate_with_salt(*remember_token)
 	  end

@@ -1,46 +1,28 @@
 require 'spreadsheet'
 Spreadsheet.client_encoding = 'UTF-8'
+#include SessionsHelper
 
 class TesdocsController < ApplicationController
   def index
     store_tipo_doc(params[:tipo_doc])
-    init_filter()
+    init_filter(current_user.azienda)
   end
 
   def delrowqta0
     tesdoc = Tesdoc.find(params[:id])
-    Rigdoc.find_by_sql("SELECT * 
-                          FROM rigdocs 
-                         WHERE rigdocs.tesdoc_id = " + tesdoc.id.to_s + 
-                         " AND rigdocs.qta = 0").each {|rigdoc| rigdoc.destroy}
-    redirect_to tesdoc
+    if tesdoc.delrowqta0
+      redirect_to tesdoc, :notice => 'Righe documento cancellate con successo.'
+    else
+      redirect_to tesdoc, :notice => 'Errori in cancellazione Righe.'
+    end
   end
 
   def add1row4article
     tesdoc = Tesdoc.find(params[:id])
-    newprg = tesdoc.lastprgrig + 1
-    error = 0
-    Article.azienda(StaticData::AZIENDA).find(:all).each do |art|
-      @rigdoc = tesdoc.rigdocs.build
-      @rigdoc.prgrig = newprg
-      @rigdoc.article_id = art.id
-      @rigdoc.descriz = art.descriz
-      @rigdoc.qta = 0
-      @rigdoc.sconto = tesdoc.sconto
-      @rigdoc.prezzo = art.prezzo * (1 - @rigdoc.sconto / 100)
-      newprg += 1
-      if @rigdoc.save
-#        redirect_to @tesdoc, :notice => 'Riga documento aggiunta con successo.'
-      else
-        error = 1
-#        flash[:error] = "Il salvataggio della riga non e' andato a buon fine"
-#        render 'new'
-      end
-    end
-    if error == 1
-      redirect_to tesdoc, :notice => 'Errori in inserimento Righe.'
-    else
+    if tesdoc.add1row4article(current_user.azienda)
       redirect_to tesdoc, :notice => 'Righe documento aggiunte con successo.'
+    else
+      redirect_to tesdoc, :notice => 'Errori in inserimento Righe.'
     end
   end
 
@@ -86,13 +68,16 @@ class TesdocsController < ApplicationController
     @altfilter = params[:altfilter]
     @causmagfilter = params[:causmagfilter]
     @contofilter = params[:contofilter]
-    @causmags = Causmag.find(:all, :conditions => ["tipo_doc = :tpd and azienda = :azd", {:tpd => se_tipo_doc, :azd => StaticData::AZIENDA}])
-    @contos = Conto.find4docfilter([@clifilter, @forfilter, @altfilter], @tpfilter||"", @desfilter||"")
+    @causmags = Causmag.find(:all, :conditions => ["tipo_doc = :tpd and azienda = :azd", 
+                                  {:tpd => se_tipo_doc, :azd => current_user.azienda}])
+    @contos = Conto.find4docfilter([@clifilter,     @forfilter,           @altfilter], @tpfilter||"",
+                                    @desfilter||"", current_user.azienda, current_annoese)
     @tesdocs = Tesdoc.filter(@tpfilter, @desfilter,
                              [@clifilter, @forfilter, @altfilter],
                              se_tipo_doc,
                              @causmagfilter,
                              @contofilter,
+                             current_user.azienda, current_annoese,
                              params[:page])
     render "index"
   end
@@ -108,8 +93,8 @@ class TesdocsController < ApplicationController
           @tesdoc = Tesdoc.new
           @causmag = Causmag.find(params[:causmag])
           @conto = Conto.find(params[:conto])
-          @tesdoc.azienda = StaticData::AZIENDA
-          @tesdoc.annoese = StaticData::ANNOESE
+          @tesdoc.azienda = current_user.azienda
+          @tesdoc.annoese = current_annoese
           @tesdoc.causmag_id = @causmag.id
           @tesdoc.conto_id = @conto.id
           @tesdoc.sconto = @conto.sconto
@@ -142,8 +127,8 @@ class TesdocsController < ApplicationController
     else
       @causmag = Causmag.find(params[:tesdoc][:causmag_id])
       @conto = Conto.find(params[:tesdoc][:conto_id])
-      @tesdoc.azienda = StaticData::AZIENDA
-      @tesdoc.annoese = StaticData::ANNOESE
+      @tesdoc.azienda = current_user.azienda
+      @tesdoc.annoese = current_annoese
       @tesdoc.causmag_id = @causmag.id
       @tesdoc.conto_id = @conto.id
       @tesdoc.sconto = @conto.sconto

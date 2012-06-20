@@ -1,6 +1,6 @@
 <h1><%= @title %></h1>
 <%= form_for(@user) do |f| %>
-	<%= render 'shared/error_messages', :object => f.object %>
+	<%= render :partial => 'shared/error_messages', :locals => {:f => @user} %>
 	<div class="field">
 	  <%= f.label :login %>
 	  <br />
@@ -15,6 +15,11 @@
 	  <%= f.label :pwd_confirmation, "Confirmation" %>
 	  <br />
 	  <%= f.password_field :pwd_confirmation %>
+	</div>
+	<div class="field">
+	  <%= f.label :azienda %>
+	  <br />
+		<%= select(:user, :azienda, (StaticData::ELNCAZND).invert.sort) %>
 	</div>
   <div class="actions">
 	  <%= f.submit "Registra" %>

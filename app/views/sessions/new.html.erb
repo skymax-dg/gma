@@ -7,17 +7,22 @@
 	  <%= f.text_field :login %>
   </div>
   <div class="field">
-	  <%= f.label :pwd %>
+	  <%= f.label :password %>
 	  <br />
 	  <%= f.password_field :pwd %>
+  </div>
+  <div class="field">
+	  <%= f.label :azienda %>
 	  <br />
-	  <%= f.number_field :azienda %>
+		<%= select(:session, :azienda, (StaticData::ELNCAZND).invert.sort) %>
+  </div>
+  <div class="field">
+	  <%= f.label :annoese %>
 	  <br />
-	  <%= f.number_field :annese, "Anno di lavoro" %>
-	  <br />
+	  <%= f.number_field :annoese, :size => 5, :value => Time.now.year %>
   </div>
   <div class="actions">
 	  <%= f.submit "ENTRA" %>
   </div>
 <% end %>
-<p>New user? <%= link_to "Nuovo Utente", signup_path %></p>
+<p>New user? <%= link_to "Nuovo Utente", new_user_path %></p>

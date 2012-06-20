@@ -188,8 +188,8 @@ ActiveRecord::Schema.define(:version => 20120617161800) do
     t.string   "login",      :limit => 20, :null => false
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
-    t.string   "salt",       :limit => 50, :null => false
-    t.string   "pwdcript",   :limit => 20, :null => false
+    t.string   "salt",       :limit => 100, :null => false
+    t.string   "pwdcript",   :limit => 100, :null => false
   end
 
   add_index "users", ["azienda", "login"], :name => "idx_users_on_login", :unique => true

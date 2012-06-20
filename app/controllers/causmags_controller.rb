@@ -1,6 +1,6 @@
 class CausmagsController < ApplicationController
   def index
-    @causmags = Causmag.azienda(StaticData::AZIENDA).paginate(:page => params[:page], :per_page => 20)
+    @causmags = Causmag.azienda(current_user.azienda).paginate(:page => params[:page], :per_page => 20)
   end
 
   def show
@@ -9,7 +9,7 @@ class CausmagsController < ApplicationController
 
   def new
     @causmag = Causmag.new
-    @causmag.azienda = StaticData::AZIENDA
+    @causmag.azienda = current_user.azienda
     @causmag.nrmagsrc = 0
     @causmag.nrmagdst = 0
   end
@@ -20,8 +20,7 @@ class CausmagsController < ApplicationController
 
   def create
     @causmag = Causmag.new(params[:causmag])
-    if (@causmag.contabile == "S" and @causmag.causale_id.nil?) or
-       (@causmag.contabile == "N" and !@causmag.causale_id.nil?)
+    if not compat_contabile(@causmag.contabile, @causmag.causale_id.nil?)
       flash[:error_explanation] = "incoerenza fra 'causale contabile' e flag 'contabile'"
       render :action => "new"
     else    
@@ -36,8 +35,7 @@ class CausmagsController < ApplicationController
 
   def update
     @causmag = Causmag.find(params[:id])
-    if (params[:causmag][:contabile] == "S" and params[:causmag][:causale_id] == "") or
-       (params[:causmag][:contabile] == "N" and !params[:causmag][:causale_id] == "")
+    if not compat_contabile(params[:causmag][:contabile], params[:causmag][:causale_id] == "")
       flash[:error_explanation] = "ERRORE!!! Incoerenza fra 'causale contabile' e flag 'contabile'"
       render :action => "edit"
     else    

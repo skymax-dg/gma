@@ -15,14 +15,8 @@
   <div class="field">
     <b> <%= f.label "Stato/Nazione" %> </b> <br />
     <br />
-    <%= fields_for @localita.paese do |fp| %>
-      <%= fp.text_field(:descriz, {:size => 50, :data => {:remote => true, 
-                                                          :url => url_for(:controller => :localitas,
-                                                                          :action => :chg_des_paese)}})%>
-    <% end %>
     <div id="prt_paese">
-      <%= render :partial => 'paese', :locals => {:hd => true} unless @paeses.nil?%>
-      <%= f.hidden_field :paese_id if @paeses.nil?%>
+      <%= collection_select :localita, :paese_id, Paese.all, :id, :descriz %>
     </div>
   </div>
   <div class="field">

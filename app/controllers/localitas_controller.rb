@@ -1,35 +1,4 @@
 class LocalitasController < ApplicationController
-  def chg_des_paese
-    @des_paese = params[:paese][:descriz]
-    if @des_paese.empty? 
-      @nr = -1
-      @paeses = Paese.all
-      @nr = @paeses.count
-      @des_paese = ""
-    else
-      @nr, @paeses = Paese.findlike_des(params[:paese][:descriz])
-      if @nr == 1
-        @des_paese = @paeses.first.descriz
-        @id = @paeses.id
-      end
-    end
-    respond_to do |format|
-      format.js
-    end 
-  end
-
-  def chg_cmb_paese
-    @id_paese = params[:localita][:paese_id]
-    if @id_paese.nil? or @id_paese.empty? 
-      @des_paese = ""
-    else
-      @des_paese = Paese.find(@id_paese).descriz
-    end
-    respond_to do |format|
-      format.js
-    end 
-  end
-
   def index
     @localitas = Localita.paginate(:page => params[:page], :per_page => 10)
   end
@@ -40,7 +9,6 @@ class LocalitasController < ApplicationController
 
   def new
     @localita = Localita.new
-    @localita.paese = Paese.new
   end
 
   def edit

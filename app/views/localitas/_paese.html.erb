@@ -1,5 +1,0 @@
-<%= collection_select :localita, :paese_id,
-                      @paeses, :id, :descriz,
-                      {:include_blank => true},
-                      {:hidden => hd, :data => {:remote => true, :url => url_for(:controller => :localitas,
-                                                                                 :action => :chg_cmb_paese)}} %>

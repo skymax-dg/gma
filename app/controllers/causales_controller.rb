@@ -1,6 +1,6 @@
 class CausalesController < ApplicationController
   def index
-    @causales = Causale.azienda(StaticData::AZIENDA).paginate(:page => params[:page], :per_page => 10)
+    @causales = Causale.azienda(current_user.azienda).paginate(:page => params[:page], :per_page => 10)
   end
 
   def show
@@ -9,7 +9,7 @@ class CausalesController < ApplicationController
 
   def new
     @causale = Causale.new
-    @causale.azienda = StaticData::AZIENDA
+    @causale.azienda = current_user.azienda
   end
 
   def edit

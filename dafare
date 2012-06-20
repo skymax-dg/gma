@@ -8,12 +8,13 @@ FATTO: In inserimento di un nuovo documento quando seleziono il conto
        se il campo tesdoc.sconto=0 proporre lo sconto presente in contos
 
 FATTO: In inserimento di una nuova riga documento 
-       se il campo rigdoc.sconto=0 proporre lo sconto presente in tesdocs
+    	   se il campo rigdoc.sconto=0 proporre lo sconto presente in tesdocs
 
 FATTO: in views\tesdocs\new.js.erb la var url = "http://localhost:3000/tesdocs/new?causmag=" + v1 + "&conto=" + v2
-       va bene solo per prove locali
+	       va bene solo per prove locali
        
 FATTO: Caricare le giacenze iniziali
+
 FATTO: Caricare i resi
 
 FATTO: In Crea nuova riga doc mettere gli articoli ordinati per codice almeno.
@@ -25,14 +26,15 @@ FATTO: Su ARTICLES, CAUSALES e CAUSMAGS aggiungere il filtro AZIENDA sulle query
 FATTO: Su CONTOS e TESDOCS aggiungere il filtro AZIENDA e ANNOESE sulle query
 
 FATTO: In testata aggiungere 2 funzioni:
-FATTO:   1 - Genera 1 rigdoc per ogni articolo con qta0 prg_rig generato in ordine di art.codice
-FATTO:   2 - Cancella tutte le righe con codice articolo e Qta=0
 
-       SE IN INSERIMENTO NUOVA CITTA DIGITI DIRETTAMENTE LA NAZIONE SENZA PASSARE PER LA COMBO DA ERRORE IN SALVATAGGIO
+FATTO:   1 - Genera 1 rigdoc per ogni articolo con qta0 prg_rig generato in ordine di art.codice
+
+FATTO:   2 - Cancella tutte le righe con codice articolo e Qta=0
 
 FATTO: In inserimento rigdoc proporre nel prezzo il prezzo già scontato
 
-       Inserire il login utente con : (nome utente e password)
-       Richiedere l'azienda di lavoro e l'anno.
+FATTO: Inserire il login utente con : (nome utente e password)
+
+FATTO: Richiedere l'azienda di lavoro e l'anno.
        
        Il metodo lastprgrig spostato da tesdoc.rb a tesdoc_helper.rb non viene visto

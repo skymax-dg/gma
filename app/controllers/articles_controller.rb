@@ -1,12 +1,8 @@
 class ArticlesController < ApplicationController
   def filter_movmag
     @article = Article.find(params[:id]) unless params[:id].nil?
-@anagens = Anagen.find_by_sql("SELECT DISTINCT anagens.id, anagens.denomin 
-                                 FROM anagens INNER JOIN contos ON (anagens.id = contos.anagen_id)
-                                WHERE contos.tipoconto = 'C' 
-                                  AND contos.azienda = " + StaticData::AZIENDA.to_s +
-                               " ORDER BY anagens.denomin")
-    @contos = Conto.findbytipoconto(StaticData::AZIENDA, StaticData::ANNOESE, "C")
+    @anagens = Anagen.findbytpconto(current_user.azienda, 'C')
+    @contos = Conto.findbytipoconto(current_user.azienda, current_annoese, "C")
     if @anagens.empty?
       flash[:error] = "Nessun conto cliente presente"
       render :action => "show"
@@ -14,12 +10,8 @@ class ArticlesController < ApplicationController
   end
 
   def filter_movmagall
-@anagens = Anagen.find_by_sql("SELECT DISTINCT anagens.id, anagens.denomin 
-                                 FROM anagens INNER JOIN contos ON (anagens.id = contos.anagen_id)
-                                WHERE contos.tipoconto = 'C' 
-                                  AND contos.azienda = " + StaticData::AZIENDA.to_s +
-                               " ORDER BY anagens.denomin")
-    @contos = Conto.findbytipoconto(StaticData::AZIENDA, StaticData::ANNOESE, "C")
+    @anagens = Anagen.findbytpconto(current_user.azienda, 'C')
+    @contos = Conto.findbytipoconto(current_user.azienda, current_annoese, "C")
     if @anagens.empty?
       flash[:error] = "Nessun conto cliente presente"
       render :action => "index"
@@ -31,9 +23,10 @@ class ArticlesController < ApplicationController
     if pdfdata.count == 0
       render 'movnotfound'
     else
-      pdf = MovtitleController.render_pdf(:data => pdfdata, 
-                                          :idanagen => params[:idanagen]||"", :nrmag => params[:nrmag]||"",
-                                          :anarif  => params[:anarif]||"",  :grpmag => params[:grpmag]||"")
+      pdf = MovtitleController.render_pdf(:data     => pdfdata, 
+                                          :idanagen => params[:idanagen]||"", :nrmag  => params[:nrmag]||"",
+                                          :anarif   => params[:anarif]||"",   :grpmag => params[:grpmag]||"",
+                                          :azienda  => current_user.azienda)
       send_data pdf, :type => "application/pdf",
                      :filename => "RpMovMagArt.pdf"
     end
@@ -44,8 +37,8 @@ class ArticlesController < ApplicationController
     if pdfdata.count == 0
       render 'movnotfound'
     else
-      pdf = MovtitleController.render_pdf(:data => pdfdata, 
-                                          :idconto => params[:idconto]||"", :nrmag => params[:nrmag]||"",
+      pdf = MovtitleController.render_pdf(:data    => pdfdata, 
+                                          :idconto => params[:idconto]||"", :nrmag  => params[:nrmag]||"",
                                           :anarif  => params[:anarif]||"",  :grpmag => params[:grpmag]||"")
       send_data pdf, :type => "application/pdf",
                      :filename => "RpMovMagArt.pdf" 
@@ -57,9 +50,10 @@ class ArticlesController < ApplicationController
     if pdfdata.count == 0
       render 'movnotfound'
     else
-      pdf = MovtitleController.render_pdf(:data => pdfdata, 
-                                          :idanagen => params[:idanagen]||"", :nrmag => params[:nrmag]||"",
-                                          :anarif  => params[:anarif]||"",  :grpmag => params[:grpmag]||"")
+      pdf = MovtitleController.render_pdf(:data     => pdfdata, 
+                                          :idanagen => params[:idanagen]||"", :nrmag  => params[:nrmag]||"",
+                                          :anarif   => params[:anarif]||"",   :grpmag => params[:grpmag]||"",
+                                          :azienda  => current_user.azienda)
       send_data pdf, :type => "application/pdf",
                      :filename => "RpMovMagAllArt.pdf" 
     end
@@ -86,7 +80,7 @@ class ArticlesController < ApplicationController
   end
 
   def index
-    @articles = Article.azienda(StaticData::AZIENDA).paginate(:page => params[:page], :per_page => 25)
+    @articles = Article.azienda(current_user.azienda).paginate(:page => params[:page], :per_page => 25)
   end
 
   def show
@@ -95,7 +89,7 @@ class ArticlesController < ApplicationController
 
   def new
     @article = Article.new
-    @article.azienda = StaticData::AZIENDA
+    @article.azienda = current_user.azienda
   end
 
   def edit

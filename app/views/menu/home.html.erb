@@ -1,45 +1,42 @@
-<% if @user.signed_in?%>
-	<h1>MENU' PRINCIPALE -- GMA</h1>
+<h1>MENU' PRINCIPALE -- GMA (<%= current_user.login + " " + current_annoese.to_s %>)</h1>
+<br />
+<br />
+<ul>
+<h3>
+	<li> <%= link_to "GESTIONE STATI/NAZIONI", {:controller => 'paeses', :action => 'index'} %> </li>
+</h3>
 	<br />
+<h3>
+	<li> <%= link_to "GESTIONE CITTA'", {:controller => 'localitas', :action => 'index'} %> </li>
+</h3>
 	<br />
-	<ul>
-	<h2>
-		<li> <%= link_to "GESTIONE STATI/NAZIONI", {:controller => 'paeses', :action => 'index'} %> </li>
-	</h2>
-		<br />
-	<h2>
-		<li> <%= link_to "GESTIONE CITTA'", {:controller => 'localitas', :action => 'index'} %> </li>
-	</h2>
-		<br />
-	<h2>
-		<li> <%= link_to "GESTIONE CAUSALI DI MAGAZZINO", {:controller => 'causmags', :action => 'index'} %> </li>
-	</h2>
-		<br />
-	<h2>
-		<li> <%= link_to "GESTIONE CAUSALI CONTABILI", {:controller => 'causales', :action => 'index'} %> </li>
-	</h2>
-		<br />
-	<h2>
-		<li> <%= link_to "GESTIONE ARTICOLI", {:controller => 'articles', :action => 'index'} %> </li>
-	</h2>
-		<br />
-	<h2>
-		<li> <%= link_to "GESTIONE CONTI CLIENTI/FORNITORI", {:controller => 'contos', :action => 'index'} %> </li>
-	</h2>
-		<br />
-	<h2>
-		<li> <%= link_to "GESTIONE ANAGRAFICA SOGGETTI", {:controller => 'anagens', :action => 'index'} %> </li>
-	</h2>
-		<br />
-	<h2>
-		<li> <%= link_to "GESTIONE ARCHIVIO DOCUMENTI", {:controller => 'tesdocs', :action => 'choose_tipo_doc'} %> </li>
-	</h2>
-		<br />
-	</ul>
-<% else %>
-  <h1>Gestione magazzino articoli</h1>
-  <p>
-	Utente non autorizzato o login non effettuato.
-  </p>
-  <%#= link_to "Sign up now!", signup_path, :class => "signup_button round" %>
-<% end if %>
+<h3>
+	<li> <%= link_to "GESTIONE CAUSALI DI MAGAZZINO", {:controller => 'causmags', :action => 'index'} %> </li>
+</h3>
+	<br />
+<h3>
+	<li> <%= link_to "GESTIONE CAUSALI CONTABILI", {:controller => 'causales', :action => 'index'} %> </li>
+</h3>
+	<br />
+<h3>
+	<li> <%= link_to "GESTIONE ARTICOLI", {:controller => 'articles', :action => 'index'} %> </li>
+</h3>
+	<br />
+<h3>
+	<li> <%= link_to "GESTIONE CONTI CLIENTI/FORNITORI", {:controller => 'contos', :action => 'index'} %> </li>
+</h3>
+	<br />
+<h3>
+	<li> <%= link_to "GESTIONE ANAGRAFICA SOGGETTI", {:controller => 'anagens', :action => 'index'} %> </li>
+</h3>
+	<br />
+<h3>
+	<li> <%= link_to "GESTIONE ARCHIVIO DOCUMENTI", {:controller => 'tesdocs', :action => 'choose_tipo_doc'} %> </li>
+</h3>
+	<br />
+</ul>
+<h2>
+	<%= link_to "DISCONNETTI", signout_path , :method => :delete %>
+</h2>
+
+

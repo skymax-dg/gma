@@ -5,8 +5,7 @@ class AnaindsController < ApplicationController
     if Anaind.nrmagexist(@anaind.id, @anaind.anagen_id, @anaind.nrmag)
       flash.now[:error] = "Indirizzo gia' esistente per il magazzino: #{@anaind.nrmag}"
       render :action => :new
-      elsif (@anaind.flmg == "S" and @anaind.nrmag == 0) or
-            (@anaind.flmg == "N" and @anaind.nrmag > 0)
+      elsif not compat_mag(@anaind.flmg, @anaind.nrmag)
         flash[:error] = "Magazzino di riferimento incompatibile con il check: Indirizzo di magazzino"
         render :action => :new
         elsif @anaind.save
@@ -62,8 +61,7 @@ class AnaindsController < ApplicationController
     if Anaind.nrmagexist(params[:id].to_i, anaind[:anagen_id].to_i, anaind[:nrmag].to_i)
       flash[:error] = "Indirizzo gia' esistente per il magazzino: #{anaind[:nrmag]}"
       render :action => :edit
-      elsif (anaind[:flmg] == "S" and anaind[:nrmag] == "0") or
-            (anaind[:flmg] == "N" and anaind[:nrmag] > "0")
+      elsif not compat_mag(anaind[:flmg],  anaind[:nrmag])
         flash[:error] = "Magazzino di riferimento incompatibile con il check: Indirizzo di magazzino"
         render :action => :edit
         elsif @anaind.update_attributes(params[:anaind])

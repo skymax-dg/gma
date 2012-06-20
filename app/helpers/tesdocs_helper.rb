@@ -1,11 +1,10 @@
 module TesdocsHelper
-
-  def init_filter
+  def init_filter(azienda)
     @clifilter = "C"
     @forfilter = "F"
     @altfilter = "A"
-    @causmags = Causmag.find(:all, :conditions => ["tipo_doc = :tpd and azienda = :azd", {:tpd => se_tipo_doc, :azd => StaticData::AZIENDA}])
-    @contos = Conto.find4docfilter([@clifilter, @forfilter, @altfilter], @tpfilter||"", @desfilter||"")
+    @causmags = Causmag.find(:all, :conditions => ["tipo_doc = :tpd and azienda = :azd", {:tpd => se_tipo_doc, :azd => current_user.azienda}])
+    @contos = Conto.find4docfilter([@clifilter, @forfilter, @altfilter], @tpfilter||"", @desfilter||"", current_user.azienda, current_annoese)
 #    render "index"
   end
 
@@ -30,7 +29,7 @@ module TesdocsHelper
     if (causmag.tipo == "E" and tp == "S") or (causmag.tipo == "U" and tp == "D")
       mags = conto.magsavailable([0])
     else
-      mags = Anagen.find(StaticData::ANARIF).magsavailable([0])
+      mags = Anagen.find(current_user.azienda).magsavailable([0])
     end
   end
   
