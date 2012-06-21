@@ -28,16 +28,25 @@ module SessionsHelper
     session[:return_to] = nil
   end
 
-  def sign_in(user, annoese)
+  def sign_in(user)
     cookies.permanent.signed[:remember_token] = [user.id, user.salt]
-    cookies.permanent.signed[:var_se_annoese] = [annoese]
 	  current_user = user
-    current_annoese = annoese
   end
   
+  def set_year(annoese)
+    cookies.permanent.signed[:var_se_annoese] = [annoese]
+    current_annoese = annoese
+  end
+
+  def unset_year
+    cookies.delete(:var_se_annoese)
+    current_annoese = nil
+  end
+
   def sign_out
     cookies.delete(:remember_token)
     current_user = nil
+    unset_year
   end
 
   def authenticate
@@ -47,7 +56,7 @@ module SessionsHelper
   def deny_acess
     store_location
     # La redirect gestisce anche il mess. flash tramite il parametro :notice
-    redirect_to signin_path, :notice => "Accesso negato, effettuare il LOGIN per accedere a questa pagina"
+    redirect_to :new_session, :notice => "Accesso negato, effettuare il LOGIN per accedere a questa pagina"
   end
 
   private

@@ -1,4 +1,5 @@
 class LocalitasController < ApplicationController
+before_filter :authenticate
   def index
     @localitas = Localita.paginate(:page => params[:page], :per_page => 10, :order => [:descriz])
   end

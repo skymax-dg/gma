@@ -2,6 +2,7 @@ require 'spreadsheet'
 Spreadsheet.client_encoding = 'UTF-8'
 
 class RigdocsController < ApplicationController
+before_filter :authenticate
   def down
     @rigdoc = Rigdoc.find(params[:id])
     @rigdoc.move :down

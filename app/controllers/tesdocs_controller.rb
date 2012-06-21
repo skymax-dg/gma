@@ -2,6 +2,7 @@ require 'spreadsheet'
 Spreadsheet.client_encoding = 'UTF-8'
 
 class TesdocsController < ApplicationController
+before_filter :authenticate
   def index
     store_tipo_doc(params[:tipo_doc])
     init_filter(current_user.azienda)

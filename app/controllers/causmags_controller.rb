@@ -1,4 +1,5 @@
 class CausmagsController < ApplicationController
+before_filter :authenticate
   def index
     @causmags = Causmag.azienda(current_user.azienda).paginate(:page     => params[:page], 
                                                                :per_page => 20, 

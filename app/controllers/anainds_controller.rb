@@ -1,4 +1,5 @@
 class AnaindsController < ApplicationController
+before_filter :authenticate
   def create
     @anagen = Anagen.find(params[:anaind][:anagen_id])
     @anaind = @anagen.anainds.build(params[:anaind])# La Build setta @anaind.anagen_id = @anagen.id

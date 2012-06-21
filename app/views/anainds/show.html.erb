@@ -26,6 +26,7 @@
 </p>
 <% end %>
 
-<%= link_to 'Indietro', @anaind.anagen %>
+<%#= link_to 'Indietro', @anaind.anagen %>
+<%= link_to 'Indietro', :back %>
 <%= link_to 'Elimina indirizzo', @anaind, :confirm => 'Confermi eliminazione?', :method => :delete %>
 <%= link_to 'Modifica indirizzo', edit_anaind_path %>

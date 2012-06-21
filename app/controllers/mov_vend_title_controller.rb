@@ -7,6 +7,7 @@ end
 
 include Helper_pdf
 class MovVendTitlePDF < CompanyPDFBase
+before_filter :authenticate
   renders :pdf, :for => MovVendTitleController
 
   build :MovVendTitle_header do

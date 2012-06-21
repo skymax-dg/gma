@@ -1,4 +1,5 @@
 class CausalesController < ApplicationController
+before_filter :authenticate
   def index
     @causales = Causale.azienda(current_user.azienda).paginate(:page => params[:page], 
                                                                :per_page => 10,

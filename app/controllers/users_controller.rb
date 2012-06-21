@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+before_filter :authenticate
  def new
     @user = User.new
   	@title = "Creazione utente"
@@ -7,7 +8,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     if @user.save
-      sign_in @user, Time.now.year
+      sign_in @user
+      set_year Time.now.year
       flash[:success] = "Benvenuto in GMA!"
       redirect_to @user
     else

@@ -1,4 +1,5 @@
 class ArticlesController < ApplicationController
+before_filter :authenticate
   def filter_mov_vend
     @tp = params[:tp]
     @article = Article.find(params[:id]) unless params[:id].nil?

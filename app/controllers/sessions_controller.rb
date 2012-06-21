@@ -10,13 +10,23 @@ class SessionsController < ApplicationController
       @title = "Accesso"
       render 'new'
     else
-      sign_in user, params[:session][:annoese]
+      sign_in user
+      set_year params[:session][:annoese]
       redirect_back_or user # Va alla pagina memorizzata o alla user => UserPage
     end
   end
 
+#  def change_year
+#    @annoese = current_annoese
+#  end
+
+#  def set_year
+#    unset_year
+#    set_year params[:annoese]
+#  end
+
   def destroy
     sign_out
-    redirect_to :action => 'new', :controller=> "sessions" unless signed_in?
+    redirect_to :new_session unless signed_in?
   end
 end

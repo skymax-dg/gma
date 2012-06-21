@@ -1,4 +1,5 @@
 class AnagensController < ApplicationController
+before_filter :authenticate
   def index
     @anagens = Anagen.paginate(:page => params[:page], :per_page => 10, :order => [:denomin])
   end
