@@ -1,6 +1,8 @@
 class CausmagsController < ApplicationController
   def index
-    @causmags = Causmag.azienda(current_user.azienda).paginate(:page => params[:page], :per_page => 20)
+    @causmags = Causmag.azienda(current_user.azienda).paginate(:page     => params[:page], 
+                                                               :per_page => 20, 
+                                                               :order => [:tipo_doc, :descriz])
   end
 
   def show

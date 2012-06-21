@@ -50,6 +50,12 @@ class Tesdoc < ActiveRecord::Base
     return 0
   end
 
+  def imponibile
+    imp = 0
+    self.rigdocs.each{|r|imp = imp + (r.qta * r.prezzo)}
+    return imp
+  end
+
   def rigdocbyxls(xls, wks, rownr, hshcol)
     # Carica una riga documento per ogni riga presente nel file excel xls nello sheet wks(0base),
     # partendo dalla riga rownr 

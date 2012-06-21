@@ -1,9 +1,5 @@
 <h1>Mostra Causale di magazzino</h1>
 <p>
-  <b>Azienda:</b>
-  <%= @causmag.azienda %>
-</p>
-<p>
   <b>Gruppo:</b>
   <%= Causmag::TIPO_DOC[@causmag.tipo_doc] %>
 </p>
@@ -26,11 +22,6 @@
 <p>
   <b>Impatto sul magazzino:</b>
   <%= Causmag::MOVIMPMAG[@causmag.movimpmag] %>
-</p>
-
-<p>
-  <b>Movimenta magazzino cliente:</b>
-  <%= Causmag::MOVIMPMAG[@causmag.magcli] %>
 </p>
 
 <p>

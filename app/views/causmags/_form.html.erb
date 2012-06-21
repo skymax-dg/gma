@@ -2,8 +2,6 @@
 <%= form_for(@causmag) do |f| %>
 
   <div class="field">
-    <b> <%= f.label :azienda %> </b> <br />
-    <%= f.text_field :azienda, :size => 1, :disabled => true %>
     <%= f.hidden_field :azienda %>
   </div>
   <div class="field">
@@ -25,10 +23,6 @@
   <div class="field">
     <b> <%= f.label "Impatto sul magazzino" %> </b>
     <%= select(:causmag, :movimpmag, Causmag::MOVIMPMAG.invert.sort, { :prompt => true }) %>
-  </div>
-  <div class="field">
-    <b> <%= f.label "Movimenta Magazzino cliente" %> </b> <br />
-    <%= select(:causmag, :magcli, Causmag::MAGCLI.invert) %>
   </div>
   <div class="field">
     <b> <%= f.label "Magazzino origine (default)" %> </b> <br />

@@ -64,7 +64,7 @@ class ArticlesController < ApplicationController
   end
 
   def index
-    @articles = Article.azienda(current_user.azienda).paginate(:page => params[:page], :per_page => 25)
+    @articles = Article.azienda(current_user.azienda).paginate(:page => params[:page], :per_page => 25, :order => [:codice])
   end
 
   def show

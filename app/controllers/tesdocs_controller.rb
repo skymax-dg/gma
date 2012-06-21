@@ -98,6 +98,7 @@ class TesdocsController < ApplicationController
           @tesdoc.causmag_id = @causmag.id
           @tesdoc.conto_id = @conto.id
           @tesdoc.sconto = @conto.sconto
+          @tesdoc.tipo_doc = @causmag.tipo_doc
         end
       end
       format.js

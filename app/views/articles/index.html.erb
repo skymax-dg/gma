@@ -1,7 +1,6 @@
 <h1>Elenco articoli</h1>
 <table>
   <tr>
-    <th>Azienda</th>
     <th>Codice</th>
     <th>Descrizione</th>
     <th>Prezzo</th>
@@ -17,6 +16,5 @@
 <br />
 
 <%= link_to 'Nuovo Articolo', new_article_path %>
-- <%= link_to 'Menu', :controller => "menu", :action => "home" %>
 <%= link_to 'Movimenti articoli', filter_movmagall_articles_path(:tp => "M") %>
 <%= link_to 'Vendite articoli', filter_movmagall_articles_path(:tp => "V") %>

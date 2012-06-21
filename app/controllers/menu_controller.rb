@@ -1,6 +1,6 @@
 class MenuController < ApplicationController
   def home
-		redirect_to :new_session unless signed_in?
+	redirect_to :new_session unless signed_in?
   end
 
   def contact

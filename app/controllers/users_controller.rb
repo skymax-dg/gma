@@ -20,35 +20,38 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @title = @user.login
     store_location
-    redirect_to menu_home_path
   end
 
   def edit
-    #@user = User.find(params[:id]) find già fatto nella correct_user
-    @title = "Edit user"
+    @user = User.find(params[:id]) #find già fatto nella correct_user
+    @title = "Modifica Utente"
   end
 
   def update
-    #@user = User.find(params[:id]) find già fatto nella correct_user
+    @user = User.find(params[:id]) #find già fatto nella correct_user
     if @user.update_attributes(params[:user])
       flash[:success] = "Utente aggiornato con successo."
       redirect_to user_path
     else
-      @title = "Edit user"
+      @title = "Modifica user"
       render 'edit'
     end
   end
 
   def index
-    @title = "All users"
-    @users = User.paginate(:page => params[:page])
-#    @users = User.all #oppure User.find(:all)
+    @title = "Elenco Utenti"
+    @users = User.where("azienda = " + current_user.azienda.to_s).paginate(:page => params[:page])
   end
 
   def destroy
-    User.find(params[:id]).destroy
-    flash[:success] = "Utente cancellato."
-    redirect_to users_path
+    if current_user.id.to_s == params[:id]
+      flash[:error] = "Non è possibile eliminare l'utente loggato."
+      redirect_to users_path
+    else
+      User.find(params[:id]).destroy
+      flash[:success] = "Utente cancellato."
+      redirect_to users_path
+    end
   end
   
   private

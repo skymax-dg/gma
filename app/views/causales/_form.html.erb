@@ -2,8 +2,6 @@
 <%= form_for(@causale) do |f| %>
 
   <div class="field">
-    <b> <%= f.label :azienda %> </b> <br />
-    <%= f.text_field :azienda, :size => 1, :disabled => true %>
     <%= f.hidden_field :azienda %>
   </div>
   <div class="field">

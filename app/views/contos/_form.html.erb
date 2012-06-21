@@ -2,13 +2,9 @@
 <%= form_for(@conto) do |f| %>
 
   <div class="field">
-    <b> <%= f.label "Azienda" %> </b> <br />
-    <%= f.text_field :azienda, :size => 1, :disabled => true %>
     <%= f.hidden_field :azienda %>
   </div>
   <div class="field">
-    <b> <%= f.label "Anno Esercizio" %> </b> <br />
-    <%= f.text_field :annoese, :size => 3, :disabled => true %>
     <%= f.hidden_field :annoese %>
   </div>
   <div class="field">

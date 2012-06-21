@@ -1,10 +1,12 @@
 <h1><%= @title %></h1>
+<br />
+<br />
 <%= form_for(@user) do |f| %>
 	<%= render :partial => 'shared/error_messages', :locals => {:f => @user} %>
 	<div class="field">
 	  <%= f.label :login %>
-	  <br />
-	  <%= f.text_field :login %>
+	  <%= f.hidden_field :login %>
+	  <b> <%= @user.login %> </b>
 	</div>
 	<div class="field">
 	  <%= f.label :pwd %>
@@ -18,11 +20,11 @@
 	</div>
 	<div class="field">
 	  <%= f.label :azienda %>
-	  <br />
-		<%= select(:user, :azienda, (StaticData::ELNCAZND).invert.sort) %>
+	  <%= f.hidden_field :azienda %>
+	  <b> <%= StaticData::ELNCAZND[@user.azienda] %> </b>
 	</div>
   <div class="actions">
-	  <%= f.submit "Registra" %>
+	  <%= f.submit "Modifica Password" %>
   </div>
 <% end %>
 <%= link_to 'Indietro', users_path %>

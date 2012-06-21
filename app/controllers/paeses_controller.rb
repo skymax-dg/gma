@@ -1,6 +1,6 @@
 class PaesesController < ApplicationController
   def index
-    @paeses = Paese.paginate(:page => params[:page], :per_page => 10)
+    @paeses = Paese.paginate(:page => params[:page], :per_page => 10, :order => [:descriz])
   end
 
   def show

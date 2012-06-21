@@ -1,6 +1,8 @@
 class ContosController < ApplicationController
   def index
-    @contos = Conto.azdanno(current_user.azienda, current_annoese).paginate(:page => params[:page], :per_page => 10)
+    @contos = Conto.azdanno(current_user.azienda, current_annoese).paginate(:page => params[:page],
+                                                                            :per_page => 10,
+                                                                            :order => [:codice])
   end
 
   def show

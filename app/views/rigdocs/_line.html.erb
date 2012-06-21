@@ -1,11 +1,12 @@
 <tr>
   <td><%= line.article.codice unless line.article.nil? %></td>
-  <td><%= line.article.descriz unless line.article.nil? %></td>
+  <%#= line.article.descriz unless line.article.nil? %>
   <td><%= line.descriz %></td>
   <td><%= line.qta %></td>
   <td><%= line.prezzo %></td>
   <td><%= line.sconto %></td>
-  <td><%= line.prgrig %></td>
+  <td><%= line.qta * line.prezzo %></td>
+  <%#= line.prgrig %>
   <td><%= link_to 'Dettaglio', line %></td>
   <td><%= link_to 'SU''', :controller => :rigdocs, :action => :up, :id => line.id %></td>
   <td><%= link_to 'GIU''', :controller => :rigdocs, :action => :down, :id => line.id %></td>

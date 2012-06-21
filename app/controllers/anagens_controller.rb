@@ -1,6 +1,6 @@
 class AnagensController < ApplicationController
   def index
-    @anagens = Anagen.paginate(:page => params[:page], :per_page => 10)
+    @anagens = Anagen.paginate(:page => params[:page], :per_page => 10, :order => [:denomin])
   end
 
   def show

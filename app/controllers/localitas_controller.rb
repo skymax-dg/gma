@@ -1,6 +1,6 @@
 class LocalitasController < ApplicationController
   def index
-    @localitas = Localita.paginate(:page => params[:page], :per_page => 10)
+    @localitas = Localita.paginate(:page => params[:page], :per_page => 10, :order => [:descriz])
   end
 
   def show
