@@ -20,12 +20,12 @@ Gma::Application.routes.draw do
 
   resources :articles do
     member do
-      get :stp_movmag
-      get :filter_movmag
+      get :stp_mov_vend
+      get :filter_mov_vend
     end
     collection do
-      get :stp_movmagall
-      get :filter_movmagall
+      get :stp_mov_vend_all
+      get :filter_mov_vend_all
     end
   end
 

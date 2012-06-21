@@ -16,5 +16,5 @@
 
 <%= link_to 'Modifica', edit_article_path(@article) %> |
 <%= link_to 'Indietro', articles_path %>
-<%= link_to 'Movimenti magazzino', filter_movmag_article_path(:tp => "M") %>
-<%= link_to 'Vendite per distributore', filter_movmag_article_path(:tp => "V") %>
+<%= link_to 'Movimenti magazzino',      filter_mov_vend_article_path(:tp => "M") %>
+<%= link_to 'Vendite per distributore', filter_mov_vend_article_path(:tp => "V") %>

@@ -1,6 +1,6 @@
 <h1> <%= @title %> </h1>
 <br/>
-<%= form_tag(:stp_movmagall_articles, :method => :get) do %>
+<%= form_tag(:stp_mov_vend_all_articles, :method => :get) do %>
   <div class="field">
     <b> TUTTI GLI ARTICOLI DI MAGAZZINO </b>
   </div>
@@ -10,7 +10,7 @@
                    options_from_collection_for_select(@anagens, :id, :denomin),
                    {:include_blank => ""}) unless @anagens.nil?%>
     <%= @tp == "M" ? "Le movimentazioni di " : "Le vendite di " %>
-    <%= Anagen.find(current_user.azienda).denomin %> 
+    <b> <%= Anagen.find(current_user.azienda).denomin %> <b/>
     <%= check_box_tag :anarif, 'S' %>
   </div>
   <div class="field">

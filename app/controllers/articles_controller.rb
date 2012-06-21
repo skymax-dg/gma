@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  def filter_movmag
+  def filter_mov_vend
     @tp = params[:tp]
     @article = Article.find(params[:id]) unless params[:id].nil?
     @anagens = Anagen.findbytpconto(current_user.azienda, 'C')
@@ -11,7 +11,7 @@ class ArticlesController < ApplicationController
     @tp == "M" ? @title = "Stampa Movimenti di magazzino" : @title = "Stampa Vendite per titolo"
   end
 
-  def filter_movmagall
+  def filter_mov_vend_all
     @tp = params[:tp]
     @anagens = Anagen.findbytpconto(current_user.azienda, 'C')
     @contos = Conto.findbytipoconto(current_user.azienda, current_annoese, "C")
@@ -22,17 +22,17 @@ class ArticlesController < ApplicationController
     @tp == "M" ? @title = "Stampa Movimenti di magazzino" : @title = "Stampa Vendite per titolo"
   end
 
-  def stp_movmag
+  def stp_mov_vend
     @tp = params[:tp]
     pdfdata = Tesdoc.art_mov_vend(params[:id],     params[:idanagen],    params[:nrmag],
                                   params[:anarif], current_user.azienda, @tp)
     if pdfdata.count == 0
       render 'mov_vend_notfound'
     else
-      pdf = MovtitleController.render_pdf(:data     => pdfdata, 
-                                          :idanagen => params[:idanagen]||"", :nrmag  => params[:nrmag]||"",
-                                          :anarif   => params[:anarif]||"",   :grpmag => params[:grpmag]||"",
-                                          :azienda  => current_user.azienda,  :tp => @tp)
+      pdf = MovVendTitleController.render_pdf(:data     => pdfdata, 
+                                              :idanagen => params[:idanagen]||"", :nrmag  => params[:nrmag]||"",
+                                              :anarif   => params[:anarif]||"",   :grpmag => params[:grpmag]||"",
+                                              :azienda  => current_user.azienda,  :tp => @tp)
       if @tp == "M"
         send_data pdf, :type => "application/pdf",
                        :filename => "RpMovArt.pdf"
@@ -43,16 +43,16 @@ class ArticlesController < ApplicationController
     end
   end
 
-  def stp_movmagall
+  def stp_mov_vend_all
     @tp = params[:tp]
     pdfdata = Tesdoc.art_mov_vend("all", params[:idanagen], params[:nrmag], params[:anarif], current_user.azienda, @tp)
     if pdfdata.count == 0
       render 'mov_vend_notfound'
     else
-      pdf = MovtitleController.render_pdf(:data     => pdfdata, 
-                                          :idanagen => params[:idanagen]||"", :nrmag  => params[:nrmag]||"",
-                                          :anarif   => params[:anarif]||"",   :grpmag => params[:grpmag]||"",
-                                          :azienda  => current_user.azienda,  :tp => @tp)
+      pdf = MovVendTitleController.render_pdf(:data     => pdfdata, 
+                                              :idanagen => params[:idanagen]||"", :nrmag  => params[:nrmag]||"",
+                                              :anarif   => params[:anarif]||"",   :grpmag => params[:grpmag]||"",
+                                              :azienda  => current_user.azienda,  :tp => @tp)
       if @tp == "M"
         send_data pdf, :type => "application/pdf",
                        :filename => "RpMovAllArt.pdf" 

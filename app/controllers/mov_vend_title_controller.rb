@@ -1,22 +1,22 @@
-class MovtitleController < Ruport::Controller
+class MovVendTitleController < Ruport::Controller
   prepare :std_report
-  stage :company_header, :Movtitle_header, :Movtitle_body, :Movtitle_footer
+  stage :company_header, :MovVendTitle_header, :MovVendTitle_body, :MovVendTitle_footer
   required_option :idanagen, :nrmag, :anarif, :grpmag, :azienda, :tp
   finalize :std_report
 end
 
 include Helper_pdf
-class MovtitlePDF < CompanyPDFBase
-  renders :pdf, :for => MovtitleController
+class MovVendTitlePDF < CompanyPDFBase
+  renders :pdf, :for => MovVendTitleController
 
-  build :Movtitle_header do
+  build :MovVendTitle_header do
     options.text_format = { :font_size => 18, :justification => :center, :bold => true }
-    options.tp == 'M' ? add_text "MOVIMENTAZIONI PER TITOLO" : add_text "VENDITE PER TITOLO"
+    options.tp == 'M' ? add_text("MOVIMENTAZIONI PER TITOLO") : add_text("VENDITE PER TITOLO")
     pad(20) { hr }
     render_pdf
   end
 
-  build :Movtitle_body do
+  build :MovVendTitle_body do
     options.text_format = { :font_size => 14, :justification => :left }
     data.each do |dataart|
       art = Article.find(dataart.attributes["artid"])
@@ -30,11 +30,7 @@ class MovtitlePDF < CompanyPDFBase
           add_text desanagen
         end
         Tesdoc.mag_mov_artic_anagen(art.id, idanagen, options.nrmag, options.anarif, options.grpmag, options.tp).each do |tesdoc|
-          if options.grpmag == "S"
-            desmag = 'MAGAZZINI RAGGRUPPATI'
-          else
-            desmag = 'MAGAZZINO: ' + Anaind::NRMAG[tesdoc.attributes['nrmag'].to_i]
-          end
+          options.grpmag == "S" ? desmag = 'MAGAZZINI RAGGRUPPATI' : desmag = 'MAGAZZINO: ' + Anaind::NRMAG[tesdoc.attributes['nrmag'].to_i]
           add_text desart
           if options.tp == "M"
             add_text desmag
@@ -76,7 +72,7 @@ class MovtitlePDF < CompanyPDFBase
     render_pdf
   end
 
-  build :Movtitle_footer do
+  build :MovVendTitle_footer do
     add_text " "
     render_pdf
   end

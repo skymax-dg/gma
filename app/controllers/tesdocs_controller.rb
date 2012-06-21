@@ -1,6 +1,5 @@
 require 'spreadsheet'
 Spreadsheet.client_encoding = 'UTF-8'
-#include SessionsHelper
 
 class TesdocsController < ApplicationController
   def index
