@@ -4,7 +4,7 @@
 <ul>
 <h3>
 <% Tesdoc::TIPO_DOC.each {|k, v| %>
-<li> <%= link_to v.upcase, {:controller => 'tesdocs', :action => 'index', :tipo_doc => k} %> </li>
+<li> <%= link_to v.upcase, tesdocs_path(:tipo_doc => k) %> </li>
 <br />
 <br />
 <br />

@@ -1,6 +1,7 @@
 class SessionsController < ApplicationController
   def new
     @title = "Accesso"
+    @login = params[:login]
   end
 
   def create
@@ -15,15 +16,6 @@ class SessionsController < ApplicationController
       redirect_back_or user # Va alla pagina memorizzata o alla user => UserPage
     end
   end
-
-#  def change_year
-#    @annoese = current_annoese
-#  end
-
-#  def set_year
-#    unset_year
-#    set_year params[:annoese]
-#  end
 
   def destroy
     sign_out

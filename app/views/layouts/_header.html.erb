@@ -11,7 +11,7 @@
 	  <li><%#= link_to "Help", help_path %></li>
 		<% if signed_in? %>
 			<li><%= link_to "LogOut(" + current_user.login + ")", signout_path , :method => :delete %></li>
-			<li><%= link_to "CambiaAnno(" + current_annoese.to_s + ")", new_session_path %></li>
+			<li><%= link_to "CambiaAnno(" + current_annoese.to_s + ")", new_session_path(:login => current_user.login) %></li>
 		<% else %>
 			<li><%= link_to "Connetti", new_session_path %></li>
 		<% end %>
