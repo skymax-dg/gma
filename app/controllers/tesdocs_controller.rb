@@ -1,11 +1,22 @@
 require 'spreadsheet'
 Spreadsheet.client_encoding = 'UTF-8'
 
+require "prawn"
+#require "prawn/layout"
+require "prawn/measurement_extensions"
+
 class TesdocsController < ApplicationController
 before_filter :authenticate
   def index
     store_tipo_doc(params[:tipo_doc])
     init_filter(current_user.azienda)
+  end
+
+  def stp_ddt1
+    @tesdoc = Tesdoc.find(params[:id])
+
+
+    render 'stp_ddt1.pdf'
   end
 
   def delrowqta0

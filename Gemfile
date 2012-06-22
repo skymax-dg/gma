@@ -10,6 +10,9 @@ gem 'pg'
 
 gem 'json'
 
+gem 'prawn'
+gem 'prawn-rails'
+
 gem 'will_paginate', '~> 3.0.beta'
 
 gem 'spreadsheet'
