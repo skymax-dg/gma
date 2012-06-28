@@ -29,7 +29,7 @@
   <%= @rigdoc.sconto %>
 </p>
 
-<%= link_to 'Indietro', :back %>
-<%#= link_to 'Indietro', @rigdoc.tesdoc %>
+<%#= link_to 'Indietro', :back %>
+<%= link_to 'Indietro', @rigdoc.tesdoc %>
 <%= link_to 'Elimina riga', @rigdoc, :confirm => 'Confermi eliminazione?', :method => :delete %>
 <%= link_to 'Modifica riga', edit_rigdoc_path %>

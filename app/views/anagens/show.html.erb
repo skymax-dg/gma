@@ -71,8 +71,8 @@
 <br>
 </br>
 
-<%= link_to 'Indietro', :back %>
-<%#= link_to 'Indietro', anagens_path %>
+<%#= link_to 'Indietro', :back %>
+<%= link_to 'Indietro', anagens_path %>
 <%= link_to 'Elimina anagrafica', @anagen, :confirm => 'Confermi eliminazione?', :method => :delete %>
 <%= link_to 'Modifica anagrafica', edit_anagen_path %>
 <%= link_to 'Aggiungi indirizzo', new_anaind_path(:id => @anagen.id) %>

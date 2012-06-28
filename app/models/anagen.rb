@@ -25,6 +25,12 @@ class Anagen < ActiveRecord::Base
 
   TIPO = $ParAzienda['ANAGEN']['TIPO SOGGETTO']
 
+  def sedelegale
+    sl=Hash.new{""}
+    self.anainds.each {|ind| sl={:indir => ind.indir, :cap => ind.cap, :desloc => ind.desloc} if ind.flsl=="S"}
+    sl
+  end
+
   def magsavailable(inivalue)
     # Ricerco i magazzini inseriti sull'anagrafica, con il .map creo un array formato dai vari nrmag,
     # con il comando select applicato all'hash Anaind::NRMAG restituisco un altro hash formato

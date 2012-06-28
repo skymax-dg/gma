@@ -13,9 +13,25 @@ before_filter :authenticate
   end
 
   def stp_ddt1
-    @tesdoc = Tesdoc.find(params[:id])
-
-
+    @tesdoc   = Tesdoc.find(params[:id])
+    @tit_doc  = [{:des => "DOCUMENTO DI TRASPORTO", :bold => "S", :align => :center},
+                 {:des => "(D.d.t.) D.P.R. 472 del 14-08-1996 - D.P.R. 696 del 21.12.1996", :align => :center}]
+    @ana      = Anagen.find(current_user.azienda)
+    @sl       = @ana.sedelegale
+    @mitt     = [{:des => @ana.denomin, :upcase => "S", :bold => "S", :align => :center},
+                 {:des => @sl[:indir], :bold => "S"},
+                 {:des => @sl[:cap] + " - " + @sl[:desloc], :bold => "S"}]
+    @anad     = Anagen.find(@tesdoc.conto.anagen_id)
+    @sld      = @anad.sedelegale
+    @dest     = [{:des => @anad.denomin, :upcase => "S", :bold => "S", :align => :center},
+                 {:des => @sld[:indir], :bold => "S"},
+                 {:des => @sld[:cap] + " - " + @sld[:desloc], :bold => "S"}]
+    @luogo    = ""
+    @rifdoc   = {:nr => @tesdoc.num_doc, :dt => @tesdoc.data_doc}
+    @causale  = ""
+    @corr     = ""
+    @int_body = {:qta => "Q.tà", :article_id => "Codice", :descriz => "Descrizione"}
+    @body     = @tesdoc.rigdocs
     render 'stp_ddt1.pdf'
   end
 
