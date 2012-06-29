@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  tesdoc_id: 1
+  caustras: MyString
+  corriere: MyString
+  dest1: MyString
+  dest2: MyString
+  aspetto: MyString
+  nrcolli: 1
+  peso: 9.99
+  porto: MyString
+  dtrit: 2012-06-28
+  orarit: 2012-06-28 10:21:42
+
+two:
+  tesdoc_id: 1
+  caustras: MyString
+  corriere: MyString
+  dest1: MyString
+  dest2: MyString
+  aspetto: MyString
+  nrcolli: 1
+  peso: 9.99
+  porto: MyString
+  dtrit: 2012-06-28
+  orarit: 2012-06-28 10:21:42

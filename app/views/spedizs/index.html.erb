@@ -1,0 +1,43 @@
+<h1>Listing spedizs</h1>
+
+<table>
+  <tr>
+    <th>Tesdoc</th>
+    <th>Caustras</th>
+    <th>Corriere</th>
+    <th>Dest1</th>
+    <th>Dest2</th>
+    <th>Aspetto</th>
+    <th>Nrcolli</th>
+    <th>Peso</th>
+    <th>Porto</th>
+    <th>Dtrit</th>
+    <th>Orarit</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @spedizs.each do |spediz| %>
+  <tr>
+    <td><%= spediz.tesdoc_id %></td>
+    <td><%= spediz.caustras %></td>
+    <td><%= spediz.corriere %></td>
+    <td><%= spediz.dest1 %></td>
+    <td><%= spediz.dest2 %></td>
+    <td><%= spediz.aspetto %></td>
+    <td><%= spediz.nrcolli %></td>
+    <td><%= spediz.peso %></td>
+    <td><%= spediz.porto %></td>
+    <td><%= spediz.dtrit %></td>
+    <td><%= spediz.orarit %></td>
+    <td><%= link_to 'Show', spediz %></td>
+    <td><%= link_to 'Edit', edit_spediz_path(spediz) %></td>
+    <td><%= link_to 'Destroy', spediz, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Spediz', new_spediz_path %>

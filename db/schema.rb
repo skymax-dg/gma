@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120617161800) do
+ActiveRecord::Schema.define(:version => 20120628082142) do
 
   create_table "anagens", :force => true do |t|
     t.integer  "codice",                     :null => false
@@ -162,6 +162,26 @@ ActiveRecord::Schema.define(:version => 20120617161800) do
   add_index "rigdocs", ["tesdoc_id", "prgrig"], :name => "index_rigdocs_on_tesdoc_id_and_prgrig", :unique => true
   add_index "rigdocs", ["tesdoc_id"], :name => "index_rigdocs_on_tesdoc_id"
 
+  create_table "spedizs", :force => true do |t|
+    t.integer  "tesdoc_id",                                                :null => false
+    t.string   "caustras",   :limit => 100
+    t.string   "corriere",   :limit => 150
+    t.string   "dest1",      :limit => 150
+    t.string   "dest2",      :limit => 150
+    t.string   "aspetto",    :limit => 100
+    t.integer  "nrcolli"
+    t.string   "um",         :limit => 2
+    t.decimal  "peso",                       :precision => 8, :scale => 2
+    t.string   "porto",      :limit => 100
+    t.date     "dtrit"
+    t.time     "orarit"
+    t.string   "note",       :limit => 1000
+    t.datetime "created_at",                                               :null => false
+    t.datetime "updated_at",                                               :null => false
+  end
+
+  add_index "spedizs", ["tesdoc_id"], :name => "index_spedizs_on_tesdoc_id"
+
   create_table "tesdocs", :force => true do |t|
     t.integer  "azienda",                                                                  :null => false
     t.integer  "annoese",                                                                  :null => false
@@ -184,10 +204,10 @@ ActiveRecord::Schema.define(:version => 20120617161800) do
   add_index "tesdocs", ["data_doc", "num_doc"], :name => "idx_tesdocs_on_data_doc_num_doc"
 
   create_table "users", :force => true do |t|
-    t.integer  "azienda",                  :null => false
-    t.string   "login",      :limit => 20, :null => false
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+    t.integer  "azienda",                   :null => false
+    t.string   "login",      :limit => 20,  :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
     t.string   "salt",       :limit => 100, :null => false
     t.string   "pwdcript",   :limit => 100, :null => false
   end

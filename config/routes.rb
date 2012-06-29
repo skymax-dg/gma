@@ -1,5 +1,7 @@
 Gma::Application.routes.draw do
 
+  resources :spedizs
+
   root :to => 'menu#home' #non funziona
 
   get "menu/home"

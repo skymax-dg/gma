@@ -1,0 +1,61 @@
+<%= form_for(@spediz) do |f| %>
+  <% if @spediz.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@spediz.errors.count, "error") %> prohibited this spediz from being saved:</h2>
+
+      <ul>
+      <% @spediz.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :tesdoc_id %><br />
+    <%= f.number_field :tesdoc_id %>
+  </div>
+  <div class="field">
+    <%= f.label :caustras %><br />
+    <%= f.text_field :caustras %>
+  </div>
+  <div class="field">
+    <%= f.label :corriere %><br />
+    <%= f.text_field :corriere %>
+  </div>
+  <div class="field">
+    <%= f.label :dest1 %><br />
+    <%= f.text_field :dest1 %>
+  </div>
+  <div class="field">
+    <%= f.label :dest2 %><br />
+    <%= f.text_field :dest2 %>
+  </div>
+  <div class="field">
+    <%= f.label :aspetto %><br />
+    <%= f.text_field :aspetto %>
+  </div>
+  <div class="field">
+    <%= f.label :nrcolli %><br />
+    <%= f.number_field :nrcolli %>
+  </div>
+  <div class="field">
+    <%= f.label :peso %><br />
+    <%= f.text_field :peso %>
+  </div>
+  <div class="field">
+    <%= f.label :porto %><br />
+    <%= f.text_field :porto %>
+  </div>
+  <div class="field">
+    <%= f.label :dtrit %><br />
+    <%= f.date_select :dtrit %>
+  </div>
+  <div class="field">
+    <%= f.label :orarit %><br />
+    <%= f.time_select :orarit %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
