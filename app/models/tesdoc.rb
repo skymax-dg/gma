@@ -185,7 +185,7 @@ class Tesdoc < ActiveRecord::Base
   end
 
   def self.art_mov_vend(idart, idanagen, nrmag, anarif, azienda, tp)
-    # Documenti che movimentano uno o più articoli per uno o più conti per uno o più magazzini
+    # Documenti che movimentano uno o piu' articoli per uno o piu' conti per uno o piu' magazzini
     idart == "all" ? where_art = " WHERE articles.azienda = " + azienda.to_s : where_art = " WHERE articles.id = " + idart.to_s
     if anarif == "S"
       filter_anagen = ""
@@ -219,7 +219,7 @@ class Tesdoc < ActiveRecord::Base
   end
   
   def self.anagen_mov_artic(idart, idanagen, nrmag, anarif, tp)
-    # Elenco conti utilizzati dai movimenti/vendite di un articolo per uno o più magazzini
+    # Elenco conti utilizzati dai movimenti/vendite di un articolo per uno o piu' magazzini
     return Tesdoc.find_by_sql("SELECT '' AS idanagen") if anarif == "S"
 
     idanagen.to_s == "" ? filter_anagen = "" : filter_anagen = " AND anagens.id = " + idanagen.to_s

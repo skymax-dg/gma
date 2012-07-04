@@ -102,13 +102,11 @@ en:
           one: "Questo %{model} non puo' essere salvato: 1 errore"
           other: "Questo %{model} non puo' essere salvato: %{count} errori."
         body: "Per favore ricontrolla:"
-
       messages:
         taken: "e' gia' in uso"
-        record_invalid: "Validazione fallita: %{errors}"
-        <<: *errors_messages
+#        record_invalid: "Validazione fallita: %{errors}"
+#        <<: *errors_messages
         blank: ": Campo Obbligatorio!"
-
       full_messages:
         format: "%{attribute} %{message}"
       models:
@@ -116,7 +114,6 @@ en:
           attributes:
             base:
               at_least_one: "Compila almeno uno dei seguenti campi: Nome, Cognome, Matricola"
-
   errors:
     errors:
       template:
@@ -124,12 +121,10 @@ en:
           one: "Questo %{model} non puo' essere salvato: 1 errore"
           other: "Questo %{model} non puo' essere salvato: %{count} errori."
         body: "Per favore ricontrolla:"
-
       messages:
         taken: "e' gia' in uso"
-        record_invalid: "Validazione fallita: %{errors}"
-        <<: *errors_messages
-
+#        record_invalid: "Validazione fallita: %{errors}"
+#        <<: *errors_messages
       full_messages:
         format: "%{t attribute} %{message}"
 
@@ -280,138 +275,6 @@ en:
         tpeu: 'Tipo'
   failures:
     invalid_request: "Richiesta non valida"
-  notices:
-    success_creating_course: "Corso creato con successo"
-    success_updating_course: "Corso modificato con successo"
-    success_destroying_course: "Corso eliminato con successo"
-    success_adding_topic: "Materia aggiunta con successo"
-
-  errors:
-    messages:
-      not_found: "non trovato"
-      already_confirmed: "e' stato gia' confermato"
-      not_locked: "non era bloccato"
-
-  number:
-    format:
-      delimiter: ""
-      precision: 2
-      significant: false
-      strip_insignificant_zeros: false
-      separator: "."
-
-    currency:
-      format:
-        format: "%n %u"
-        unit: "€"
-        separator: "."
-        delimiter: ","
-        precision: 2
-        significant: false
-        strip_insignificant_zeros: false
-
-    percentage:
-      format:
-        delimiter: ""
-        # precision:
-
-    precision:
-      format:
-        # separator:
-        delimiter: ""
-        # precision:
-
-    human:
-      format:
-        # separator:
-        delimiter: ""
-        precision: 1
-        significant: true
-        strip_insignificant_zeros: true
-      storage_units:
-        format: "%n %u"
-        units:
-          byte:
-            one: "Byte"
-            other: "Byte"
-          kb: "Kb"
-          mb: "Mb"
-          gb: "Gb"
-          tb: "Tb"
-      decimal_units:
-        format: "%n %u"
-        units:
-          unit: ""
-          thousand: "Mila"
-          million: "Milioni"
-          billion: "Miliardi"
-          trillion: "Bilioni"
-          quadrillion: "Biliardi"
-
-  date:
-    formats:
-      default: "%d-%m-%Y"
-      short: "%d %b"
-      long: "%d %B %Y"
-
-    day_names:
-      - Domenica
-      - Lunedi
-      - Martedi
-      - Mercoledi
-      - Giovedi
-      - Venerdi
-      - Sabato
-    abbr_day_names:
-      - Dom
-      - Lun
-      - Mar
-      - Mer
-      - Gio
-      - Ven
-      - Sab
-
-    month_names:
-      - ~
-      - Gennaio
-      - Febbraio
-      - Marzo
-      - Aprile
-      - Maggio
-      - Giugno
-      - Luglio
-      - Agosto
-      - Settembre
-      - Ottobre
-      - Novembre
-      - Dicembre
-    abbr_month_names:
-      - ~
-      - Gen
-      - Feb
-      - Mar
-      - Apr
-      - Mag
-      - Giu
-      - Lug
-      - Ago
-      - Set
-      - Ott
-      - Nov
-      - Dic
-    order:
-      - :day
-      - :month
-      - :year
-
-  time:
-    formats:
-      default: "%a %d %b %Y, %H:%M:%S %z"
-      short: "%d %b %H:%M"
-      long: "%d %B %Y %H:%M"
-    am: 'am'
-    pm: 'pm'
-
   datetime:
     distance_in_words:
       half_a_minute: "mezzo minuto"

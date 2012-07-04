@@ -30,7 +30,7 @@ before_filter :authenticate
     @rifdoc   = {:nr => @tesdoc.num_doc, :dt => @tesdoc.data_doc}
     @causale  = ""
     @corr     = ""
-    @int_body = {:qta => "Q.tà", :article_id => "Codice", :descriz => "Descrizione"}
+    #@int_body = {:qta => "Q.ta'", :article_id => "Codice", :descriz => "Descrizione"}
     @body     = @tesdoc.rigdocs
     render 'stp_ddt1.pdf'
   end

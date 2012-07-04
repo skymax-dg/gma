@@ -19,7 +19,7 @@ FATTO: Caricare i resi
 
 FATTO: In Crea nuova riga doc mettere gli articoli ordinati per codice almeno.
 
-FATTO: Inserito l'articolo in rigdoc se la des è vuota proporre quella dell'articolo
+FATTO: Inserito l'articolo in rigdoc se la des e' vuota proporre quella dell'articolo
 
 FATTO: Su ARTICLES, CAUSALES e CAUSMAGS aggiungere il filtro AZIENDA sulle query
 
@@ -31,7 +31,7 @@ FATTO:   1 - Genera 1 rigdoc per ogni articolo con qta0 prg_rig generato in ordi
 
 FATTO:   2 - Cancella tutte le righe con codice articolo e Qta=0
 
-FATTO: In inserimento rigdoc proporre nel prezzo il prezzo già scontato
+FATTO: In inserimento rigdoc proporre nel prezzo il prezzo gia' scontato
 
 FATTO: Inserire il login utente con : (nome utente e password)
 

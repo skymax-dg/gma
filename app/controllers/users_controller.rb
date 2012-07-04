@@ -1,5 +1,6 @@
+# encoding: utf-8
 class UsersController < ApplicationController
-before_filter :authenticate
+before_filter :authenticate, :except => [:new, :create]
  def new
     @user = User.new
   	@title = "Creazione utente"
@@ -25,12 +26,12 @@ before_filter :authenticate
   end
 
   def edit
-    @user = User.find(params[:id]) #find già fatto nella correct_user
+    @user = User.find(params[:id]) #find gia' fatto nella correct_user
     @title = "Modifica Utente"
   end
 
   def update
-    @user = User.find(params[:id]) #find già fatto nella correct_user
+    @user = User.find(params[:id]) #find gia' fatto nella correct_user
     if @user.update_attributes(params[:user])
       flash[:success] = "Utente aggiornato con successo."
       redirect_to user_path
@@ -47,7 +48,7 @@ before_filter :authenticate
 
   def destroy
     if current_user.id.to_s == params[:id]
-      flash[:error] = "Non è possibile eliminare l'utente loggato."
+      flash[:error] = "Non e' possibile eliminare l'utente loggato."
       redirect_to users_path
     else
       User.find(params[:id]).destroy
