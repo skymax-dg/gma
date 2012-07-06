@@ -6,7 +6,7 @@ class CreateRigdocs < ActiveRecord::Migration
       t.references :article
       t.string :descriz, :limit => 150
       t.integer :qta
-      t.decimal :prezzo, :precision => 8, :scale => 2, :default => 0, :null => false
+      t.decimal :prezzo, :precision => 12, :scale => 6, :default => 0, :null => false
       t.decimal :sconto, :precision => 5, :scale => 2, :default => 0, :null => false
 
       t.timestamps

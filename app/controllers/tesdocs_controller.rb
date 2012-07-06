@@ -4,6 +4,7 @@ Spreadsheet.client_encoding = 'UTF-8'
 require "prawn"
 #require "prawn/layout"
 require "prawn/measurement_extensions"
+require 'will_paginate/array'
 
 class TesdocsController < ApplicationController
 before_filter :authenticate
@@ -117,6 +118,7 @@ before_filter :authenticate
           init_filter
           render "index"
         else
+          @act_new = 1
           @tesdoc = Tesdoc.new
           @causmag = Causmag.find(params[:causmag])
           @conto = Conto.find(params[:conto])
@@ -138,14 +140,19 @@ before_filter :authenticate
 
   def show
     @tesdoc = Tesdoc.find(params[:id])
-    @rigdocs = @tesdoc.rigdocs.paginate(:page => params[:page], :per_page => 10)
-    @rigdocs = @rigdocs.sort {|a,b|a.prgrig<=>b.prgrig}
+#    @rigdocs = @tesdoc.rigdocs.paginate(:page => params[:page], :per_page => 10)
+#    @rigdocs = @rigdocs.sort {|a,b|a.prgrig<=>b.prgrig}
+
+    @rigdocs = @tesdoc.rigdocs.sort{|a,b|a.prgrig<=>b.prgrig}
+    @rigdocs = @rigdocs.paginate(:page => params[:page], :per_page => 10)
+
   end
 
   def edit
-    @tesdoc = Tesdoc.find(params[:id])
+    @act_new = 0
+    @tesdoc  = Tesdoc.find(params[:id])
     @causmag = Causmag.find(@tesdoc.causmag_id)
-    @conto = Conto.find(@tesdoc.conto_id)
+    @conto   = Conto.find(@tesdoc.conto_id)
   end
 
   def create

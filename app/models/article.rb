@@ -13,13 +13,13 @@ class Article < ActiveRecord::Base
   scope :azienda, lambda { |azd| {:conditions => ['articles.azienda = ?', azd]}}
   default_scope :order => 'articles.codice ASC' 
 
-  def self.chk_art_xls(xls, wks, rownr, colnr)
+  def self.chk_art_xls(azienda, xls, wks, rownr, colnr)
     # Controlla che nel file excel xls nello sheet wks(0base), partendo dalla riga rownr,
     # ogni valore della colonna colnr corrisponda ad un codice articolo nel DB 
     errors = []
     xls.worksheet(wks).each rownr do |row|
       unless row[colnr].blank?
-        if not find_by_azienda_and_codice(current_user.azienda, row[colnr].to_s.strip)
+        if not find_by_azienda_and_codice(azienda, row[colnr].to_s.strip)
           errors << "L'articolo con codice: " + row[colnr].to_s.strip + " riportato sulla riga: " + (row.idx + 1).to_s + " non e' presente in banca dati."
         end
       end

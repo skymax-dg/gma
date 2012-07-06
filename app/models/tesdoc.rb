@@ -180,7 +180,7 @@ class Tesdoc < ActiveRecord::Base
     hshvar[:d] = "%#{des}%" unless des == ""
     
     includes(:causmag, :conto =>[:anagen]).where([whcausmag + whconto + whana, hshvar]).azdanno(
-      azienda, annoese).paginate(:page => page, :per_page => 10) unless hsh[tp].nil?
+      azienda, annoese).paginate(:page => page, :per_page => 10, :order => "data_doc, causmag_id, num_doc") unless hsh[tp].nil?
 #      current_user.azienda, current_annoese).paginate(:page => page, :per_page => 10) unless hsh[tp].nil?
   end
 

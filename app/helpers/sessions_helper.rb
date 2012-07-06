@@ -4,7 +4,7 @@ module SessionsHelper
   end
 
   def current_annoese
-    @current_annoese ||= cookies.signed[:var_se_annoese] || [nil]
+    @current_annoese ||= cookies.signed[:var_se_annoese] || nil
   end
 
   def current_user?(user)
@@ -34,7 +34,7 @@ module SessionsHelper
   end
   
   def set_year(annoese)
-    cookies.permanent.signed[:var_se_annoese] = [annoese]
+    cookies.permanent.signed[:var_se_annoese] = annoese
     current_annoese = annoese
   end
 

@@ -1,3 +1,4 @@
+# coding: utf-8
 class MovVendTitleController < Ruport::Controller
   prepare :std_report
   stage :company_header, :MovVendTitle_header, :MovVendTitle_body, :MovVendTitle_footer
@@ -7,14 +8,14 @@ end
 
 include Helper_pdf
 class MovVendTitlePDF < CompanyPDFBase
-before_filter :authenticate
   renders :pdf, :for => MovVendTitleController
 
   build :MovVendTitle_header do
+aaa
     options.text_format = { :font_size => 18, :justification => :center, :bold => true }
     options.tp == 'M' ? add_text("MOVIMENTAZIONI PER TITOLO") : add_text("VENDITE PER TITOLO")
     pad(20) { hr }
-    render_pdf
+    #render_pdf
   end
 
   build :MovVendTitle_body do
@@ -70,12 +71,12 @@ before_filter :authenticate
         end
       end
     end
-    render_pdf
+    #render_pdf
   end
 
   build :MovVendTitle_footer do
     add_text " "
-    render_pdf
+    #render_pdf
   end
 
   def build_vendtab(art_id, anagen_id, anarif)

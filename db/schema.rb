@@ -150,8 +150,8 @@ ActiveRecord::Schema.define(:version => 20120628082142) do
     t.integer  "article_id"
     t.string   "descriz",    :limit => 150
     t.integer  "qta"
-    t.decimal  "prezzo",                    :precision => 8, :scale => 2, :default => 0.0, :null => false
-    t.decimal  "sconto",                    :precision => 5, :scale => 2, :default => 0.0, :null => false
+    t.decimal  "prezzo",                   :precision => 12, :scale => 6, :default => 0.0, :null => false
+    t.decimal  "sconto",                   :precision => 5,  :scale => 2, :default => 0.0, :null => false
     t.datetime "created_at",                                                               :null => false
     t.datetime "updated_at",                                                               :null => false
     t.integer  "prgrig",                                                  :default => 0,   :null => false

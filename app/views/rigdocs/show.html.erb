@@ -29,6 +29,10 @@
   <%= @rigdoc.sconto %>
 </p>
 
+<p>
+  <b>Totale riga:</b>
+  <%= @rigdoc.prezzo * @rigdoc.qta %>
+</p>
 <%#= link_to 'Indietro', :back %>
 <%= link_to 'Indietro', @rigdoc.tesdoc %>
 <%= link_to 'Elimina riga', @rigdoc, :confirm => 'Confermi eliminazione?', :method => :delete %>

@@ -50,11 +50,11 @@
   </div>
   <br />
   <div class="field">
-    <b> <%= f.label "Magazzino origine" %> </b>-
-    <b> <%= f.label "Magazzino destinazione" %> </b>
+    <b> <%= f.label "Mag Origine" %> - </b>
+    <b> <%= f.label "Mag Destinazione" %> </b>
   </div>
   <div id="magsrcdst">
-    <%= render :partial => 'magsrcdst', :locals => {:tesdoc => @tesdoc, :causmag => @causmag} %>
+    <%= render :partial => 'magsrcdst', :locals => {:tesdoc=>@tesdoc, :causmag=>@causmag, :act_new=>@act_new} %>
   </div>
   <br />
   <div class="field">

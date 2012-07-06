@@ -26,10 +26,14 @@ module TesdocsHelper
     # mags = Hash[*Anaind::NRMAG.select{|k,v| [0].index(k)}.flatten]
     causmag = Causmag.find(idcausmag)
     conto = Conto.find(idconto)
-    if (causmag.tipo == "E" and tp == "S") or (causmag.tipo == "U" and tp == "D")
+    # Se il movimento è di entrata/rend.resi il mag sorgente è uno tra quelli del conto
+    # Se il movimento è di uscita/rend.vendite il mag destinazione è uno tra quelli del conto
+    if (["E","R"].include?(causmag.tipo) and tp == "S") or (["U","V"].include?(causmag.tipo) and tp == "D")
       mags = conto.magsavailable([0])
-    else
+    elsif (["E","R"].include?(causmag.tipo) and tp == "D") or (["U","V"].include?(causmag.tipo) and tp == "S")
       mags = Anagen.find(current_user.azienda).magsavailable([0])
+    else
+      Errore
     end
   end
   
