@@ -33,7 +33,7 @@ before_filter :authenticate
       pdf = MovVendTitleController.render_pdf(:data     => pdfdata, 
                                               :idanagen => params[:idanagen]||"", :nrmag  => params[:nrmag]||"",
                                               :anarif   => params[:anarif]||"",   :grpmag => params[:grpmag]||"",
-                                              :azienda  => current_user.azienda,  :tp => @tp)
+                                              :azienda  => current_user.azienda,  :tp     => @tp)
       if @tp == "M"
         send_data pdf, :type => "application/pdf",
                        :filename => "RpMovArt.pdf"

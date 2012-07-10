@@ -17,11 +17,10 @@ gem 'will_paginate', '~> 3.0.beta'
 
 gem 'spreadsheet'
 
-gem 'ruport'
+#gem 'ruport'
+#gem 'ruport-util'
 gem 'acts_as_reportable'
-gem 'ruport-util'
 gem 'pdf-writer'
-#gem 'pdf_writer_proxy'
 
 # Gems used only for assets and not required
 # in production environments by default.
