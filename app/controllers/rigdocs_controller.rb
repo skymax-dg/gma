@@ -1,5 +1,5 @@
-require 'spreadsheet'
-Spreadsheet.client_encoding = 'UTF-8'
+#require 'spreadsheet'
+#Spreadsheet.client_encoding = 'UTF-8'
 
 class RigdocsController < ApplicationController
 before_filter :authenticate
@@ -71,7 +71,7 @@ before_filter :authenticate
       end
     rescue Exception => e
       flash[:error] = $!.message
-     @errors << "File bloccato da un'altra applicazione o non trovato: " + e #$?.exitstatus
+     @errors << "File bloccato da un'altra applicazione o non trovato: " + e.to_s #$?.exitstatus
     end
   end
 

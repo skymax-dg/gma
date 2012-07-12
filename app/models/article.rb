@@ -1,5 +1,5 @@
 class Article < ActiveRecord::Base
-  acts_as_reportable
+  #acts_as_reportable
   before_destroy :require_no_rigdocs
   has_many :rigdocs
 

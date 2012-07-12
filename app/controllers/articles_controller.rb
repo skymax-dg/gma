@@ -1,3 +1,7 @@
+require "prawn"
+#require "prawn/layout"
+require "prawn/measurement_extensions"
+
 class ArticlesController < ApplicationController
 before_filter :authenticate
   def filter_mov_vend
@@ -25,42 +29,68 @@ before_filter :authenticate
 
   def stp_mov_vend
     @tp = params[:tp]
-    pdfdata = Tesdoc.art_mov_vend(params[:id],     params[:idanagen],    params[:nrmag],
-                                  params[:anarif], current_user.azienda, @tp)
-    if pdfdata.count == 0
+    @id = params[:id]||""
+    @idanagen = params[:idanagen]||""
+    @nrmag = params[:nrmag]||""
+    @anarif = params[:anarif]||""
+    @grpmag = params[:grpmag]||""
+
+    @artmov = Tesdoc.art_mov_vend(@id, @idanagen, @nrmag,
+                                  @anarif, current_user.azienda, @tp)
+    if @artmov.count == 0
       render 'mov_vend_notfound'
     else
-      pdf = MovVendTitleController.render_pdf(:data     => pdfdata, 
-                                              :idanagen => params[:idanagen]||"", :nrmag  => params[:nrmag]||"",
-                                              :anarif   => params[:anarif]||"",   :grpmag => params[:grpmag]||"",
-                                              :azienda  => current_user.azienda,  :tp     => @tp)
-      if @tp == "M"
-        send_data pdf, :type => "application/pdf",
-                       :filename => "RpMovArt.pdf"
-      else
-        send_data pdf, :type => "application/pdf",
-                       :filename => "RpVendArt.pdf"
-      end
+
+      render 'stp_mov_vend.pdf'
+
+#      movart = StpMovArt.new(:page_layout   => :portrait, :page_size => 'A4',
+#                             :left_margin   => 1.2.cm,    :right_margin  => 1.2.cm,
+#                             :top_margin    => 1.2.cm,    :bottom_margin => 1.2.cm)
+#      movart.artmov = @artmov
+#      hr.righe = 8
+#      hr.colonne = 3
+#      hr.gutter = 15
+#      hr.omaggi = true
+#      output = StpMovArt.to_pdf
+
+#      respond_to do |format|
+#        format.pdf do
+#          send_data output, :filename => "stp_mov_vend.pdf", :type => "application/pdf"
+#        end
+#      end
+
+
+#      pdf = MovVendTitleController.render_pdf(:data     => pdfdata, 
+#                                              :idanagen => params[:idanagen]||"", :nrmag  => params[:nrmag]||"",
+#                                              :anarif   => params[:anarif]||"",   :grpmag => params[:grpmag]||"",
+#                                              :azienda  => current_user.azienda,  :tp     => @tp)
+#      if @tp == "M"
+#        send_data pdf, :type => "application/pdf",
+#                       :filename => "RpMovArt.pdf"
+#      else
+#        send_data pdf, :type => "application/pdf",
+#                       :filename => "RpVendArt.pdf"
+#      end
     end
   end
 
   def stp_mov_vend_all
     @tp = params[:tp]
-    pdfdata = Tesdoc.art_mov_vend("all", params[:idanagen], params[:nrmag], params[:anarif], current_user.azienda, @tp)
+#    pdfdata = Tesdoc.art_mov_vend("all", params[:idanagen], params[:nrmag], params[:anarif], current_user.azienda, @tp)
     if pdfdata.count == 0
       render 'mov_vend_notfound'
-    else
-      pdf = MovVendTitleController.render_pdf(:data     => pdfdata, 
-                                              :idanagen => params[:idanagen]||"", :nrmag  => params[:nrmag]||"",
-                                              :anarif   => params[:anarif]||"",   :grpmag => params[:grpmag]||"",
-                                              :azienda  => current_user.azienda,  :tp => @tp)
-      if @tp == "M"
-        send_data pdf, :type => "application/pdf",
-                       :filename => "RpMovAllArt.pdf" 
-      else
-        send_data pdf, :type => "application/pdf",
-                       :filename => "RpVendAllArt.pdf"
-      end
+#    else
+#      pdf = MovVendTitleController.render_pdf(:data     => pdfdata, 
+#                                              :idanagen => params[:idanagen]||"", :nrmag  => params[:nrmag]||"",
+#                                              :anarif   => params[:anarif]||"",   :grpmag => params[:grpmag]||"",
+#                                              :azienda  => current_user.azienda,  :tp => @tp)
+#      if @tp == "M"
+#        send_data pdf, :type => "application/pdf",
+#                       :filename => "RpMovAllArt.pdf" 
+#      else
+#        send_data pdf, :type => "application/pdf",
+#                       :filename => "RpVendAllArt.pdf"
+#      end
     end
   end
 
@@ -111,4 +141,5 @@ before_filter :authenticate
     end
     redirect_to articles_url
   end
+
 end

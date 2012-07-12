@@ -19,8 +19,8 @@ gem 'spreadsheet'
 
 #gem 'ruport'
 #gem 'ruport-util'
-gem 'acts_as_reportable'
-gem 'pdf-writer'
+#gem 'acts_as_reportable'
+#gem 'pdf-writer'
 
 # Gems used only for assets and not required
 # in production environments by default.

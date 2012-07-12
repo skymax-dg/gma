@@ -11,7 +11,6 @@ class MovVendTitlePDF < CompanyPDFBase
   renders :pdf, :for => MovVendTitleController
 
   build :MovVendTitle_header do
-aaa
     options.text_format = { :font_size => 18, :justification => :center, :bold => true }
     options.tp == 'M' ? add_text("MOVIMENTAZIONI PER TITOLO") : add_text("VENDITE PER TITOLO")
     pad(20) { hr }
