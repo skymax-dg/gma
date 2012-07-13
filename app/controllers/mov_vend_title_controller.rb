@@ -120,19 +120,7 @@ class MovVendTitlePDF < CompanyPDFBase
       qta     = r.attributes["qta"].to_i
       tpmag   = r.attributes["tipomag"]
       movmag  = r.attributes["movmag"]
-      if anarif == "S"
-        tipomov == "E" and movmag == 'M'   ? car=qta  : car=""
-        tipomov == "T" and tpmag  == 'DST' ? car=qta  : car=""
-        tipomov == "U" and movmag == 'M'   ? sca=qta  : sca=""
-        tipomov == "T" and tpmag  == 'SRC' ? sca=qta  : sca=""
-      else
-        tipomov == "U" and movmag == 'M'   ? car=qta  : car=""
-        tipomov == "R" and tpmag  == 'DST' ? car=qta  : car=""
-        tipomov == "E" and movmag == 'M'   ? sca=qta  : sca=""
-        tipomov == "V" and tpmag  == 'SRC' ? sca=qta  : sca=""
-      end
-      tipomov == "E" and movmag == 'I' ? imp=-qta : imp=""
-      tipomov == "U" and movmag == 'I' ? imp=-qta : imp=""
+      car, sca, imp = set_car_sca_imp(anarif, tipomov, tpmag, movmag, qta)
       giac += car.to_i - sca.to_i
       tcar += car.to_i
       tsca += sca.to_i

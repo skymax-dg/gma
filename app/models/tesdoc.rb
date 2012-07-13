@@ -52,7 +52,7 @@ class Tesdoc < ActiveRecord::Base
 
   def imponibile
     imp = 0
-    self.rigdocs.each{|r|imp = imp + (r.qta * r.prezzo)}
+    self.rigdocs.each{|r|imp += (r.qta * r.prezzo)}
     return imp
   end
 
@@ -251,22 +251,16 @@ class Tesdoc < ActiveRecord::Base
       # Movimenti per l'anagrafica interna di riferimento
       filter_magsrc = " AND  (   
                                   (causmags.movimpmag = 'M' and causmags.tipo IN ('T','U'))
-                               OR (causmags.movimpmag = 'I' and causmags.tipo IN ('E'))
+                               OR (causmags.movimpmag = 'I' and causmags.tipo IN ('U'))
                              )"
       filter_magdst = " AND  (   
                                   (causmags.movimpmag = 'M' and causmags.tipo IN ('T','E'))
-                               OR (causmags.movimpmag = 'I' and causmags.tipo IN ('U'))
+                               OR (causmags.movimpmag = 'I' and causmags.tipo IN ('E'))
                              )"
     else
       filter_anagen = " AND anagens.id = " + idanagen.to_s unless idanagen == ""
-      filter_magsrc = " AND  (   
-                                  (causmags.movimpmag = 'M' and causmags.tipo IN ('R','V','E'))
-                               OR (causmags.movimpmag = 'I' and causmags.tipo IN ('U'))
-                             )"
-      filter_magdst = " AND  (   
-                                  (causmags.movimpmag = 'M' and causmags.tipo IN ('R','V','U'))
-                               OR (causmags.movimpmag = 'I' and causmags.tipo IN ('E'))
-                             )"
+      filter_magsrc = " AND  (causmags.movimpmag = 'M' and causmags.tipo IN ('V','E'))"
+      filter_magdst = " AND  (causmags.movimpmag = 'M' and causmags.tipo IN ('R','U'))"
     end
     nrmag == "" ? filter_nrmagsrc = "" : filter_nrmagsrc = " AND tesdocs.nrmagsrc = " + nrmag.to_s
     nrmag == "" ? filter_nrmagdst = "" : filter_nrmagdst = " AND tesdocs.nrmagdst = " + nrmag.to_s
@@ -299,22 +293,16 @@ class Tesdoc < ActiveRecord::Base
       # Movimenti per l'anagrafica interna di riferimento
       filter_magsrc = " AND  (   
                                   (causmags.movimpmag = 'M' and causmags.tipo IN ('T','U'))
-                               OR (causmags.movimpmag = 'I' and causmags.tipo IN ('E'))
+                               OR (causmags.movimpmag = 'I' and causmags.tipo IN ('U'))
                              )"
       filter_magdst = " AND  (   
                                   (causmags.movimpmag = 'M' and causmags.tipo IN ('T','E'))
-                               OR (causmags.movimpmag = 'I' and causmags.tipo IN ('U'))
+                               OR (causmags.movimpmag = 'I' and causmags.tipo IN ('E'))
                              )"
     else 
       filter_anagen = " AND anagens.id = " + idanagen.to_s unless idanagen.to_s == ""
-      filter_magsrc = " AND  (   
-                                  (causmags.movimpmag = 'M' and causmags.tipo IN ('R','V','E'))
-                               OR (causmags.movimpmag = 'I' and causmags.tipo IN ('U'))
-                             )"
-      filter_magdst = " AND  (   
-                                  (causmags.movimpmag = 'M' and causmags.tipo IN ('R','V','U'))
-                               OR (causmags.movimpmag = 'I' and causmags.tipo IN ('E'))
-                             )"
+      filter_magsrc = " AND  (causmags.movimpmag = 'M' and causmags.tipo IN ('V','E'))"
+      filter_magdst = " AND  (causmags.movimpmag = 'M' and causmags.tipo IN ('R','U'))"
     end
     if grpmag == "S"
       filter_nrmagsrc = ""

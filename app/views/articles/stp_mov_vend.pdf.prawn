@@ -10,6 +10,7 @@
         idanagen = ""
       else
         idanagen = tesdoc.attributes["idanagen"]
+        pdf.move_down 10
         desanagen = 'ANAGRAFICA: ' + Anagen.find(idanagen).denomin
         pdf.text desanagen,
                      :size => 12, :style => :bold, :align => :left
@@ -38,19 +39,7 @@
             qta     = r.attributes["qta"].to_i
             tpmag   = r.attributes["tipomag"]
             movmag  = r.attributes["movmag"]
-            if @anarif == "S"
-              tipomov == "E" and movmag == 'M'   ? car=qta  : car=""
-              tipomov == "T" and tpmag  == 'DST' ? car=qta  : car=""
-              tipomov == "U" and movmag == 'M'   ? sca=qta  : sca=""
-              tipomov == "T" and tpmag  == 'SRC' ? sca=qta  : sca=""
-            else
-              tipomov == "U" and movmag == 'M'   ? car=qta  : car=""
-              tipomov == "R" and tpmag  == 'DST' ? car=qta  : car=""
-              tipomov == "E" and movmag == 'M'   ? sca=qta  : sca=""
-              tipomov == "V" and tpmag  == 'SRC' ? sca=qta  : sca=""
-            end
-            tipomov == "E" and movmag == 'I' ? imp=-qta : imp=""
-            tipomov == "U" and movmag == 'I' ? imp=-qta : imp=""
+            car, sca, imp = set_car_sca_imp(anarif, tipomov, tpmag, movmag, qta)
             giac += car.to_i - sca.to_i
             tcar += car.to_i
             tsca += sca.to_i
@@ -64,8 +53,9 @@
             tab.row(0).font_style = :bold
             tab.row(tab.row_length-1).font_style = :bold
             tab.header = true
+            tab.column(1).style :align => :right
+            tab.column(3..8).style :align => :right
           end
-
         end
       end
     end

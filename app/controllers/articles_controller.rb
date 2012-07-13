@@ -16,6 +16,18 @@ before_filter :authenticate
     @tp == "M" ? @title = "Stampa Movimenti di magazzino" : @title = "Stampa Vendite per titolo"
   end
 
+  def filter_mov_vend_xls
+    @tp = params[:tp]
+    @article = Article.find(params[:id]) unless params[:id].nil?
+    @anagens = Anagen.findbytpconto(current_user.azienda, 'C')
+    @contos = Conto.findbytipoconto(current_user.azienda, current_annoese, "C")
+    if @anagens.empty?
+      flash[:error] = "Nessun conto cliente presente"
+      render :action => "show"
+    end
+    @tp == "M" ? @title = "Export (XLS) Movimenti di magazzino" : @title = "Export (XLS) Vendite per titolo"
+  end
+
   def filter_mov_vend_all
     @tp = params[:tp]
     @anagens = Anagen.findbytpconto(current_user.azienda, 'C')
@@ -25,6 +37,17 @@ before_filter :authenticate
       render :action => "index"
     end
     @tp == "M" ? @title = "Stampa Movimenti di magazzino" : @title = "Stampa Vendite per titolo"
+  end
+
+  def filter_mov_vend_all_xls
+    @tp = params[:tp]
+    @anagens = Anagen.findbytpconto(current_user.azienda, 'C')
+    @contos = Conto.findbytipoconto(current_user.azienda, current_annoese, "C")
+    if @anagens.empty?
+      flash[:error] = "Nessun conto cliente presente"
+      render :action => "index"
+    end
+    @tp == "M" ? @title = "Export (XLS) Movimenti di magazzino" : @title = "Export (XLS) Vendite per titolo"
   end
 
   def stp_mov_vend
@@ -40,17 +63,12 @@ before_filter :authenticate
     if @artmov.count == 0
       render 'mov_vend_notfound'
     else
-
       render 'stp_mov_vend.pdf'
 
 #      movart = StpMovArt.new(:page_layout   => :portrait, :page_size => 'A4',
 #                             :left_margin   => 1.2.cm,    :right_margin  => 1.2.cm,
 #                             :top_margin    => 1.2.cm,    :bottom_margin => 1.2.cm)
 #      movart.artmov = @artmov
-#      hr.righe = 8
-#      hr.colonne = 3
-#      hr.gutter = 15
-#      hr.omaggi = true
 #      output = StpMovArt.to_pdf
 
 #      respond_to do |format|
@@ -60,7 +78,7 @@ before_filter :authenticate
 #      end
 
 
-#      pdf = MovVendTitleController.render_pdf(:data     => pdfdata, 
+#      pdf = MovVendTitleController.render_pdf(:data     => @artmov, 
 #                                              :idanagen => params[:idanagen]||"", :nrmag  => params[:nrmag]||"",
 #                                              :anarif   => params[:anarif]||"",   :grpmag => params[:grpmag]||"",
 #                                              :azienda  => current_user.azienda,  :tp     => @tp)
@@ -76,11 +94,17 @@ before_filter :authenticate
 
   def stp_mov_vend_all
     @tp = params[:tp]
-#    pdfdata = Tesdoc.art_mov_vend("all", params[:idanagen], params[:nrmag], params[:anarif], current_user.azienda, @tp)
-    if pdfdata.count == 0
+    @idanagen = params[:idanagen]||""
+    @nrmag = params[:nrmag]||""
+    @anarif = params[:anarif]||""
+    @grpmag = params[:grpmag]||""
+    @artmov = Tesdoc.art_mov_vend("all", @idanagen, @nrmag,
+                                  @anarif, current_user.azienda, @tp)
+    if @artmov.count == 0
       render 'mov_vend_notfound'
-#    else
-#      pdf = MovVendTitleController.render_pdf(:data     => pdfdata, 
+    else
+      render 'stp_mov_vend.pdf'
+#      pdf = MovVendTitleController.render_pdf(:data     => @artmov, 
 #                                              :idanagen => params[:idanagen]||"", :nrmag  => params[:nrmag]||"",
 #                                              :anarif   => params[:anarif]||"",   :grpmag => params[:grpmag]||"",
 #                                              :azienda  => current_user.azienda,  :tp => @tp)
@@ -91,6 +115,38 @@ before_filter :authenticate
 #        send_data pdf, :type => "application/pdf",
 #                       :filename => "RpVendAllArt.pdf"
 #      end
+    end
+  end
+
+  def mov_vend_xls
+    @tp = params[:tp]
+    @id = params[:id]||""
+    @idanagen = params[:idanagen]||""
+    @nrmag = params[:nrmag]||""
+    @anarif = params[:anarif]||""
+    @grpmag = params[:grpmag]||""
+
+    @artmov = Tesdoc.art_mov_vend(@id, @idanagen, @nrmag,
+                                  @anarif, current_user.azienda, @tp)
+    if @artmov.count == 0
+      render 'mov_vend_notfound'
+    else
+      exp_movart_xls(@tp, @artmov, @idanagen, @nrmag, @anarif, @grpmag)
+    end
+  end
+
+  def mov_vend_all_xls
+    @tp = params[:tp]
+    @idanagen = params[:idanagen]||""
+    @nrmag = params[:nrmag]||""
+    @anarif = params[:anarif]||""
+    @grpmag = params[:grpmag]||""
+    @artmov = Tesdoc.art_mov_vend("all", @idanagen, @nrmag,
+                                  @anarif, current_user.azienda, @tp)
+    if @artmov.count == 0
+      render 'mov_vend_notfound'
+    else
+      exp_movart_xls(@tp, @artmov, @idanagen, @nrmag, @anarif, @grpmag)
     end
   end
 

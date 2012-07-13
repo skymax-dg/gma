@@ -49,3 +49,62 @@ class Article < ActiveRecord::Base
       raise ActiveRecord::RecordInvalid.new self unless rigdocs.count == 0
     end
 end
+
+def exp_movart_xls(tp, artmov, idanagen, nrmag, anarif, grpmag)
+  formatbold = Spreadsheet::Format.new :weight => :bold
+  book = Spreadsheet::Workbook.new # istanzio il workbook (file xls)
+  shmovart = book.create_worksheet :name => 'Movimenti' # istanzio lo sheet
+  if tp == "M"
+    shmovart.row(0).concat %w{Articolo Descrizione Anagrafica Data_Doc Nr_Doc Causale Magazzino Carico Scarico Giacenza Impegnato Disponib}
+    shmovart.row(0).default_format = formatbold
+  elsif tp == "V"
+    shmovart.row(0).concat %w{intestazione colonne = ???}
+  else
+    errore
+  end
+  nrrow = 1
+  artmov.each do |dataart|
+    art = Article.find(dataart.attributes["artid"])
+    Tesdoc.anagen_mov_artic(art.id, idanagen, nrmag, anarif, tp).each do |tesdoc|
+      anarif == "S" ? idanagen = current_user.azienda : idanagen = tesdoc.attributes["idanagen"]
+      desanagen = Anagen.find(idanagen).denomin
+      Tesdoc.mag_mov_artic_anagen(art.id, idanagen, nrmag, anarif, grpmag, tp).each do |tesdoc|
+        if tp == "M"
+          giac = 0
+          tcar = 0
+          tsca = 0
+          timp = 0
+          Tesdoc.mov_artanagenmag(art.id, idanagen, tesdoc.attributes["nrmag"], anarif, grpmag).each do |r|
+            dt_doc  = r.attributes["data_doc"]
+            num     = r.attributes["numero"]
+            cau     = r.attributes["causale"]
+            nrmag   = r.attributes["nrmag"]
+            tipomov = r.attributes["tipomov"]
+            qta     = r.attributes["qta"].to_i
+            tpmag   = r.attributes["tipomag"]
+            movmag  = r.attributes["movmag"]
+            car, sca, imp = set_car_sca_imp(anarif, tipomov, tpmag, movmag, qta)
+            giac += car.to_i - sca.to_i
+            tcar += car.to_i
+            tsca += sca.to_i
+            timp += imp.to_i
+            shmovart.row(nrrow).concat [art.codice, art.descriz, desanagen, dt_doc, num, cau,
+                                        nrmag,      car,        sca,        giac,   imp, giac-imp.to_i]
+            nrrow += 1
+          end
+          shmovart.row(nrrow).concat [art.codice, art.descriz, desanagen, "TOTALI:", "", "", "", tcar, tsca, giac, timp, giac-timp]
+          shmovart.row(nrrow).default_format = formatbold
+          nrrow += 2
+        end
+      end
+    end
+  end
+  data = StringIO.new('')
+  book.write(data)
+  send_data(data.string, {
+    :disposition => 'attachment',
+    :encoding => 'utf8',
+    :stream => false,
+    :type => 'application/excel',
+    :filename => './mov_art.xls'})
+end

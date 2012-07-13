@@ -1,16 +1,15 @@
 Gma::Application.routes.draw do
 
-  resources :spedizs
-
-  root :to => 'menu#home' #non funziona
-
-  get "menu/home"
+#  root :to => 'menu#home' #non funziona
+  root :to => "menu#home"
 
   get "menu/contact"
 
   get "menu/help"
 
   match '/signout', :to => 'sessions#destroy'
+
+  resources :spedizs
 
   resources :sessions, :only => [:new, :create, :destroy]
   
@@ -22,12 +21,16 @@ Gma::Application.routes.draw do
 
   resources :articles do
     member do
-      get :stp_mov_vend
       get :filter_mov_vend
+      get :stp_mov_vend
+      get :filter_mov_vend_xls
+      get :mov_vend_xls
     end
     collection do
-      get :stp_mov_vend_all
       get :filter_mov_vend_all
+      get :stp_mov_vend_all
+      get :filter_mov_vend_all_xls
+      get :mov_vend_all_xls
     end
   end
 
