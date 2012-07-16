@@ -64,31 +64,6 @@ before_filter :authenticate
       render 'mov_vend_notfound'
     else
       render 'stp_mov_vend.pdf'
-
-#      movart = StpMovArt.new(:page_layout   => :portrait, :page_size => 'A4',
-#                             :left_margin   => 1.2.cm,    :right_margin  => 1.2.cm,
-#                             :top_margin    => 1.2.cm,    :bottom_margin => 1.2.cm)
-#      movart.artmov = @artmov
-#      output = StpMovArt.to_pdf
-
-#      respond_to do |format|
-#        format.pdf do
-#          send_data output, :filename => "stp_mov_vend.pdf", :type => "application/pdf"
-#        end
-#      end
-
-
-#      pdf = MovVendTitleController.render_pdf(:data     => @artmov, 
-#                                              :idanagen => params[:idanagen]||"", :nrmag  => params[:nrmag]||"",
-#                                              :anarif   => params[:anarif]||"",   :grpmag => params[:grpmag]||"",
-#                                              :azienda  => current_user.azienda,  :tp     => @tp)
-#      if @tp == "M"
-#        send_data pdf, :type => "application/pdf",
-#                       :filename => "RpMovArt.pdf"
-#      else
-#        send_data pdf, :type => "application/pdf",
-#                       :filename => "RpVendArt.pdf"
-#      end
     end
   end
 
@@ -104,17 +79,6 @@ before_filter :authenticate
       render 'mov_vend_notfound'
     else
       render 'stp_mov_vend.pdf'
-#      pdf = MovVendTitleController.render_pdf(:data     => @artmov, 
-#                                              :idanagen => params[:idanagen]||"", :nrmag  => params[:nrmag]||"",
-#                                              :anarif   => params[:anarif]||"",   :grpmag => params[:grpmag]||"",
-#                                              :azienda  => current_user.azienda,  :tp => @tp)
-#      if @tp == "M"
-#        send_data pdf, :type => "application/pdf",
-#                       :filename => "RpMovAllArt.pdf" 
-#      else
-#        send_data pdf, :type => "application/pdf",
-#                       :filename => "RpVendAllArt.pdf"
-#      end
     end
   end
 

@@ -16,6 +16,7 @@
 <br />
 
 <%= link_to 'Nuovo Articolo', new_article_path %>
-<%= link_to 'Movimenti articoli', filter_mov_vend_all_articles_path(:tp => "M") %>
-<%= link_to 'Movimenti magazzino XLS',  filter_mov_vend_all_xls_articles_path(:tp => "M") %>
-<%= link_to 'Vendite articoli',   filter_mov_vend_all_articles_path(:tp => "V") %>
+<%= link_to 'Stampa Movimenti', filter_mov_vend_all_articles_path(:tp => "M") %>
+<%= link_to 'Stampa Movimenti(XLS)',  filter_mov_vend_all_xls_articles_path(:tp => "M") %>
+<%= link_to 'Stampa Vendite',   filter_mov_vend_all_articles_path(:tp => "V") %>
+<%= link_to 'Stampa Vendite(XLS)',  filter_mov_vend_all_xls_articles_path(:tp => "V") %>

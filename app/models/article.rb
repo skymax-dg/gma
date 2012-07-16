@@ -56,12 +56,12 @@ def exp_movart_xls(tp, artmov, idanagen, nrmag, anarif, grpmag)
   shmovart = book.create_worksheet :name => 'Movimenti' # istanzio lo sheet
   if tp == "M"
     shmovart.row(0).concat %w{Articolo Descrizione Anagrafica Data_Doc Nr_Doc Causale Magazzino Carico Scarico Giacenza Impegnato Disponib}
-    shmovart.row(0).default_format = formatbold
   elsif tp == "V"
-    shmovart.row(0).concat %w{intestazione colonne = ???}
+    shmovart.row(0).concat %w{Articolo Descrizione Anagrafica Data_Doc Nr_Doc Causale Vendite Resi Prezzo Fatturato Accrediatato Progr}
   else
     errore
   end
+  shmovart.row(0).default_format = formatbold
   nrrow = 1
   artmov.each do |dataart|
     art = Article.find(dataart.attributes["artid"])
@@ -95,6 +95,52 @@ def exp_movart_xls(tp, artmov, idanagen, nrmag, anarif, grpmag)
           shmovart.row(nrrow).concat [art.codice, art.descriz, desanagen, "TOTALI:", "", "", "", tcar, tsca, giac, timp, giac-timp]
           shmovart.row(nrrow).default_format = formatbold
           nrrow += 2
+        else
+          prg  = 0
+          tven = 0
+          tres = 0
+          tfatt = 0
+          taccr = 0
+          Tesdoc.ven_artanagen(art.id, idanagen, anarif).each do |r|
+            dt_doc  = r.attributes["data_doc"]
+            num     = r.attributes["numero"]
+            cau     = r.attributes["causale"]
+            tipomov = r.attributes["tipomov"]
+            qta     = r.attributes["qta"].to_i
+            prezzo  = r.attributes["prezzo"].to_f
+
+            (tipomov == "U" or tipomov == "V") ? ven=qta : ven=""
+            (tipomov == "E" or tipomov == "R") ? res=qta : res=""
+            res == "" ? fatt = qta * prezzo : fatt = 0
+            ven == "" ? accr = qta * prezzo : accr = 0
+            prg  += ven.to_i - res.to_i
+            tven += ven.to_i
+            tres += res.to_i
+            tfatt += fatt.to_f
+            taccr += accr.to_f
+#           fatt = fatt.round(2).to_s
+#           fatt << "0" if fatt[fatt.length-2] == '.'
+#           accr = accr.round(2).to_s
+#           accr << "0" if accr[accr.length-2] == '.'
+#           prezzo = prezzo.round(2).to_s
+#           prezzo << "0" if prezzo[prezzo.length-2] == '.'
+#           fatt = "" if fatt == "0.00"
+#           accr = "" if accr == "0.00"
+            shmovart.row(nrrow).concat [art.codice, art.descriz, desanagen, dt_doc, num,  cau,
+                                        ven,        res,         prezzo,    fatt,   accr, prg.to_i]
+            nrrow += 1
+          end
+          shmovart.row(nrrow).concat [art.codice, art.descriz, desanagen, "TOTALI:", "", "", tven, tres, "", tfatt, taccr, prg.to_i]
+          shmovart.row(nrrow).default_format = formatbold
+          shmovart.column(1).width = 60
+          shmovart.column(2).width = 30
+          shmovart.column(5).width = 30
+          nrrow += 2
+#          tfatt = tfatt.round(2).to_s
+#          tfatt << "0" if tfatt[tfatt.length-2] == '.' # 6.20 diventava 6.2, così rimane 6.20
+#          taccr = taccr.round(2).to_s
+#          taccr << "0" if taccr[taccr.length-2] == '.' # 6.20 diventava 6.2, così rimane 6.20
+#          @tb << ["TOTALI:", "", "", tven, tres, "", tfatt, taccr, prg]
         end
       end
     end

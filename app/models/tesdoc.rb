@@ -345,7 +345,7 @@ class Tesdoc < ActiveRecord::Base
 
     Tesdoc.find_by_sql("SELECT tesdocs.data_doc   AS Data_doc, tesdocs.num_doc  AS Numero,
                                causmags.descriz   AS Causale,  causmags.tipo    AS Tipomov,
-                               rigdocs.qta        AS Qta
+                               rigdocs.qta        AS Qta,      rigdocs.prezzo   AS Prezzo
                           FROM tesdocs INNER JOIN rigdocs  ON (rigdocs.tesdoc_id = tesdocs.id)
                                        INNER JOIN articles ON (articles.id = rigdocs.article_id)
                                        INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)

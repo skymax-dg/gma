@@ -17,9 +17,9 @@
     <b> <%= label_tag "Magazzino: " %> </b> <br />
     <% mag = Hash.new %>
     <% Anaind::NRMAG.each {|k,v|mag[k]=v unless k==0} %>
-    <%= select_tag(:nrmag, options_for_select(mag.invert.sort), {:include_blank => "", :selected => ""}) %>
+    <%= select_tag(:nrmag, options_for_select(mag.invert.sort), {:include_blank => "", :selected => "", :disabled => @tp=="V"}) %>
     raggruppati:
-    <%= check_box_tag :grpmag, 'S' %>
+    <%= check_box_tag :grpmag, 'S', checked = @tp=="V", {:disabled => @tp=="V"}%>
     <%= hidden_field_tag :tp, @tp %>
   </div>
 
