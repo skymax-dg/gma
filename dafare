@@ -36,3 +36,8 @@ FATTO: In inserimento rigdoc proporre nel prezzo il prezzo gia' scontato
 FATTO: Inserire il login utente con : (nome utente e password)
 
 FATTO: Richiedere l'azienda di lavoro e l'anno.
+
+Amministrazione utenti
+Migliorare con delle classi gli export pdf e xls
+Verifica i path file temporanei di export (pdf/xls) e di import (vedi carica righe doc da file xls), ora sono
+	statici meglio se parametrizzati

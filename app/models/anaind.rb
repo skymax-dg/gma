@@ -2,6 +2,7 @@ include AnaindsHelper
 class Anaind < ActiveRecord::Base
   belongs_to :anagen
   belongs_to :localita
+  has_many :spedizs, :dependent => :nullify
   
   attr_accessible :indir, :cap, :desloc, :anagen_id, :localita_id, :flsl, :flsp, :flmg, :nrmag
   
@@ -16,6 +17,10 @@ class Anaind < ActiveRecord::Base
     deco = deco + "Indirizzo di spedizione/" if flsp == "S"
     deco = deco + "Indirizzo di magazzino/" if flmg == "S"
     if deco == "" then deco = "Indirizzo generico" else deco = deco[0, deco.length-1] end
+  end
+
+  def ind_completo
+    self.indir + " " + self.cap + " " + self.desloc
   end
 
   def self.nrmagexist(id, anagen_id, nrmag)

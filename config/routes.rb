@@ -1,5 +1,7 @@
 Gma::Application.routes.draw do
 
+  resources :ivas
+
 #  root :to => 'menu#home' #non funziona
   root :to => "menu#home"
 
@@ -9,7 +11,11 @@ Gma::Application.routes.draw do
 
   match '/signout', :to => 'sessions#destroy'
 
-  resources :spedizs
+  resources :spedizs do #, :only => [:new, :create, :edit, :update, :destroy]
+    collection do
+      get :setind
+    end
+  end
 
   resources :sessions, :only => [:new, :create, :destroy]
   
@@ -63,6 +69,7 @@ Gma::Application.routes.draw do
       get :add1row4article
       get :delrowqta0
       get :stp_ddt1
+      get :ges_datisped
     end
   end
 

@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120628082142) do
+ActiveRecord::Schema.define(:version => 20120717152644) do
 
   create_table "anagens", :force => true do |t|
     t.integer  "codice",                     :null => false
@@ -108,6 +109,16 @@ ActiveRecord::Schema.define(:version => 20120628082142) do
   add_index "contos", ["azienda", "annoese", "codice"], :name => "idx_contos_on_codice", :unique => true
   add_index "contos", ["azienda", "annoese", "descriz"], :name => "idx_contos_on_descriz"
 
+  create_table "ivas", :force => true do |t|
+    t.integer  "codice",                    :null => false
+    t.string   "descriz",    :limit => 50,  :null => false
+    t.string   "desest",     :limit => 150, :null => false
+    t.float    "aliq",                      :null => false
+    t.string   "flese",      :limit => 1,   :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
   create_table "localitas", :force => true do |t|
     t.string   "descriz",    :limit => 50, :null => false
     t.string   "prov",       :limit => 2
@@ -146,15 +157,16 @@ ActiveRecord::Schema.define(:version => 20120628082142) do
   add_index "prezzoarticclis", ["azienda", "artic_id"], :name => "index_prezzoarticclis_on_azienda_and_artic_id"
 
   create_table "rigdocs", :force => true do |t|
-    t.integer  "tesdoc_id",                                                                :null => false
+    t.integer  "tesdoc_id",                                                                 :null => false
     t.integer  "article_id"
     t.string   "descriz",    :limit => 150
     t.integer  "qta"
-    t.decimal  "prezzo",                   :precision => 12, :scale => 6, :default => 0.0, :null => false
-    t.decimal  "sconto",                   :precision => 5,  :scale => 2, :default => 0.0, :null => false
-    t.datetime "created_at",                                                               :null => false
-    t.datetime "updated_at",                                                               :null => false
-    t.integer  "prgrig",                                                  :default => 0,   :null => false
+    t.decimal  "prezzo",                    :precision => 12, :scale => 6, :default => 0.0, :null => false
+    t.decimal  "sconto",                    :precision => 5,  :scale => 2, :default => 0.0, :null => false
+    t.datetime "created_at",                                                                :null => false
+    t.datetime "updated_at",                                                                :null => false
+    t.integer  "prgrig",                                                   :default => 0,   :null => false
+    t.integer  "iva_id"
   end
 
   add_index "rigdocs", ["article_id"], :name => "index_rigdocs_on_article_id"
@@ -164,20 +176,21 @@ ActiveRecord::Schema.define(:version => 20120628082142) do
 
   create_table "spedizs", :force => true do |t|
     t.integer  "tesdoc_id",                                                :null => false
-    t.string   "caustras",   :limit => 100
-    t.string   "corriere",   :limit => 150
+    t.string   "caustra",    :limit => 3
+    t.string   "corriere",   :limit => 3
     t.string   "dest1",      :limit => 150
     t.string   "dest2",      :limit => 150
-    t.string   "aspetto",    :limit => 100
+    t.string   "aspetto",    :limit => 3
     t.integer  "nrcolli"
     t.string   "um",         :limit => 2
-    t.decimal  "peso",                       :precision => 8, :scale => 2
-    t.string   "porto",      :limit => 100
+    t.decimal  "valore",                     :precision => 8, :scale => 2
+    t.string   "porto",      :limit => 3
     t.date     "dtrit"
     t.time     "orarit"
     t.string   "note",       :limit => 1000
     t.datetime "created_at",                                               :null => false
     t.datetime "updated_at",                                               :null => false
+    t.integer  "anaind_id"
   end
 
   add_index "spedizs", ["tesdoc_id"], :name => "index_spedizs_on_tesdoc_id"
@@ -197,6 +210,7 @@ ActiveRecord::Schema.define(:version => 20120628082142) do
     t.integer  "nrmagdst",                                                :default => 0,   :null => false
     t.string   "seguefatt",  :limit => 1,                                 :default => "N", :null => false
     t.integer  "tipo_doc",                                                :default => 0,   :null => false
+    t.integer  "iva_id"
   end
 
   add_index "tesdocs", ["causmag_id"], :name => "index_tesdocs_on_causmag_id"

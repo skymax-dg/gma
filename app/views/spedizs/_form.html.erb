@@ -1,61 +1,61 @@
+<%= render :partial => 'shared/error_messages', :locals => {:f => @spediz} %>
 <%= form_for(@spediz) do |f| %>
-  <% if @spediz.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@spediz.errors.count, "error") %> prohibited this spediz from being saved:</h2>
-
-      <ul>
-      <% @spediz.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <div class="field">
-    <%= f.label :tesdoc_id %><br />
-    <%= f.number_field :tesdoc_id %>
+    <%= f.hidden_field :tesdoc_id %>
   </div>
   <div class="field">
-    <%= f.label :caustras %><br />
-    <%= f.text_field :caustras %>
+    <b> <%= f.label "causale di trasporto:" %> </b>
+    <%= select(:spediz, :caustra, Spediz::CAUSTRA.invert.sort, {:include_blank => true}) %>
+    <b> <%= f.label "corriere:" %> </b> 
+    <%= select(:spediz, :corriere, Spediz::CORRIERE.invert.sort, {:include_blank => true}) %>
+  </div>
+  <br />
+  <br />
+  <div class="field">
+    <b> <%= f.label "aspetto dei beni:" %> </b>
+    <%= select(:spediz, :aspetto, Spediz::ASPETTO.invert.sort, {:include_blank => true}) %>
+    <b> <%= f.label "nr colli:" %> </b>
+    <%= f.number_field :nrcolli, :size => 5 %>
+    <b> <%= f.label "porto:" %> </b>
+    <%= select(:spediz, :porto, Spediz::PORTO.invert.sort, {:include_blank => true}) %>
+  </div>
+  <br />
+  <br />
+  <div class="field">
+    <b> <%= f.label "unità di misura:" %> </b>
+    <%= select(:spediz, :um, Spediz::UM.invert.sort, {:include_blank => true}) %>
+    <b> <%= f.label "valore:" %> </b>
+    <%= f.number_field :valore %>
+  </div>
+  <br />
+  <br />
+  <div class="field">
+    <b> <%= f.label "Indirizzo:" %> </b>
+    <%=collection_select :spediz, :anaind_id,
+                         @spediz.ind_disp, :id, :ind_completo,
+                         {:include_blank => true},
+                         {:data => {:remote => true,
+                                    :url => url_for(:controller => :spedizs, :action => :setind)}} %>
   </div>
   <div class="field">
-    <%= f.label :corriere %><br />
-    <%= f.text_field :corriere %>
+    <b> <%= f.label "destinazione (riga 1)" %> </b> <br />
+    <%= f.text_field :dest1, :size => 150 %>
   </div>
   <div class="field">
-    <%= f.label :dest1 %><br />
-    <%= f.text_field :dest1 %>
+    <b> <%= f.label "destinazione (riga 2)" %> </b> <br />
+    <%= f.text_field :dest2, :size => 150 %>
   </div>
   <div class="field">
-    <%= f.label :dest2 %><br />
-    <%= f.text_field :dest2 %>
-  </div>
-  <div class="field">
-    <%= f.label :aspetto %><br />
-    <%= f.text_field :aspetto %>
-  </div>
-  <div class="field">
-    <%= f.label :nrcolli %><br />
-    <%= f.number_field :nrcolli %>
-  </div>
-  <div class="field">
-    <%= f.label :peso %><br />
-    <%= f.text_field :peso %>
-  </div>
-  <div class="field">
-    <%= f.label :porto %><br />
-    <%= f.text_field :porto %>
-  </div>
-  <div class="field">
-    <%= f.label :dtrit %><br />
-    <%= f.date_select :dtrit %>
-  </div>
-  <div class="field">
-    <%= f.label :orarit %><br />
+    <b> <%= f.label "data ritiro:" %> </b>
+    <%= f.date_select :dtrit, :use_month_numbers => true, :order => [:day, :month, :year] %>
+    <b> <%= f.label "ora ritiro:" %> </b>
     <%= f.time_select :orarit %>
   </div>
+  <div class="field">
+    <b> <%= f.label "annotazioni:" %> </b>
+    <%= f.text_area(:note, :cols => 100, :rows => 6) %>
+  </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "SALVA" %>
   </div>
 <% end %>

@@ -1,4 +1,10 @@
 class SpedizsController < ApplicationController
+  def setind
+    @anaind = Anaind.find(params[:spediz][:anaind_id])
+    @des1 = @anaind.indir.strip
+    @des2 = "#{@anaind.cap} #{@anaind.desloc}".strip
+  end
+
   # GET /spedizs
   # GET /spedizs.json
   def index
@@ -24,8 +30,9 @@ class SpedizsController < ApplicationController
   # GET /spedizs/new
   # GET /spedizs/new.json
   def new
-    @spediz = Spediz.new
-
+    @spediz = Tesdoc.find(params[:id]).build_spediz # La Build valorizza automaticamente il campo spediz.tesdoc_id
+    #@spediz = Spediz.new
+    #@spediz.tesdoc_id = params[:id]
     respond_to do |format|
       format.html # new.html.erb
       format.json { render :json => @spediz }
@@ -34,22 +41,18 @@ class SpedizsController < ApplicationController
 
   # GET /spedizs/1/edit
   def edit
-    @spediz = Spediz.find(params[:id])
+    @spediz = Tesdoc.find(params[:id]).spediz
   end
 
   # POST /spedizs
   # POST /spedizs.json
   def create
-    @spediz = Spediz.new(params[:spediz])
-
-    respond_to do |format|
-      if @spediz.save
-        format.html { redirect_to @spediz, :notice => 'Spediz was successfully created.' }
-        format.json { render :json => @spediz, :status => :created, :location => @spediz }
-      else
-        format.html { render :action => "new" }
-        format.json { render :json => @spediz.errors, :status => :unprocessable_entity }
-      end
+    @spediz = Tesdoc.find(params[:spediz][:tesdoc_id]).build_spediz(params[:spediz])
+    if @spediz.save
+      redirect_to @spediz.tesdoc, :notice => 'Dati spedizione inseriti con successo.'
+    else
+      flash[:error] = "Il salvataggio dei dati spedizione non e' andato a buon fine"
+      render 'new'
     end
   end
 

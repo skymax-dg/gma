@@ -2,15 +2,16 @@ class CreateSpedizs < ActiveRecord::Migration
   def change
     create_table :spedizs do |t|
       t.integer :tesdoc_id,                     :null => false
-      t.string :caustras, :limit => 100
-      t.string :corriere, :limit => 150
+      t.string :caustra, :limit => 3
+      t.string :corriere, :limit => 3
+      t.integer :anaind_id,
       t.string :dest1, :limit => 150
       t.string :dest2, :limit => 150
-      t.string :aspetto, :limit => 100
+      t.string :aspetto, :limit => 3
       t.integer :nrcolli
       t.string :um, :limit => 2
-      t.decimal :peso, :precision => 8, :scale => 2
-      t.string :porto, :limit => 100
+      t.decimal :valore, :precision => 8, :scale => 2
+      t.string :porto, :limit => 3
       t.date :dtrit
       t.time :orarit
       t.string :note, :limit => 1000

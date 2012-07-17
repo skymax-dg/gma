@@ -1,60 +1,64 @@
-<p id="notice"><%= notice %></p>
-
+<h1>Mostra Dati di spedizione</h1>
 <p>
-  <b>Tesdoc:</b>
-  <%= @spediz.tesdoc_id %>
-</p>
-
-<p>
-  <b>Caustras:</b>
-  <%= @spediz.caustras %>
+  <b>Causale di trasporto:</b>
+  <%= Spediz::CAUSTRA[@spediz.caustra] %>
 </p>
 
 <p>
   <b>Corriere:</b>
-  <%= @spediz.corriere %>
+  <%= Spediz::CORRIERE[@spediz.corriere] %>
 </p>
 
 <p>
-  <b>Dest1:</b>
-  <%= @spediz.dest1 %>
+  <b>Aspetto dei beni:</b>
+  <%= Spediz::ASPETTO[@spediz.aspetto] %>
 </p>
 
 <p>
-  <b>Dest2:</b>
-  <%= @spediz.dest2 %>
-</p>
-
-<p>
-  <b>Aspetto:</b>
-  <%= @spediz.aspetto %>
-</p>
-
-<p>
-  <b>Nrcolli:</b>
+  <b>Nr colli:</b>
   <%= @spediz.nrcolli %>
 </p>
 
 <p>
-  <b>Peso:</b>
-  <%= @spediz.peso %>
-</p>
-
-<p>
   <b>Porto:</b>
-  <%= @spediz.porto %>
+  <%= Spediz::PORTO[@spediz.porto] %>
 </p>
 
 <p>
-  <b>Dtrit:</b>
-  <%= @spediz.dtrit %>
+  <b>Unita' di misura:</b>
+  <%= Spediz::UM[@spediz.um] %>
 </p>
 
 <p>
-  <b>Orarit:</b>
-  <%= @spediz.orarit %>
+  <b>Valore:</b>
+  <%= @spediz.valore %>
+</p>
+
+<p>
+  <b>Destinazione (Riga1):</b>
+  <%= @spediz.dest1 %>
+</p>
+
+<p>
+  <b>Destinazione (Riga2):</b>
+  <%= @spediz.dest2 %>
+</p>
+
+<p>
+  <b>Data ritito:</b>
+  <%= @spediz.dtrit.strftime("%d/%m/%Y") %>
+  <b>Ora ritiro:</b>
+  <%= @spediz.orarit.strftime("%H:%M") %>
+</p>
+
+<p>
+  <b>Annotazioni:</b>
+  <%= text_area(:spediz, :note, :cols => 100, :rows => 6, :disabled => 'disabled') %>
+  <%= hidden_field(:spediz, :note) %>
+  <%#= @spediz.note %>
 </p>
 
 
-<%= link_to 'Edit', edit_spediz_path(@spediz) %> |
-<%= link_to 'Back', spedizs_path %>
+<%= link_to 'Indietro', @spediz.tesdoc %>
+<%#= link_to 'Edit', edit_spediz_path(@spediz) %> |
+<%#= link_to 'Back', spedizs_path %>

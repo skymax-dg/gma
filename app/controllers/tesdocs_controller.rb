@@ -45,6 +45,16 @@ before_filter :authenticate
     end
   end
 
+  def ges_datisped
+    tesdoc = Tesdoc.find(params[:id])
+    if tesdoc.spediz
+      redirect_to edit_spediz_path(:id => params[:id])
+    else
+      redirect_to new_spediz_path(:id => params[:id])
+    end
+    # redirect_to tesdoc, :notice => 'Righe documento cancellate con successo.'
+  end
+
   def add1row4article
     tesdoc = Tesdoc.find(params[:id])
     if tesdoc.add1row4article(current_user.azienda)

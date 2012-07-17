@@ -1,10 +1,11 @@
 class Rigdoc < ActiveRecord::Base
   belongs_to :article
   belongs_to :tesdoc
+  belongs_to :iva
 
   default_scope :order => 'rigdocs.prgrig ASC'
   
-  attr_accessible :descriz, :prezzo, :qta, :sconto, :article_id, :tesdoc_id, :prgrig
+  attr_accessible :descriz, :prezzo, :qta, :sconto, :article_id, :tesdoc_id, :prgrig, :iva_id
   validates :descriz, :length => { :maximum => 150}
 
   def move(dir)

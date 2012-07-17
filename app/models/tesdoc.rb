@@ -2,10 +2,12 @@ include TesdocsHelper
 class Tesdoc < ActiveRecord::Base
   belongs_to :causmag
   belongs_to :conto
+  belongs_to :iva
+  has_one :spediz, :dependent => :destroy
   has_many :rigdocs, :dependent => :destroy
 
   attr_accessible :azienda, :annoese, :tipo_doc, :num_doc, :data_doc, :descriz,
-                  :causmag_id, :nrmagsrc, :nrmagdst, :seguefatt, :conto_id, :sconto
+                  :causmag_id, :nrmagsrc, :nrmagdst, :seguefatt, :conto_id, :sconto, :iva_id
 
   validates :azienda, :annoese, :tipo_doc, :num_doc, :data_doc, :descriz,
             :causmag_id, :conto_id, :nrmagsrc, :nrmagdst, :seguefatt, :sconto, :presence => true

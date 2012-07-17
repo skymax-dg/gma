@@ -59,3 +59,26 @@ CAUSALE:
   TIPOIVA:
     S: 'Si'
     N: 'No'
+SPEDIZ:
+  CAUSTRA:
+    ICD: 'Conto Deposito'
+    ICV: 'Conto Vendita'
+    IOM: 'Omaggio'
+    RCD: 'Reso da Conto Deposito'
+    RCV: 'Reso da Conto Vendita'
+  CORRIERE:
+    GLS: 'GLS'
+    SDA: 'SDA'
+    BRT: 'BARTOLINI'
+  ASPETTO:
+    CRT: 'CARTONI'
+    VSB: 'VISIBILE'
+  PORTO:
+    ASS: 'Assegnato'
+    FRC: 'Franco'
+  UM:
+    KG: 'Chilogrammi'
+    NR: 'Numero'
+    PZ: 'Pezzi'
+    MT: 'Metri lineari'
+    MQ: 'Metri quadrati'

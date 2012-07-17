@@ -1,0 +1,14 @@
+des1old = $("#spediz_dest1").val();
+des2old = $("#spediz_dest2").val();
+des1new = "<%=@des1%>";
+des2new = "<%=@des2%>";
+if (des1old.trim().length == 0 && des2old.trim().length == 0 )
+{
+  $("#spediz_dest1").val(des1new);
+  $("#spediz_dest2").val(des2new);
+}
+else if (confirm("vuoi risettare l'indirizzo di spedizione ?"))
+  {
+    $("#spediz_dest1").val(des1new);
+    $("#spediz_dest2").val(des2new);
+  }

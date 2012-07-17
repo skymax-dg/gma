@@ -4,9 +4,9 @@
                             :top_margin    => 1.2.cm, :bottom_margin => 1.2.cm,
                             :page_size => 'A4')
   if @tp == "M"
-    pdf.text "STAMPA MOVIMENTI DI MAGAZZINO", :size => 20, :style => :bold, :align => :center
+    pdf.text "STAMPA MOVIMENTI DI MAGAZZINO per TITOLO", :size => 20, :style => :bold, :align => :center
   else
-    pdf.text "STAMPA VENDITE ARTICOLO", :size => 20, :style => :bold, :align => :center
+    pdf.text "STAMPA VENDITE per TITOLO", :size => 20, :style => :bold, :align => :center
   end
   @artmov.each do |dataart|
     art = Article.find(dataart.attributes["artid"])

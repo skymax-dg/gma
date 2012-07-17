@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  codice: 1
+  descriz: MyString
+  desest: MyString
+  aliq: 1.5
+  flese: MyString
+
+two:
+  codice: 1
+  descriz: MyString
+  desest: MyString
+  aliq: 1.5
+  flese: MyString

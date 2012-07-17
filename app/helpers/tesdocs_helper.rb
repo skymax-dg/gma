@@ -52,7 +52,7 @@ module TesdocsHelper
         tipomov == "V" and tpmag  == 'SRC' ? sca=qta  : sca=""
         tipomov == "R" and tpmag  == 'DST' ? car=qta  : car=""
       end
-    elsif movmag = 'I'
+    elsif movmag == 'I'
       tipomov == "E" and tpmag  == 'DST' ? imp= qta : imp="" # Ordine ricevuto = impegno mag. azienda (DST)
       tipomov == "U" and tpmag  == 'SRC' ? imp=-qta : imp="" # Ordine cancellato = disimpegno mag. azienda (DST)
     else

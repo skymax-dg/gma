@@ -2,9 +2,6 @@
                             :left_margin   => 1.2.cm, :right_margin  => 1.2.cm,
                             :top_margin    => 1.2.cm, :bottom_margin => 1.2.cm,
                             :page_size => 'A4')
-
-  
-
 	pdf.bounding_box [0,780], :width => 530, :height => 780 do
 	# Cornice intero documento
 		pdf.stroke_bounds
