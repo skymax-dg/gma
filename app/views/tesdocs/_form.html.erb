@@ -13,7 +13,7 @@
     <b> <%= f.label "Nr:" %> </b>
     <%= f.number_field :num_doc, :size => 6 %>
     <b> <%= f.label "Data:" %> </b>
-    <%= f.date_select :data_doc, :order => [:day, :month, :year], :use_short_month => true %>
+    <%= f.date_select :data_doc, :use_month_numbers => true, :order => [:day, :month, :year] %>
   </div>
   <br />
   <div class="field">
@@ -68,8 +68,8 @@
   </div>
 
   <div class="field">
-    <b> <%= f.label "aliquota iva" %> </b>
-    <%#= f.text_field :iva_id %>
+    <b> <%= f.label "aliquota iva:" %> </b>
+    <%= collection_select :tesdoc, :iva_id, Iva.all, :id, :descriz, {:include_blank => true} %>
   </div>
 
   <br />

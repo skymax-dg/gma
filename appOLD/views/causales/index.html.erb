@@ -1,0 +1,19 @@
+<h1>Elenco Causali</h1>
+<table>
+  <tr>
+    <th>Descrizione</th>
+    <th>Tipo REG</th>
+    <th>Tipo IVA</th>
+    <th>Conto IVA</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <%= will_paginate @causales %>
+  <%= render :partial => 'line', :collection => @causales unless @causales.empty? %>
+</table>
+
+<br />
+
+<%= link_to 'Nuova Causale', new_causale_path %>

@@ -1,0 +1,76 @@
+<h1>Mostra Documento (<%= Causmag::TIPO_DOC[se_tipo_doc.to_i] %>) </h1>
+<p>
+  <b>Azienda:</b>
+  <%= @tesdoc.azienda %>
+  <b>Annoese:</b>
+  <%= @tesdoc.annoese %>
+</p>
+
+<p>
+  <b>Tipo doc:</b>
+  <%= Tesdoc::TIPO_DOC[@tesdoc.tipo_doc] %>
+  <b>Nr. documento:</b>
+  <%= @tesdoc.num_doc %>
+  <b>Data documento:</b>
+  <%= @tesdoc.data_doc.strftime('%d-%m-%Y') %>
+</p>
+
+<p>
+  <b>Descrizione:</b>
+  <%= @tesdoc.descriz %>
+  <b>Causale:</b>
+  <%= @tesdoc.causmag.descriz %>
+  <b>Codice conto anag.:</b>
+  <%= @tesdoc.conto.codice %>
+  <b>Conto anagrafica:</b>
+  <%= @tesdoc.conto.descriz %>
+</p>
+
+<p>
+  <b>Mag. origine</b>
+  <%= Tesdoc::NRMAG[@tesdoc.nrmagsrc] %>
+
+  <b>Mag. destinaz.</b>
+  <%= Tesdoc::NRMAG[@tesdoc.nrmagdst] %>
+
+  <b>Segue fattura:</b>
+  <%= Tesdoc::SEGUEFATT[@tesdoc.seguefatt] %>
+  <b>Sconto:</b>
+  <%= @tesdoc.sconto %>
+  <b>Totale imponibile:</b>
+  <%= @tesdoc.imponibile %>
+</p>
+
+<table>
+  <tr>
+    <th>Codice articolo</th>
+    <th>Descrizione_riga______________________________</th>
+    <th>Quantita'</th>
+    <th>Prezzo___</th>
+    <th>Sconto___</th>
+    <th>Tot.riga</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <%= will_paginate @rigdocs %>
+  <%#= render :partial => '/rigdocs/line', :collection => @tesdoc.rigdocs unless @tesdoc.rigdocs.empty? %>
+  <%= render :partial => '/rigdocs/line', :collection => @rigdocs unless @rigdocs.empty? %>
+</table>
+
+<br />
+<br />
+<%= link_to 'Elimina_documento', @tesdoc, :confirm => 'Confermi eliminazione?', :method => :delete %>
+|<%= link_to 'Aggiungi_documento', new_tesdoc_path(:causmag => @tesdoc.causmag_id||"", :conto => @tesdoc.conto_id||"") %>
+|<%= link_to '.Modifica_testata_', edit_tesdoc_path %>
+|<%= link_to '______Stampa______', stp_ddt1_tesdoc_path %>
+|<%= link_to 'Dati_di_spedizione', ges_datisped_tesdoc_path %>
+<br />
+<%= link_to '__Aggiungi_riga___', new_rigdoc_path(:id => @tesdoc.id) %>
+|<%= link_to 'Carica_righe_da_file', addrow_fromxls_rigdocs_path(:id => @tesdoc.id), :confirm => 'Confermi caricamento da file?' %>
+|<%= link_to '1_riga_per_articolo', add1row4article_tesdoc_path %>
+|<%= link_to 'Canc.righe_con_qta=0', delrowqta0_tesdoc_path %>
+<br />
+<%#= link_to 'Indietro', :back %>
+<%= link_to 'Indietro', :controller => :tesdocs, :action => 'index', :tipo_doc => se_tipo_doc %>

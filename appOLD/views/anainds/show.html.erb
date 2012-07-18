@@ -1,0 +1,32 @@
+<h1>Mostra Indirizzo anagrafica</h1>
+<p>
+  <b>Indir:</b>
+  <%= @anaind.indir %>
+</p>
+
+<p>
+  <b>Cap:</b>
+  <%= @anaind.cap %>
+</p>
+
+<p>
+  <b>Localita:</b>
+  <%= @anaind.desloc %>
+</p>
+
+<p>
+  <b>Valido come:</b>
+  <%= @anaind.decoflgs %>
+</p>
+
+<% if @anaind.flmg == "S" %>
+<p>
+  <b>Rif. magazzino:</b>
+  <%= Anaind::NRMAG[@anaind.nrmag] %>
+</p>
+<% end %>
+
+<%= link_to 'Indietro', @anaind.anagen %>
+<%#= link_to 'Indietro', :back %>
+<%= link_to 'Elimina indirizzo', @anaind, :confirm => 'Confermi eliminazione?', :method => :delete %>
+<%= link_to 'Modifica indirizzo', edit_anaind_path %>

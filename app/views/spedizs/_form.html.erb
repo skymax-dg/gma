@@ -32,10 +32,14 @@
   <div class="field">
     <b> <%= f.label "Indirizzo:" %> </b>
     <%=collection_select :spediz, :anaind_id,
-                         @spediz.ind_disp, :id, :ind_completo,
+                         @spediz.ind_sped, :id, :ind_completo,
                          {:include_blank => true},
                          {:data => {:remote => true,
                                     :url => url_for(:controller => :spedizs, :action => :setind)}} %>
+  </div>
+  <div class="field">
+    <b> <%= f.label "presso" %> </b> <br />
+    <%= f.text_field :presso, :size => 150 %>
   </div>
   <div class="field">
     <b> <%= f.label "destinazione (riga 1)" %> </b> <br />

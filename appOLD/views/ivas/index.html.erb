@@ -1,0 +1,30 @@
+<h1>Elenco codici iva ed esenzioni</h1>
+<table>
+  <tr>
+    <th>Codice</th>
+    <th>Descrizione</th>
+    <th>Descrizione estesa (REPORT)</th>
+    <th>Aliquota</th>
+    <th>Esenzione</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @ivas.each do |iva| %>
+  <tr>
+    <td><%= iva.codice %></td>
+    <td><%= iva.descriz %></td>
+    <td><%= iva.desest %></td>
+    <td><%= iva.aliq %></td>
+    <td><%= iva.flese %></td>
+    <td><%= link_to 'Visualizza', iva %></td>
+    <td><%= link_to 'Modifica', edit_iva_path(iva) %></td>
+    <td><%= link_to 'Elimina', iva, confirm: 'Confermi?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Nuovo CodiceIva/Esenzione', new_iva_path %>

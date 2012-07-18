@@ -20,7 +20,7 @@
     <td><%= iva.flese %></td>
     <td><%= link_to 'Visualizza', iva %></td>
     <td><%= link_to 'Modifica', edit_iva_path(iva) %></td>
-    <td><%= link_to 'Elimina', iva, confirm: 'Confermi?', method: :delete %></td>
+    <td><%= link_to 'Elimina', iva, :confirm => 'Confermi?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>

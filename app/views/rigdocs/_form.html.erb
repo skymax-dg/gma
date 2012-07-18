@@ -12,14 +12,17 @@
     <span id="article_descriz">
         <%= @rigdoc.article.descriz unless @rigdoc.article.nil? %>
     </span>
-    <%#= f.text_field :causmag_id, :size => 1, :disabled => true %>
+    <br />
+    <br />
+    <br />
     <b> <%= f.label "Qta'" %> </b>
     <%= f.number_field :qta, :size => 3 %>
     <b> <%= f.label "Prezzo" %> </b>
     <%= f.number_field :prezzo, :size => 6  %>
     <b> <%= f.label "Sconto" %> </b>
     <%= f.number_field :sconto, :size => 6  %>
-
+    <b> <%= f.label "aliquota iva:" %> </b>
+    <%= collection_select :rigdoc, :iva_id, Iva.all, :id, :descriz, {:include_blank => true} %>
   </div>
   <br/>
   <br/>

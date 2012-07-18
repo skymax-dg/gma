@@ -37,10 +37,36 @@
   <%= Tesdoc::SEGUEFATT[@tesdoc.seguefatt] %>
   <b>Sconto:</b>
   <%= @tesdoc.sconto %>
+  
+  <% unless @tesdoc.iva.nil? %>
+    <b>Iva:</b>
+    <%= @tesdoc.iva.descriz %>
+  <% end %>
+  
   <b>Totale imponibile:</b>
   <%= @tesdoc.imponibile %>
+  <br />
+  <table>
+    <tr>
+      <th>Tipo imponibile</th>
+      <th>Imponibile</th>
+      <th>Aliquota</th>
+      <th>Imposta</th>
+      <th>Totale</th>
+    </tr>
+    <% @tesdoc.impiva.each do |idiva, impiva| %>
+      <% if impiva > 0 %>
+        <% tpimp, aliq, imposta, tot = tot_x_tp(idiva, impiva) %>
+        <tr>
+          <td><%= tpimp %></td>
+          <td><%= impiva %></td>
+          <td><%= aliq %></td>
+          <td><%= imposta %></td>
+          <td><%= tot %></td>
+        </tr>
+      <% end %>
+    <% end %>
 </p>
-
 <table>
   <tr>
     <th>Codice articolo</th>
@@ -48,6 +74,7 @@
     <th>Quantita'</th>
     <th>Prezzo___</th>
     <th>Sconto___</th>
+    <th>Iva___</th>
     <th>Tot.riga</th>
     <th></th>
     <th></th>
@@ -55,7 +82,6 @@
   </tr>
 
   <%= will_paginate @rigdocs %>
-  <%#= render :partial => '/rigdocs/line', :collection => @tesdoc.rigdocs unless @tesdoc.rigdocs.empty? %>
   <%= render :partial => '/rigdocs/line', :collection => @rigdocs unless @rigdocs.empty? %>
 </table>
 

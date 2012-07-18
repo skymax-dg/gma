@@ -30,6 +30,11 @@
 </p>
 
 <p>
+  <b>Iva:</b>
+  <%= @rigdoc.iva.descriz unless @rigdoc.iva.nil? %>
+</p>
+
+<p>
   <b>Totale riga:</b>
   <%= @rigdoc.prezzo * @rigdoc.qta %>
 </p>

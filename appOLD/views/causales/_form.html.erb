@@ -1,0 +1,26 @@
+<%= render :partial => 'shared/error_messages', :locals => {:f => @causale} %>
+<%= form_for(@causale) do |f| %>
+
+  <div class="field">
+    <%= f.hidden_field :azienda %>
+  </div>
+  <div class="field">
+    <b> <%= f.label "descrizione" %> </b> <br />
+    <%= f.text_field :descriz %>
+  </div>
+  <div class="field">
+    <b> <%= f.label "tipologia REG" %> </b>
+    <%= select(:causale, :tiporeg, Causale::TIPOREG.invert.sort, { :prompt => true }) %>
+  </div>
+  <div class="field">
+    <b> <%= f.label "tipologia IVA" %> </b>
+    <%= select(:causale, :tipoiva, Causale::TIPOIVA.invert.sort, { :prompt => true }) %>
+  </div>
+  <div class="field">
+    <b> <%= f.label "Conto IVA" %> </b> <br />
+    <%= f.text_field :contoiva %>
+  </div>
+  <div class="actions">
+    <%= f.submit "SALVA" %>
+  </div>
+<% end %>

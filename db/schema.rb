@@ -110,13 +110,13 @@ ActiveRecord::Schema.define(:version => 20120717152644) do
   add_index "contos", ["azienda", "annoese", "descriz"], :name => "idx_contos_on_descriz"
 
   create_table "ivas", :force => true do |t|
-    t.integer  "codice",                    :null => false
-    t.string   "descriz",    :limit => 50,  :null => false
-    t.string   "desest",     :limit => 150, :null => false
-    t.float    "aliq",                      :null => false
-    t.string   "flese",      :limit => 1,   :null => false
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.integer  "codice",                                                    :null => false
+    t.string   "descriz",    :limit => 50,                                  :null => false
+    t.string   "desest",     :limit => 150,                                 :null => false
+    t.decimal  "aliq",                      :precision => 5, :scale => 2,   :null => false
+    t.string   "flese",      :limit => 1,                                   :null => false
+    t.datetime "created_at",                                                :null => false
+    t.datetime "updated_at",                                                :null => false
   end
 
   create_table "localitas", :force => true do |t|
@@ -178,6 +178,7 @@ ActiveRecord::Schema.define(:version => 20120717152644) do
     t.integer  "tesdoc_id",                                                :null => false
     t.string   "caustra",    :limit => 3
     t.string   "corriere",   :limit => 3
+    t.string   "presso",     :limit => 150
     t.string   "dest1",      :limit => 150
     t.string   "dest2",      :limit => 150
     t.string   "aspetto",    :limit => 3

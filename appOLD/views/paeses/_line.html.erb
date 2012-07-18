@@ -1,0 +1,9 @@
+<tr>
+  <td><%= line.descriz %></td>
+  <td><%= Paese::TPEU[line.tpeu] %></td>
+  <td><%= line.codfis %></td>
+  <td><%= line.prepiva %></td>
+  <td><%= link_to 'Visualizza', line %></td>
+  <td><%= link_to 'Modifica', edit_paese_path(line) %></td>
+  <td><%= link_to 'Elimina', line, :confirm => 'Confermi?', :method => :delete %></td>
+</tr>

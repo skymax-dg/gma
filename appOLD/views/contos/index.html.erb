@@ -1,0 +1,23 @@
+<h1>Elenco Conti</h1>
+
+<table>
+  <tr>
+    <th>Codice</th>
+    <th>Descrizione</th>
+    <th>Anagrafica</th>
+    <th>Riferimento</th>
+    <th>Tipoconto</th>
+    <th>Cntrpartita</th>
+    <th>Sconto</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <%= will_paginate @contos %>
+  <%= render :partial => 'line', :collection => @contos unless @contos.empty? %>
+</table>
+
+<br />
+
+<%= link_to 'Nuovo Conto', new_conto_path %>

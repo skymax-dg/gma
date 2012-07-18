@@ -4,6 +4,7 @@
   <td><%= line.qta %></td>
   <td><%= line.prezzo %></td>
   <td><%= line.sconto %></td>
+  <td><%= line.iva.nil? ? " " : line.iva.descriz %></td>
   <td><%= line.qta * line.prezzo %></td>
   <td><%= link_to 'Dettaglio', line %></td>
   <td><%= link_to 'SU''', up_rigdoc_path(:id => line.id) %></td>

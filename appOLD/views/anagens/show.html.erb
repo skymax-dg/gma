@@ -1,0 +1,78 @@
+<h1>Mostra Anagrafica soggetti</h1>
+<p>
+  <b>Codice:</b>
+  <%= @anagen.codice %>
+  <b>Tipo:</b>
+  <%= Anagen::TIPO[@anagen.tipo] %>
+  <b>Denominazione:</b>
+  <%= @anagen.denomin %>
+</p>
+<p>
+  <b>Luogo di nascita:</b>
+  <%= @anagen.localita.descriz unless @anagen.localita.nil? %>
+</p>
+<p>
+  <b>Data di nascita:</b>
+  <%= @anagen.dtnas.strftime('%d-%m-%Y') unless @anagen.dtnas.nil? %>
+</p>
+<p>
+  <b>Sesso:</b>
+  <%= @anagen.sesso %>
+</p>
+<p>
+  <b>Codfis:</b>
+  <%= @anagen.codfis %>
+  <b>Pariva:</b>
+  <%= @anagen.pariva %>
+</p>
+
+<p>
+  <b>Telefono:</b>
+  <%= @anagen.telefono %>
+  <b>Fax:</b>
+  <%= @anagen.fax %>
+</p>
+
+<p>
+  <b>E-mail:</b>
+  <%= @anagen.email %>
+  <b>Sito Web:</b>
+  <%= @anagen.web %>
+</p>
+
+<table>
+  <caption>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th>Valido per</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </caption>
+  <tr>
+    <th>Indirizzo__________________________</th>
+    <th>Localita_______________________</th>
+    <th>Cap</th>
+    <th>SedeLegale</th>
+    <th>Spedizione</th>
+    <th>Magazzino</th>
+    <th>Riferimento</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <%= render :partial => '/anainds/line', :collection => @anagen.anainds unless @anagen.anainds.empty? %>
+  <br>
+  </br>
+</table>
+<br>
+</br>
+
+<%#= link_to 'Indietro', :back %>
+<%= link_to 'Indietro', anagens_path %>
+<%= link_to 'Elimina anagrafica', @anagen, :confirm => 'Confermi eliminazione?', :method => :delete %>
+<%= link_to 'Modifica anagrafica', edit_anagen_path %>
+<%= link_to 'Aggiungi indirizzo', new_anaind_path(:id => @anagen.id) %>

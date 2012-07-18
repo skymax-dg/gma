@@ -61,4 +61,14 @@ module TesdocsHelper
     return car, sca, imp
   end
  
+  def tot_x_tp(idiva, impiva)
+    return "Iva non associata", "", "", impiva if idiva == 0
+    iva = Iva.find(idiva)
+    return iva.desest, "", "", impiva if iva.flese == "S"
+    return iva.desest, iva.aliq, 0,  impiva if impiva == 0
+    tpimp = iva.desest
+    imposta = impiva/100*iva.aliq
+    return iva.desest, iva.aliq, imposta, impiva+imposta
+  end
+
 end

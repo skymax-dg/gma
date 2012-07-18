@@ -1,8 +1,5 @@
 Gma::Application.routes.draw do
 
-  resources :ivas
-
-#  root :to => 'menu#home' #non funziona
   root :to => "menu#home"
 
   get "menu/contact"
@@ -11,12 +8,6 @@ Gma::Application.routes.draw do
 
   match '/signout', :to => 'sessions#destroy'
 
-  resources :spedizs do #, :only => [:new, :create, :edit, :update, :destroy]
-    collection do
-      get :setind
-    end
-  end
-
   resources :sessions, :only => [:new, :create, :destroy]
   
   resources :users
@@ -24,6 +15,20 @@ Gma::Application.routes.draw do
   resources :localitas
 
   resources :paeses
+
+  resources :ivas
+
+  resources :causmags
+
+  resources :causales
+
+  resources :contos
+
+  resources :spedizs, :only => [:new, :create, :edit, :update, :destroy]  do
+    collection do
+      get :setind
+    end
+  end
 
   resources :articles do
     member do
@@ -39,12 +44,6 @@ Gma::Application.routes.draw do
       get :mov_vend_all_xls
     end
   end
-
-  resources :causmags
-
-  resources :causales
-
-  resources :contos
 
   resources :anagens do
     collection do

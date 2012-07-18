@@ -1,0 +1,29 @@
+<%= render :partial => 'shared/error_messages', :locals => {:f => @localita} %>
+<%= form_for(@localita) do |f| %>
+  <div class="field">
+    <b> <%= f.label "Descrizione" %> </b> <br />
+    <%= f.text_field :descriz %>
+  </div>
+  <div class="field">
+    <b> <%= f.label "Provincia" %> </b> <br />
+    <%= f.text_field :prov %>
+  </div>
+  <div class="field">
+    <b> <%= f.label "Cap" %> </b> <br />
+    <%= f.text_field :cap %>
+  </div>
+  <div class="field">
+    <b> <%= f.label "Stato/Nazione" %> </b> <br />
+    <br />
+    <div id="prt_paese">
+      <%= collection_select :localita, :paese_id, Paese.all, :id, :descriz %>
+    </div>
+  </div>
+  <div class="field">
+    <b> <%= f.label "CodFis" %> </b> <br />
+    <%= f.text_field(:codfis, {:size => 5})%>
+  </div>
+  <div class="actions">
+    <%= f.submit "SALVA"%>
+  </div>
+<% end %>

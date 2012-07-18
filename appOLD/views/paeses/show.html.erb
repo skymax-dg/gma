@@ -1,0 +1,22 @@
+<h1>Mostra Stato/Nazione</h1>
+<p>
+  <b>Descrizione:</b>
+  <%= @paese.descriz %>
+</p>
+
+<p>
+  <b>Tipo:</b>
+  <%= Paese::TPEU[@paese.tpeu] %>
+</p>
+<p>
+  <b>Codice belfiore(CF):</b>
+  <%= @paese.codfis %>
+</p>
+<p>
+  <b>Prefisso P_iva:</b>
+  <%= @paese.prepiva %>
+</p>
+
+<%= link_to 'Modifica', edit_paese_path(@paese) %> |
+<%#= link_to 'Indietro', :back %>
+<%= link_to 'Indietro', paeses_path %>

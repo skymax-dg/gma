@@ -1,0 +1,24 @@
+<h1>Mostra Causale</h1>
+<p>
+  <b>Descrizione:</b>
+  <%= @causale.descriz %>
+</p>
+
+<p>
+  <b>Conto IVA:</b>
+  <%= @causale.contoiva %>
+</p>
+
+<p>
+  <b>Tipo IVA:</b>
+  <%= Causale::TIPOIVA[@causale.tipoiva] %>
+</p>
+
+<p>
+  <b>Tipo REG:</b>
+  <%= Causale::TIPOREG[@causale.tiporeg] %>
+</p>
+
+<%= link_to 'Modifica', edit_causale_path(@causale) %> |
+<%#= link_to 'Indietro', :back %>
+<%= link_to 'Indietro', causales_path %>

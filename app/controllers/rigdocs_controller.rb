@@ -31,6 +31,13 @@ before_filter :authenticate
     end
   end
 
+  def new
+    @rigdoc = Tesdoc.find(params[:id]).rigdocs.build # La Build valorizza automaticamente il campo rigdoc.tesdoc_id
+    @rigdoc.sconto = Tesdoc.find(params[:id]).sconto
+    @rigdoc.iva_id = Tesdoc.find(params[:id]).iva_id
+    @rigdoc.qta = 1
+  end
+
   def create
     @tesdoc = Tesdoc.find(params[:rigdoc][:tesdoc_id])
     newprg = @tesdoc.lastprgrig + 1
@@ -42,12 +49,6 @@ before_filter :authenticate
       flash[:error] = "Il salvataggio della riga non e' andato a buon fine"
       render 'new'
     end
-  end
-
-  def new
-    @rigdoc = Tesdoc.find(params[:id]).rigdocs.build # La Build valorizza automaticamente il campo rigdoc.tesdoc_id
-    @rigdoc.sconto = Tesdoc.find(params[:id]).sconto
-    @rigdoc.qta = 1
   end
 
   def addrow_fromxls

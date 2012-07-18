@@ -1,0 +1,19 @@
+<h1>Elenco citta'</h1>
+<table>
+  <tr>
+    <th>Descrizione</th>
+    <th>Prov</th>
+    <th>Cap</th>
+    <th>Paese di appartenenza</th>
+    <th>Codfis</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <%= will_paginate @localitas %>
+  <%= render :partial => 'line', :collection => @localitas unless @localitas.empty? %>
+</table>
+<br />
+
+<%= link_to 'Nuova citta''', new_localita_path %>

@@ -5,6 +5,7 @@ class CreateSpedizs < ActiveRecord::Migration
       t.string :caustra, :limit => 3
       t.string :corriere, :limit => 3
       t.integer :anaind_id,
+      t.string :presso, :limit => 150
       t.string :dest1, :limit => 150
       t.string :dest2, :limit => 150
       t.string :aspetto, :limit => 3

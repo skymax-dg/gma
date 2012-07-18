@@ -1,0 +1,38 @@
+<%= render :partial => 'shared/error_messages', :locals => {:f => @anagen} %>
+<%= form_for(@anagen) do |f| %>
+
+  <div class="field">
+    <b> <%= f.label :codice %> </b>
+    <%= f.number_field :codice %>
+    <b> <%= f.label :tipo %> </b>
+    <%= select(:anagen, :tipo, Anagen::TIPO.invert.sort, { :prompt => true },
+               {:data => {:remote => true, :url => url_for(:controller => :anagens,
+                                                           :action => :chg_tipo)}})%>
+    <b> <%= f.label "Denominazione" %> </b>
+    <%= f.text_field :denomin, :size => 55 %>
+  </div>
+  <div class="field">
+    <b> <%= f.label "Codice Fiscale" %> </b>
+    <%= f.text_field :codfis, :size => 35 %>
+    <b> <%= f.label "Partita Iva" %> </b>
+    <%= f.text_field :pariva %>
+  </div>
+  <div class="field" id="datinas">
+    <%= render(:partial => 'datinas') %>
+  </div>
+  <div class="field">
+    <b> <%= f.label "Telefono" %> </b>
+    <%= f.text_field :telefono %>
+    <b> <%= f.label "Fax" %> </b>
+    <%= f.text_field :fax %>
+  </div>
+  <div class="field">
+    <b> <%= f.label "E-mail" %> </b>
+    <%= f.text_field :email, :size => 45 %>
+    <b> <%= f.label "Sito Web" %> </b>
+    <%= f.text_field :web, :size => 55 %>
+  </div>
+  <div class="actions">
+    <%= f.submit "SALVA"%>
+  </div>
+<% end %>

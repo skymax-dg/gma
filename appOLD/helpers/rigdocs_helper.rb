@@ -1,0 +1,2 @@
+module RigdocsHelper
+end

@@ -1,0 +1,40 @@
+<%= render :partial => 'shared/error_messages', :locals => {:f => @conto} %>
+<%= form_for(@conto) do |f| %>
+
+  <div class="field">
+    <%= f.hidden_field :azienda %>
+  </div>
+  <div class="field">
+    <%= f.hidden_field :annoese %>
+  </div>
+  <div class="field">
+    <b> <%= f.label "Codice" %> </b> <br />
+    <%= f.number_field :codice %>
+  </div>
+  <div class="field">
+    <b> <%= f.label "Descrizione" %> </b> <br />
+    <%= f.text_field :descriz %>
+  </div>
+  <div class="field">
+    <b> <%= f.label "Anagrafica" %> </b> <br />
+    <%= collection_select(:conto, :anagen_id, Anagen.all, :id, :denomin, {:include_blank => true})%>
+  </div>
+  <div class="field">
+    <b> <%= f.label "Riferimento" %> </b> <br />
+    <%= select(:conto, :tipoconto, Conto::TIPOCONTO.invert.sort, { :prompt => true }) %>
+  </div>
+  <div class="field">
+    <b> <%= f.label "Tipologia conto" %> </b> <br />
+    <%= select(:conto, :tipopeo, Conto::TIPOPEO.invert.sort, { :prompt => true }) %>
+  </div>
+  <div class="field">
+    <b> <%= f.label "Contropartita" %> </b> <br />
+    <%= f.number_field :cntrpartita %>
+  <div class="field">
+    <b> <%= f.label "Sconto" %> </b>
+    <%= f.number_field :sconto, :size => 4 %>
+  </div>
+  <div class="actions">
+    <%= f.submit "SALVA" %>
+  </div>
+<% end %>
