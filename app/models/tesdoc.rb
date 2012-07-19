@@ -58,14 +58,21 @@ class Tesdoc < ActiveRecord::Base
     return imp
   end
 
-  def subtot_iva
+  def impon_iva
     imp=Hash.new
     self.rigdocs.each do |r| 
       r.iva.nil? ? ivaid=0 : ivaid=r.iva.id
       imp[ivaid]=Hash.new if not imp.key?(ivaid)
       imp[ivaid]["impon"]=imp[ivaid]["impon"].to_f + (r.qta * r.prezzo)
     end
-    imp.each do |k,v|
+    return imp
+  end
+
+  def subtot_iva
+    imp=self.impon_iva
+    tot_impon = 0.to_f
+    tot_imposta = 0.to_f
+    imp.each_key do |k|
       if k==0
         imp[k]["des"]="Iva non associata"
         imp[k]["aliq"]=""
@@ -84,42 +91,13 @@ class Tesdoc < ActiveRecord::Base
           imp[k]["tot"]=imp[k]["impon"]
         end
       end
+      tot_impon += imp[k]["impon"].to_f
+      tot_imposta += imp[k]["imposta"].to_f
     end
-    return imp
-  end
-
-#  def impivaOLD
-#    imp=Hash.new
-#    self.rigdocs.each do |r| 
-#      r.iva.nil? ? ivaid=0 : ivaid=r.iva.id
-#
-#      imp[ivaid]["impon"]=imp[ivaid].to_f + (r.qta * r.prezzo)
-#
-#      r.iva.nil? ? imp[ivaid]["tpimp"]="Iva non associata" : imp[ivaid]["tpimp"]=r.iva.desest
-#
-#      r.iva.nil? ? imp[ivaid]["aliq"]="" : imp[ivaid]["aliq"]=r.iva.aliq
-#
-#      imp[ivaid]["imposta"]=imp[ivaid].to_f + (r.qta * r.prezzo)
-#    end
-#    return imp
-#  end
-
-#  def tot_x_tp(idiva, impiva)
-#    return "Iva non associata", "", "", impiva if idiva == 0
-#    iva = Iva.find(idiva)
-#    return iva.desest, "", "", impiva if iva.flese == "S"
-#    return iva.desest, iva.aliq, 0,  impiva if impiva == 0
-#    tpimp = iva.desest
-#    imposta = impiva/100*iva.aliq
-#    return iva.desest, iva.aliq, imposta, impiva+imposta
-#  end
-
-  def impiva
-    imp=Hash.new
-    self.rigdocs.each do |r| 
-      r.iva.nil? ? ivaid=0 : ivaid=r.iva.id
-      imp[ivaid] = imp[ivaid].to_f + (r.qta * r.prezzo)
-    end
+    imp["T"]=Hash.new
+    imp["T"]["impon"]   = tot_impon
+    imp["T"]["imposta"] = tot_imposta
+    imp["T"]["tot"] = imp["T"]["impon"] + imp["T"]["imposta"]
     return imp
   end
 

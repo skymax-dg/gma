@@ -31,7 +31,7 @@ class SpedizsController < ApplicationController
   def update
     @spediz = Spediz.find(params[:id])
     if @spediz.update_attributes(params[:spediz])
-      redirect_to @spediz, :notice => 'Dati spedizione aggiornati.'
+      redirect_to @spediz.tesdoc, :notice => 'Dati spedizione aggiornati.'
     else
       render :action => "edit"
     end

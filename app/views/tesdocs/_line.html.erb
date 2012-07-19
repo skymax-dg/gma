@@ -1,6 +1,6 @@
 <tr>
   <td><%= Causmag::TIPO_DOC[line.causmag.tipo_doc] %></td>
-  <td><%= line.num_doc %></td>
+  <td align=right ><%= line.num_doc %></td>
   <td><%= line.data_doc.strftime('%d-%m-%Y') %></td>
   <td><%= line.causmag.descriz %></td>
   <td><%= Conto::TIPOCONTO[line.conto.tipoconto] %></td>
