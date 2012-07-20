@@ -1,27 +1,27 @@
-	pdf = Prawn::Document.new(:page_layout   => :portrait, 
+  pdf = Prawn::Document.new(:page_layout   => :portrait, 
                             :left_margin   => 1.2.cm, :right_margin  => 1.2.cm,
                             :top_margin    => 1.2.cm, :bottom_margin => 1.2.cm,
                             :page_size => 'A4')
-	
+  
   #pdf.bounding_box [0,780], :width => 530, :height => 780 do
-	  #Cornice intero documento
+    #Cornice intero documento
     #pdf.stroke_bounds
-	#end
+  #end
 
   #titolo documento
-	pdf.bounding_box [240,780], :width => 290, :height => 50 do
-		pdf.stroke_bounds
-	end
+  pdf.bounding_box [240,780], :width => 290, :height => 50 do
+    pdf.stroke_bounds
+  end
   pdf.text_box @tit_doc[0],
-	             :at => [250,770],  :width => 280, :height => 12, :size => 12, :style => :bold,
+               :at => [250,770],  :width => 280, :height => 12, :size => 12, :style => :bold,
                :align => :center, :overflow => :shrink_to_fit, :min_font_size => 8
   pdf.text_box @tit_doc[1],
-	             :at => [250,760], :width => 280, :height => 24, :size => 8, :align => :center
+               :at => [250,760], :width => 280, :height => 24, :size => 8, :align => :center
 
   #Mittente
-	pdf.bounding_box [0,780], :width => 240, :height => 80 do
-		pdf.stroke_bounds
-	end
+  pdf.bounding_box [0,780], :width => 240, :height => 80 do
+    pdf.stroke_bounds
+  end
   pdf.formatted_text_box [{:text => "Mitt: #{@ana.denomin.upcase}\n", :styles => [:bold], :size => 12},
                           {:text => "Part.Iva: #{@ana.pariva}\n"},
                           {:text => "#{@sl[:indir]}\n#{@sl[:cap]} #{@sld[:desloc]}\n"},
@@ -32,9 +32,9 @@
                          :overflow => :shrink_to_fit, :size => 10, :min_font_size => 6
 
   #Destinatario
-	pdf.bounding_box [0,700], :width => 240, :height => 95 do
-		pdf.stroke_bounds
-	end
+  pdf.bounding_box [0,700], :width => 240, :height => 95 do
+    pdf.stroke_bounds
+  end
   pdf.formatted_text_box [{:text => "Dest: #{@anad.denomin.upcase}\n", :styles => [:bold], :size => 12},
                           {:text => "Part.Iva: #{@anad.pariva}\n"},
                           {:text => "#{@sld[:indir]}\n#{@sld[:cap]} #{@sld[:desloc]}"}],
@@ -45,7 +45,7 @@
     pdf.stroke_bounds
   end
 
-	unless @datispe.nil? || "#{@datispe.dest1}#{@datispe.dest2}".strip.length == 0
+  unless @datispe.nil? || "#{@datispe.dest1}#{@datispe.dest2}".strip.length == 0
     pdf.text_box "Luogo di consegna",
                  :at => [245, 720], :height => 15, :size => 12, :style => :bold
 
@@ -53,54 +53,33 @@
                             {:text => "#{@datispe.dest1}\n#{@datispe.dest2}"}],
                            :at => [260,705], :width => 268, :height => 73,
                            :overflow => :shrink_to_fit, :size => 10, :min_font_size => 6
-	end
+  end
 
   #Riferimenti documento e causale/corriere
-	pdf.bounding_box [0,630], :width => 530, :height => 60 do
-		pdf.stroke_bounds
-	end
-  pdf.text_box "Documento Nr. #{@rifdoc[:nr]} del #{@rifdoc[:dt]}",
+  pdf.bounding_box [0,630], :width => 530, :height => 60 do
+    pdf.stroke_bounds
+  end
+  pdf.text_box "FATTURA Nr. #{@rifdoc[:nr]} del #{@rifdoc[:dt]}",
                :at => [2, 620], :width => 240, :height => 20, :size => 12, :style => :bold
-
-	#pdf.bounding_box [0,600], :width => 260, :height => 50 do
-	  #Causale di trasp
-    #pdf.stroke_bounds
-	#end
-  pdf.formatted_text_box [{:text => "Causale di trasporto: ", :styles => [:bold]},
-                          {:text => Spediz::CAUSTRA[@datispe.caustra]||""}],
-                         :at => [2, 590], :width => 240, :height => 20, :size => 10
-
-  #Corriere
-	#pdf.bounding_box [280,600], :width => 250, :height => 50 do
-    #pdf.stroke_bounds
-	#end
-  pdf.formatted_text_box [{:text => "Causale di trasporto: ", :styles => [:bold]},
-                          {:text => Spediz::CAUSTRA[@datispe.caustra]||""}],
-                         :at => [2, 590], :width => 240, :height => 20, :size => 10
-
-  pdf.formatted_text_box [{:text => "A mezzo: ", :styles => [:bold]},
-                          {:text => Spediz::CORRIERE[@datispe.corriere]||""}],
-                          :at => [270, 590], :width => 260, :height => 45, :size => 10
 
   pdf.move_down 7
   #Array Intestazione e righe
   @tb = Array.new
-  @tb << ["CODICE", "DESCRIZIONE", "Q.TA'"]
+  @tb << ["CODICE", "DESCRIZIONE", "Q.TA'", "PRZ.LIST.", "PRZ.SCN.", "IMPONIBILE", "IVA"]
   @tqta=0
-  @tesdoc.rigdocs.each {|r|@tb<<[r.article.codice, r.descriz, r.qta]&&@tqta+=r.qta}
-  @tb << ["","TOTALE", @tqta]
+  @tesdoc.rigdocs.each {|r|@tb<<[r.article.codice, r.descriz, r.qta, r.article.prezzo, r.prezzo, r.prezzo*r.qta, r.iva.descriz]&&@tqta+=r.qta&&}
+  @tb << ["TOTALE", @tqta]
 
   #Creazione e stampa tabella articoli
-  tab = pdf.make_table(@tb, :column_widths=>{0=>120,1=>357, 2=>50})
+  tab = pdf.make_table(@tb, :column_widths=>{0=>477, 1=>50})
   tab.row(0).font_style = :bold
   tab.row(tab.row_length-1).font_style = :bold
   tab.header = true
   tab.column(0).style :align => :left
-  tab.column(1).style :align => :left
-  tab.column(2).style :align => :right
+  tab.column(1).style :align => :right
   tab.draw
 
-	#note
+  #note
   unless @datispe.note.nil? || @datispe.note.strip.length == 0
     #Esegue salto pagina se non è rimasto abbastanza spazio per le note
     pdf.start_new_page if pdf.cursor < 175
@@ -111,13 +90,13 @@
                  :at => [70, 175], :width => 250, :height => 70, :size => 10
   end
 
-	#Piede documento (aspetto - colli - um/valore - porto)
+  #Piede documento (aspetto - colli - um/valore - porto)
   #Esegue salto pagina se non è rimasto abbastanza spazio per i dati di piede
   pdf.start_new_page if pdf.cursor < 100
 
-	pdf.bounding_box [0,80], :width => 530, :height => 30 do
-		pdf.stroke_bounds
-	end
+  pdf.bounding_box [0,80], :width => 530, :height => 30 do
+    pdf.stroke_bounds
+  end
   pdf.text_box "Aspetto esteriore dei beni",
                :at => [2, 78], :height => 12, :size => 10, :style => :bold
   pdf.text_box "Nr.Colli",
@@ -135,10 +114,10 @@
   pdf.text_box Spediz::PORTO[@datispe.porto]||"",
                :at => [400, 65], :width => 125, :height => 12, :size => 10
 
-	# data e ora ritiro
-	pdf.bounding_box [0,50], :width => 530, :height => 35 do
-		pdf.stroke_bounds
-	end
+  # data e ora ritiro
+  pdf.bounding_box [0,50], :width => 530, :height => 35 do
+    pdf.stroke_bounds
+  end
   pdf.draw_text "Data del ritiro",
                 :at => [2, 40], :size => 10, :style => :bold
   pdf.draw_text "Ora del ritiro",
@@ -156,7 +135,7 @@
 #  pdf.text_box @datispe.orarit.strftime("%H:%M"),
 #               :at => [135, 35], :width => 115, :height => 12, :size => 10
 
-	# spazio pe la firma
+  # spazio pe la firma
   pdf.text_box "Firma",
                :at => [400, 48], :width => 115, :height => 12, :size => 10, :style => :bold
 

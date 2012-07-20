@@ -18,23 +18,31 @@ before_filter :authenticate
     @tit_doc=Array.new
     @tit_doc[0] = "DOCUMENTO DI TRASPORTO"
     @tit_doc[1] = "(D.d.t.) D.P.R. 472 del 14-08-1996 - D.P.R. 696 del 21.12.1996"
-#    @tit_doc  = [{:des => "DOCUMENTO DI TRASPORTO", :bold => "S", :align => :center},
-#                 {:des => "(D.d.t.) D.P.R. 472 del 14-08-1996 - D.P.R. 696 del 21.12.1996", :align => :center}]
     @ana      = Anagen.find(current_user.azienda)
     @sl       = @ana.sedelegale
-
-#    @mitt     = [{:des => @ana.denomin, :upcase => "S", :bold => "S", :align => :center},
-#                 {:des => @sl[:indir], :bold => "S"},
-#                 {:des => @sl[:cap] + " - " + @sl[:desloc], :bold => "S"}]
     @anad     = Anagen.find(@tesdoc.conto.anagen_id)
     @sld      = @anad.sedelegale
     @datispe  = @tesdoc.spediz
-
-
     @rifdoc   = {:nr => @tesdoc.num_doc, :dt => @tesdoc.data_doc}
     @causale  = ""
     @corr     = ""
-    #@int_body = {:qta => "Q.ta'", :article_id => "Codice", :descriz => "Descrizione"}
+    @body     = @tesdoc.rigdocs
+    render 'stp_ddt1.pdf'
+  end
+
+  def stp_fat1
+    @tesdoc   = Tesdoc.find(params[:id])
+    @tit_doc=Array.new
+    @tit_doc[0] = "FATTURA SU RENDICONTO VENDITE"
+    @tit_doc[1] = ""
+    @ana      = Anagen.find(current_user.azienda)
+    @sl       = @ana.sedelegale
+    @anad     = Anagen.find(@tesdoc.conto.anagen_id)
+    @sld      = @anad.sedelegale
+    @datispe  = @tesdoc.spediz
+    @rifdoc   = {:nr => @tesdoc.num_doc, :dt => @tesdoc.data_doc}
+    @causale  = ""
+    @corr     = ""
     @body     = @tesdoc.rigdocs
     render 'stp_ddt1.pdf'
   end

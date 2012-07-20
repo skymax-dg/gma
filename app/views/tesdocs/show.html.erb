@@ -56,14 +56,14 @@
     <th align=right width=200 > Totale </th>
   </tr>
   <% @subtot_iva.each_key do |idiva| %>
-    <%= render :partial => 'tot_impon', :locals => {:subtot=>@subtot_iva[idiva]} unless idiva == "T" %>
+    <%= render :partial => 'tot_impon', :locals => {:subtot=>@subtot_iva[idiva]} unless idiva == :T %>
   <% end %>
 <tr>
   <td><b>TOTALI:</b></td>
-  <td align=right > <b> <%= number_to_currency(@subtot_iva["T"]["impon"]) %> </b> </td>
+  <td align=right > <b> <%= number_to_currency(@subtot_iva[:T][:impon]) %> </b> </td>
   <td></td>
-  <td align=right > <b> <%= number_to_currency(@subtot_iva["T"]["imposta"]) %> </b> </td>
-  <td align=right > <b> <%= number_to_currency(@subtot_iva["T"]["tot"]) %> </b> </td>
+  <td align=right > <b> <%= number_to_currency(@subtot_iva[:T][:imposta]) %> </b> </td>
+  <td align=right > <b> <%= number_to_currency(@subtot_iva[:T][:tot]) %> </b> </td>
 </tr>
 </table>
 <br />
