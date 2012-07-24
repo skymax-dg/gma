@@ -82,3 +82,9 @@ SPEDIZ:
     PZ: 'Pezzi'
     MT: 'Metri lineari'
     MQ: 'Metri quadrati'
+ARTICLE:
+  CATEG:
+    GE: 'Generica'
+    LB: 'Libri'
+    CD: 'CD'
+    PE: 'Periodici'

@@ -68,6 +68,7 @@ Gma::Application.routes.draw do
       get :add1row4article
       get :delrowqta0
       get :stp_ddt1
+      get :stp_fat1
       get :ges_datisped
     end
   end

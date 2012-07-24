@@ -1,4 +1,5 @@
 class Iva < ActiveRecord::Base
+  has_many :articles
   has_many :rigdocs
   has_many :tesdocs
   attr_accessible :codice, :descriz, :desest, :aliq, :flese

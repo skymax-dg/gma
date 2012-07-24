@@ -16,6 +16,18 @@
     <b> <%= f.label :Prezzo %> </b> <br />
     <%= f.text_field :prezzo %>
   </div>
+
+
+  <div class="field">
+    <b> <%= f.label :Categoria %> </b> <br />
+    <%= select(:article, :categ, Article::CATEG.invert.sort)%>
+  </div>
+
+
+  <div class="field">
+    <b> <%= f.label :Iva %> </b> <br />
+    <%= collection_select :article, :iva_id, Iva.all, :id, :descriz, {:include_blank => true} %>
+  </div>
   <div class="actions">
     <%= f.submit "SALVA"%>
   </div>

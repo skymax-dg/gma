@@ -10,6 +10,6 @@ class CreateLocalitas < ActiveRecord::Migration
       t.timestamps
     end
     add_index :localitas, :paese_id
-    add_index :localitas, [:descriz], {:name => "idx_localitas_on_descriz", :unique => true}
+    add_index :localitas, [:descriz], {:name => "idx_localitas_on_descriz"}
   end
 end

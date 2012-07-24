@@ -9,7 +9,7 @@
   #end
 
   #titolo documento
-  pdf.bounding_box [240,780], :width => 290, :height => 50 do
+  pdf.bounding_box [240,780], :width => 290, :height => 40 do
     pdf.stroke_bounds
   end
   pdf.text_box @tit_doc[0],
@@ -19,125 +19,100 @@
                :at => [250,760], :width => 280, :height => 24, :size => 8, :align => :center
 
   #Mittente
-  pdf.bounding_box [0,780], :width => 240, :height => 80 do
+  pdf.bounding_box [0,780], :width => 240, :height => 190 do
     pdf.stroke_bounds
   end
-  pdf.formatted_text_box [{:text => "Mitt: #{@ana.denomin.upcase}\n", :styles => [:bold], :size => 12},
+  pdf.formatted_text_box [{:text => "#{@ana.denomin.upcase}\n", :styles => [:bold], :size => 12},
                           {:text => "Part.Iva: #{@ana.pariva}\n"},
                           {:text => "#{@sl[:indir]}\n#{@sl[:cap]} #{@sld[:desloc]}\n"},
                           {:text => "Tel: #{@ana.telefono} / Fax: #{@ana.fax}\n"},
                           {:text => "E-Mail: #{@ana.email} / Web: #{@ana.web}"}
                           ],
-                         :at => [2,777], :width => 238, :height => 77,
+                         :at => [2,777], :width => 238, :height => 185,
                          :overflow => :shrink_to_fit, :size => 10, :min_font_size => 6
 
   #Destinatario
-  pdf.bounding_box [0,700], :width => 240, :height => 95 do
+  pdf.bounding_box [240,740], :width => 290, :height => 170 do
     pdf.stroke_bounds
   end
-  pdf.formatted_text_box [{:text => "Dest: #{@anad.denomin.upcase}\n", :styles => [:bold], :size => 12},
+  pdf.formatted_text_box [{:text => "Spett.le: #{@anad.denomin.upcase}\n", :styles => [:bold], :size => 12},
                           {:text => "Part.Iva: #{@anad.pariva}\n"},
-                          {:text => "#{@sld[:indir]}\n#{@sld[:cap]} #{@sld[:desloc]}"}],
-                         :at => [2,698], :width => 238, :height => 93,
+                          {:text => "#{@sld[:indir]}\n#{@sld[:cap]} #{@sld[:desloc]}\n"},
+                          {:text => "E-Mail: #{@anad.email} / Web: #{@anad.web}"}],
+                         :at => [242,698], :width => 286, :height => 158,
                          :overflow => :shrink_to_fit, :size => 10, :min_font_size => 6
-  #Presso e luogo di destinazione
-  pdf.bounding_box [240,730], :width => 290, :height => 100 do
-    pdf.stroke_bounds
-  end
-
-  unless @datispe.nil? || "#{@datispe.dest1}#{@datispe.dest2}".strip.length == 0
-    pdf.text_box "Luogo di consegna",
-                 :at => [245, 720], :height => 15, :size => 12, :style => :bold
-
-    pdf.formatted_text_box [{:text => "Presso: #{@datispe.presso.upcase}\n", :styles => [:bold], :size => 12},
-                            {:text => "#{@datispe.dest1}\n#{@datispe.dest2}"}],
-                           :at => [260,705], :width => 268, :height => 73,
-                           :overflow => :shrink_to_fit, :size => 10, :min_font_size => 6
-  end
-
-  #Riferimenti documento e causale/corriere
-  pdf.bounding_box [0,630], :width => 530, :height => 60 do
+  #Riferimenti documento
+  pdf.bounding_box [0,590], :width => 240, :height => 20 do
     pdf.stroke_bounds
   end
   pdf.text_box "FATTURA Nr. #{@rifdoc[:nr]} del #{@rifdoc[:dt]}",
-               :at => [2, 620], :width => 240, :height => 20, :size => 12, :style => :bold
+               :at => [2, 584], :width => 240, :height => 15, :size => 12, :style => :bold
 
-  pdf.move_down 7
-  #Array Intestazione e righe
+  pdf.move_down 25
   @tb = Array.new
-  @tb << ["CODICE", "DESCRIZIONE", "Q.TA'", "PRZ.LIST.", "PRZ.SCN.", "IMPONIBILE", "IVA"]
+  @tb << ["CODICE", "DESCRIZIONE", "Q.TA", "PRZ.\nLIST.", "PRZ.\nSCN.", "IMPON.", "IVA"]#, "IMPOSTA"]
   @tqta=0
-  @tesdoc.rigdocs.each {|r|@tb<<[r.article.codice, r.descriz, r.qta, r.article.prezzo, r.prezzo, r.prezzo*r.qta, r.iva.descriz]&&@tqta+=r.qta&&}
-  @tb << ["TOTALE", @tqta]
+  @timpon=0
+  @timposta=0
+  @tesdoc.rigdocs.each do |r|
+    @tb<<[r.article.codice, r.descriz,     r.qta, number_with_precision(r.article.prezzo),
+          number_with_precision(r.prezzo), number_with_precision(r.impon),
+          r.iva.descriz]
+#number_with_precision(r.imposta)]}
+    @tqta+=r.qta
+    @timpon+=r.impon
+    #@timposta+=r.imposta
+  end
+  @tb << ["TOTALE", "", @tqta, "", "", number_with_precision(@timpon), ""]#number_with_precision(@timposta)]
 
   #Creazione e stampa tabella articoli
-  tab = pdf.make_table(@tb, :column_widths=>{0=>477, 1=>50})
+  tab = pdf.make_table(@tb, :column_widths=>{0=>80, 3=>35, 4=>35}, :cell_style => {:size => 8})
+  tab.row(0).font_style = :bold
+  tab.row(tab.row_length-1).font_style = :bold
+  tab.header = true
+  tab.column(2).style :align => :right
+  tab.column(3).style :align => :right
+  tab.column(4).style :align => :right
+  tab.column(5).style :align => :right
+  #tab.column(7).style :align => :right
+  tab.draw
+
+  pdf.move_down 27
+
+  #Array Intestazione e righe (RIEPILOGO IMPONIBILI)
+  @tb = Array.new
+  @tb << ["CATEGORIA", "IMPONIBILE", "IVA/ESENZ.", "IMPOSTA", "TOTALE"]
+  sub_iva = @tesdoc.subtot_iva
+  sub_iva.each_key do |categ|
+    sub_iva[categ].each_key do |k|
+      @tb << [Article::CATEG[categ], number_with_precision(sub_iva[categ][k][:impon]), sub_iva[categ][k][:des], number_with_precision(sub_iva[categ][k][:imposta]), number_with_precision(sub_iva[categ][k][:tot])] unless k == :T
+    end
+  end
+  @tb << [sub_iva[:T][:T][:desest], number_with_precision(sub_iva[:T][:T][:impon]), sub_iva[:T][:T][:des], number_with_precision(sub_iva[:T][:T][:imposta]), number_with_precision(sub_iva[:T][:T][:tot])]
+
+  #Stampa tabella riepilogativa
+  # Salto pagina se non c'è abbastanza spazio per il riepilogo impobnibili
+  pdf.start_new_page if pdf.cursor < @tb.count * 10 + 65
+
+  pdf.text "RIEPILOGO IMPONIBILI", :size => 14, :style => :bold, :align => :center
+  tab = pdf.make_table(@tb, :column_widths=>{0=>160, 1=> 80, 2=>120, 3=>80, 4=>87}, :cell_style => {:size => 10})
   tab.row(0).font_style = :bold
   tab.row(tab.row_length-1).font_style = :bold
   tab.header = true
   tab.column(0).style :align => :left
-  tab.column(1).style :align => :right
+  tab.column(1..4).style :align => :right
   tab.draw
 
   #note
   unless @datispe.note.nil? || @datispe.note.strip.length == 0
     #Esegue salto pagina se non è rimasto abbastanza spazio per le note
-    pdf.start_new_page if pdf.cursor < 175
+    pdf.start_new_page if pdf.cursor < 70
     
     pdf.text_box "Annotazioni: #{@datispe.note}",
-                 :at => [2, 175], :width => 80, :height => 12, :size => 10, :style => :bold
+                 :at => [2, 70], :width => 80, :height => 12, :size => 10, :style => :bold
     pdf.text_box "#{@datispe.note}",
-                 :at => [70, 175], :width => 250, :height => 70, :size => 10
+                 :at => [70, 70], :width => 250, :height => 70, :size => 10
   end
-
-  #Piede documento (aspetto - colli - um/valore - porto)
-  #Esegue salto pagina se non è rimasto abbastanza spazio per i dati di piede
-  pdf.start_new_page if pdf.cursor < 100
-
-  pdf.bounding_box [0,80], :width => 530, :height => 30 do
-    pdf.stroke_bounds
-  end
-  pdf.text_box "Aspetto esteriore dei beni",
-               :at => [2, 78], :height => 12, :size => 10, :style => :bold
-  pdf.text_box "Nr.Colli",
-               :at => [200, 78], :height => 12, :size => 10, :style => :bold
-  pdf.text_box "#{@datispe.um}",
-               :at => [300, 78], :height => 12, :size => 10, :style => :bold
-  pdf.text_box "Porto",
-               :at => [400, 78], :height => 12, :size => 10, :style => :bold
-  pdf.text_box Spediz::ASPETTO[@datispe.aspetto]||"",
-               :at => [2, 65], :width => 190, :height => 12, :size => 10
-  pdf.text_box @datispe.nrcolli.to_s,
-               :at => [200, 65], :width => 95, :height => 12, :size => 10
-  pdf.text_box @datispe.valore.to_s,
-               :at => [300, 65], :width => 95, :height => 12, :size => 10
-  pdf.text_box Spediz::PORTO[@datispe.porto]||"",
-               :at => [400, 65], :width => 125, :height => 12, :size => 10
-
-  # data e ora ritiro
-  pdf.bounding_box [0,50], :width => 530, :height => 35 do
-    pdf.stroke_bounds
-  end
-  pdf.draw_text "Data del ritiro",
-                :at => [2, 40], :size => 10, :style => :bold
-  pdf.draw_text "Ora del ritiro",
-                :at => [130, 40], :size => 10, :style => :bold
-  pdf.draw_text @datispe.dtrit.strftime("%d/%m/%Y"),
-                :at => [5, 30], :size => 10
-  pdf.draw_text @datispe.orarit.strftime("%H:%M"),
-                :at => [135, 30], :size => 10
-#  pdf.text_box "Data del ritiro",
-#               :at => [2, 48], :width => 125, :height => 12, :size => 10, :style => :bold
-#  pdf.text_box "Ora del ritiro",
-#               :at => [130, 48], :width => 125, :height => 12, :size => 10, :style => :bold
-#  pdf.text_box @datispe.dtrit.strftime("%d/%m/%Y"),
-#               :at => [5, 35], :width => 115, :height => 12, :size => 10
-#  pdf.text_box @datispe.orarit.strftime("%H:%M"),
-#               :at => [135, 35], :width => 115, :height => 12, :size => 10
-
-  # spazio pe la firma
-  pdf.text_box "Firma",
-               :at => [400, 48], :width => 115, :height => 12, :size => 10, :style => :bold
 
   #Numerazione delle pagine
   pdf.page_count.times do |page|

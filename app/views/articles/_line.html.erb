@@ -1,7 +1,8 @@
 <tr>
   <td><%= line.codice %></td>
+  <td><%= Article::CATEG[line.categ] %> </td>
   <td><%= line.descriz %></td>
-  <td><%= line.prezzo %></td>
+  <td align=right><%= line.prezzo %></td>
   <td><%= link_to 'Visualizza', line %></td>
   <td><%= link_to 'Modifica', edit_article_path(line) %></td>
   <td><%= link_to 'Elimina', line, :confirm => 'Confermi?', :method => :delete %></td>

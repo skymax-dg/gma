@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120717152644) do
+ActiveRecord::Schema.define(:version => 20120723144835) do
 
   create_table "anagens", :force => true do |t|
     t.integer  "codice",                     :null => false
@@ -52,12 +52,14 @@ ActiveRecord::Schema.define(:version => 20120717152644) do
   add_index "anainds", ["anagen_id"], :name => "index_anainds_on_anagen_id"
 
   create_table "articles", :force => true do |t|
-    t.integer  "azienda",                                                                  :null => false
-    t.string   "codice",     :limit => 20,                                                 :null => false
-    t.string   "descriz",    :limit => 100,                                                :null => false
-    t.decimal  "prezzo",                    :precision => 8, :scale => 2, :default => 0.0, :null => false
-    t.datetime "created_at",                                                               :null => false
-    t.datetime "updated_at",                                                               :null => false
+    t.integer  "azienda",                                                                   :null => false
+    t.string   "codice",     :limit => 20,                                                  :null => false
+    t.string   "descriz",    :limit => 100,                                                 :null => false
+    t.decimal  "prezzo",                    :precision => 8, :scale => 2, :default => 0.0,  :null => false
+    t.datetime "created_at",                                                                :null => false
+    t.datetime "updated_at",                                                                :null => false
+    t.string   "categ",      :limit => 2,                                 :default => "GE", :null => false
+    t.integer  "iva_id",                                                  :default => 1,    :null => false
   end
 
   add_index "articles", ["azienda", "codice"], :name => "idx_articles_on_codice", :unique => true
@@ -110,13 +112,13 @@ ActiveRecord::Schema.define(:version => 20120717152644) do
   add_index "contos", ["azienda", "annoese", "descriz"], :name => "idx_contos_on_descriz"
 
   create_table "ivas", :force => true do |t|
-    t.integer  "codice",                                                    :null => false
-    t.string   "descriz",    :limit => 50,                                  :null => false
-    t.string   "desest",     :limit => 150,                                 :null => false
-    t.decimal  "aliq",                      :precision => 5, :scale => 2,   :null => false
-    t.string   "flese",      :limit => 1,                                   :null => false
-    t.datetime "created_at",                                                :null => false
-    t.datetime "updated_at",                                                :null => false
+    t.integer  "codice",                                                  :null => false
+    t.string   "descriz",    :limit => 50,                                :null => false
+    t.string   "desest",     :limit => 150,                               :null => false
+    t.decimal  "aliq",                      :precision => 5, :scale => 2, :null => false
+    t.string   "flese",      :limit => 1,                                 :null => false
+    t.datetime "created_at",                                              :null => false
+    t.datetime "updated_at",                                              :null => false
   end
 
   create_table "localitas", :force => true do |t|
@@ -129,7 +131,7 @@ ActiveRecord::Schema.define(:version => 20120717152644) do
     t.datetime "updated_at",               :null => false
   end
 
-  add_index "localitas", ["descriz"], :name => "idx_localitas_on_descriz", :unique => true
+  add_index "localitas", ["descriz"], :name => "idx_localitas_on_descriz"
   add_index "localitas", ["paese_id"], :name => "index_localitas_on_paese_id"
 
   create_table "paeses", :force => true do |t|
@@ -166,7 +168,7 @@ ActiveRecord::Schema.define(:version => 20120717152644) do
     t.datetime "created_at",                                                                :null => false
     t.datetime "updated_at",                                                                :null => false
     t.integer  "prgrig",                                                   :default => 0,   :null => false
-    t.integer  "iva_id"
+    t.integer  "iva_id",                                                   :default => 1,   :null => false
   end
 
   add_index "rigdocs", ["article_id"], :name => "index_rigdocs_on_article_id"
@@ -178,7 +180,6 @@ ActiveRecord::Schema.define(:version => 20120717152644) do
     t.integer  "tesdoc_id",                                                :null => false
     t.string   "caustra",    :limit => 3
     t.string   "corriere",   :limit => 3
-    t.string   "presso",     :limit => 150
     t.string   "dest1",      :limit => 150
     t.string   "dest2",      :limit => 150
     t.string   "aspetto",    :limit => 3
@@ -192,6 +193,7 @@ ActiveRecord::Schema.define(:version => 20120717152644) do
     t.datetime "created_at",                                               :null => false
     t.datetime "updated_at",                                               :null => false
     t.integer  "anaind_id"
+    t.string   "presso",     :limit => 150
   end
 
   add_index "spedizs", ["tesdoc_id"], :name => "index_spedizs_on_tesdoc_id"

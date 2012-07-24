@@ -44,7 +44,7 @@ before_filter :authenticate
     @causale  = ""
     @corr     = ""
     @body     = @tesdoc.rigdocs
-    render 'stp_ddt1.pdf'
+    render 'stp_fat1.pdf'
   end
 
   def delrowqta0

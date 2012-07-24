@@ -101,6 +101,9 @@
   tab.draw
 
 	#note
+  if not @datispe.nil? && @datispe.corriere == "GLS" && @anad.email.length > 0
+    @datispe.note = "INVIO NOTIFICA: #{@anad.email}\n" + @datispe.note||""
+  end
   unless @datispe.note.nil? || @datispe.note.strip.length == 0
     #Esegue salto pagina se non è rimasto abbastanza spazio per le note
     pdf.start_new_page if pdf.cursor < 175

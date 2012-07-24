@@ -58,7 +58,7 @@ class Tesdoc < ActiveRecord::Base
     return imp
   end
 
-  def impon_iva
+  def impon_iva_Matrix
     imp={}
     self.rigdocs.each do |r| 
       r.iva.nil? ? ivaid=0 : ivaid=r.iva.id
@@ -69,56 +69,30 @@ class Tesdoc < ActiveRecord::Base
     return imp
   end
 
-  def impon_ivaARRAY
+  def impon_iva
     imp={}
     self.rigdocs.each do |r| 
+      cat=r.article.categ
       r.iva.nil? ? ivaid=0 : ivaid=r.iva.id
-      imp[ivaid]=Array.new unless imp.key?(ivaid)
-      imp[ivaid][1]=imp[ivaid][1].to_f + (r.qta * r.prezzo)
+      imp[cat]=Hash.new unless imp.key?(cat)
+      imp[cat][ivaid]=Hash.new unless imp[cat].key?(ivaid)
+      imp[cat][ivaid][:impon]=imp[cat][ivaid][:impon].to_f + (r.qta * r.prezzo)
     end
     puts imp
     return imp
   end
 
-  def subtot_ivaARRAY
+  def subtot_iva_Matrix
     imp=self.impon_iva
     tot_impon = 0.to_f
     tot_imposta = 0.to_f
     imp.each_key do |k|
       if k==0
-        imp[k]=["Iva non associata", imp[k][1], "", "", imp[k][1]]
+        imp[k]=imp[k].merge({:desest=>"Iva non associata", :des=>"N/A", :aliq=>"", :imposta=>"", :tot=>imp[k][:impon]})
       else
         iva = Iva.find(k)
-        if iva.flese == "N"
-          imp[k]=[iva.desest,
-                  imp[k][1],
-                  iva.aliq,
-                  imp[k][1]/100*iva.aliq,
-                  imp[k][1]+imp[k][3]
-                 ]
-        else
-          imp[k]=[iva.desest, imp[k][1], "", "", imp[k][1]]
-          #imp[k]=[nil, nil, nil, nil, imp[k][1]})
-        end
-      end
-      tot_impon += imp[k][1].to_f
-      tot_imposta += imp[k][3].to_f
-    end
-    imp[:T]=Hash.new
-    imp[:T]=["TOTALI", tot_impon, nil, tot_imposta, imp[:T][1].to_f + imp[:T][3].to_f]
-    return imp
-  end
-
-  def subtot_iva
-    imp=self.impon_iva
-    tot_impon = 0.to_f
-    tot_imposta = 0.to_f
-    imp.each_key do |k|
-      if k==0
-        imp[k]=imp[k].merge({:des=>"Iva non associata", :aliq=>"", :imposta=>"", :tot=>imp[k][:impon]})
-      else
-        iva = Iva.find(k)
-        imp[k][:des]=iva.desest
+        imp[k][:desest]=iva.desest
+        imp[k][:des]=iva.descriz
         if iva.flese == "N"
           imp[k]=imp[k].merge({:aliq=>iva.aliq, :imposta=>imp[k][:impon]/100*iva.aliq,
                                                 :tot=>imp[k][:impon]+imp[k][:imposta]})
@@ -130,7 +104,38 @@ class Tesdoc < ActiveRecord::Base
       tot_imposta += imp[k][:imposta].to_f
     end
     imp[:T]=Hash.new
-    imp[:T]={:des=>"TOTALI", :impon=>tot_impon, :imposta=>tot_imposta, :tot=>imp[:T][:impon].to_f + imp[:T][:imposta].to_f}
+    imp[:T]={:desest=>"TOTALI", :des=>"", :impon=>tot_impon, :imposta=>tot_imposta, :tot=>tot_impon + tot_imposta}
+    return imp
+  end
+
+  def subtot_iva
+    imp=self.impon_iva
+    tot_impon = 0.to_f
+    tot_imposta = 0.to_f
+    imp.each_key do |categ|
+      imp[categ].each_key do |k|
+        if k==0
+          imp[categ][k]=imp[categ][k].merge({:desest=>"Iva non associata", :des=>"N/A",
+                                             :aliq=>"",                    :imposta=>"", :tot=>imp[categ][k][:impon]})
+        else
+          iva = Iva.find(k)
+          imp[categ][k][:desest]=iva.desest
+          imp[categ][k][:des]=iva.descriz
+          if iva.flese == "N"
+            imposta=imp[categ][k][:impon]/100*iva.aliq
+            imp[categ][k]=imp[categ][k].merge({:aliq=>iva.aliq, :imposta=>imposta,
+                                               :tot=>imp[categ][k][:impon]+imposta})
+          else
+            imp[categ][k]=imp[categ][k].merge({:aliq=>"", :imposta=>"", :tot=>imp[categ][k][:impon]})
+          end
+        end
+        tot_impon += imp[categ][k][:impon].to_f
+        tot_imposta += imp[categ][k][:imposta].to_f
+      end
+    end
+    imp[:T]=Hash.new
+    imp[:T][:T]=Hash.new
+    imp[:T][:T]={:desest=>"TOTALE", :des=>"", :impon=>tot_impon, :imposta=>tot_imposta, :tot=>tot_impon + tot_imposta}
     return imp
   end
 

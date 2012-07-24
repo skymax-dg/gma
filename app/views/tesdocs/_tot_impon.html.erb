@@ -1,7 +1,8 @@
 <tr>
-  <td><%= subtot[:des] %></td>
+  <td><%= Article::CATEG[categ] %></td>
+  <td><%= subtot[:desest] %></td>
   <td align=right ><%= number_with_precision(subtot[:impon]) %> </td>
-  <td align=right ><%= number_with_precision(subtot[:aliq], :delimiter=>".", :separator=>",", :precision => 2) %></td>
-  <td align=right ><%= subtot[:imposta] %></td>
+  <td align=right ><%= number_with_precision(subtot[:aliq]) %></td>
+  <td align=right ><%= number_with_precision(subtot[:imposta]) %></td>
   <td align=right ><%= number_with_precision(subtot[:tot]) %></td>
 </tr>

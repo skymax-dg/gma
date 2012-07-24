@@ -3,14 +3,16 @@
   <div class="field">
     <%= hidden_field(:rigdoc, :tesdoc_id) %>
     <b> <%= f.label "Descizione riga" %> </b>
-    <%= f.text_field :descriz, :size => 50 %>
+    <%= f.text_field :descriz, :size => 100 %>
+  </div>
+  <div class="field">
     <b> <%= f.label "Articolo" %> </b>
     <%= collection_select(:rigdoc, :article_id, Article.all, :id, :codice,
                            {:include_blank => true},
                             {:data => {:remote => true, :url => url_for(:controller => :rigdocs,
                                                                         :action => :article_exit)}})%>
     <span id="article_descriz">
-        <%= @rigdoc.article.descriz unless @rigdoc.article.nil? %>
+        <b> <%= @rigdoc.article.des_plus unless @rigdoc.article.nil? %> </b> 
     </span>
     <br />
     <br />

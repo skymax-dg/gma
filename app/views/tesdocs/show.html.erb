@@ -49,21 +49,25 @@
 
 <table border=1 cellspacing=5 cellpadding=3>
   <tr>
-    <th align=left  width=200 > Tipo imponibile </th>
-    <th align=right width=200 > Imponibile </th>
-    <th align=right width=200 > Aliquota </th>
-    <th align=right width=200 > Imposta </th>
-    <th align=right width=200 > Totale </th>
+    <th align=left  width=200 > Categoria </th>
+    <th align=left  width=300 > Tipo imponibile </th>
+    <th align=right width=120 > Imponibile </th>
+    <th align=right width=80 > Aliquota </th>
+    <th align=right width=120 > Imposta </th>
+    <th align=right width=150 > Totale </th>
   </tr>
-  <% @subtot_iva.each_key do |idiva| %>
-    <%= render :partial => 'tot_impon', :locals => {:subtot=>@subtot_iva[idiva]} unless idiva == :T %>
+  <% @subtot_iva.each_key do |categ| %>
+    <% @subtot_iva[categ].each_key do |idiva| %>
+      <%= render :partial => 'tot_impon', :locals => {:categ=>categ, :subtot=>@subtot_iva[categ][idiva]} unless idiva == :T %>
+    <% end %>
   <% end %>
 <tr>
   <td><b>TOTALI:</b></td>
-  <td align=right > <b> <%= number_to_currency(@subtot_iva[:T][:impon]) %> </b> </td>
   <td></td>
-  <td align=right > <b> <%= number_to_currency(@subtot_iva[:T][:imposta]) %> </b> </td>
-  <td align=right > <b> <%= number_to_currency(@subtot_iva[:T][:tot]) %> </b> </td>
+  <td align=right > <b> <%= number_to_currency(@subtot_iva[:T][:T][:impon]) %> </b> </td>
+  <td></td>
+  <td align=right > <b> <%= number_to_currency(@subtot_iva[:T][:T][:imposta]) %> </b> </td>
+  <td align=right > <b> <%= number_to_currency(@subtot_iva[:T][:T][:tot]) %> </b> </td>
 </tr>
 </table>
 <br />
@@ -74,8 +78,8 @@
     <th align=right > Qta'</th>
     <th align=right > Prezzo </th>
     <th align=right > Sconto </th>
+    <th align=right > Imponibile </th>
     <th align=right > Iva </th>
-    <th align=right > Totale </th>
     <th></th>
     <th></th>
     <th></th>
@@ -90,7 +94,8 @@
 <%= link_to 'Elimina_documento', @tesdoc, :confirm => 'Confermi eliminazione?', :method => :delete %>
 |<%= link_to 'Aggiungi_documento', new_tesdoc_path(:causmag => @tesdoc.causmag_id||"", :conto => @tesdoc.conto_id||"") %>
 |<%= link_to '.Modifica_testata_', edit_tesdoc_path %>
-|<%= link_to '______Stampa______', stp_ddt1_tesdoc_path %>
+|<%= link_to '____Stampa_DDT____', stp_ddt1_tesdoc_path %>
+|<%= link_to '__Stampa_Fattura__', stp_fat1_tesdoc_path %>
 |<%= link_to 'Dati_di_spedizione', ges_datisped_tesdoc_path %>
 <br />
 <%= link_to '__Aggiungi_riga___', new_rigdoc_path(:id => @tesdoc.id) %>

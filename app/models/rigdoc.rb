@@ -24,4 +24,12 @@ class Rigdoc < ActiveRecord::Base
     self.update_attributes(:prgrig => newprg)
     return 1
   end
+
+  def impon
+    self.qta * self.prezzo
+  end
+
+  def imposta
+    self.iva.aliq > 0 && self.impon > 0 ? self.impon * self.iva.aliq / 100 : 0;
+  end
 end

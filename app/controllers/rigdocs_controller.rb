@@ -18,6 +18,8 @@ before_filter :authenticate
   def article_exit
     @prezzo = Article.find(params[:rigdoc][:article_id]).prezzo unless params[:rigdoc][:article_id].empty? 
     @descriz = Article.find(params[:rigdoc][:article_id]).descriz unless params[:rigdoc][:article_id].empty? 
+    @des_plus = Article.find(params[:rigdoc][:article_id]).des_plus unless params[:rigdoc][:article_id].empty? 
+    @iva_id = Article.find(params[:rigdoc][:article_id]).iva_id unless params[:rigdoc][:article_id].empty? 
     respond_to do |format|
       format.js
     end

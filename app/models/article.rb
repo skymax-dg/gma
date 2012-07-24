@@ -2,16 +2,19 @@ class Article < ActiveRecord::Base
   #acts_as_reportable
   before_destroy :require_no_rigdocs
   has_many :rigdocs
+  belongs_to :iva
 
-  attr_accessible :codice, :descriz, :prezzo, :azienda
+  attr_accessible :codice, :descriz, :prezzo, :azienda, :categ, :iva_id
 
-  validates :codice, :descriz, :azienda, :presence => true
+  validates :codice, :descriz, :azienda, :categ, :iva_id, :presence => true
   validates :codice, :descriz, :uniqueness => true
   validates :codice,  :length => { :maximum => 10}
   validates :descriz, :length => { :maximum => 50}
   
   scope :azienda, lambda { |azd| {:conditions => ['articles.azienda = ?', azd]}}
   default_scope :order => 'articles.codice ASC' 
+
+  CATEG = $ParAzienda['ARTICLE']['CATEG']
 
   def self.chk_art_xls(azienda, xls, wks, rownr, colnr)
     # Controlla che nel file excel xls nello sheet wks(0base), partendo dalla riga rownr,
@@ -29,6 +32,10 @@ class Article < ActiveRecord::Base
 
   def desest1
     self.codice.to_s + " " + self.descriz
+  end
+
+  def des_plus
+    "#{self.descriz} (#{Article::CATEG[self.categ]})"
   end
 
   def self.movmag(id)

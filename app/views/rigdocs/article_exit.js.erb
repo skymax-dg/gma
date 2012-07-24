@@ -10,9 +10,24 @@
 	$("#rigdoc_prezzo").val(prz);
 //}
 
-$("#article_descriz").html("<%=@descriz%>");
+$("#article_descriz").html("<%=@des_plus%>");
 
 if ($("#rigdoc_descriz").val().trim().length==0)
 {
 	$("#rigdoc_descriz").val("<%=@descriz%>");
+}
+else if (confirm("Articolo cambiato, vuoi sostituire la descrizione riga?"))
+{
+	$("#rigdoc_descriz").val("<%=@descriz%>");
+}
+
+old_iva = $("#rigdoc_iva_id").val().trim()
+new_iva = "<%=@iva_id%>"
+if (old_iva.length==0)
+{
+	$("#rigdoc_iva_id").val(new_iva);
+}
+else if (new_iva != old_iva && confirm("L'Iva associata all'articolo risulta diversa dalla precedente, vuoi sostituire?"))
+{
+	$("#rigdoc_iva_id").val(new_iva);
 }

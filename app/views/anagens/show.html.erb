@@ -7,6 +7,7 @@
   <b>Denominazione:</b>
   <%= @anagen.denomin %>
 </p>
+<% unless @anagen.tipo == "G" %>
 <p>
   <b>Luogo di nascita:</b>
   <%= @anagen.localita.descriz unless @anagen.localita.nil? %>
@@ -19,6 +20,7 @@
   <b>Sesso:</b>
   <%= @anagen.sesso %>
 </p>
+<% end %>
 <p>
   <b>Codfis:</b>
   <%= @anagen.codfis %>
