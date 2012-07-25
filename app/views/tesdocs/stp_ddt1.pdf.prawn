@@ -24,7 +24,7 @@
 	end
   pdf.formatted_text_box [{:text => "Mitt: #{@ana.denomin.upcase}\n", :styles => [:bold], :size => 12},
                           {:text => "Part.Iva: #{@ana.pariva}\n"},
-                          {:text => "#{@sl[:indir]}\n#{@sl[:cap]} #{@sld[:desloc]}\n"},
+                          {:text => "#{@sl[:indir]}\n#{@sl[:cap]} #{@sl[:desloc]}\n"},
                           {:text => "Tel: #{@ana.telefono} / Fax: #{@ana.fax}\n"},
                           {:text => "E-Mail: #{@ana.email} / Web: #{@ana.web}"}
                           ],
@@ -59,7 +59,7 @@
 	pdf.bounding_box [0,630], :width => 530, :height => 60 do
 		pdf.stroke_bounds
 	end
-  pdf.text_box "Documento Nr. #{@rifdoc[:nr]} del #{@rifdoc[:dt]}",
+  pdf.text_box "Documento Nr. #{@rifdoc[:nr]} del #{@rifdoc[:dt].strftime("%d/%m/%Y")}",
                :at => [2, 620], :width => 240, :height => 20, :size => 12, :style => :bold
 
 	#pdf.bounding_box [0,600], :width => 260, :height => 50 do
@@ -88,7 +88,7 @@
   @tb << ["CODICE", "DESCRIZIONE", "Q.TA'"]
   @tqta=0
   @tesdoc.rigdocs.each {|r|@tb<<[r.article.codice, r.descriz, r.qta]&&@tqta+=r.qta}
-  @tb << ["","TOTALE", @tqta]
+  @tb << ["TOTALE", "", @tqta]
 
   #Creazione e stampa tabella articoli
   tab = pdf.make_table(@tb, :column_widths=>{0=>120,1=>357, 2=>50})

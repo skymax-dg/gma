@@ -22,7 +22,11 @@ Gma::Application.routes.draw do
 
   resources :causales
 
-  resources :contos
+  resources :contos do
+    collection do
+      get :anagen_exit
+    end
+  end
 
   resources :spedizs, :only => [:new, :create, :edit, :update, :destroy]  do
     collection do

@@ -125,7 +125,7 @@ class MovVendTitlePDF < CompanyPDFBase
       tcar += car.to_i
       tsca += sca.to_i
       timp += imp.to_i
-      table << Ruport::Data::Record.new([dt_doc, num, cau, nrmag, car, sca, giac.to_s, imp, giac-imp.to_i],
+      table << Ruport::Data::Record.new([dt_doc.strftime("%d/%m/%Y"), num, cau, nrmag, car, sca, giac.to_s, imp, giac-imp.to_i],
                                         :attributes => col_head)
     end
     table << Ruport::Data::Record.new(["TOTALI:", "", "", "", tcar, tsca, giac, timp, giac-timp],

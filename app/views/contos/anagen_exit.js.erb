@@ -1,0 +1,8 @@
+if ($("#conto_descriz").val().trim().length==0)
+{
+	$("#conto_descriz").val("<%=@descriz%>");
+}
+else if (confirm("Anagrafica conto cambiata, vuoi sostituire la descrizione?"))
+{
+	$("#conto_descriz").val("<%=@descriz%>");
+}

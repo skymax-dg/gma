@@ -6,6 +6,7 @@ class Rigdoc < ActiveRecord::Base
   default_scope :order => 'rigdocs.prgrig ASC'
   
   attr_accessible :descriz, :prezzo, :qta, :sconto, :article_id, :tesdoc_id, :prgrig, :iva_id
+  validates :prezzo, :sconto, :presence => true
   validates :descriz, :length => { :maximum => 150}
 
   def move(dir)

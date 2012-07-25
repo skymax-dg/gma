@@ -12,12 +12,14 @@
     <%= f.number_field :codice %>
   </div>
   <div class="field">
-    <b> <%= f.label "Descrizione" %> </b> <br />
-    <%= f.text_field :descriz %>
+    <b> <%= f.label "Anagrafica" %> </b> <br />
+    <%= collection_select(:conto, :anagen_id, Anagen.all, :id, :denomin, {:include_blank => true},
+                            {:data => {:remote => true, :url => url_for(:controller => :contos,
+                                                                        :action => :anagen_exit)}}) %>
   </div>
   <div class="field">
-    <b> <%= f.label "Anagrafica" %> </b> <br />
-    <%= collection_select(:conto, :anagen_id, Anagen.all, :id, :denomin, {:include_blank => true})%>
+    <b> <%= f.label "Descrizione" %> </b> <br />
+    <%= f.text_field :descriz %>
   </div>
   <div class="field">
     <b> <%= f.label "Riferimento" %> </b> <br />

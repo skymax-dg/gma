@@ -2,7 +2,7 @@ class SpedizsController < ApplicationController
   def setind
     @anaind = Anaind.find(params[:spediz][:anaind_id])
     @des1 = @anaind.indir.strip
-    @des2 = "#{@anaind.cap} #{@anaind.desloc}".strip
+    @des2 = "#{@anaind.desloc}".strip
   end
 
   def show

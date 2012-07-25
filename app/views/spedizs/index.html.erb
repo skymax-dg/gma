@@ -31,7 +31,7 @@
     <td><%= spediz.nrcolli %></td>
     <td><%= spediz.peso %></td>
     <td><%= spediz.porto %></td>
-    <td><%= spediz.dtrit %></td>
+    <td><%= spediz.dtrit.strftime("%d/%m/%Y") %></td>
     <td><%= spediz.orarit %></td>
     <td><%= link_to 'Show', spediz %></td>
     <td><%= link_to 'Edit', edit_spediz_path(spediz) %></td>

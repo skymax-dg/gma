@@ -6,6 +6,13 @@ before_filter :authenticate
                                                                             :order => [:codice])
   end
 
+  def anagen_exit
+    @descriz = Anagen.find(params[:conto][:anagen_id]).denomin unless params[:conto][:anagen_id].empty? 
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def show
     @conto = Conto.find(params[:id])
   end

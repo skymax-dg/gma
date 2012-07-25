@@ -168,7 +168,7 @@ ActiveRecord::Schema.define(:version => 20120723144835) do
     t.datetime "created_at",                                                                :null => false
     t.datetime "updated_at",                                                                :null => false
     t.integer  "prgrig",                                                   :default => 0,   :null => false
-    t.integer  "iva_id",                                                   :default => 1,   :null => false
+    t.integer  "iva_id"
   end
 
   add_index "rigdocs", ["article_id"], :name => "index_rigdocs_on_article_id"
