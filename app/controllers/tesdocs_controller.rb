@@ -16,8 +16,7 @@ before_filter :authenticate
   def stp_ddt1
     @tesdoc   = Tesdoc.find(params[:id])
     @tit_doc=Array.new
-    @tit_doc[0] = "DOCUMENTO DI TRASPORTO"
-    @tit_doc[1] = "(D.d.t.) D.P.R. 472 del 14-08-1996 - D.P.R. 696 del 21.12.1996"
+    @tit_doc = ["DOCUMENTO DI TRASPORTO", "(D.d.t.) D.P.R. 472 del 14-08-1996 - D.P.R. 696 del 21.12.1996"]
     @ana      = Anagen.find(current_user.azienda)
     @sl       = @ana.sedelegale
     @anad     = Anagen.find(@tesdoc.conto.anagen_id)
@@ -33,8 +32,7 @@ before_filter :authenticate
   def stp_fat1
     @tesdoc   = Tesdoc.find(params[:id])
     @tit_doc=Array.new
-    @tit_doc[0] = "FATTURA SU RENDICONTO VENDITE"
-    @tit_doc[1] = ""
+    @tit_doc = ["FATTURA SU RENDICONTO VENDITE", ""]
     @ana      = Anagen.find(current_user.azienda)
     @sl       = @ana.sedelegale
     @anad     = Anagen.find(@tesdoc.conto.anagen_id)

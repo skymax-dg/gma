@@ -26,8 +26,8 @@ class Anagen < ActiveRecord::Base
   TIPO = $ParAzienda['ANAGEN']['TIPO SOGGETTO']
 
   def sedelegale
-    sl=Hash.new{""}
-    self.anainds.each {|ind| sl={:indir => ind.indir, :cap => ind.cap, :desloc => ind.desloc} if ind.flsl=="S"}
+    sl={}
+    self.anainds.each {|ind| sl={:indir => ind.indir, :desloc => ind.desloc} if ind.flsl=="S"}
     sl
   end
 

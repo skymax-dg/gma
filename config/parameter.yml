@@ -14,9 +14,9 @@ ANAIND:
     4: 'Secondario3'
 CAUSMAG:
   TIPO_DOC:
-    0: 'generico'
-    1: 'ddt'
-    2: 'contabile'
+    0: 'Documenti contabili'
+    1: 'Ddt'
+    2: 'Documenti generici'
   TIPO:
     E: 'Entrata'
     U: 'Uscita'

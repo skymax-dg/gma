@@ -49,19 +49,15 @@
                :at => [2, 584], :width => 240, :height => 15, :size => 12, :style => :bold
 
   pdf.move_down 25
-  @tb = Array.new
-  @tb << ["CODICE", "DESCRIZIONE", "Q.TA", "PRZ.\nLIST.", "PRZ.\nSCN.", "IMPON.", "IVA"]#, "IMPOSTA"]
+  @tb = Array.new(1, ["CODICE", "DESCRIZIONE", "Q.TA", "PRZ.\nLIST.", "PRZ.\nSCN.", "IMPON.", "IVA"])
   @tqta=0
   @timpon=0
   @timposta=0
   @tesdoc.rigdocs.each do |r|
     @tb<<[r.article.codice, r.descriz,     r.qta, number_with_precision(r.article.prezzo),
-          number_with_precision(r.prezzo), number_with_precision(r.impon),
-          r.iva.descriz]
-#number_with_precision(r.imposta)]}
+          number_with_precision(r.prezzo), number_with_precision(r.impon), r.iva.descriz]
     @tqta+=r.qta
     @timpon+=r.impon
-    #@timposta+=r.imposta
   end
   @tb << ["TOTALE", "", @tqta, "", "", number_with_precision(@timpon), ""]#number_with_precision(@timposta)]
 
@@ -70,18 +66,13 @@
   tab.row(0).font_style = :bold
   tab.row(tab.row_length-1).font_style = :bold
   tab.header = true
-  tab.column(2).style :align => :right
-  tab.column(3).style :align => :right
-  tab.column(4).style :align => :right
-  tab.column(5).style :align => :right
-  #tab.column(7).style :align => :right
+  tab.column(2..5).style :align => :right
   tab.draw
 
   pdf.move_down 27
 
   #Array Intestazione e righe (RIEPILOGO IMPONIBILI)
-  @tb = Array.new
-  @tb << ["CATEGORIA", "IMPONIBILE", "IVA/ESENZ.", "IMPOSTA", "TOTALE"]
+  @tb = Array.new(1, ["CATEGORIA", "IMPONIBILE", "IVA/ESENZ.", "IMPOSTA", "TOTALE"])
   sub_iva = @tesdoc.subtot_iva
   sub_iva.each_key do |categ|
     sub_iva[categ].each_key do |k|
