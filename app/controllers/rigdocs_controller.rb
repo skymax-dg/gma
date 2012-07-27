@@ -53,31 +53,6 @@ before_filter :authenticate
     end
   end
 
-  def addrow_fromxls
-    begin
-      @errors = []
-      @success = []
-      Spreadsheet.open "rigdocXLS.xls" do |book|
-        @tesdoc = Tesdoc.find(params[:id])
-        begin
-          @errors = Article.chk_art_xls(current_user.azienda, book, 0, 1, 0)
-          raise "I seguenti articoli non sono presenti sulla banca dati" if @errors.count > 0
-          @errors, @success = @tesdoc.rigdocbyxls(book, 0, 1, {:article_id_bycod => 0, :qta => 1, :prezzo => 2, :sconto => 3})
-          if @errors.count == 0
-            flash[:notice] = "CARICAMENTO COMPLETATO con SUCCESSO."
-          else
-            flash[:error] = "Si sono verificati ERRORI durante il caricamento (CARICAMENTO PARZIALE)"
-          end
-        rescue
-          flash[:error] = $!.message
-        end
-      end
-    rescue Exception => e
-      flash[:error] = $!.message
-     @errors << "File bloccato da un'altra applicazione o non trovato: " + e.to_s #$?.exitstatus
-    end
-  end
-
   def show
     @rigdoc = Rigdoc.find(params[:id])
   end

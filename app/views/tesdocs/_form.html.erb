@@ -7,7 +7,7 @@
     <b> <%= f.label "Anno:" %> </b>
     <%= f.text_field :annoese, :size => 3, :disabled => true %>
     <%= f.hidden_field :annoese %>
-    <b> <%= f.label "Tipo???:" %> </b>
+    <b> <%= f.label "Tipo:" %> </b>
     <%= select(:tesdoc, :tipo_doc, Tesdoc::TIPO_DOC.invert.sort, {}, {:disabled => true})%>
     <%= f.hidden_field :tipo_doc %>
     <b> <%= f.label "Nr:" %> </b>

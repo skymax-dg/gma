@@ -13,6 +13,42 @@ before_filter :authenticate
     init_filter(current_user.azienda)
   end
 
+  def upload_xls
+  end
+
+  def addrow_fromxls
+    tfile = params[:file]
+    time=Time.now()
+    str="_#{time.year.to_s}_#{time.month.to_s}_#{time.day.to_s}_#{time.hour.to_s}_#{time.min.to_s}_#{time.sec.to_s}.xls"
+    tname = tfile.original_filename.gsub(".xls", str)
+    # create the file path
+    path = File.join("#{Rails.root}/public/upload", "#{tname}")
+    # write the file
+    File.open(path, "wb") { |f| f.write(tfile.read) }
+    begin
+      @errors = []
+      @success = []
+      Spreadsheet.open path do |book|
+        @tesdoc = Tesdoc.find(params[:id])
+        begin
+          @errors = Article.chk_art_xls(current_user.azienda, book, 0, 1, 0)
+          raise "I seguenti articoli non sono presenti sulla banca dati" if @errors.count > 0
+          @errors, @success = @tesdoc.rigdocbyxls(book, 0, 1, {:article_id_bycod => 0, :qta => 1, :prezzo => 2, :sconto => 3})
+          if @errors.count == 0
+            flash[:notice] = "CARICAMENTO COMPLETATO con SUCCESSO."
+          else
+            flash[:error] = "Si sono verificati ERRORI durante il caricamento (CARICAMENTO PARZIALE)"
+          end
+        rescue
+          flash[:error] = $!.message
+        end
+      end
+    rescue Exception => e
+      flash[:error] = $!.message
+      @errors << "File bloccato da un'altra applicazione o non trovato: " + e.to_s #$?.exitstatus
+    end
+  end
+
   def stp_ddt1
     @tesdoc   = Tesdoc.find(params[:id])
     @tit_doc=Array.new
@@ -61,7 +97,6 @@ before_filter :authenticate
     else
       redirect_to new_spediz_path(:id => params[:id])
     end
-    # redirect_to tesdoc, :notice => 'Righe documento cancellate con successo.'
   end
 
   def add1row4article
@@ -77,7 +112,7 @@ before_filter :authenticate
     begin
       @errors = []
       @success = []
-      Spreadsheet.open "tesrigdocMESS.xls" do |book|
+      Spreadsheet.open "tesrigdoc.xls" do |book|
         begin
           #@errors = Tesdoc.chk_tesrigdoc_xls(book, ...)
           #raise "Errore su alcune testate e righe documento" if @errors.count > 0
@@ -144,6 +179,7 @@ before_filter :authenticate
           @tesdoc.azienda = current_user.azienda
           @tesdoc.annoese = current_annoese
           @tesdoc.causmag_id = @causmag.id
+          @tesdoc.descriz = @causmag.descriz
           @tesdoc.conto_id = @conto.id
           @tesdoc.sconto = @conto.sconto
           @tesdoc.tipo_doc = @causmag.tipo_doc
@@ -159,9 +195,6 @@ before_filter :authenticate
 
   def show
     @tesdoc = Tesdoc.find(params[:id])
-#    @rigdocs = @tesdoc.rigdocs.paginate(:page => params[:page], :per_page => 10)
-#    @rigdocs = @rigdocs.sort {|a,b|a.prgrig<=>b.prgrig}
-
     @rigdocs = @tesdoc.rigdocs.sort{|a,b|a.prgrig<=>b.prgrig}
     @rigdocs = @rigdocs.paginate(:page => params[:page], :per_page => 10)
     @subtot_iva = @tesdoc.subtot_iva

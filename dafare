@@ -37,10 +37,10 @@ FATTO: Inserire il login utente con : (nome utente e password)
 
 FATTO: Richiedere l'azienda di lavoro e l'anno.
 
+FATTO: Comando carica file xls per import (funzionalità carica righe da file)
+
 Amministrazione utenti
 Migliorare con delle classi gli export pdf e xls
 Fare le classi per il PDF DDT PRAWN
-Comando apertura file xls vuoto per import (funzionalità carica righe da file)
-
 Verifica i path file temporanei di export (pdf/xls) e di import (vedi carica righe doc da file xls), ora sono
 	statici meglio se parametrizzati

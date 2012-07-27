@@ -74,13 +74,14 @@ Gma::Application.routes.draw do
       get :stp_ddt1
       get :stp_fat1
       get :ges_datisped
+      post :addrow_fromxls
+      get :upload_xls
     end
   end
 
   resources :rigdocs do
     collection do
       get :article_exit
-      get :addrow_fromxls
     end
     member do
       get :up

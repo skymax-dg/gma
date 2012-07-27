@@ -151,6 +151,7 @@ class Tesdoc < ActiveRecord::Base
         @rigdoc = self.rigdocs.build # La Build valorizza automaticamente il campo rigdoc.tesdoc_id
         @rigdoc.article_id = Article.find_by_codice(row[hshcol[:article_id_bycod]].to_s.strip).id
         @rigdoc.descriz    = Article.find_by_codice(row[hshcol[:article_id_bycod]].to_s.strip).descriz
+        @rigdoc.iva_id     = Article.find_by_codice(row[hshcol[:article_id_bycod]].to_s.strip).iva_id
         @rigdoc.qta        = row[hshcol[:qta]]||0
         @rigdoc.prezzo     = row[hshcol[:prezzo]].to_s.sub(",",".")||0
         @rigdoc.sconto     = row[hshcol[:sconto]]||0
@@ -263,7 +264,7 @@ class Tesdoc < ActiveRecord::Base
     hshvar[:d] = "%#{des}%" unless des == ""
     
     includes(:causmag, :conto =>[:anagen]).where([whcausmag + whconto + whana, hshvar]).azdanno(
-      azienda, annoese).paginate(:page => page, :per_page => 10, :order => "data_doc, causmag_id, num_doc") unless hsh[tp].nil?
+      azienda, annoese).paginate(:page => page, :per_page => 10, :order => "data_doc DESC, causmag_id, num_doc") unless hsh[tp].nil?
 #      current_user.azienda, current_annoese).paginate(:page => page, :per_page => 10) unless hsh[tp].nil?
   end
 

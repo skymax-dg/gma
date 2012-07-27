@@ -8,11 +8,17 @@ class Conto < ActiveRecord::Base
 
   validates :annoese, :azienda, :codice, :descriz, :tipoconto, :tipopeo, :sconto, :presence => true
   validates :descriz, :length => { :maximum => 150}
+  validates :codice, :numericality => { :only_integer => true }
+  validate :codice_toobig4integer #(non mettendo niente la validazione scatta su create e update), :on => :create
   
   scope :azdanno, lambda { |azd, anno| {:conditions => ['contos.azienda = ? and contos.annoese = ?', azd, anno]}}
 
   TIPOCONTO = $ParAzienda['CONTO']['TIPOCONTO']
   TIPOPEO = $ParAzienda['CONTO']['TIPOPEO']
+
+  def codice_toobig4integer
+    errors.add(:codice, "Valore massimo consentito: 2147483647") if self.codice > 2147483647
+  end
 
   def magsavailable(inivalue)
     #trova i magazzini disponibili (per popolare una combo)

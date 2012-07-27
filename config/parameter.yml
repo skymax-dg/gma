@@ -70,6 +70,7 @@ SPEDIZ:
     GLS: 'GLS'
     SDA: 'SDA'
     BRT: 'BARTOLINI'
+    PIT: 'POSTE ITALIANE'
   ASPETTO:
     CRT: 'CARTONI'
     VSB: 'VISIBILE'
