@@ -36,7 +36,7 @@
           tsca = 0
           timp = 0
           @tb = Array.new
-          Tesdoc.mov_artanagenmag(art.id, @idanagen, tesdoc.attributes["nrmag"], @anarif, @grpmag).each do |r|
+          Tesdoc.mov_artanagenmag(art.id, idanagen, tesdoc.attributes["nrmag"], @anarif, @grpmag).each do |r|
             dt_doc  = r.attributes["data_doc"]
             num     = r.attributes["numero"]
             cau     = r.attributes["causale"]
