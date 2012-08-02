@@ -17,6 +17,10 @@ gem 'will_paginate', '~> 3.0.beta'
 
 gem 'spreadsheet'
 
+gem 'thin'
+
+#gem 'therubyracer'
+
 #gem 'ruport'
 #gem 'ruport-util'
 #gem 'acts_as_reportable'

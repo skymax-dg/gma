@@ -179,25 +179,37 @@ class Tesdoc < ActiveRecord::Base
     errors = []
     xls.worksheet(wks).each rowini do |row|
 #if check_info_riga_ok
+      @new_azienda  = Anagen.find_by_codice(row[coltes[:col_azienda]].to_i).id
+      @new_data_doc = row[coltes[:col_data_doc]].to_s.strip
+      @new_num_doc  = row[coltes[:col_num_doc]].to_i
+      @new_conto    = Conto.find_by_azienda_and_annoese_and_codice(
+                            Anagen.find_by_codice(row[coltes[:col_azienda]].to_i).id,
+                            row[coltes[:col_annoese]].to_i,
+                            row[coltes[:col_conto_codice]].to_i).id
       if row.idx == rowini or
-         row[coltes[:col_azienda]].to_i    != @tesdoc.azienda    or
-         row[coltes[:col_annoese]].to_i    != @tesdoc.annoese    or
-         row[coltes[:col_causmag_id]].to_i != @tesdoc.causmag_id or
-         row[coltes[:col_num_doc]].to_i    != @tesdoc.num_doc
+         #row[coltes[:col_azienda]].to_i    != @tesdoc.azienda    or
+         #row[coltes[:col_annoese]].to_i    != @tesdoc.annoese    or
+         #row[coltes[:col_causmag_id]].to_i != @tesdoc.causmag_id or
+         #row[coltes[:col_num_doc]].to_i    != @tesdoc.num_doc
+         @new_azienda  != @old_azienda or
+         @new_data_doc != @old_data_doc or
+         @new_num_doc  != @old_num_doc or
+         @new_conto    != @old_conto
         @tesdoc = Tesdoc.new
-        @tesdoc.azienda    = row[coltes[:col_azienda]].to_i
+        @tesdoc.azienda    = @new_azienda #Anagen.find_by_codice(row[coltes[:col_azienda]].to_i).id
         @tesdoc.annoese    = row[coltes[:col_annoese]].to_i
-        @tesdoc.num_doc    = row[coltes[:col_num_doc]].to_i
+        @tesdoc.num_doc    = @new_num_doc #row[coltes[:col_num_doc]].to_i
         @tesdoc.tipo_doc   = 1
-        @tesdoc.data_doc   = row[coltes[:col_data_doc]].to_s.strip
+        @tesdoc.data_doc   = @new_data_doc #row[coltes[:col_data_doc]].to_s.strip
         @tesdoc.descriz    = row[coltes[:col_descriz]].to_s.strip
         @tesdoc.causmag_id = row[coltes[:col_causmag_id]].to_i
-        conto = Conto.find_by_azienda_and_annoese_and_codice(
-                       @tesdoc.azienda, @tesdoc.annoese, row[coltes[:col_conto_codice]].to_i)
-        if conto.nil?
+#        conto = new_conto # Conto.find_by_azienda_and_annoese_and_codice(
+                                  #@tesdoc.azienda, @tesdoc.annoese, row[coltes[:col_conto_codice]].to_i)
+"azienda:" + @tesdoc.azienda.to_s + " annoese:" + @tesdoc.annoese.to_s + " codice:" + row[coltes[:col_conto_codice]].to_s
+        if @new_conto.nil? #conto.nil?
           errors << "conto non valido o nullo. Doc: " + @tesdoc.num_doc + " del " + @tesdoc.data_doc
         else
-          @tesdoc.conto_id = conto.id
+          @tesdoc.conto_id = @new_conto #conto.id
         end
         @tesdoc.nrmagsrc = row[coltes[:col_nrmagsrc]].to_i
         @tesdoc.nrmagdst = row[coltes[:col_nrmagdst]].to_i
@@ -209,6 +221,10 @@ class Tesdoc < ActiveRecord::Base
           errors  << "Errore testata. Azienda: " + @tesdoc.azienda.to_s + " Annoese: " + @tesdoc.annoese.to_s +
                      " num_doc: " + @tesdoc.num_doc.to_s + " data_doc: " + @tesdoc.data_doc.to_s
         end
+        @old_azienda  = @new_azienda
+        @old_data_doc = @new_data_doc
+        @old_num_doc  = @new_num_doc
+        @old_conto    = @new_conto
       end
       @rigdoc = @tesdoc.rigdocs.build # La Build valorizza automaticamente il campo rigdoc.tesdoc_id
       article = Article.find_by_azienda_and_codice(
@@ -230,12 +246,12 @@ class Tesdoc < ActiveRecord::Base
           success << "Caricata riga. Azienda: " + @tesdoc.azienda.to_s + " num_doc: " + @tesdoc.num_doc.to_s +
                      " data_doc: " + @tesdoc.data_doc.to_s + " idarticolo: " + @rigdoc.article_id.to_s +
                      " descriz: " + @rigdoc.descriz + " qta: " + @rigdoc.qta.to_s +
-                     " prezzo: " + @rigdoc.prezzo.to_s + " prg_rig: " + @rigdoc.prg_rig.to_s
+                     " prezzo: " + @rigdoc.prezzo.to_s + " prgrig: " + @rigdoc.prgrig.to_s
         else
           errors  << "Errore articolo. Azienda" + @tesdoc.azienda.to_s + " num_doc: " + @tesdoc.num_doc.to_s +
                      " data_doc: " + @tesdoc.data_doc.to_s + " idarticolo: " + @rigdoc.article_id.to_s +
                      " descriz: " + @rigdoc.descriz + " qta: " + @rigdoc.qta.to_s +
-                     " prezzo: " + @rigdoc.prezzo.to_s + " prg_rig: " + @rigdoc.prg_rig.to_s
+                     " prezzo: " + @rigdoc.prezzo.to_s + " prgrig: " + @rigdoc.prgrig.to_s
         end
       end
 #end
