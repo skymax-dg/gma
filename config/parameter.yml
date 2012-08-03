@@ -77,6 +77,7 @@ SPEDIZ:
   PORTO:
     ASS: 'Assegnato'
     FRC: 'Franco'
+    CTR: 'Contrassegno'
   UM:
     KG: 'Chilogrammi'
     NR: 'Numero'

@@ -50,7 +50,7 @@
             tcar += car.to_i
             tsca += sca.to_i
             timp += imp.to_i
-            @tb << [dt_doc, num, cau, nrmag, car, sca, giac.to_s, imp, giac-imp.to_i]
+            @tb << [dt_doc.strftime("%d/%m/%Y"), num, cau, nrmag, car, sca, giac.to_s, imp, giac-imp.to_i]
           end
           @tb << ["TOTALI:", "", "", "", tcar, tsca, giac, timp, giac-timp]
           @tb.insert(0, col_head) # inserisco riga intestazione
@@ -87,7 +87,7 @@
            prezzo << "0" if prezzo[prezzo.length-2] == '.'
            fatt = "" if fatt == "0.00"
            accr = "" if accr == "0.00"
-            @tb << [dt_doc, num, cau, ven, res, prezzo, fatt, accr, prg]
+            @tb << [dt_doc.strftime("%d/%m/%Y"), num, cau, ven, res, prezzo, fatt, accr, prg]
           end
           tfatt = tfatt.round(2).to_s
           tfatt << "0" if tfatt[tfatt.length-2] == '.' # 6.20 diventava 6.2, così rimane 6.20

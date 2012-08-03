@@ -45,17 +45,28 @@
   pdf.bounding_box [0,590], :width => 240, :height => 20 do
     pdf.stroke_bounds
   end
-  pdf.text_box "FATTURA Nr. #{@rifdoc[:nr]} del #{@rifdoc[:dt].strftime("%d/%m/%Y")}",
+  pdf.text_box "DOCUMENTO Nr. #{@rifdoc[:nr]} del #{@rifdoc[:dt].strftime("%d/%m/%Y")}",
                :at => [2, 584], :width => 240, :height => 15, :size => 12, :style => :bold
+  # do per scontato che se è stata specificata una causale di trasporto allora il documeno deve riportare anche
+  # i dati DDT.
+  @datispe&&@datispe.caustra&&@datispe.caustra.strip.length > 0 ? ddt = 1 : ddt=0
 
+  if ddt == 1
+    pdf.formatted_text_box [{:text => "Causale di trasporto: ", :styles => [:bold]},
+                            {:text => Spediz::CAUSTRA[(@datispe&&@datispe.caustra)||""]||""}],
+                             :at => [2, 565], :width => 240, :height => 20, :size => 10
+    pdf.formatted_text_box [{:text => "A mezzo: ", :styles => [:bold]},
+                            {:text => Spediz::CORRIERE[(@datispe&&@datispe.corriere)||""]||""}],
+                             :at => [270, 565], :width => 260, :height => 45, :size => 10
+  end
   pdf.move_down 25
   @tb = Array.new(1, ["CODICE", "DESCRIZIONE", "Q.TA", "PRZ.\nLIST.", "PRZ.\nSCN.", "IMPON.", "IVA"])
   @tqta=0
   @timpon=0
   @timposta=0
   @tesdoc.rigdocs.each do |r|
-    @tb<<[r.article.codice, r.descriz,     r.qta, number_with_precision(r.article.prezzo),
-          number_with_precision(r.prezzo), number_with_precision(r.impon), r.iva.descriz]
+    @tb<<[""&&r.article&&r.article.codice, r.descriz,     r.qta, number_with_precision(0&&r.article&&r.article.prezzo),
+          number_with_precision(r.prezzo), number_with_precision(r.impon), ""&&r.iva&&r.iva.descriz]
     @tqta+=r.qta
     @timpon+=r.impon
   end
@@ -94,17 +105,68 @@
   tab.column(1..4).style :align => :right
   tab.draw
 
-  #note
-  unless @datispe.note.nil? || @datispe.note.strip.length == 0
+  #dati pagamento
+  unless @datispe.nil? || @datispe.pagam.nil? || @datispe.pagam.strip.length == 0
     #Esegue salto pagina se non è rimasto abbastanza spazio per le note
-    pdf.start_new_page if pdf.cursor < 70
+    pdf.cursor < 300 ? pdf.start_new_page : pdf.move_cursor_to(310)
     
-    pdf.text_box "Annotazioni: #{@datispe.note}",
-                 :at => [2, 70], :width => 80, :height => 12, :size => 10, :style => :bold
-    pdf.text_box "#{@datispe.note}",
-                 :at => [70, 70], :width => 250, :height => 70, :size => 10
+    pdf.text "Pagamento:", :size => 10, :style => :bold
+    pdf.text @datispe.pagam, :size => 8  
+#    pdf.text "Pagamento: #{@datispe.pagam}", :size => 8  
+    pdf.text "Banca:", :size => 10, :style => :bold
+    pdf.text @datispe.banca, :size => 8
+#    pdf.text "Banca: #{@datispe.banca}", :size => 8
   end
 
+  #note
+  unless @datispe.nil? || @datispe.note.nil? || @datispe.note.strip.length == 0
+    #Esegue salto pagina se non è rimasto abbastanza spazio per le note
+    pdf.start_new_page if pdf.cursor < 180
+    
+    pdf.text_box "Annotazioni: #{@datispe.note}",
+                 :at => [2, 178], :width => 80, :height => 12, :size => 10, :style => :bold
+    pdf.text_box "#{@datispe.note}",
+                 :at => [70, 178], :width => 450, :height => 105, :size => 8
+  end
+
+  if ddt == 1
+    pdf.bounding_box [0,80], :width => 530, :height => 30 do
+      pdf.stroke_bounds
+    end
+    pdf.draw_text "Aspetto esteriore dei beni",
+                  :at => [2, 70], :size => 10, :style => :bold
+    pdf.draw_text "Nr.Colli",
+                  :at => [200, 70], :size => 10, :style => :bold
+    pdf.draw_text "#{@datispe&&@datispe.um}",
+                  :at => [300, 70], :size => 10, :style => :bold
+    pdf.draw_text "Porto",
+                  :at => [400, 70], :size => 10, :style => :bold
+    pdf.draw_text Spediz::ASPETTO[(@datispe&&@datispe.aspetto)||""]||"",
+                  :at => [2, 57], :size => 10
+    pdf.draw_text @datispe&&@datispe.nrcolli.to_s,
+                  :at => [200, 57], :size => 10
+    pdf.draw_text @datispe&&@datispe.valore.to_s,
+                  :at => [300, 57], :size => 10
+    pdf.draw_text Spediz::PORTO[(@datispe&&@datispe.porto)]||"",
+                  :at => [400, 57], :size => 10
+
+    # data e ora ritiro
+    pdf.bounding_box [0,50], :width => 530, :height => 35 do
+      pdf.stroke_bounds
+    end
+    pdf.draw_text "Data del ritiro",
+                  :at => [2, 40], :size => 10, :style => :bold
+    pdf.draw_text "Ora del ritiro",
+                  :at => [130, 40], :size => 10, :style => :bold
+    pdf.draw_text @datispe&&@datispe.dtrit.strftime("%d/%m/%Y"),
+                  :at => [5, 27], :size => 10 if @datispe&&@datispe.aspetto
+    pdf.draw_text @datispe&&@datispe.orarit.strftime("%H:%M"),
+                  :at => [135, 27], :size => 10 if @datispe&&@datispe.aspetto
+
+  # spazio pe la firma
+    pdf.draw_text "Firma",
+                  :at => [400, 40], :size => 10, :style => :bold
+  end
   #Numerazione delle pagine
   pdf.page_count.times do |page|
     pdf.go_to_page(page+1)

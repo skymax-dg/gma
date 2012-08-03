@@ -95,8 +95,8 @@
 |<%= link_to 'Aggiungi_documento', new_tesdoc_path(:causmag => @tesdoc.causmag_id||"", :conto => @tesdoc.conto_id||"") %>
 |<%= link_to '.Modifica_testata_', edit_tesdoc_path %>
 |<%= link_to '____Stampa_DDT____', stp_ddt1_tesdoc_path %>
-|<%= link_to '__Stampa_Fattura__', stp_fat1_tesdoc_path %>
-|<%= link_to 'Dati_di_spedizione', ges_datisped_tesdoc_path %>
+|<%= link_to 'Stampa_Fatt/NotaC.', stp_fat1_tesdoc_path %>
+|<%= link_to 'Dati_spediz./pagam.', ges_datisped_tesdoc_path %>
 <br />
 <%= link_to '__Aggiungi_riga___', new_rigdoc_path(:id => @tesdoc.id) %>
 |<%= link_to 'Carica_righe_da_file', upload_xls_tesdoc_path %>

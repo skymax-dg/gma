@@ -83,7 +83,7 @@
   #Array Intestazione e righe
   @tb = Array.new(1,["CODICE", "DESCRIZIONE", "Q.TA'"])
   @tqta=0
-  @tesdoc.rigdocs.each {|r|@tb<<[r.article.codice, r.descriz, r.qta]&&@tqta+=r.qta}
+  @tesdoc.rigdocs.each {|r|@tb<<[""&&r.article&&r.article.codice, r.descriz, r.qta]&&@tqta+=r.qta}
   @tb << ["TOTALE", "", @tqta]
 
   #Creazione e stampa tabella articoli
@@ -104,10 +104,10 @@
     #Esegue salto pagina se non è rimasto abbastanza spazio per le note
     pdf.start_new_page if pdf.cursor < 175
     
-    pdf.text_box "Annotazioni: #{@datispe.note}",
-                 :at => [2, 175], :width => 80, :height => 12, :size => 10, :style => :bold
+    pdf.text_box "Annotazioni:",
+                 :at => [2, 178], :width => 80, :height => 12, :size => 10, :style => :bold
     pdf.text_box "#{@datispe.note}",
-                 :at => [70, 175], :width => 250, :height => 70, :size => 10
+                 :at => [70, 178], :width => 450, :height => 105, :size => 8
   end
 
 	#Piede documento (aspetto - colli - um/valore - porto)

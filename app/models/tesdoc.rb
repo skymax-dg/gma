@@ -72,7 +72,7 @@ class Tesdoc < ActiveRecord::Base
   def impon_iva
     imp={}
     self.rigdocs.each do |r| 
-      cat=r.article.categ
+      cat=""&&r.article&&r.article.categ
       r.iva.nil? ? ivaid=0 : ivaid=r.iva.id
       imp[cat]=Hash.new unless imp.key?(cat)
       imp[cat][ivaid]=Hash.new unless imp[cat].key?(ivaid)
@@ -153,9 +153,13 @@ class Tesdoc < ActiveRecord::Base
         @rigdoc.descriz    = Article.find_by_codice(row[hshcol[:article_id_bycod]].to_s.strip).descriz
         @rigdoc.iva_id     = Article.find_by_codice(row[hshcol[:article_id_bycod]].to_s.strip).iva_id
         @rigdoc.qta        = row[hshcol[:qta]]||0
-        @rigdoc.prezzo     = row[hshcol[:prezzo]].to_s.sub(",",".")||0
-        @rigdoc.sconto     = row[hshcol[:sconto]]||0
-        @rigdoc.prgrig     = prgrig
+        if row[hshcol[:prezzo]].respond_to?(:value)
+          @rigdoc.prezzo = row[hshcol[:prezzo]].value.to_s.sub(",",".")||0
+        else
+          @rigdoc.prezzo = row[hshcol[:prezzo]].to_s.sub(",",".")||0
+        end
+        @rigdoc.sconto = row[hshcol[:sconto]]||0
+        @rigdoc.prgrig = prgrig
         if @rigdoc.qta > 0
           if @rigdoc.save
             prgrig += 1

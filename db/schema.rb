@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120723144835) do
+ActiveRecord::Schema.define(:version => 20120803132022) do
 
   create_table "anagens", :force => true do |t|
     t.integer  "codice",                     :null => false
@@ -194,6 +194,8 @@ ActiveRecord::Schema.define(:version => 20120723144835) do
     t.datetime "updated_at",                                               :null => false
     t.integer  "anaind_id"
     t.string   "presso",     :limit => 150
+    t.string   "pagam",      :limit => 500
+    t.string   "banca",      :limit => 200
   end
 
   add_index "spedizs", ["tesdoc_id"], :name => "index_spedizs_on_tesdoc_id"
