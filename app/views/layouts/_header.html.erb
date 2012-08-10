@@ -1,6 +1,25 @@
 <header>
   <div class="row">
-  <div class="twelve columns">
+    <div class="twelve columns">
+      <ul class="nav-bar">
+        <li class="has-flyout">
+          <%= link_to "Menu", root_path %>
+          <a href="#" class="flyout-toggle"><span> </span></a>
+          <ul class="flyout">
+            <li> <%= link_to "STATI/NAZIONI", paeses_path %> </li>
+            <li> <%= link_to "CITTA'", localitas_path %> </li>
+            <li> <%= link_to "ARCHIVIO IVA/ESENZIONI", ivas_path %> </li>
+            <li> <%= link_to "CAUSALI DI MAGAZZINO", causmags_path %> </li>
+            <li> <%= link_to "CAUSALI CONTABILI", causales_path %> </li>
+            <li> <%= link_to "ARTICOLI", articles_path %> </li>
+            <li> <%= link_to "CONTI CLIENTI/FORNITORI", contos_path %> </li>
+            <li> <%= link_to "ANAGRAFICA SOGGETTI", anagens_path %> </li>
+            <li> <%= link_to "ARCHIVIO DOCUMENTI", choose_tipo_doc_tesdocs_path %> </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
 
   <nav class="round">
   	<ul>

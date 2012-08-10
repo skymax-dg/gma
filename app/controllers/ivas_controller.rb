@@ -1,7 +1,7 @@
 class IvasController < ApplicationController
   def index
     @title = "Elenco Tipi Iva/Esenzioni"
-    @ivas = Iva.all
+    @ivas = Iva.paginate(:page => params[:page], :per_page => 10, :order => [:codice])
   end
 
   def show

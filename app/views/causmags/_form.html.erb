@@ -1,54 +1,111 @@
 <%= render :partial => 'shared/error_messages', :locals => {:f => @causmag} %>
 <%= form_for(@causmag) do |f| %>
-
-  <div class="field">
-    <%= f.hidden_field :azienda %>
-  </div>
-  <div class="field">
-    <b> <%= f.label "Gruppo (0-9)" %> </b> <br />
-    <%= select(:causmag, :tipo_doc, Causmag::TIPO_DOC.invert.sort, { :prompt => true }) %>
-  </div>
-  <div class="field">
-    <b> <%= f.label "descrizione" %> </b> <br />
-    <%= f.text_field :descriz %>
-  </div>
-  <div class="field">
-    <b> <%= f.label "descrizione causale" %> </b> <br />
-    <%= f.text_field :des_caus %>
-  </div>
-  <div class="field">
-    <b> <%= f.label "tipologia" %> </b>
-    <%= select(:causmag, :tipo, Causmag::TIPO.invert.sort, { :prompt => true }) %>
-  </div>
-  <div class="field">
-    <b> <%= f.label "Impatto sul magazzino" %> </b>
-    <%= select(:causmag, :movimpmag, Causmag::MOVIMPMAG.invert.sort, { :prompt => true }) %>
-  </div>
-  <div class="field">
-    <b> <%= f.label "Magazzino origine (default)" %> </b> <br />
-    <%= select(:causmag, :nrmagsrc, Causmag::NRMAG.invert.sort) %>
-  </div>
-  <div class="field">
-    <b> <%= f.label "Magazzino destinazione (default)" %> </b> <br />
-    <%= select(:causmag, :nrmagdst, Causmag::NRMAG.invert.sort) %>
-  </div>
-  <div class="field">
-    <b> <%= f.label "Movimento contabile" %> </b> <br />
-    <%= select(:causmag, :contabile, Causmag::CONTABILE.invert.sort, { :prompt => true })%>
-  </div>
-  <div class="field">
-    <b> <%= f.label "Causale contabile" %> </b> <br />
-    <%= collection_select(:causmag, :causale_id, Causale.all, :id, :descriz, {:include_blank => true}) %>
-  </div>
-  <div class="field">
-    <b> <%= f.label "Causale di trasporto" %> </b> <br />
-    <%= f.text_field :caus_tra %>
-  </div>
-  <div class="field">
-    <b> <%= f.label "Nome modulo" %> </b> <br />
-    <%= f.text_field :modulo %>
-  </div>
-  <div class="actions">
-    <%= f.submit "SALVA" %>
+  <div class="row">
+    <div class="twelve columns">
+      <fieldset>
+        <legend> Dati causale di magazzino </legend>
+        <div class="row">
+          <div class="one columns"><%= f.label "uno" %></div>
+          <div class="one columns"><%= f.label "due" %></div>
+          <div class="one columns"><%= f.label "tre" %></div>
+          <div class="one columns"><%= f.label "qua" %></div>
+          <div class="one columns"><%= f.label "cin" %></div>
+          <div class="one columns"><%= f.label "sei" %></div>
+          <div class="one columns"><%= f.label "set" %></div>
+          <div class="one columns"><%= f.label "ott" %></div>
+          <div class="one columns"><%= f.label "nov" %></div>
+          <div class="one columns"><%= f.label "die" %></div>
+          <div class="one columns"><%= f.label "und" %></div>
+          <div class="one columns"><%= f.label "dod" %></div>
+        </div>
+        <div class="field">
+          <%= f.hidden_field :azienda %>
+        </div>
+        <div class="row">
+          <div class="one columns offset-by-one">
+            <%= f.label "Gruppo", :class=>"right" %>
+          </div>
+          <div class="two columns">
+            <%= select(:causmag, :tipo_doc, Causmag::TIPO_DOC.invert.sort, { :prompt => true }) %>
+          </div>
+          <div class="one columns">
+            <%= f.label "Descrizione", :class=>"inline right" %>
+          </div>
+          <div class="six columns">
+            <%= f.text_field :descriz %>
+          </div>
+          <div class="one columns"></div>
+        </div>
+        <div class="row">
+          <div class="one columns offset-by-one">
+            <%= f.label "Tipo", :class => "right" %>
+          </div>
+          <div class="two columns">
+            <%= select(:causmag, :tipo, Causmag::TIPO.invert.sort, { :prompt => true }) %>
+          </div>
+          <div class="one columns">
+            <%= f.label "Contabile", :class=>"right" %>
+          </div>
+          <div class="one columns">
+            <%= select(:causmag, :contabile, Causmag::CONTABILE.invert.sort, { :prompt => true })%>
+          </div>
+          <div class="one columns">
+            <%= f.label "Movimenta", :class=>"right" %>
+          </div>
+          <div class="one columns">
+            <%= select(:causmag, :movimpmag, Causmag::MOVIMPMAG.invert.sort, { :prompt => true }) %>
+          </div>
+          <div class="one columns">
+            <%= f.label "Origine", :class=>"right" %>
+          </div>
+          <div class="one columns">
+            <%= select(:causmag, :nrmagsrc, Causmag::NRMAG.invert.sort) %>
+          </div>
+          <div class="one columns">
+            <%= f.label "Destin", :class=>"right" %>
+          </div>
+          <div class="one columns">
+            <%= select(:causmag, :nrmagdst, Causmag::NRMAG.invert.sort) %>
+          </div>
+        </div>
+<br />
+        <div class="row">
+          <div class="one columns offset-by-one">
+            <%= f.label "Causale:", :class=>"inline right" %>
+          </div>
+          <div class="four columns">
+            <%= f.text_field :des_caus %>
+          </div>
+          <div class="one columns">
+            <%= f.label "CausContab", :class=>"right" %>
+          </div>
+          <div class="four columns">
+            <%= collection_select(:causmag, :causale_id, Causale.all, :id, :descriz, {:include_blank => true}) %>
+          </div>
+          <div class="one columns"></div>
+        </div>
+        <div class="row">
+          <div class="one columns offset-by-one">
+            <%= f.label "CausTrasp", :class=>"inline right" %>
+          </div>
+          <div class="four columns">
+            <%= f.text_field :caus_tra %>
+          </div>
+          <div class="one columns">
+            <%= f.label "Modulo", :class=>"inline right" %>
+          </div>
+          <div class="two columns">
+            <%= f.text_field :modulo %>
+          </div>
+          <div class="three columns"></div>
+        </div>
+        <div class="row">
+          <div class="four columns offset-by-one">
+            <%= f.submit "SALVA", :class => "button radius small" %>
+            <%= link_to 'ANNULLA', causmags_path, :class => "button radius small" %>
+          </div>
+        </div>
+      </fieldset>
+    </div>
   </div>
 <% end %>

@@ -2,35 +2,35 @@ ELNCAZND:
   9: EIFIS EDITORE
 ANAGEN:
   TIPO SOGGETTO:
-    F: 'Persona fisica'
-    G: 'Persona giuridica'
-    I: 'Ditta individuale'
+    F: 'Pers.fisica'
+    G: 'Pers.giuridica'
+    I: 'Ditta individ.'
 ANAIND:
   NRMAG:
-    0: 'Nessuno'
-    1: 'Principale'
-    2: 'Secondario1'
-    3: 'Secondario2'
-    4: 'Secondario3'
+    0: 'No'
+    1: 'Princ'
+    2: 'Sec1'
+    3: 'Sec2'
+    4: 'Sec3'
 CAUSMAG:
   TIPO_DOC:
-    0: 'Documenti contabili'
+    0: 'Contab.'
     1: 'Ddt'
-    2: 'Documenti generici'
+    2: 'Generici'
   TIPO:
     E: 'Entrata'
     U: 'Uscita'
-    T: 'Trasferimento'
-    V: 'Rend.Vendite'
-    R: 'Rend.Resi'
+    T: 'Trasf.'
+    V: 'Rnd.Vnd.'
+    R: 'Rnd.Resi'
   MOVIMPMAG:
-    M: 'Movimenta'
-    I: 'Impegna'
-    N: 'Non impatta'
+    M: 'Mov'
+    I: 'Imp'
+    N: 'No'
   MAGCLI:
-    C: 'Carico'
-    S: 'Scarico'
-    N: 'Nessuna'
+    C: 'Car'
+    S: 'Sca'
+    N: 'No'
   CONTABILE:
     S: 'Si'
     N: 'No'
@@ -40,14 +40,14 @@ CONTO:
     F: 'Fornitore'
     A: 'Altro'
   TIPOPEO:
-    P: 'Patrimoniale'
-    E: 'Economico'
-    O: 'd''Ordine'
+    P: 'Patrim'
+    E: 'Econom'
+    O: 'Ordine'
 PAESE:
   TPEU:
     E: 'Europeo'
-    X: 'Extraeuropeo'
-    N: 'Da assegnare'
+    X: 'Extraeu'
+    N: 'Da ass.'
 TESDOC:
   SEGUEFATT:
     S: 'Si'
@@ -61,11 +61,11 @@ CAUSALE:
     N: 'No'
 SPEDIZ:
   CAUSTRA:
-    ICD: 'Conto Deposito'
-    ICV: 'Conto Vendita'
+    ICD: 'C/Deposito'
+    ICV: 'C/Vendita'
     IOM: 'Omaggio'
-    RCD: 'Reso da Conto Deposito'
-    RCV: 'Reso da Conto Vendita'
+    RCD: 'Reso da C/Dep'
+    RCV: 'Reso da C/Ven'
   CORRIERE:
     GLS: 'GLS'
     SDA: 'SDA'

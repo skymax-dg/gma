@@ -1,6 +1,20 @@
-<h1><%= @title %></h1>
+<div class="row">
+  <div class="twelve columns">
+    <div class="panel pagetitle">
+      <%= @title %>
+    </div>
+  </div>
+</div>
 <%= render 'form' %>
-
-<%= link_to 'Visualizza', @localita %> |
-<%= link_to 'Indietro', localitas_path %>
-
+<div class="row">
+  <div class="twelve columns">
+    <ul class="button-group [radius, rounded]">
+      <li>
+        <%= link_to 'Visualizza', @localita, :class => "button radius small" %>
+      </li>
+      <li>
+       	<%= link_to 'Indietro', localitas_path, :class => "button radius small" %>
+      </li>
+    </ul>
+  </div>
+</div>

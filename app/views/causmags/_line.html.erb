@@ -4,9 +4,9 @@
   <td><%= Causmag::TIPO[line.tipo] %></td>
   <td><%= Causmag::MOVIMPMAG[line.movimpmag] %></td>
   <td><%= Causmag::CONTABILE[line.contabile] %></td>
-  <td><%= line.causale.descriz unless line.causale.nil? %></td>
-  <td><%= line.caus_tra unless line.caus_tra.nil? %></td>
-  <td><%= link_to 'Visualizza', line %></td>
-  <td><%= link_to 'Modifica', edit_causmag_path(line) %></td>
-  <td><%= link_to 'Elimina', line, :confirm => 'Confermi?', :method => :delete %></td>
+  <td>
+    <%= link_to 'V', line, :class => "button radius tiny", :title => "Visualizza" %>
+    <%= link_to 'M', edit_causmag_path(line), :class => "button radius tiny", :title => "Modifica" %>
+    <%= link_to 'C', line, :confirm => 'Confermi?', :method => :delete, :class => "button radius tiny", :title => "Cancella" %>
+  </td>
 </tr>

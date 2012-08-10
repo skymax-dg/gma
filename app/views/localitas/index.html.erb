@@ -1,7 +1,7 @@
 <div class="row">
   <div class="twelve columns">
-    <div class="panel">
-      <h1><%= @title %></h1>
+    <div class="panel pagetitle">
+      <%= @title %>
     </div>
   </div>
 </div>
@@ -11,20 +11,17 @@
       <%= will_paginate @localitas %>
       <table>
         <thead>
-          <th>Descrizione</th>
-          <th>Prv.</th>
-          <th>Cap</th>
-          <th>Paese</th>
-          <th>C.F.</th>
-          <th />
-          <th />
-          <th />
+          <th width="40%">Descrizione</th>
+          <th width="3%">Prv.</th>
+          <th width="6%">Cap</th>
+          <th width="30%">Paese</th>
+          <th width="6%">C.F.</th>
+          <th width="15%"></th>
         </thead>
         <tbody>
             <%= render :partial => 'line', :collection => @localitas unless @localitas.empty? %>
         </tbody>
       </table>
-
       <div class="row">
         <div class="twelve columns">
           <ul class="button-group [radius, rounded]">

@@ -4,7 +4,10 @@
 	<td><%= line.cap %></td>
 	<td><%= line.paese.descriz %></td>
 	<td><%= line.codfis %></td>
-	<td><%= link_to 'V', line, :class => "button radius tiny", :title => "Visualizza" %></td>
-	<td><%= link_to 'M', edit_localita_path(line), :class => "button radius tiny", :title => "Modifica" %></td>
-	<td><%= link_to 'C', line, :confirm => 'Confermi?', :method => :delete, :class => "button radius tiny", :title => "Cancella" %></td>
+
+	<td>
+		<%= link_to 'V', line, :class => "button radius tiny", :title => "Visualizza" %>
+		<%= link_to 'M', edit_localita_path(line), :class => "button radius tiny", :title => "Modifica" %>
+		<%= link_to 'C', line, :confirm => 'Confermi?', :method => :delete, :class => "button radius tiny", :title => "Cancella" %>
+	</td>
 </tr>

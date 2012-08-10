@@ -4,7 +4,7 @@
     <div class="twelve columns">
       <fieldset>
         <legend> Dati localita' </legend>
-<!--        <div class="row">
+        <div class="row">
           <div class="one columns"><%= f.label "uno" %></div>
           <div class="one columns"><%= f.label "due" %></div>
           <div class="one columns"><%= f.label "tre" %></div>
@@ -18,11 +18,7 @@
           <div class="one columns"><%= f.label "und" %></div>
           <div class="one columns"><%= f.label "dod" %></div>
         </div>
--->
-<br/>
-<br/>
-<br/>
-<br/>
+
         <div class="row">
           <div class="two columns offset-by-one">
             <%= f.label "Descrizione", :class=>"inline" %>
@@ -32,8 +28,6 @@
           </div>
           <div class="three columns"></div>
         </div>
-<br/>
-<br/>
         <div class="row">
           <div class="two columns offset-by-one">
             <%= f.label "Provincia", :class=>"inline" %>
@@ -55,11 +49,9 @@
           </div>
           <div class="three columns"></div>
         </div>
-<br/>
-<br/>
         <div class="row">
           <div class="two columns offset-by-one">
-            <%= f.label "Stato/Nazione", :class=>"inline" %>
+            <%= f.label "Stato/Nazione" %>
           </div>
           <div class="six columns">
             <%= collection_select :localita,     :paese_id, Paese.all,
@@ -67,23 +59,10 @@
           </div>
           <div class="three columns"></div>
         </div>
-<br/>
-<br/>
-<br/>
-<br/>
-
-<div class="row">
-  <div class="two columns offset-by-one">
-    <%= f.submit "SALVA", :class => "button radius" %>
-  </div>
-</div>
-
-
         <div class="row">
-          <div class="two columns offset-by-one">
-            <div class="actions">
-              <%= f.submit "SALVA" %>
-            </div>
+          <div class="four columns offset-by-one">
+            <%= f.submit "SALVA", :class => "button radius small" %>
+            <%= link_to 'ANNULLA', localitas_path, :class => "button radius small" %>
           </div>
         </div>
       </fieldset>
