@@ -21,17 +21,17 @@ class MovVendTitlePDF < CompanyPDFBase
     options.text_format = { :font_size => 14, :justification => :left }
     data.each do |dataart|
       art = Article.find(dataart.attributes["artid"])
-      desart = 'ARTICOLO: ' + art.codice + '    ' + art.descriz
+      desart = "ARTICOLO: #{art.codice}    #{art.descriz}"
       Tesdoc.anagen_mov_artic(art.id, options.idanagen, options.nrmag, options.anarif, options.tp).each do |tesdoc|
         if options.anarif == "S"
           idanagen = ""
         else
           idanagen = tesdoc.attributes["idanagen"]
-          desanagen = 'ANAGRAFICA: ' + Anagen.find(idanagen).denomin
+          desanagen = "ANAGRAFICA: #{Anagen.find(idanagen).denomin}"
           add_text desanagen
         end
         Tesdoc.mag_mov_artic_anagen(art.id, idanagen, options.nrmag, options.anarif, options.grpmag, options.tp).each do |tesdoc|
-          options.grpmag == "S" ? desmag = 'MAGAZZINI RAGGRUPPATI' : desmag = 'MAGAZZINO: ' + Anaind::NRMAG[tesdoc.attributes['nrmag'].to_i]
+          options.grpmag == "S" ? desmag = 'MAGAZZINI RAGGRUPPATI' : desmag = "MAGAZZINO: #{Anaind::NRMAG[tesdoc.attributes['nrmag'].to_i]}"
           add_text desart
           if options.tp == "M"
             add_text desmag

@@ -1,20 +1,24 @@
 class LocalitasController < ApplicationController
 before_filter :authenticate
   def index
-    @localitas = Localita.paginate(:page => params[:page], :per_page => 10, :order => [:descriz])
+    @title = "Elenco Citta'"
+    @localitas = Localita.paginate(:page => params[:page], :per_page => 15, :order => [:descriz])
 #    @des = ""
 #    @localitas = Localita.where("descriz like '%#{@des}%'").paginate(:page => params[:page], :per_page => 10, :order => [:descriz])
   end
 
   def show
+    @title = "Mostra Citta'"
     @localita = Localita.find(params[:id])
   end
 
   def new
+    @title = "Nuova Citta'"
     @localita = Localita.new
   end
 
   def edit
+    @title = "Modifica Citta'"
     @localita = Localita.find(params[:id])
   end
 

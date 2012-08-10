@@ -1,7 +1,6 @@
 <h1> <%= @title %> </h1>
 
 <%= will_paginate %>
-
 <u1 class="users" >
   <% @users.each do |user| %>
   	<%= user.login %>
@@ -9,8 +8,6 @@
     <%= link_to "Modifica", edit_user_path(user) %> 
   <% end %>
 </u1>
-
-<%= will_paginate %>
 <br />
 <br />
 <br />

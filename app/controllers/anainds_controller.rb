@@ -23,10 +23,10 @@ before_filter :authenticate
     else
       loc = Localita.find(loc_id)
       @descrizloc = ""
-      @descrizloc = loc.cap + ", " unless loc.cap.empty?
-      @descrizloc = @descrizloc + loc.descriz
-      @descrizloc = @descrizloc + " (" + loc.prov + ")" unless loc.prov.empty?
-      @descrizloc = @descrizloc + " - " + loc.paese.descriz unless loc.paese.nil?
+      @descrizloc = "#{loc.cap}, " unless loc.cap.empty?
+      @descrizloc = "#{@descrizloc}#{loc.descriz}"
+      @descrizloc = "#{@descrizloc} (#{loc.prov})" unless loc.prov.empty?
+      @descrizloc = "#{@descrizloc} - #{loc.paese.descriz}" unless loc.paese.nil?
       @caploc = loc.cap unless loc.cap.empty?
     end 
     respond_to do |format|
@@ -41,6 +41,7 @@ before_filter :authenticate
   end
 
   def new
+    @title = "Nuovo Indirizzo"
     @anaind = Anagen.find(params[:id]).anainds.build # La Build valorizza automaticamente il campo anaind.anagen_id
     @anaind.flsl = 'N'
     @anaind.flsp = 'N'
@@ -49,10 +50,12 @@ before_filter :authenticate
   end
 
   def show
+    @title = "Mostra Indirizzo"
     @anaind = Anaind.find(params[:id])
   end
 
   def edit
+    @title = "Modifica Indirizzo"
     @anaind = Anaind.find(params[:id])
   end
 

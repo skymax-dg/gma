@@ -1,17 +1,21 @@
 class IvasController < ApplicationController
   def index
+    @title = "Elenco Tipi Iva/Esenzioni"
     @ivas = Iva.all
   end
 
   def show
+    @title = "Mostra Tipo Iva/Esenzione"
     @iva = Iva.find(params[:id])
   end
 
   def new
+    @title = "Nuovo Tipo Iva/Esenzione"
     @iva = Iva.new
   end
 
   def edit
+    @title = "Modifica Tipo Iva/Esenzione"
     @iva = Iva.find(params[:id])
   end
 

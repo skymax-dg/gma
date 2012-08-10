@@ -1,0 +1,10 @@
+<tr>
+  <td><%= line.codice %></td>
+  <td><%= line.descriz %></td>
+  <td><%= line.desest %></td>
+  <td><%= line.aliq %></td>
+  <td><%= line.flese %></td>
+  <td><%= link_to 'Visualizza', line %></td>
+  <td><%= link_to 'Modifica', edit_iva_path(line) %></td>
+  <td><%= link_to 'Elimina', line, :confirm => 'Confermi?', :method => :delete %></td>
+</tr>

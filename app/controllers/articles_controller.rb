@@ -115,19 +115,23 @@ before_filter :authenticate
   end
 
   def index
+    @title = "Elenco Articoli"
     @articles = Article.azienda(current_user.azienda).paginate(:page => params[:page], :per_page => 25, :order => [:codice])
   end
 
   def show
+    @title = "Mostra Articolo"
     @article = Article.find(params[:id])
   end
 
   def new
+    @title = "Nuovo Articolo"
     @article = Article.new
     @article.azienda = current_user.azienda
   end
 
   def edit
+    @title = "Modifica Articolo"
     @article = Article.find(params[:id])
   end
 

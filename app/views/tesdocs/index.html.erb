@@ -1,30 +1,43 @@
-<h1>Elenco Documenti (<%= Causmag::TIPO_DOC[se_tipo_doc.to_i] %>) </h1>
-<br />
+<h1><%= @title %></h1>
 <%= render :partial => 'filter' %>
-
-<br />
-<br />
-<table>
-  <tr>
-    <th>Tipo doc|</th>
-    <th>Nr. doc|</th>
-    <th>Data documento|</th>
-    <th>Causale documento|</th>
-    <th>TipoConto|</th>
-    <th>CodiceConto|</th>
-    <th>ContoAnagrafica|</th>
+<%= will_paginate @tesdocs unless @tesdocs.nil? %>
+<table class="idx">
+  <tr align=left>
+    <th>Tipo doc</th>
+    <th align=right>Nr. doc</th>
+    <th>Data documento</th>
+    <th>Causale documento</th>
+    <th>TipoConto</th>
+    <th>CodiceConto</th>
+    <th>ContoAnagrafica</th>
     <th></th>
     <th></th>
     <th></th>
   </tr>
 
-  <%= will_paginate @tesdocs unless @tesdocs.nil? %>
   <%= render :partial => 'line', :collection => @tesdocs unless @tesdocs.nil? %>
 </table>
 
 <br />
 
-<%= link_to 'Aggiungi documento', new_tesdoc_path(:causmag => @causmagfilter||"", :conto => @contofilter||""), :remote => true
-                                   %>
-- <%= link_to 'Menu tipo-documenti', choose_tipo_doc_tesdocs_path %>
-- <%= link_to 'Carica Testate e righe doc', addtesrigdoc_fromxls_tesdocs_path, :confirm => 'Confermi caricamento da Exel?' %>
+<table class="pagemenu">
+  <tr>
+    <th>
+      <%= link_to 'Aggiungi documento', new_tesdoc_path(:causmag => @causmagfilter||"",
+                                                        :conto   => @contofilter||""), :remote => true %>
+    </th>
+    <th>
+      <%= link_to 'Menu tipo-documenti', choose_tipo_doc_tesdocs_path %>
+    </th>
+    <th>
+      <%= link_to 'Carica Testate e righe doc', addtesrigdoc_fromxls_tesdocs_path, 
+                  :confirm => 'Confermi caricamento da Exel?' %>
+    </th>
+  </tr>
+</table>
+<li><%= link_to 'Aggiungi documento', new_tesdoc_path(:causmag => @causmagfilter||"",
+                                                      :conto   => @contofilter||""), :remote => true %></li>
+<li><%= link_to 'Menu tipo-documenti', choose_tipo_doc_tesdocs_path %></li>
+<li><%= link_to 'Carica Testate e righe doc', 
+                addtesrigdoc_fromxls_tesdocs_path, 
+                :confirm => 'Confermi caricamento da Exel?' %></li>

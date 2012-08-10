@@ -1,6 +1,7 @@
 class ContosController < ApplicationController
 before_filter :authenticate
   def index
+    @title = "Elenco Conti"
     @contos = Conto.azdanno(current_user.azienda, current_annoese).paginate(:page => params[:page],
                                                                             :per_page => 10,
                                                                             :order => [:codice])
@@ -14,24 +15,27 @@ before_filter :authenticate
   end
 
   def show
+    @title = "Mostra Conto"
     @conto = Conto.find(params[:id])
   end
 
   def new
+    @title = "Nuovo Conto"
     @conto = Conto.new
     @conto.azienda = current_user.azienda
     @conto.annoese = current_annoese
   end
 
   def edit
+    @title = "Modifica Conto"
     @conto = Conto.find(params[:id])
   end
 
   def create
     @conto = Conto.new(params[:conto])
     if not compat_tipoconto(@conto.tipoconto, @conto.anagen_id.nil?)
-      flash.alert = "Per la tipologia " + Conto::TIPOCONTO["C"] + "/" + Conto::TIPOCONTO["F"] +
-                    " e' obbligatorio specificare una anagrafica soggetto"
+      flash.alert = "Per la tipologia #{Conto::TIPOCONTO["C"]}/#{Conto::TIPOCONTO["F"]} " +
+                    "e' obbligatorio specificare una anagrafica soggetto"
       render :action => "new"
     else
       if @conto.save
@@ -45,10 +49,9 @@ before_filter :authenticate
 
   def update
     @conto = Conto.find(params[:id])
-
     if not compat_tipoconto(params[:conto][:tipoconto], params[:conto][:anagen_id].nil?)
-      flash.alert = "Per la tipologia " + Conto::TIPOCONTO["C"] + "/" + Conto::TIPOCONTO["F"] +
-                    " e' obbligatorio specificare una anagrafica soggetto"
+      flash.alert = "Per la tipologia #{Conto::TIPOCONTO["C"]}/#{Conto::TIPOCONTO["F"]} " +
+                    "e' obbligatorio specificare una anagrafica soggetto"
     else
       if @conto.update_attributes(params[:conto])
         redirect_to @conto, :notice => 'Piano dei conti aggiornato con successo.'

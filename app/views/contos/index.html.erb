@@ -1,5 +1,5 @@
-<h1>Elenco Conti</h1>
-
+<h1><%= @title %></h1>
+<%= will_paginate @contos %>
 <table>
   <tr>
     <th>Codice</th>
@@ -14,10 +14,10 @@
     <th></th>
   </tr>
 
-  <%= will_paginate @contos %>
   <%= render :partial => 'line', :collection => @contos unless @contos.empty? %>
 </table>
 
 <br />
 
-<%= link_to 'Nuovo Conto', new_conto_path %>
+<%= link_to 'Nuovo Conto', new_conto_path %> <br />
+<%= link_to 'Indietro', contos_path %>

@@ -1,4 +1,4 @@
-<h1>Mostra Stato/Nazione</h1>
+<h1><%= @title %></h1>
 <p>
   <b>Descrizione:</b>
   <%= @paese.descriz %>
@@ -18,5 +18,4 @@
 </p>
 
 <%= link_to 'Modifica', edit_paese_path(@paese) %> |
-<%#= link_to 'Indietro', :back %>
 <%= link_to 'Indietro', paeses_path %>

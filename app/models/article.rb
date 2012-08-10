@@ -23,7 +23,7 @@ class Article < ActiveRecord::Base
     xls.worksheet(wks).each rownr do |row|
       unless row[colnr].blank?
         if not find_by_azienda_and_codice(azienda, row[colnr].to_s.strip)
-          errors << "L'articolo con codice: " + row[colnr].to_s.strip + " riportato sulla riga: " + (row.idx + 1).to_s + " non e' presente in banca dati."
+          errors << "Articolo: #{row[colnr].to_s.strip} sulla riga: #{(row.idx + 1).to_s} non presente in banca dati."
         end
       end
     end
@@ -58,9 +58,11 @@ class Article < ActiveRecord::Base
 end
 
 def exp_movart_xls(tp, artmov, idanagen, nrmag, anarif, grpmag)
-  formatbold = Spreadsheet::Format.new :weight => :bold
   book = Spreadsheet::Workbook.new # istanzio il workbook (file xls)
+  formatbold = Spreadsheet::Format.new :weight=>:bold, :bottom=>true, :top=>true, :left=>true, :right=>true
+  formatbord = Spreadsheet::Format.new :bottom=>true, :top=>true, :left=>true, :right=>true
   shmovart = book.create_worksheet :name => 'Movimenti' # istanzio lo sheet
+
   if tp == "M"
     shmovart.row(0).concat %w{Articolo Descrizione Anagrafica Data_Doc Nr_Doc Causale Magazzino Carico Scarico Giacenza Impegnato Disponib}
   elsif tp == "V"
@@ -68,7 +70,7 @@ def exp_movart_xls(tp, artmov, idanagen, nrmag, anarif, grpmag)
   else
     errore
   end
-  shmovart.row(0).default_format = formatbold
+  12.times{|i|shmovart.row(0).set_format(i, formatbold)}
   nrrow = 1
   artmov.each do |dataart|
     art = Article.find(dataart.attributes["artid"])
@@ -96,11 +98,13 @@ def exp_movart_xls(tp, artmov, idanagen, nrmag, anarif, grpmag)
             tsca += sca.to_i
             timp += imp.to_i
             shmovart.row(nrrow).concat [art.codice, art.descriz, desanagen, dt_doc, num, cau,
-                                        nrmag,      car,        sca,        giac,   imp, giac-imp.to_i]
+                                        nrmag,      car,         sca,       giac,   imp, giac-imp.to_i]
+            12.times{|i|shmovart.row(nrrow).set_format(i, formatbord)}
             nrrow += 1
           end
-          shmovart.row(nrrow).concat [art.codice, art.descriz, desanagen, "TOTALI:", "", "", "", tcar, tsca, giac, timp, giac-timp]
-          shmovart.row(nrrow).default_format = formatbold
+          shmovart.row(nrrow).concat [art.codice, art.descriz, desanagen, "TOTALI:", "",   "",
+                                      "",         tcar,        tsca,      giac,      timp, giac-timp]
+          12.times{|i|shmovart.row(nrrow).set_format(i, formatbold)}
           nrrow += 2
         else
           prg  = 0
@@ -125,20 +129,14 @@ def exp_movart_xls(tp, artmov, idanagen, nrmag, anarif, grpmag)
             tres += res.to_i
             tfatt += fatt.to_f
             taccr += accr.to_f
-#           fatt = fatt.round(2).to_s
-#           fatt << "0" if fatt[fatt.length-2] == '.'
-#           accr = accr.round(2).to_s
-#           accr << "0" if accr[accr.length-2] == '.'
-#           prezzo = prezzo.round(2).to_s
-#           prezzo << "0" if prezzo[prezzo.length-2] == '.'
-#           fatt = "" if fatt == "0.00"
-#           accr = "" if accr == "0.00"
             shmovart.row(nrrow).concat [art.codice, art.descriz, desanagen, dt_doc, num,  cau,
                                         ven,        res,         prezzo,    fatt,   accr, prg.to_i]
+            12.times{|i|shmovart.row(nrrow).set_format(i, formatbord)}
             nrrow += 1
           end
-          shmovart.row(nrrow).concat [art.codice, art.descriz, desanagen, "TOTALI:", "", "", tven, tres, "", tfatt, taccr, prg.to_i]
-          shmovart.row(nrrow).default_format = formatbold
+          shmovart.row(nrrow).concat [art.codice, art.descriz, desanagen, "TOTALI:", "",    "",
+                                      tven,       tres,        "",        tfatt,     taccr, prg.to_i]
+          12.times{|i|shmovart.row(nrrow).set_format(i, formatbold)}
           shmovart.column(1).width = 60
           shmovart.column(2).width = 30
           shmovart.column(5).width = 30

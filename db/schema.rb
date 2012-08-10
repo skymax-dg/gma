@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120803132022) do
+ActiveRecord::Schema.define(:version => 20120806140630) do
 
   create_table "anagens", :force => true do |t|
     t.integer  "codice",                     :null => false
@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(:version => 20120803132022) do
     t.integer  "nrmagdst",                                   :null => false
     t.integer  "causale_id"
     t.string   "magcli",     :limit => 1,   :default => "N"
+    t.string   "caus_tra",   :limit => 50
   end
 
   add_index "causmags", ["azienda", "descriz"], :name => "idx_causmags_on_descriz", :unique => true

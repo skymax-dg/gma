@@ -43,7 +43,7 @@ before_filter :authenticate, :except => [:new, :create]
 
   def index
     @title = "Elenco Utenti"
-    @users = User.where("azienda = " + current_user.azienda.to_s).paginate(:page => params[:page])
+    @users = User.where("azienda = #{current_user.azienda.to_s}").paginate(:page => params[:page])
   end
 
   def destroy

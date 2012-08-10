@@ -34,6 +34,7 @@ before_filter :authenticate
   end
 
   def new
+    @title = "Nuova Riga documento"
     @rigdoc = Tesdoc.find(params[:id]).rigdocs.build # La Build valorizza automaticamente il campo rigdoc.tesdoc_id
     @rigdoc.sconto = Tesdoc.find(params[:id]).sconto
     @rigdoc.iva_id = Tesdoc.find(params[:id]).iva_id
@@ -54,10 +55,12 @@ before_filter :authenticate
   end
 
   def show
+    @title = "Mostra Riga documento"
     @rigdoc = Rigdoc.find(params[:id])
   end
 
   def edit
+    @title = "Modifica Riga documento"
     @rigdoc = Rigdoc.find(params[:id])
   end
 

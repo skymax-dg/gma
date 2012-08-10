@@ -71,8 +71,9 @@ Gma::Application.routes.draw do
     member do
       get :add1row4article
       get :delrowqta0
-      get :stp_ddt1
-      get :stp_fat1
+      get :stp
+#      get :stp_ddt1
+#      get :stp_fat1
       get :ges_datisped
       post :addrow_fromxls
       get :upload_xls

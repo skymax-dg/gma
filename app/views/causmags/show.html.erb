@@ -1,4 +1,4 @@
-<h1>Mostra Causale di magazzino</h1>
+<h1><%= @title %></h1>
 <p>
   <b>Gruppo:</b>
   <%= Causmag::TIPO_DOC[@causmag.tipo_doc] %>
@@ -42,6 +42,11 @@
 <p>
   <b>Causale contabile:</b>
   <%= @causmag.causale.descriz unless @causmag.causale.nil? %>
+</p>
+
+<p>
+  <b>Causale di trasporto:</b>
+  <%= @causmag.caus_tra unless @causmag.caus_tra.nil? %>
 </p>
 
 <p>

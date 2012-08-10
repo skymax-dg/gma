@@ -1,4 +1,5 @@
-<h1>Elenco stati/nazioni</h1>
+<h1><%= @title %></h1>
+<%= will_paginate @paeses %>
 <table>
   <tr>
     <th>Descrizione</th>
@@ -10,10 +11,10 @@
     <th></th>
   </tr>
 
-  <%= will_paginate @paeses %>
   <%= render :partial => 'line', :collection => @paeses unless @paeses.empty? %>
 </table>
 
 <br />
 
-<%= link_to 'Nuovo stato/nazione', new_paese_path %>
+<%= link_to 'Nuovo stato/nazione', new_paese_path %> <br />
+<%= link_to 'Indietro', paeses_path %>

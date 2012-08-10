@@ -8,12 +8,14 @@ require 'will_paginate/array'
 
 class TesdocsController < ApplicationController
 before_filter :authenticate
-  def index
-    store_tipo_doc(params[:tipo_doc])
-    init_filter(current_user.azienda)
-  end
 
   def upload_xls
+  end
+
+  def index
+    @title = "Elenco Documenti (#{Causmag::TIPO_DOC[se_tipo_doc.to_i]})"
+    store_tipo_doc(params[:tipo_doc])
+    init_filter(current_user.azienda)
   end
 
   def addrow_fromxls
@@ -45,20 +47,63 @@ before_filter :authenticate
       end
     rescue Exception => e
       flash[:error] = $!.message
-      @errors << "File bloccato da un'altra applicazione o non trovato: " + e.to_s #$?.exitstatus
+      @errors << "File bloccato da un'altra applicazione o non trovato: #{e.to_s}" #$?.exitstatus
+    end
+  end
+
+  def stp
+    @tesdoc   = Tesdoc.find(params[:id])
+    @tit_doc  = []
+
+    @tit_doc[0] = "#{@tesdoc.causmag.des_caus}"
+    @tit_doc[1] = ""
+    @ana      = Anagen.find(current_user.azienda)
+    @sl       = @ana.sedelegale
+    @anad     = Anagen.find(@tesdoc.conto.anagen_id)
+    @sld      = @anad.sedelegale
+    @rifdoc   = {:nr => @tesdoc.num_doc, :dt => @tesdoc.data_doc}
+
+    @datispe  = @tesdoc.spediz unless @tesdoc.spediz.nil?
+    if @tesdoc.movmagint && @tesdoc.spediz.nil?
+      flash[:error] = "DATI DI SPEDIZIONE MANCANTI"
+      redirect_to @tesdoc
+    elsif @tesdoc.causmag.modulo == "DDT"
+      @tit_doc[1] = "(D.d.t.) D.P.R. 472 del 14-08-1996 - D.P.R. 696 del 21.12.1996"
+      @datispe  = @tesdoc.spediz
+      render 'stp_ddt1.pdf'
+    elsif @tesdoc.causmag.modulo == "NOTACRE"
+      render 'stp_fat1.pdf'
+    elsif @tesdoc.causmag.modulo == "FATT"
+      render 'stp_fat1.pdf'
+    elsif @tesdoc.causmag.modulo == "FATTACC"
+      render 'stp_fat1.pdf'
+    elsif @tesdoc.causmag.modulo == "ORD"
+      flash[:error] = "MODULO DI STRAMPA NON TROVATO !!! (#{@tesdoc.causmag.modulo})"
+      redirect_to @tesdoc
+    elsif @tesdoc.causmag.modulo == "PREV"
+      flash[:error] = "MODULO DI STRAMPA NON TROVATO !!! (#{@tesdoc.causmag.modulo})"
+      redirect_to @tesdoc
+    elsif @tesdoc.causmag.modulo == "TRASF"
+      flash[:error] = "MODULO DI STRAMPA NON TROVATO !!! (#{@tesdoc.causmag.modulo})"
+      redirect_to @tesdoc
     end
   end
 
   def stp_ddt1
     @tesdoc   = Tesdoc.find(params[:id])
-    @tit_doc = ["#{@tesdoc.causmag.descriz}", "(D.d.t.) D.P.R. 472 del 14-08-1996 - D.P.R. 696 del 21.12.1996"]
-    @ana      = Anagen.find(current_user.azienda)
-    @sl       = @ana.sedelegale
-    @anad     = Anagen.find(@tesdoc.conto.anagen_id)
-    @sld      = @anad.sedelegale
-    @datispe  = @tesdoc.spediz
-    @rifdoc   = {:nr => @tesdoc.num_doc, :dt => @tesdoc.data_doc}
-    render 'stp_ddt1.pdf'
+    if @tesdoc.movmagint
+      @tit_doc = ["#{@tesdoc.causmag.des_caus}", "(D.d.t.) D.P.R. 472 del 14-08-1996 - D.P.R. 696 del 21.12.1996"]
+      @ana      = Anagen.find(current_user.azienda)
+      @sl       = @ana.sedelegale
+      @anad     = Anagen.find(@tesdoc.conto.anagen_id)
+      @sld      = @anad.sedelegale
+      @datispe  = @tesdoc.spediz
+      @rifdoc   = {:nr => @tesdoc.num_doc, :dt => @tesdoc.data_doc}
+      render 'stp_ddt1.pdf'
+    else
+      flash[:error] = "STAMPA DDT FALLITA !!! -- Il Documento non movimenta il magazzino"
+      redirect_to @tesdoc
+    end
   end
 
   def stp_fat1
@@ -83,11 +128,17 @@ before_filter :authenticate
   end
 
   def ges_datisped
-    tesdoc = Tesdoc.find(params[:id])
-    if tesdoc.spediz
-      redirect_to edit_spediz_path(:id => params[:id])
+    @tesdoc = Tesdoc.find(params[:id])
+    if @tesdoc.movmagint || @tesdoc.causmag.contabile == "S"
+      if @tesdoc.spediz
+        redirect_to edit_spediz_path(:id => params[:id])
+      else
+        redirect_to new_spediz_path(:id => params[:id])
+      end
     else
-      redirect_to new_spediz_path(:id => params[:id])
+      flash[:error] = "La causale del Documento non e' di tipo contabile e non movimenta il magazzino,
+                       dati spedizione/pagamento non necessari"
+      redirect_to @tesdoc
     end
   end
 
@@ -130,7 +181,7 @@ before_filter :authenticate
       end
     rescue Exception => e
       flash[:error] = $!.message
-      @errors << "File bloccato da un'altra applicazione o non trovato: " + e.to_s #$?.exitstatus
+      @errors << "File bloccato da un'altra applicazione o non trovato: #{e.to_s}" #$?.exitstatus
     end
   end
 
@@ -157,6 +208,7 @@ before_filter :authenticate
   end
   
   def new
+    @title = "Nuovo Documento (#{Causmag::TIPO_DOC[se_tipo_doc.to_i]})"
     respond_to do |format|
       format.html do
         if params[:causmag].empty? or params[:causmag].nil? or params[:conto].empty? or params[:conto].nil?
@@ -186,6 +238,7 @@ before_filter :authenticate
   end
 
   def show
+    @title = "Mostra Documento (#{Causmag::TIPO_DOC[se_tipo_doc.to_i]})"
     @tesdoc = Tesdoc.find(params[:id])
     @rigdocs = @tesdoc.rigdocs.sort{|a,b|a.prgrig<=>b.prgrig}
     @rigdocs = @rigdocs.paginate(:page => params[:page], :per_page => 10)
@@ -193,6 +246,7 @@ before_filter :authenticate
   end
 
   def edit
+    @title = "Modifica Testata documento (#{Causmag::TIPO_DOC[se_tipo_doc.to_i]})"
     @act_new = 0
     @tesdoc  = Tesdoc.find(params[:id])
     @causmag = Causmag.find(@tesdoc.causmag_id)

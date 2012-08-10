@@ -1,19 +1,23 @@
 class AnagensController < ApplicationController
 before_filter :authenticate
   def index
+    @title = "Elenco Soggetti/Societa'"
     @anagens = Anagen.paginate(:page => params[:page], :per_page => 10, :order => [:denomin])
   end
 
   def show
+    @title = "Mostra Soggetto/Societa'"
     @anagen = Anagen.find(params[:id])
   end
 
   def new
+    @title = "Nuovo Soggetto/Societa'"
     @anagen = Anagen.new
     @anagen.codice = Anagen.newcod
   end
 
   def edit
+    @title = "Modifica Soggetto/Societa'"
     @anagen = Anagen.find(params[:id])
   end
 

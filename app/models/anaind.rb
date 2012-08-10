@@ -13,14 +13,14 @@ class Anaind < ActiveRecord::Base
 
   def decoflgs
     deco = ""
-    deco = deco + "Sede legale/" if flsl == 'S'
-    deco = deco + "Indirizzo di spedizione/" if flsp == "S"
-    deco = deco + "Indirizzo di magazzino/" if flmg == "S"
-    if deco == "" then deco = "Indirizzo generico" else deco = deco[0, deco.length-1] end
+    deco = "#{deco}Sede legale/" if flsl == 'S'
+    deco = "#{deco}Indirizzo di spedizione/" if flsp == "S"
+    deco = "#{deco}Indirizzo di magazzino/" if flmg == "S"
+    deco == "" ? deco = "Indirizzo generico" : deco = deco[0, deco.length-1]
   end
 
   def ind_completo
-    self.indir + " " + self.cap + " " + self.desloc
+    "#{self.indir} #{self.cap} #{self.desloc}"
   end
 
   def self.nrmagexist(id, anagen_id, nrmag)

@@ -1,4 +1,4 @@
-<h1>Mostra Dati di spedizione / pagamento</h1>
+<h1><%= @title %></h1>
 <p>
   <b>Causale di trasporto:</b>
   <%= Spediz::CAUSTRA[@spediz.caustra] %>
@@ -58,7 +58,4 @@
   <%#= @spediz.note %>
 </p>
 
-
 <%= link_to 'Indietro', @spediz.tesdoc %>
-<%#= link_to 'Edit', edit_spediz_path(@spediz) %> |
-<%#= link_to 'Back', spedizs_path %>

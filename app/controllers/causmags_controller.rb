@@ -1,16 +1,19 @@
 class CausmagsController < ApplicationController
 before_filter :authenticate
   def index
+    @title = "Elenco Causali di magazzino"
     @causmags = Causmag.azienda(current_user.azienda).paginate(:page     => params[:page], 
                                                                :per_page => 20, 
                                                                :order => [:tipo_doc, :descriz])
   end
 
   def show
+    @title = "Mostra Causale di magazzino"
     @causmag = Causmag.find(params[:id])
   end
 
   def new
+    @title = "Nuova Causale di magazzino"
     @causmag = Causmag.new
     @causmag.azienda = current_user.azienda
     @causmag.nrmagsrc = 0
@@ -18,6 +21,7 @@ before_filter :authenticate
   end
 
   def edit
+    @title = "Modifica Causale di magazzino"
     @causmag = Causmag.find(params[:id])
   end
 

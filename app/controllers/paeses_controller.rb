@@ -1,19 +1,23 @@
 class PaesesController < ApplicationController
 before_filter :authenticate
   def index
+    @title = "Elenco Stati/Nazioni"
     @paeses = Paese.paginate(:page => params[:page], :per_page => 10, :order => [:descriz])
   end
 
   def show
+    @title = "Mostra Stato/Nazione"
     @paese = Paese.find(params[:id])
   end
 
   def new
+    @title = "Nuovo Stato/Nazione"
     @paese = Paese.new
     @paese.descriz = params[:descriz] unless params[:descriz].nil?
   end
 
   def edit
+    @title = "Modifica Stato/Nazione"
     @paese = Paese.find(params[:id])
   end
 

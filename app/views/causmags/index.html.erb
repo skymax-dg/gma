@@ -1,4 +1,5 @@
-<h1>Elenco Causali di magazzino</h1>
+<h1><%= @title %></h1>
+<%= will_paginate @causmags %>
 <table>
   <tr>
     <th>Gruppo</th>
@@ -7,15 +8,16 @@
     <th>Magazzino</th>
     <th>Contabile</th>
     <th>Causale contabile</th>
+    <th>Causale di trasporto</th>
     <th></th>
     <th></th>
     <th></th>
   </tr>
 
-  <%= will_paginate @causmags %>
   <%= render :partial => 'line', :collection => @causmags unless @causmags.empty? %>
 </table>
 
 <br />
 
-<%= link_to 'Nuova Causale', new_causmag_path %>
+<%= link_to 'Nuova Causale', new_causmag_path %> <br />
+<%= link_to 'Indietro', causmags_path %>

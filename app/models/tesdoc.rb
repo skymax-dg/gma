@@ -19,6 +19,11 @@ class Tesdoc < ActiveRecord::Base
   SEGUEFATT = $ParAzienda['TESDOC']['SEGUEFATT']
   TIPO_DOC  = $ParAzienda['CAUSMAG']['TIPO_DOC']
 
+  def movmagint
+    return false if self.causmag.movimpmag!='M'||self.causmag.tipo=='V'||self.causmag.tipo == 'R'
+    return true
+  end
+
   def add1row4article(azienda)
     newprg = self.lastprgrig + 1
     error = 0

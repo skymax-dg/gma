@@ -19,47 +19,53 @@
                :at => [250,760], :width => 280, :height => 24, :size => 8, :align => :center
 
   #Mittente
-  pdf.bounding_box [0,780], :width => 240, :height => 190 do
+  pdf.bounding_box [0,780], :width => 240, :height => 155 do
     pdf.stroke_bounds
   end
   pdf.formatted_text_box [{:text => "#{@ana.denomin.upcase}\n", :styles => [:bold], :size => 12},
-                          {:text => "Part.Iva: #{@ana.pariva}\n"},
                           {:text => "#{@sl[:indir]}\n#{@sl[:cap]} #{@sl[:desloc]}\n"},
+                          {:text => "Part.Iva: #{@ana.pariva}\n"},
                           {:text => "Tel: #{@ana.telefono} / Fax: #{@ana.fax}\n"},
                           {:text => "E-Mail: #{@ana.email} / Web: #{@ana.web}"}
                           ],
-                         :at => [2,777], :width => 238, :height => 185,
+                         :at => [2,757], :width => 238, :height => 130,
                          :overflow => :shrink_to_fit, :size => 10, :min_font_size => 6
 
   #Destinatario
-  pdf.bounding_box [240,740], :width => 290, :height => 170 do
+  pdf.bounding_box [240,740], :width => 290, :height => 135 do
     pdf.stroke_bounds
   end
   pdf.formatted_text_box [{:text => "Spett.le: #{@anad.denomin.upcase}\n", :styles => [:bold], :size => 12},
-                          {:text => "Part.Iva: #{@anad.pariva}\n"},
                           {:text => "#{@sld[:indir]}\n#{@sld[:cap]} #{@sld[:desloc]}\n"},
+                          {:text => "Part.Iva: #{@anad.pariva}\n"},
                           {:text => "E-Mail: #{@anad.email} / Web: #{@anad.web}"}],
-                         :at => [242,698], :width => 286, :height => 158,
+                         :at => [242,698], :width => 286, :height => 92,
                          :overflow => :shrink_to_fit, :size => 10, :min_font_size => 6
   #Riferimenti documento
-  pdf.bounding_box [0,590], :width => 240, :height => 20 do
+  pdf.bounding_box [0,625], :width => 240, :height => 20 do
     pdf.stroke_bounds
   end
   pdf.text_box "DOCUMENTO Nr. #{@rifdoc[:nr]} del #{@rifdoc[:dt].strftime("%d/%m/%Y")}",
-               :at => [2, 584], :width => 240, :height => 15, :size => 12, :style => :bold
+               :at => [2, 619], :width => 240, :height => 15, :size => 12, :style => :bold
   # do per scontato che se è stata specificata una causale di trasporto allora il documeno deve riportare anche
   # i dati DDT.
-  @datispe&&@datispe.caustra&&@datispe.caustra.strip.length > 0 ? ddt = 1 : ddt=0
+  @datispe&&@datispe.corriere&&@datispe.corriere.strip.length > 0 ? ddt = 1 : ddt=0
 
   if ddt == 1
+    pdf.bounding_box [0,605], :width => 530, :height => 30 do
+      pdf.stroke_bounds
+    end
     pdf.formatted_text_box [{:text => "Causale di trasporto: ", :styles => [:bold]},
-                            {:text => Spediz::CAUSTRA[(@datispe&&@datispe.caustra)||""]||""}],
-                             :at => [2, 565], :width => 240, :height => 20, :size => 10
+                            {:text => @tesdoc.causmag.caus_tra||""}],
+                             :at => [2, 590], :width => 240, :height => 20, :size => 10
+#                             :at => [2, 565], :width => 240, :height => 20, :size => 10
     pdf.formatted_text_box [{:text => "A mezzo: ", :styles => [:bold]},
                             {:text => Spediz::CORRIERE[(@datispe&&@datispe.corriere)||""]||""}],
-                             :at => [270, 565], :width => 260, :height => 45, :size => 10
+                             :at => [270, 590], :width => 260, :height => 45, :size => 10
+#                             :at => [270, 565], :width => 260, :height => 45, :size => 10
   end
-  pdf.move_down 25
+  pdf.move_down 10
+  pdf.text "DETTAGLIO ARTICOLI", :size => 14, :style => :bold, :align => :center
   @tb = Array.new(1, ["CODICE", "DESCRIZIONE", "Q.TA", "PRZ.\nLIST.", "PRZ.\nSCN.", "IMPON.", "IVA"])
   @tqta=0
   @timpon=0
@@ -73,7 +79,7 @@
   @tb << ["TOTALE", "", @tqta, "", "", number_with_precision(@timpon), ""]#number_with_precision(@timposta)]
 
   #Creazione e stampa tabella articoli
-  tab = pdf.make_table(@tb, :column_widths=>{0=>80, 3=>35, 4=>35}, :cell_style => {:size => 8})
+  tab = pdf.make_table(@tb, :column_widths=>{0=>80, 1=>245, 2=>30, 3=>35, 4=>35, 5=>50, 6=>50}, :cell_style => {:size => 8})
   tab.row(0).font_style = :bold
   tab.row(tab.row_length-1).font_style = :bold
   tab.header = true
@@ -110,12 +116,12 @@
     #Esegue salto pagina se non è rimasto abbastanza spazio per le note
     pdf.cursor < 300 ? pdf.start_new_page : pdf.move_cursor_to(310)
     
-    pdf.text "Pagamento:", :size => 10, :style => :bold
-    pdf.text @datispe.pagam, :size => 8  
-#    pdf.text "Pagamento: #{@datispe.pagam}", :size => 8  
-    pdf.text "Banca:", :size => 10, :style => :bold
-    pdf.text @datispe.banca, :size => 8
-#    pdf.text "Banca: #{@datispe.banca}", :size => 8
+    pdf.text "Pagamento:", :size => 12, :style => :bold
+    pdf.text @datispe.pagam, :size => 10
+#    pdf.text "Pagamento: #{@datispe.pagam}", :size => 10
+    pdf.text "Banca:", :size => 12, :style => :bold
+    pdf.text @datispe.banca, :size => 10
+#    pdf.text "Banca: #{@datispe.banca}", :size => 10
   end
 
   #note

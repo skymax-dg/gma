@@ -1,4 +1,4 @@
-<h1>Mostra Documento (<%= Causmag::TIPO_DOC[se_tipo_doc.to_i] %>) </h1>
+<h1><%= @title %></h1>
 <p>
   <b>Azienda:</b>
   <%= @tesdoc.azienda %>
@@ -71,6 +71,7 @@
 </tr>
 </table>
 <br />
+<%= will_paginate @rigdocs %>
 <table border="1" cellspacing=5 cellpadding=5 >
   <tr>
     <th align=left  > Codice articolo </b> </th>
@@ -85,7 +86,6 @@
     <th></th>
   </tr>
 
-  <%= will_paginate @rigdocs %>
   <%= render :partial => '/rigdocs/line', :collection => @rigdocs unless @rigdocs.empty? %>
 </table>
 
@@ -94,8 +94,7 @@
 <%= link_to 'Elimina_documento', @tesdoc, :confirm => 'Confermi eliminazione?', :method => :delete %>
 |<%= link_to 'Aggiungi_documento', new_tesdoc_path(:causmag => @tesdoc.causmag_id||"", :conto => @tesdoc.conto_id||"") %>
 |<%= link_to '.Modifica_testata_', edit_tesdoc_path %>
-|<%= link_to '____Stampa_DDT____', stp_ddt1_tesdoc_path %>
-|<%= link_to 'Stampa_Fatt/NotaC.', stp_fat1_tesdoc_path %>
+|<%= link_to '______Stampa______', stp_tesdoc_path %>
 |<%= link_to 'Dati_spediz./pagam.', ges_datisped_tesdoc_path %>
 <br />
 <%= link_to '__Aggiungi_riga___', new_rigdoc_path(:id => @tesdoc.id) %>
@@ -103,5 +102,4 @@
 |<%= link_to '1_riga_per_articolo', add1row4article_tesdoc_path %>
 |<%= link_to 'Canc.righe_con_qta=0', delrowqta0_tesdoc_path %>
 <br />
-<%#= link_to 'Indietro', :back %>
 <%= link_to 'Indietro', :controller => :tesdocs, :action => 'index', :tipo_doc => se_tipo_doc %>

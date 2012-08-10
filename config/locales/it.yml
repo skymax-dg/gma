@@ -2,6 +2,10 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 it:
+  will_paginate:
+    previous_label: "&#8592; Prec."
+    next_label: "Succ. &#8594;"
+    page_gap: "&hellip;"
   number:
     currency:
         format:

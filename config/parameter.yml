@@ -36,9 +36,9 @@ CAUSMAG:
     N: 'No'
 CONTO:
   TIPOCONTO:
-    C: 'Cliente__'
+    C: 'Cliente'
     F: 'Fornitore'
-    A: 'Altro____'
+    A: 'Altro'
   TIPOPEO:
     P: 'Patrimoniale'
     E: 'Economico'

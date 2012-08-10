@@ -1,0 +1,10 @@
+<tr>
+  <td><%= line.descriz %></td>
+  <td><%= line.prov %></td>
+  <td><%= line.cap %></td>
+  <td><%= line.paese.descriz %></td>
+  <td><%= line.codfis %></td>
+  <td><%= link_to 'Visualizza', line %></td>
+  <td><%= link_to 'Modifica', edit_localita_path(line) %></td>
+  <td><%= link_to 'Elimina', line, :confirm => 'Confermi?', :method => :delete %></td>
+</tr>

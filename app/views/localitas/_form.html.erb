@@ -1,29 +1,92 @@
 <%= render :partial => 'shared/error_messages', :locals => {:f => @localita} %>
 <%= form_for(@localita) do |f| %>
-  <div class="field">
-    <b> <%= f.label "Descrizione" %> </b> <br />
-    <%= f.text_field :descriz %>
+  <div class="row">
+    <div class="twelve columns">
+      <fieldset>
+        <legend> Dati localita' </legend>
+<!--        <div class="row">
+          <div class="one columns"><%= f.label "uno" %></div>
+          <div class="one columns"><%= f.label "due" %></div>
+          <div class="one columns"><%= f.label "tre" %></div>
+          <div class="one columns"><%= f.label "qua" %></div>
+          <div class="one columns"><%= f.label "cin" %></div>
+          <div class="one columns"><%= f.label "sei" %></div>
+          <div class="one columns"><%= f.label "set" %></div>
+          <div class="one columns"><%= f.label "ott" %></div>
+          <div class="one columns"><%= f.label "nov" %></div>
+          <div class="one columns"><%= f.label "die" %></div>
+          <div class="one columns"><%= f.label "und" %></div>
+          <div class="one columns"><%= f.label "dod" %></div>
+        </div>
+-->
+<br/>
+<br/>
+<br/>
+<br/>
+        <div class="row">
+          <div class="two columns offset-by-one">
+            <%= f.label "Descrizione", :class=>"inline" %>
+          </div>
+          <div class="six columns">
+            <%= f.text_field :descriz %>
+          </div>
+          <div class="three columns"></div>
+        </div>
+<br/>
+<br/>
+        <div class="row">
+          <div class="two columns offset-by-one">
+            <%= f.label "Provincia", :class=>"inline" %>
+          </div>
+          <div class="one columns">
+            <%= f.text_field :prov %>
+          </div>
+          <div class="one columns">
+            <%= f.label "Cap", :class=>"inline" %>
+          </div>
+          <div class="two columns">
+            <%= f.text_field :cap %>
+          </div>
+          <div class="one columns">
+            <%= f.label "CodFis", :class=>"inline" %>
+          </div>
+          <div class="one columns">
+            <%= f.text_field :codfis %>
+          </div>
+          <div class="three columns"></div>
+        </div>
+<br/>
+<br/>
+        <div class="row">
+          <div class="two columns offset-by-one">
+            <%= f.label "Stato/Nazione", :class=>"inline" %>
+          </div>
+          <div class="six columns">
+            <%= collection_select :localita,     :paese_id, Paese.all,
+                                  :id, :descriz %>
+          </div>
+          <div class="three columns"></div>
+        </div>
+<br/>
+<br/>
+<br/>
+<br/>
+
+<div class="row">
+  <div class="two columns offset-by-one">
+    <%= f.submit "SALVA", :class => "button radius" %>
   </div>
-  <div class="field">
-    <b> <%= f.label "Provincia" %> </b> <br />
-    <%= f.text_field :prov %>
-  </div>
-  <div class="field">
-    <b> <%= f.label "Cap" %> </b> <br />
-    <%= f.text_field :cap %>
-  </div>
-  <div class="field">
-    <b> <%= f.label "Stato/Nazione" %> </b> <br />
-    <br />
-    <div id="prt_paese">
-      <%= collection_select :localita, :paese_id, Paese.all, :id, :descriz %>
+</div>
+
+
+        <div class="row">
+          <div class="two columns offset-by-one">
+            <div class="actions">
+              <%= f.submit "SALVA" %>
+            </div>
+          </div>
+        </div>
+      </fieldset>
     </div>
-  </div>
-  <div class="field">
-    <b> <%= f.label "CodFis" %> </b> <br />
-    <%= f.text_field(:codfis, {:size => 5})%>
-  </div>
-  <div class="actions">
-    <%= f.submit "SALVA"%>
   </div>
 <% end %>

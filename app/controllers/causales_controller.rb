@@ -1,21 +1,25 @@
 class CausalesController < ApplicationController
 before_filter :authenticate
   def index
+    @title = "Elenco Causali contabili"
     @causales = Causale.azienda(current_user.azienda).paginate(:page => params[:page], 
                                                                :per_page => 10,
                                                                :order => [:descriz])
   end
 
   def show
+    @title = "Mostra Causale contabile"
     @causale = Causale.find(params[:id])
   end
 
   def new
+    @title = "Nuova Causale contabile"
     @causale = Causale.new
     @causale.azienda = current_user.azienda
   end
 
   def edit
+    @title = "Modifica Causale contabile"
     @causale = Causale.find(params[:id])
   end
 
