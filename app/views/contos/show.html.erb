@@ -1,39 +1,86 @@
-<h1><%= @title %></h1>
-<p>
-  <b>Codice:</b>
-  <%= @conto.codice %>
-</p>
-
-<p>
-  <b>Descrizione:</b>
-  <%= @conto.descriz %>
-</p>
-
-<p>
-  <b>Anagrafica:</b>
-  <%= @conto.anagen.denomin %>
-</p>
-
-<p>
-  <b>Riferimento:</b>
-  <%= Conto::TIPOCONTO[@conto.tipoconto] %>
-</p>
-
-<p>
-  <b>Tipo conto:</b>
-  <%= Conto::TIPOPEO[@conto.tipopeo] %>
-</p>
-
-<p>
-  <b>Contropartita:</b>
-  <%= @conto.cntrpartita %>
-</p>
-
-<p>
-  <b>Sconto:</b>
-  <%= @conto.sconto %>
-</p>
-
-<%= link_to 'Modifica', edit_conto_path(@conto) %> |
-<%#= link_to 'Indietro', :back %>
-<%= link_to 'Indietro', contos_path %>
+<div class="row">
+  <div class="twelve columns">
+    <div class="panel pagetitle">
+      <%= @title %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="twelve columns">
+    <ul class="button-group [radius, rounded]">
+      <li>
+        <%= link_to 'Indietro', contos_path, :class => "button radius small" %>
+      </li>
+      <li>
+        <%= link_to 'Modifica', edit_conto_path(@conto), :class => "button radius small" %>
+      </li>
+      <li>
+        <%= link_to 'Elimina', @conto, :confirm => 'Confermi eliminazione?',
+                                       :method => :delete, :class => "button radius small" %>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="row">
+  <div class="twelve columns">
+    <fieldset>
+      <legend> Dati Conto </legend>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @conto, "Codice:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @conto.codice %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @conto, "Descrizione:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @conto.descriz %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @conto, "Anagrafica:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @conto.anagen.denomin %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @conto, "Riferimento:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= Conto::TIPOCONTO[@conto.tipoconto] %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @conto, "Tipo conto:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= Conto::TIPOPEO[@conto.tipopeo] %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @conto, "Contropartita:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= Conto::TIPOPEO[@conto.cntrpartita] %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @conto, "Sconto:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= Conto::TIPOPEO[@conto.sconto] %>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</div>

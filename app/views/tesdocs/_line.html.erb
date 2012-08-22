@@ -1,10 +1,9 @@
 <tr>
-  <td><%= Causmag::TIPO_DOC[line.causmag.tipo_doc] %></td>
   <td><%= line.num_doc %></td>
   <td><%= line.data_doc.strftime('%d-%m-%Y') %></td>
   <td><%= line.causmag.descriz %></td>
-  <td><%= Conto::TIPOCONTO[line.conto.tipoconto] %></td>
-  <td><%= line.conto.codice %></td>
   <td><%= line.conto.descriz %></td>
-  <td><%= link_to 'Dettaglio', line %></td>
+	<td>
+		<%= link_to 'D', line, :class => "button radius tiny", :title => "Dettaglio" %>
+	</td>
 </tr>

@@ -1,28 +1,40 @@
 <h1><%= @title %></h1>
 
+<div class="row">
+  <div class="twelve columns">
+    <ul class="button-group [radius, rounded]">
+      <li>
+        <%= link_to "Nuovo Utente", new_user_path, :class => "button radius small" %>
+      </li>
+    </ul>
+  </div>
+</div>
 <%= form_for(:session, :url => sessions_path) do |f| %>
-  <div class="field">
-	  <%= f.label :login %>
-	  <br />
-	  <%= f.text_field :login, :value => @login%>
-  </div>
-  <div class="field">
-	  <%= f.label :password %>
-	  <br />
-	  <%= f.password_field :pwd %>
-  </div>
-  <div class="field">
-	  <%= f.label :azienda %>
-	  <br />
-		<%= select(:session, :azienda, (StaticData::ELNCAZND).invert.sort) %>
-  </div>
-  <div class="field">
-	  <%= f.label :annoese %>
-	  <br />
-	  <%= f.number_field :annoese, :size => 5, :value => Time.now.year %>
-  </div>
-  <div class="actions">
-	  <%= f.submit "ENTRA" %>
+<div class="row">
+    <div class="twelve columns">
+      <fieldset>
+        <legend> Dati login </legend>
+        <div class="ten columns offset-by-one">
+          <%= f.label :login %>
+          <%= f.text_field :login, :value => @login%>
+        </div>
+        <div class="ten columns offset-by-one">
+          <%= f.label :password %>
+          <%= f.password_field :pwd %>
+        </div>
+        <div class="five columns offset-by-one">
+          <%= f.label :azienda %>
+          <%= select(:session, :azienda, (StaticData::ELNCAZND).invert.sort) %>
+        </div>
+        <div class="five columns">
+          <%= f.label :annoese %>
+          <%= f.number_field :annoese, :value => Time.now.year %>
+        </div>
+        <hr />
+        <div class="ten columns offset-by-one">
+          <%= f.submit "ENTRA", :class => "button radius small" %>
+        </div>
+      </fieldset>
+    </div>
   </div>
 <% end %>
-<p>New user? <%= link_to "Nuovo Utente", new_user_path %></p>

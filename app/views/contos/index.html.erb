@@ -1,23 +1,38 @@
-<h1><%= @title %></h1>
-<%= will_paginate @contos %>
-<table>
-  <tr>
-    <th>Codice</th>
-    <th>Descrizione</th>
-    <th>Anagrafica</th>
-    <th>Riferimento</th>
-    <th>Tipoconto</th>
-    <th>Cntrpartita</th>
-    <th>Sconto</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-  <%= render :partial => 'line', :collection => @contos unless @contos.empty? %>
-</table>
-
-<br />
-
-<%= link_to 'Nuovo Conto', new_conto_path %> <br />
-<%= link_to 'Indietro', contos_path %>
+<div class="row">
+  <div class="twelve columns">
+    <div class="panel pagetitle">
+      <%= @title %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="twelve columns">
+    <ul class="button-group [radius, rounded]">
+      <li>
+        <%= link_to 'Nuovo Conto', new_conto_path, :class => "button radius small" %>
+      </li>
+      <li>
+        <%= link_to "Indietro", contos_path, :class => "button radius small" %>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="row">
+  <div class="twelve columns">
+    <div class="panel">
+      <table>
+        <thead>
+          <th width="11%">Codice</th>
+          <th width="60%">Descrizione</th>
+          <th width="7%">Riferim.</th>
+          <th width="7%">Tipo</th>
+          <th width="15%"></th>
+        </thead>
+        <tbody>
+            <%= render :partial => 'line', :collection => @contos unless @contos.empty? %>
+        </tbody>
+      </table>
+      <%= will_paginate @contos %>
+    </div>
+  </div>
+</div>

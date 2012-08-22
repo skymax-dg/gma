@@ -3,7 +3,10 @@
   <td><%= Article::CATEG[line.categ] %> </td>
   <td><%= line.descriz %></td>
   <td><%= line.prezzo %></td>
-  <td><%= link_to 'Visualizza', line %></td>
-  <td><%= link_to 'Modifica', edit_article_path(line) %></td>
-  <td><%= link_to 'Elimina', line, :confirm => 'Confermi?', :method => :delete %></td>
+	<td>
+		<%= link_to 'V', line, :class => "button radius tiny", :title => "Visualizza" %>
+		<%= link_to 'M', edit_article_path(line), :class => "button radius tiny", :title => "Modifica" %>
+		<%= link_to 'C', line, :confirm => 'Confermi?',        :method => :delete,
+		                       :class => "button radius tiny", :title => "Cancella" %>
+	</td>
 </tr>

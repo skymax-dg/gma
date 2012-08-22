@@ -1,12 +1,11 @@
 <tr>
   <td><%= line.codice %></td>
   <td><%= line.descriz %></td>
-  <td><%= line.anagen.denomin unless line.anagen.nil? %></td>
   <td><%= Conto::TIPOCONTO[line.tipoconto] %></td>
   <td><%= Conto::TIPOPEO[line.tipopeo] %></td>
-  <td><%= line.cntrpartita %></td>
-  <td><%= line.sconto %></td>
-  <td><%= link_to 'Visualizza', line %></td>
-  <td><%= link_to 'Modifica', edit_conto_path(line) %></td>
-  <td><%= link_to 'Elimina', line, :confirm => 'Confermi?', :method => :delete %></td>
+  <td>
+    <%= link_to 'V', line, :class => "button radius tiny", :title => "Visualizza" %>
+    <%= link_to 'M', edit_conto_path(line), :class => "button radius tiny", :title => "Modifica" %>
+    <%= link_to 'C', line, :confirm => 'Confermi?', :method => :delete, :class => "button radius tiny", :title => "Cancella" %>
+  </td>
 </tr>

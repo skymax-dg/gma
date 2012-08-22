@@ -1,4 +1,17 @@
-<h1><%= @title %></h1>
+<div class="row">
+  <div class="twelve columns">
+    <div class="panel pagetitle">
+      <%= @title %>
+    </div>
+  </div>
+</div>
 <%= render 'form' %>
-
-<%= link_to 'Indietro', @spediz.tesdoc %>
+<div class="row">
+  <div class="twelve columns">
+    <ul class="button-group [radius, rounded]">
+      <li>
+       	<%= link_to 'Indietro', @spediz.tesdoc, :class => "button radius small" %>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -6,5 +6,5 @@
   <td><%= 'X' if line.flsp == 'S' %></td>
   <td><%= 'X' if line.flmg == 'S' %></td>
   <td><%= Anaind::NRMAG[line.nrmag] %></td>
-  <td><%= link_to 'Dettaglio', line %></td>
+  <td><%= link_to 'D', line, :class => "button radius tiny", :title => "Dettaglio" %></td>
 </tr>

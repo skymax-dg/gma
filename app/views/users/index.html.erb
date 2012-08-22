@@ -1,16 +1,35 @@
-<h1> <%= @title %> </h1>
-
-<%= will_paginate %>
-<u1 class="users" >
-  <% @users.each do |user| %>
-  	<%= user.login %>
-    <%= link_to "Elimina", user, :method => :delete, :confirm => "Are you sure?", :title => "Delete #(user.login)" %> 
-    <%= link_to "Modifica", edit_user_path(user) %> 
-  <% end %>
-</u1>
-<br />
-<br />
-<br />
-<%= link_to 'Nuovo utente', new_user_path %> |
-<%= link_to 'Indietro', :back %>
-<%#= link_to 'Indietro', users_path %>
+<div class="row">
+  <div class="twelve columns">
+    <div class="panel pagetitle">
+      <%= @title %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="twelve columns">
+    <ul class="button-group [radius, rounded]">
+      <li>
+        <%= link_to 'Nuovo utente', new_user_path, :class => "button radius small" %>
+      </li>
+      <li>
+        <%= link_to "Indietro", :back, :class => "button radius small" %>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="row">
+  <div class="twelve columns">
+    <div class="panel">
+      <table>
+        <thead>
+          <th width="85%">Login</th>
+          <th width="15%">........................</th>
+        </thead>
+        <tbody>
+          <%= render :partial => 'line', :collection => @users unless @users.empty? %>
+        </tbody>
+      </table>
+      <%= will_paginate @users %>
+    </div>
+  </div>
+</div>

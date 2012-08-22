@@ -1,26 +1,38 @@
-<h1><%= @title %></h1>
-<%= will_paginate @anagens %>
-<table>
-  <tr>
-    <th>Codice</th>
-    <th>Tipo</th>
-    <th>Denomin</th>
-    <th>Luogo di nascita</th>
-    <th>Data di nascita</th>
-    <th>Sesso</th>
-    <th>Codfis</th>
-    <th>Pariva</th>
-    <th>Telefono</th>
-    <th>E-Mail</th>
-    <th>Fax</th>
-    <th>Sito Web</th>
-    <th colspan="3"></th>
-  </tr>
-
-  <%= render :partial => 'line', :collection => @anagens unless @anagens.empty? %>
-</table>
-
-<br />
-
-<%= link_to 'Nuova Anagrafica', new_anagen_path %> <br />
-<%= link_to 'Indietro', anagens_path %>
+<div class="row">
+  <div class="twelve columns">
+    <div class="panel pagetitle">
+      <%= @title %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="twelve columns">
+    <ul class="button-group [radius, rounded]">
+      <li>
+        <%= link_to 'Nuova Anagrafica', new_anagen_path, :class => "button radius small" %>
+      </li>
+      <li>
+        <%= link_to 'Indietro', anagens_path, :class => "button radius small" %>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="row">
+  <div class="twelve columns">
+    <div class="panel">
+      <table>
+        <thead>
+          <th width="6%">Codice</th>
+          <th width="10%">Tipo</th>
+          <th width="65%">Nominat./Ragione sociale</th>
+          <th width="15%">P.I.-C.F.</th>
+          <th width="4%"></th>
+        </thead>
+        <tbody>
+            <%= render :partial => 'line', :collection => @anagens unless @anagens.empty? %>
+        </tbody>
+      </table>
+      <%= will_paginate @anagens %>
+    </div>
+  </div>
+</div>

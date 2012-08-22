@@ -1,34 +1,50 @@
 <%= render :partial => 'shared/error_messages', :locals => {:f => @rigdoc} %>
 <%= form_for @rigdoc do |f| %>
-  <div class="field">
-    <%= hidden_field(:rigdoc, :tesdoc_id) %>
-    <b> <%= f.label "Descizione riga" %> </b>
-    <%= f.text_field :descriz, :size => 100 %>
-  </div>
-  <div class="field">
-    <b> <%= f.label "Articolo" %> </b>
-    <%= collection_select(:rigdoc, :article_id, Article.all, :id, :codice,
-                           {:include_blank => true},
-                            {:data => {:remote => true, :url => url_for(:controller => :rigdocs,
-                                                                        :action => :article_exit)}})%>
-    <span id="article_descriz">
-        <b> <%= @rigdoc.article.des_plus unless @rigdoc.article.nil? %> </b> 
-    </span>
-    <br />
-    <br />
-    <br />
-    <b> <%= f.label "Qta'" %> </b>
-    <%= f.number_field :qta, :size => 3 %>
-    <b> <%= f.label "Prezzo" %> </b>
-    <%= f.number_field :prezzo, :size => 6  %>
-    <b> <%= f.label "Sconto" %> </b>
-    <%= f.number_field :sconto, :size => 6  %>
-    <b> <%= f.label "aliquota iva:" %> </b>
-    <%= collection_select :rigdoc, :iva_id, Iva.all, :id, :descriz, {:include_blank => true} %>
-  </div>
-  <br/>
-  <br/>
-  <div class="actions">
-    <%= f.submit "SALVA"%>
+  <%= hidden_field(:rigdoc, :tesdoc_id) %>
+  <div class="row">
+    <div class="twelve columns">
+      <fieldset>
+        <legend> Dati riga documento </legend>
+        <div class="five columns offset-by-one">
+          <%= f.label "Articolo" %>
+          <%= collection_select(:rigdoc, :article_id, Article.all, :id, :codice,
+                                 {:include_blank => true},
+                                  {:data => {:remote => true, :url => url_for(:controller => :rigdocs,
+                                                                              :action => :article_exit)}})%>
+        </div>
+        <div class="five columns">
+          <%= f.label "Descrizione articolo" %>
+          <span id="article_descriz">
+            <%= @rigdoc.article.des_plus unless @rigdoc.article.nil? %>
+          </span>
+        </div>
+        <div class="ten columns offset-by-one">
+          <%= f.label "Descizione riga" %>
+          <%= f.text_field :descriz %>
+        </div>
+        <div class="four columns offset-by-one">
+          <%= f.label "Qta'" %>
+          <%= f.number_field :qta %>
+        </div>
+        <div class="three columns">
+          <%= f.label "Prezzo" %>
+          <%= f.number_field :prezzo %>
+        </div>
+        <div class="three columns">
+          <%= f.label "Sconto" %>
+          <%= f.number_field :sconto %>
+        </div>
+        <div class="ten columns offset-by-one">
+          <%= f.label "aliquota iva:" %>
+          <%= collection_select :rigdoc, :iva_id, Iva.all, :id, :descriz, {:include_blank => true} %>
+        </div>
+        <hr />
+        <div class="ten columns offset-by-one">
+          <%= f.submit "SALVA", :class => "button radius small" %>
+          <%= link_to 'ANNULLA', @rigdoc, :class => "button radius small" %>
+        </div>
+      </fieldset>
+    </div>
   </div>
 <% end %>
+

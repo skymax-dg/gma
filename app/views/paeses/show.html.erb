@@ -1,21 +1,62 @@
-<h1><%= @title %></h1>
-<p>
-  <b>Descrizione:</b>
-  <%= @paese.descriz %>
-</p>
-
-<p>
-  <b>Tipo:</b>
-  <%= Paese::TPEU[@paese.tpeu] %>
-</p>
-<p>
-  <b>Codice belfiore(CF):</b>
-  <%= @paese.codfis %>
-</p>
-<p>
-  <b>Prefisso P_iva:</b>
-  <%= @paese.prepiva %>
-</p>
-
-<%= link_to 'Modifica', edit_paese_path(@paese) %> |
-<%= link_to 'Indietro', paeses_path %>
+<div class="row">
+  <div class="twelve columns">
+    <div class="panel pagetitle">
+      <%= @title %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="twelve columns">
+    <ul class="button-group [radius, rounded]">
+      <li>
+        <%= link_to 'Indietro', paeses_path, :class => "button radius small" %>
+      </li>
+      <li>
+        <%= link_to 'Modifica', edit_paese_path(@paese), :class => "button radius small" %>
+      </li>
+      <li>
+        <%= link_to 'Elimina', @paese, :confirm => 'Confermi eliminazione?',
+                                       :method => :delete, :class => "button radius small" %>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="row">
+  <div class="twelve columns">
+    <fieldset>
+      <legend> Dati stato/nazione </legend>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @paese, "Descrizione:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @paese.descriz %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @paese, "Tipo:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= Paese::TPEU[@paese.tpeu] %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @paese, "Codice belfiore:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @paese.codfis %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @paese, "Prefisso partita iva:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @paese.prepiva %>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</div>

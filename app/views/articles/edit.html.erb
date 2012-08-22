@@ -1,7 +1,10 @@
-<h1><%= @title %></h1>
-<br/>
-
 <%= render 'form' %>
-
-<%= link_to 'Visualizza', @article %> |
-<%= link_to 'Indietro', articles_path %>
+<div class="row">
+  <div class="twelve columns">
+    <ul class="button-group [radius, rounded]">
+      <li>
+        <%= link_to 'Visualizza', @article, :class => "button radius small" %>
+      </li>
+    </ul>
+  </div>
+</div>

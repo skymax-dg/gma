@@ -1,4 +1,16 @@
 <%= form_tag 'addrow_fromxls', :multipart => true do %>
-  <label for="file">File excel da caricare </label> <%= file_field_tag "file" %>
-  <%= submit_tag %>
+  <div class="row">
+    <div class="twelve columns">
+      <fieldset>
+        <legend> Elabora file </legend>
+        <div class="ten columns offset-by-one">
+  		    <label for="file">File excel da caricare </label>
+          <%= file_field_tag "file" %>
+        </div>
+        <div class="ten columns offset-by-one">
+          <%= submit_tag %>
+        </div>
+      </fieldset>
+    </div>
+  </div>
 <% end %>

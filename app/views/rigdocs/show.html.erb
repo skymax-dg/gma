@@ -1,43 +1,94 @@
-<h1><%= @title %></h1>
-<p>
-  <b>Descrizione riga:</b>
-  <%= @rigdoc.descriz %>
-</p>
-
-<p>
-  <b>Codice articolo:</b>
-  <%= @rigdoc.article.codice unless @rigdoc.article.nil? %>
-</p>
-
-<p>
-  <b>Descrizione articolo:</b>
-  <%= @rigdoc.article.descriz unless @rigdoc.article.nil? %>
-</p>
-
-<p>
-  <b>Quantita':</b>
-  <%= @rigdoc.qta %>
-</p>
-
-<p>
-  <b>Prezzo:</b>
-  <%= @rigdoc.prezzo %>
-</p>
-
-<p>
-  <b>Sconto:</b>
-  <%= @rigdoc.sconto %>
-</p>
-
-<p>
-  <b>Iva:</b>
-  <%= @rigdoc.iva.descriz unless @rigdoc.iva.nil? %>
-</p>
-
-<p>
-  <b>Totale riga:</b>
-  <%= @rigdoc.prezzo * @rigdoc.qta %>
-</p>
-<%= link_to 'Indietro', @rigdoc.tesdoc %>
-<%= link_to 'Elimina riga', @rigdoc, :confirm => 'Confermi eliminazione?', :method => :delete %>
-<%= link_to 'Modifica riga', edit_rigdoc_path %>
+<div class="row">
+  <div class="twelve columns">
+    <div class="panel pagetitle">
+      <%= @title %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="twelve columns">
+    <ul class="button-group [radius, rounded]">
+      <li>
+        <%= link_to 'Indietro', @rigdoc.tesdoc, :class => "button radius small" %>
+      </li>
+      <li>
+        <%= link_to 'Modifica', edit_rigdoc_path, :class => "button radius small" %>
+      </li>
+      <li>
+        <%= link_to 'Elimina', @rigdoc, :confirm => 'Confermi eliminazione?',
+                                       :method => :delete, :class => "button radius small" %>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="row">
+  <div class="twelve columns">
+    <fieldset>
+      <legend> Dati riga documento </legend>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @rigdoc, "Descrizione riga:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @rigdoc.descriz %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @rigdoc, "Codice articolo:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @rigdoc.article.codice unless @rigdoc.article.nil? %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @rigdoc, "Descrizione articolo:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @rigdoc.article.descriz unless @rigdoc.article.nil? %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @rigdoc, "Quantita':", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @rigdoc.qta %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @rigdoc, "Prezzo:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @rigdoc.prezzo %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @rigdoc, "Sconto:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @rigdoc.sconto %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @rigdoc, "Iva:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @rigdoc.iva.descriz %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @rigdoc, "Totale di riga:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @rigdoc.prezzo * @rigdoc.qta %>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</div>

@@ -1,15 +1,12 @@
-<span class="field_mag">
-  <% magsrc = findmags("S", tesdoc.causmag_id, tesdoc.conto_id) %>
-  <% magdst = findmags("D", tesdoc.causmag_id, tesdoc.conto_id) %>
-  <% nrmagsrc = act_new == 1 ? causmag.nrmagsrc : tesdoc.nrmagsrc %>
-  <% nrmagdst = act_new == 1 ? causmag.nrmagdst : tesdoc.nrmagdst %>
-  <% if magsrc[nrmagsrc].nil? then magsrcsel = 0 else magsrcsel = nrmagsrc end %>
-  <% if magdst[nrmagdst].nil? then magdstsel = 0 else magdstsel = nrmagdst end %>
-  <span class="field_magsrc">
-    <b> <%= select(:tesdoc, :nrmagsrc, magsrc.invert.sort, :selected => magsrcsel) %> </b>
-  </span>
-  <span class="field_magdst">
-    <b> <%= select(:tesdoc, :nrmagdst, magdst.invert.sort, :selected => magdstsel) %> </b>
-  </span>
-  <br />
-</span>
+<% magsrc = findmags("S", tesdoc.causmag_id, tesdoc.conto_id) %>
+<% magdst = findmags("D", tesdoc.causmag_id, tesdoc.conto_id) %>
+<% nrmagsrc = act_new == 1 ? causmag.nrmagsrc : tesdoc.nrmagsrc %>
+<% nrmagdst = act_new == 1 ? causmag.nrmagdst : tesdoc.nrmagdst %>
+<% if magsrc[nrmagsrc].nil? then magsrcsel = 0 else magsrcsel = nrmagsrc end %>
+<% if magdst[nrmagdst].nil? then magdstsel = 0 else magdstsel = nrmagdst end %>
+<div class="five columns offset-by-one">
+  <%= select(:tesdoc, :nrmagsrc, magsrc.invert.sort, :selected => magsrcsel) %>
+</div>
+<div class="five columns">
+  <%= select(:tesdoc, :nrmagdst, magdst.invert.sort, :selected => magdstsel) %>
+</div>

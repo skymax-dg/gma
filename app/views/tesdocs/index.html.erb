@@ -1,43 +1,45 @@
-<h1><%= @title %></h1>
-<%= render :partial => 'filter' %>
-<%= will_paginate @tesdocs unless @tesdocs.nil? %>
-<table class="idx">
-  <tr align=left>
-    <th>Tipo doc</th>
-    <th align=right>Nr. doc</th>
-    <th>Data documento</th>
-    <th>Causale documento</th>
-    <th>TipoConto</th>
-    <th>CodiceConto</th>
-    <th>ContoAnagrafica</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<div class="row">
+  <div class="twelve columns">
+    <div class="panel pagetitle">
+      <%= @title %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="twelve columns">
+    <div class="panel">
+      <%= render :partial => 'filter' %>
+    </div>
+    <div class="panel">
+      <div class="row">
+        <div class="twelve columns">
+          <ul class="button-group [radius, rounded]">
+            <li>
+              <%= link_to 'Aggiungi documento', new_tesdoc_path(:causmag => @causmagfilter||"",
+                                                                :conto   => @contofilter||""), :remote => true,
+                                                                :class => "button radius small" %>
+            </li>
+            <li>
+              <%= link_to 'Carica Testate e righe doc', addtesrigdoc_fromxls_tesdocs_path, 
+                          :confirm => 'Confermi caricamento da Exel?', :class => "button radius small" %>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <th width="12%">Nr doc</th>
+          <th width="13%">Del</th>
+          <th width="35%">Causale</th>
+          <th width="35%">ContoAnagrafica</th>
+          <th width="5%"></th>
+        </thead>
+        <tbody>
+            <%= render :partial => 'line', :collection => @tesdocs unless @tesdocs.nil?||@tesdocs.empty? %>
+        </tbody>
+      </table>
+      <%= will_paginate @tesdocs unless @tesdocs.nil? %>
+    </div>
+  </div>
+</div>
 
-  <%= render :partial => 'line', :collection => @tesdocs unless @tesdocs.nil? %>
-</table>
-
-<br />
-
-<table class="pagemenu">
-  <tr>
-    <th>
-      <%= link_to 'Aggiungi documento', new_tesdoc_path(:causmag => @causmagfilter||"",
-                                                        :conto   => @contofilter||""), :remote => true %>
-    </th>
-    <th>
-      <%= link_to 'Menu tipo-documenti', choose_tipo_doc_tesdocs_path %>
-    </th>
-    <th>
-      <%= link_to 'Carica Testate e righe doc', addtesrigdoc_fromxls_tesdocs_path, 
-                  :confirm => 'Confermi caricamento da Exel?' %>
-    </th>
-  </tr>
-</table>
-<li><%= link_to 'Aggiungi documento', new_tesdoc_path(:causmag => @causmagfilter||"",
-                                                      :conto   => @contofilter||""), :remote => true %></li>
-<li><%= link_to 'Menu tipo-documenti', choose_tipo_doc_tesdocs_path %></li>
-<li><%= link_to 'Carica Testate e righe doc', 
-                addtesrigdoc_fromxls_tesdocs_path, 
-                :confirm => 'Confermi caricamento da Exel?' %></li>

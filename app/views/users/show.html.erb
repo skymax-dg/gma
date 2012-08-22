@@ -1,9 +1,38 @@
-<h1>Visualizza utente</h1>
-<p>
-  <b>Login:</b>
-  <%= @user.login %>
-</p>
-
-<%= link_to 'Modifica', edit_user_path(@user) %> |
-<%#= link_to 'Indietro', :back %>
-<%= link_to 'Indietro', users_path %>
+<div class="row">
+  <div class="twelve columns">
+    <div class="panel pagetitle">
+      <%= @title %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="twelve columns">
+    <ul class="button-group [radius, rounded]">
+      <li>
+        <%= link_to 'Indietro', users_path, :class => "button radius small" %>
+      </li>
+      <li>
+        <%= link_to 'Modifica', edit_user_path(@user), :class => "button radius small" %>
+      </li>
+      <li>
+        <%= link_to 'Elimina', @user, :confirm => 'Confermi eliminazione?',
+                                       :method => :delete, :class => "button radius small" %>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="row">
+  <div class="twelve columns">
+    <fieldset>
+      <legend> Dati utente </legend>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @user, "Nome utente:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @user.login %>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</div>

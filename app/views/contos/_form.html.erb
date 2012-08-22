@@ -1,42 +1,51 @@
 <%= render :partial => 'shared/error_messages', :locals => {:f => @conto} %>
 <%= form_for(@conto) do |f| %>
-
   <div class="field">
     <%= f.hidden_field :azienda %>
   </div>
   <div class="field">
     <%= f.hidden_field :annoese %>
   </div>
-  <div class="field">
-    <b> <%= f.label "Codice" %> </b> <br />
-    <%= f.number_field :codice %>
-  </div>
-  <div class="field">
-    <b> <%= f.label "Anagrafica" %> </b> <br />
-    <%= collection_select(:conto, :anagen_id, Anagen.all, :id, :denomin, {:include_blank => true},
-                            {:data => {:remote => true, :url => url_for(:controller => :contos,
-                                                                        :action => :anagen_exit)}}) %>
-  </div>
-  <div class="field">
-    <b> <%= f.label "Descrizione" %> </b> <br />
-    <%= f.text_field :descriz, :size => 100 %>
-  </div>
-  <div class="field">
-    <b> <%= f.label "Riferimento" %> </b> <br />
-    <%= select(:conto, :tipoconto, Conto::TIPOCONTO.invert.sort, { :prompt => true }) %>
-  </div>
-  <div class="field">
-    <b> <%= f.label "Tipologia conto" %> </b> <br />
-    <%= select(:conto, :tipopeo, Conto::TIPOPEO.invert.sort, { :prompt => true }) %>
-  </div>
-  <div class="field">
-    <b> <%= f.label "Contropartita" %> </b> <br />
-    <%= f.number_field :cntrpartita %>
-  <div class="field">
-    <b> <%= f.label "Sconto" %> </b>
-    <%= f.number_field :sconto, :size => 4 %>
-  </div>
-  <div class="actions">
-    <%= f.submit "SALVA" %>
+  <div class="row">
+    <div class="twelve columns">
+      <fieldset>
+        <legend> Dati conto </legend>
+        <div class="five columns offset-by-one">
+          <%= f.label "Codice" %>
+          <%= f.number_field :codice %>
+        </div>
+        <div class="five columns">
+          <%= f.label "Sconto" %>
+          <%= f.number_field :sconto %>
+        </div>
+        <div class="ten columns offset-by-one">
+          <%= f.label "Anagrafica" %>
+          <%= collection_select(:conto, :anagen_id, Anagen.all, :id, :denomin, {:include_blank => true},
+                                  {:data => {:remote => true, :url => url_for(:controller => :contos,
+                                                                              :action => :anagen_exit)}}) %>
+        </div>
+        <div class="ten columns offset-by-one">
+          <%= f.label "Descrizione" %>
+          <%= f.text_field :descriz %>
+        </div>
+        <div class="four columns offset-by-one">
+          <%= f.label "Riferimento" %>
+          <%= select(:conto, :tipoconto, Conto::TIPOCONTO.invert.sort, { :prompt => true }) %>
+        </div>
+        <div class="three columns">
+          <%= f.label "Tipologia conto" %>
+          <%= select(:conto, :tipopeo, Conto::TIPOPEO.invert.sort, { :prompt => true }) %>
+        </div>
+        <div class="three columns">
+          <%= f.label "Contropartita" %>
+          <%= f.number_field :cntrpartita %>
+        </div>
+        <hr />
+        <div class="ten columns offset-by-one">
+          <%= f.submit "SALVA", :class => "button radius small" %>
+          <%= link_to 'ANNULLA', contos_path, :class => "button radius small" %>
+        </div>
+      </fieldset>
+    </div>
   </div>
 <% end %>

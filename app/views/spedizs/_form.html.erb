@@ -3,61 +3,85 @@
   <div class="field">
     <%= f.hidden_field :tesdoc_id %>
   </div>
-  <% if @spediz.tesdoc.movmagint %>
-    <div class="field">
-      <b> <%= f.label "aspetto dei beni:" %> </b>
-      <%= select(:spediz, :aspetto, Spediz::ASPETTO.invert.sort, {:include_blank => true}) %>
-      <b> <%= f.label "nr colli:" %> </b>
-      <%= f.number_field :nrcolli, :size => 5 %>
-      <b> <%= f.label "porto:" %> </b>
-      <%= select(:spediz, :porto, Spediz::PORTO.invert.sort, {:include_blank => true}) %>
+  <div class="row">
+    <div class="twelve columns">
+      <fieldset>
+        <legend> Dati Spedizione/Pagamento </legend>
+        <% if @spediz.tesdoc.movmagint %>
+          <div class="four columns offset-by-one">
+            <%= f.label "aspetto dei beni:" %>
+            <%= select(:spediz, :aspetto, Spediz::ASPETTO.invert.sort, {:include_blank => true}) %>
+          </div>
+          <div class="three columns">
+            <%= f.label "porto:" %>
+            <%= select(:spediz, :porto, Spediz::PORTO.invert.sort, {:include_blank => true}) %>
+          </div>
+          <div class="three columns">
+            <%= f.label "nr colli:" %>
+            <%= f.number_field :nrcolli %>
+          </div>
+          <div class="four columns offset-by-one">
+            <%= f.label "corriere:" %>
+            <%= select(:spediz, :corriere, Spediz::CORRIERE.invert.sort, {:include_blank => true}) %>
+          </div>
+          <div class="three columns">
+            <%= f.label "unità di misura:" %>
+            <%= select(:spediz, :um, Spediz::UM.invert.sort, {:include_blank => true}) %>
+          </div>
+          <div class="three columns">
+            <%= f.label "valore:" %>
+            <%= f.number_field :valore %>
+          </div>
+          <div class="ten columns offset-by-one">
+            <%= f.label "Indirizzo:" %>
+            <%=collection_select :spediz, :anaind_id,
+                                 @spediz.ind_sped, :id, :ind_completo,
+                                 {:include_blank => true},
+                                 {:data => {:remote => true,
+                                            :url => url_for(:controller => :spedizs, :action => :setind)}} %>
+          </div>
+          <div class="ten columns offset-by-one">
+            <%= f.label "Presso: " %>
+            <%= f.text_field :presso %>
+          </div>
+          <div class="ten columns offset-by-one">
+            <%= f.label "destinazione (riga 1)" %>
+            <%= f.text_field :dest1 %>
+          </div>
+          <div class="ten columns offset-by-one">
+            <%= f.label "destinazione (riga 2)" %>
+            <%= f.text_field :dest2 %>
+          </div>
+          <div class="five columns offset-by-one">
+            <%= f.label "data ritiro:" %>
+            <%#= f.date_select :dtrit, :use_month_numbers => true, :order => [:day, :month, :year] %>
+            <%= f.text_field :dtrit %>
+          </div>
+          <div class="five columns">
+            <%= f.label "ora ritiro:" %>
+            <%#= f.time_select :orarit %>
+            <%= f.text_field :orarit %>
+          </div>
+        <% end %>
+        <% if @spediz.tesdoc.causmag.contabile == "S" %>
+          <div class="five columns offset-by-one">
+            <%= f.label "Pagamento:" %>
+            <%= f.text_area(:pagam, :rows => 6) %>
+          </div>
+          <div class="five columns">
+            <%= f.label "Banca d'appoggio:" %>
+            <%= f.text_area(:banca, :rows => 6) %>
+          </div>
+        <% end %>
+        <div class="ten columns offset-by-one">
+          <%= f.label "annotazioni:" %>
+          <%= f.text_area(:note, :rows => 8) %>
+        </div>
+        <hr />
+        <div class="ten columns offset-by-one">
+          <%= f.submit 'SALVA', :class => "button radius small" %>
+        </div>
+      </fieldset>
     </div>
-    <div class="field">
-      <b> <%= f.label "corriere:" %> </b> 
-      <%= select(:spediz, :corriere, Spediz::CORRIERE.invert.sort, {:include_blank => true}) %>
-      <b> <%= f.label "unità di misura:" %> </b>
-      <%= select(:spediz, :um, Spediz::UM.invert.sort, {:include_blank => true}) %>
-      <b> <%= f.label "valore:" %> </b>
-      <%= f.number_field :valore, :size => 7 %>
-    </div>
-    <div class="field">
-      <b> <%= f.label "Indirizzo:" %> </b>
-      <%=collection_select :spediz, :anaind_id,
-                           @spediz.ind_sped, :id, :ind_completo,
-                           {:include_blank => true},
-                           {:data => {:remote => true,
-                                      :url => url_for(:controller => :spedizs, :action => :setind)}} %>
-    </div>
-    <div class="field">
-      <b> <%= f.label "Presso: " %> </b>
-      <%= f.text_field :presso, :size => 125 %> <br />
-      <b> <%= f.label "destinazione (riga 1)" %> </b> <br />
-      <%= f.text_field :dest1, :size => 135 %> <br />
-      <b> <%= f.label "destinazione (riga 2)" %> </b> <br />
-      <%= f.text_field :dest2, :size => 135 %>
-    </div>
-    <div class="field">
-      <b> <%= f.label "data ritiro:" %> </b>
-      <%= f.date_select :dtrit, :use_month_numbers => true, :order => [:day, :month, :year] %>
-      <b> <%= f.label "ora ritiro:" %> </b>
-      <%= f.time_select :orarit %>
-    </div>
-  <% end %>
-  <% if @spediz.tesdoc.causmag.contabile == "S" %>
-    <div class="field">
-      <b> <%= f.label "Pagamento:" %> </b> <br />
-      <%= f.text_area(:pagam, :cols => 70, :rows => 4) %>
-    </div>
-    <div class="field">
-      <b> <%= f.label "Banca d'appoggio:" %> </b> <br />
-      <%= f.text_area(:banca, :cols => 70, :rows => 2) %>
-    </div>
-  <% end %>
-  <div class="field">
-    <b> <%= f.label "annotazioni:" %> </b> <br />
-    <%= f.text_area(:note, :cols => 100, :rows => 6) %>
-  </div>
-  <div class="actions">
-    <%= f.submit "SALVA" %>
   </div>
 <% end %>

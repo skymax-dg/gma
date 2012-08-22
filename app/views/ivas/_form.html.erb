@@ -1,26 +1,35 @@
 <%= render :partial => 'shared/error_messages', :locals => {:f => @iva} %>
 <%= form_for(@iva) do |f| %>
-
-  <div class="field">
-    <b> <%= f.label :codice %> </b> <br />
-    <%= f.number_field :codice %>
-  </div>
-  <div class="field">
-    <b> <%= f.label :descrizione %> </b> <br />
-    <%= f.text_field :descriz %>
-  </div>
-  <div class="field">
-    <b> <%= f.label "descrizione estesa (Stampa)" %> </b> <br />
-    <%= f.text_field :desest %>
-  </div>
-  <div class="field">
-    <b> <%= f.label "Aliquota IVA %" %> </b> <br />
-    <%= f.number_field :aliq %>
-  </div>
-  <div class="field">
-    <%= check_box :iva, :flese, {}, 'S', 'N' %> <b> Esenzione </b> <br /> 
-  </div>
-  <div class="actions">
-    <%= f.submit "SALVA"%>
+  <div class="row">
+    <div class="twelve columns">
+      <fieldset>
+        <legend> Dati aliquota iva/esenzione </legend>
+        <div class="four columns offset-by-one">
+          <%= f.label :codice %>
+          <%= f.number_field :codice %>
+        </div>
+        <div class="three columns">
+          <%= f.label :descrizione %>
+          <%= f.text_field :descriz %>
+        </div>
+        <div class="three columns">
+          <%= f.label "Esenzione" %>
+          <%= check_box :iva, :flese, {}, 'S', 'N' %>
+        </div>
+        <div class="ten columns offset-by-one">
+          <%= f.label "descrizione estesa (Stampa)" %>
+          <%= f.text_field :desest %>
+        </div>
+        <div class="five columns offset-by-one">
+          <%= f.label "Aliquota IVA %" %>
+          <%= f.number_field :aliq %>
+        </div>
+        <hr />
+        <div class="ten columns offset-by-one">
+          <%= f.submit "SALVA", :class => "button radius small" %>
+          <%= link_to 'ANNULLA', ivas_path, :class => "button radius small" %>
+        </div>
+      </fieldset>
+    </div>
   </div>
 <% end %>

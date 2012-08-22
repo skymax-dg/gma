@@ -1,6 +1,8 @@
-<h1><%= @title %></h1>
-<br/>
-
+<div class="row">
+  <div class="twelve columns">
+    <div class="panel pagetitle">
+      <%= @title %>
+    </div>
+  </div>
+</div>
 <%= render 'form' %>
-
-<%= link_to 'Indietro', {:controller => 'tesdocs', :action => 'index', :tipo_doc => se_tipo_doc} %>

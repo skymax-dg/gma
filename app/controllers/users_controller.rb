@@ -21,7 +21,7 @@ before_filter :authenticate, :except => [:new, :create]
 
   def show
     @user = User.find(params[:id])
-    @title = @user.login
+    @title = "Mostra utente"
     store_location
   end
 

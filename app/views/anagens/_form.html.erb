@@ -1,38 +1,56 @@
 <%= render :partial => 'shared/error_messages', :locals => {:f => @anagen} %>
 <%= form_for(@anagen) do |f| %>
+  <div class="row">
+    <div class="twelve columns">
+      <fieldset>
+        <legend> Dati anagrafici </legend>
+        <div class="five columns offset-by-one">
+          <%= f.label "Codice" %>
+          <%= f.number_field :codice %>
+        </div>
+        <div class="five columns">
+          <%= f.label :tipo %>
+          <%= select(:anagen, :tipo, Anagen::TIPO.invert.sort, { :prompt => true },
+                     {:data => {:remote => true, :url => url_for(:controller => :anagens,
+                                                                 :action => :chg_tipo)}}) %>
+        </div>
+        <div class="ten columns offset-by-one">
+          <%= f.label "Denominazione" %>
+          <%= f.text_field :denomin %>
+        </div>
+        <div class="five columns offset-by-one">
+          <%= f.label "Partita Iva" %>
+          <%= f.text_field :pariva %>
+        </div>
+        <div class="five columns">
+          <%= f.label "Codice Fiscale" %>
+          <%= f.text_field :codfis %>
+        </div>
 
-  <div class="field">
-    <b> <%= f.label :codice %> </b>
-    <%= f.number_field :codice %>
-    <b> <%= f.label :tipo %> </b>
-    <%= select(:anagen, :tipo, Anagen::TIPO.invert.sort, { :prompt => true },
-               {:data => {:remote => true, :url => url_for(:controller => :anagens,
-                                                           :action => :chg_tipo)}})%>
-    <b> <%= f.label "Denominazione" %> </b>
-    <%= f.text_field :denomin, :size => 55 %>
-  </div>
-  <div class="field">
-    <b> <%= f.label "Codice Fiscale" %> </b>
-    <%= f.text_field :codfis, :size => 35 %>
-    <b> <%= f.label "Partita Iva" %> </b>
-    <%= f.text_field :pariva %>
-  </div>
-  <div class="field" id="datinas">
-    <%= render(:partial => 'datinas') %>
-  </div>
-  <div class="field">
-    <b> <%= f.label "Telefono" %> </b>
-    <%= f.text_field :telefono %>
-    <b> <%= f.label "Fax" %> </b>
-    <%= f.text_field :fax %>
-  </div>
-  <div class="field">
-    <b> <%= f.label "E-mail" %> </b>
-    <%= f.text_field :email, :size => 45 %>
-    <b> <%= f.label "Sito Web" %> </b>
-    <%= f.text_field :web, :size => 55 %>
-  </div>
-  <div class="actions">
-    <%= f.submit "SALVA"%>
+        <%= render(:partial => 'datinas') %>
+
+        <div class="four columns offset-by-one">
+          <%= f.label "E-mail" %>
+          <%= f.text_field :email %>
+        </div>
+        <div class="three columns">
+          <%= f.label "Telefono" %>
+          <%= f.text_field :telefono %>
+        </div>
+        <div class="three columns">
+          <%= f.label "Fax" %>
+          <%= f.text_field :fax %>
+        </div>
+        <div class="ten columns offset-by-one">
+          <%= f.label "Sito Web" %>
+          <%= f.text_field :web %>
+        </div>
+        <hr />
+        <div class="ten columns offset-by-one">
+          <%= f.submit 'SALVA', :class => "button radius small" %>
+          <%= link_to 'ANNULLA', anagens_path, :class => "button radius small" %>
+        </div>
+      </fieldset>
+    </div>
   </div>
 <% end %>

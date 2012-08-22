@@ -2,14 +2,8 @@
   <td><%= line.codice %></td>
   <td><%= Anagen::TIPO[line.tipo] %></td>
   <td><%= line.denomin %></td>
-  <td><%= line.localita.descriz unless line.localita.nil? %></td>
-  <td><%= line.dtnas.strftime('%d-%m-%Y') unless line.dtnas.nil? %> </td>
-  <td><%= line.sesso %></td>
-  <td><%= line.codfis %></td>
-  <td><%= line.pariva %></td>
-  <td><%= line.telefono %></td>
-  <td><%= line.email %></td>
-  <td><%= line.fax %></td>
-  <td><%= line.web %></td>
-  <td><%= link_to 'Dettaglio', line %></td>
+  <td><%= line.pi_or_cf %></td>
+  <td>
+    <%= link_to 'D', line, :class => "button radius tiny", :title => "Dettaglio" %>
+  </td>
 </tr>

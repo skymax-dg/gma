@@ -3,7 +3,9 @@
   <td><%= Paese::TPEU[line.tpeu] %></td>
   <td><%= line.codfis %></td>
   <td><%= line.prepiva %></td>
-  <td><%= link_to 'Visualizza', line %></td>
-  <td><%= link_to 'Modifica', edit_paese_path(line) %></td>
-  <td><%= link_to 'Elimina', line, :confirm => 'Confermi?', :method => :delete %></td>
+	<td>
+		<%= link_to 'V', line, :class => "button radius tiny", :title => "Visualizza" %>
+		<%= link_to 'M', edit_paese_path(line), :class => "button radius tiny", :title => "Modifica" %>
+		<%= link_to 'C', line, :confirm => 'Confermi?', :method => :delete, :class => "button radius tiny", :title => "Cancella" %>
+	</td>
 </tr>

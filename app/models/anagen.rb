@@ -45,6 +45,10 @@ class Anagen < ActiveRecord::Base
     (select("max(codice) as maxcod")[0].maxcod.to_i||0) + 1
   end
 
+  def pi_or_cf
+    self.pariva&&self.pariva.strip.length > 0 ? self.pariva : self.codfis||""
+  end
+
   def self.findbytpconto(azienda, tipoconto)
     find_by_sql("SELECT DISTINCT anagens.id, anagens.denomin 
                    FROM anagens INNER JOIN contos ON (anagens.id = contos.anagen_id)

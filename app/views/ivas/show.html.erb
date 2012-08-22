@@ -1,26 +1,70 @@
-<h1><%= @title %></h1>
-<p>
-  <b>Codice:</b>
-  <%= @iva.codice %>
-</p>
-
-<p>
-  <b>Descrizione:</b>
-  <%= @iva.descriz %>
-</p>
-
-<p>
-  <b>Descrizione estesa(REPORT):</b>
-  <%= @iva.desest %>
-</p>
-
-<p>
-  <b>Aliquota:</b>
-  <%= @iva.aliq %>
-  <b>Esenzione:</b>
-  <%= @iva.flese %>
-</p>
-
-
-<%= link_to 'Modifica', edit_iva_path(@iva) %> |
-<%= link_to 'Indietro', ivas_path %>
+<div class="row">
+  <div class="twelve columns">
+    <div class="panel pagetitle">
+      <%= @title %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="twelve columns">
+    <ul class="button-group [radius, rounded]">
+      <li>
+        <%= link_to 'Indietro', ivas_path, :class => "button radius small" %>
+      </li>
+      <li>
+        <%= link_to 'Modifica', edit_iva_path(@iva), :class => "button radius small" %>
+      </li>
+      <li>
+        <%= link_to 'Elimina', @iva, :confirm => 'Confermi eliminazione?',
+                                     :method => :delete, :class => "button radius small" %>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="row">
+  <div class="twelve columns">
+    <fieldset>
+      <legend> Dati iva/esenzione </legend>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @iva, "Codice:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @iva.codice %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @iva, "Descrizione:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @iva.descriz %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @iva, "Descrizione estesa(REPORT):", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @iva.desest %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @iva, "Aliquota:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @iva.aliq %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @iva, "Esenzione:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @iva.flese %>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</div>

@@ -7,59 +7,64 @@
 </div>
 <div class="row">
   <div class="twelve columns">
-    <fieldset>
-      <legend> Dati localita' </legend>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <b>Descrizione:</b>
-        </div>
-        <div class="six columns">
-          <%= @localita.descriz %>
-        </div>
-        <div class="three columns"></div>
-      </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <b>Provincia:</b>
-        </div>
-        <div class="one columns">
-          <%= @localita.prov %>
-        </div>
-        <div class="one columns">
-          <b>Cap:</b>
-        </div>
-        <div class="two columns">
-          <%= @localita.cap %>
-        </div>
-        <div class="one columns">
-          <b>Codfis:</b>
-        </div>
-        <div class="one columns">
-          <%= @localita.codfis %>
-        </div>
-        <div class="three columns"></div>
-      </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <b>Stato/Nazione</b>
-        </div>
-        <div class="six columns">
-          <%= @localita.paese.descriz %>
-        </div>
-        <div class="three columns"></div>
-      </div>
-    </fieldset>
+    <ul class="button-group [radius, rounded]">
+      <li>
+        <%= link_to 'Indietro', localitas_path, :class => "button radius small" %>
+      </li>
+      <li>
+        <%= link_to 'Modifica', edit_localita_path(@localita), :class => "button radius small" %>
+      </li>
+      <li>
+        <%= link_to 'Elimina', @localita, :confirm => 'Confermi eliminazione?',
+                                          :method => :delete, :class => "button radius small" %>
+      </li>
+    </ul>
   </div>
 </div>
 <div class="row">
   <div class="twelve columns">
-    <ul class="button-group [radius, rounded]">
-      <li>
-        <%= link_to 'Indietro', localitas_path, :class => "button radius" %>
-      </li>
-      <li>
-        <%= link_to 'Modifica', edit_localita_path(@localita), :class => "button radius" %>
-      </li>
-    </ul>
+    <fieldset>
+      <legend> Dati localita' </legend>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @localita, "Descrizione:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @localita.descriz %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @localita, "Provincia:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @localita.prov %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @localita, "CAP:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @localita.cap %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @localita, "Cod Fisc:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @localita.codfis %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @localita, "Stato/Nazione", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @localita.paese.descriz %>
+        </div>
+      </div>
+    </fieldset>
   </div>
 </div>

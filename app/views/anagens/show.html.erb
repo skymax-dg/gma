@@ -1,80 +1,153 @@
-<h1><%= @title %></h1>
-<p>
-  <b>Codice:</b>
-  <%= @anagen.codice %>
-  <b>Tipo:</b>
-  <%= Anagen::TIPO[@anagen.tipo] %>
-  <b>Denominazione:</b>
-  <%= @anagen.denomin %>
-</p>
-<% unless @anagen.tipo == "G" %>
-<p>
-  <b>Luogo di nascita:</b>
-  <%= @anagen.localita.descriz unless @anagen.localita.nil? %>
-</p>
-<p>
-  <b>Data di nascita:</b>
-  <%= @anagen.dtnas.strftime('%d-%m-%Y') unless @anagen.dtnas.nil? %>
-</p>
-<p>
-  <b>Sesso:</b>
-  <%= @anagen.sesso %>
-</p>
-<% end %>
-<p>
-  <b>Codfis:</b>
-  <%= @anagen.codfis %>
-  <b>Pariva:</b>
-  <%= @anagen.pariva %>
-</p>
-
-<p>
-  <b>Telefono:</b>
-  <%= @anagen.telefono %>
-  <b>Fax:</b>
-  <%= @anagen.fax %>
-</p>
-
-<p>
-  <b>E-mail:</b>
-  <%= @anagen.email %>
-  <b>Sito Web:</b>
-  <%= @anagen.web %>
-</p>
-
-<table>
-  <caption>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th>Valido per</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </caption>
-  <tr>
-    <th>Indirizzo__________________________</th>
-    <th>Localita_______________________</th>
-    <th>Cap</th>
-    <th>SedeLegale</th>
-    <th>Spedizione</th>
-    <th>Magazzino</th>
-    <th>Riferimento</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-  <%= render :partial => '/anainds/line', :collection => @anagen.anainds unless @anagen.anainds.empty? %>
-  <br>
-  </br>
-</table>
-<br>
-</br>
-
-<%#= link_to 'Indietro', :back %>
-<%= link_to 'Indietro', anagens_path %>
-<%= link_to 'Elimina anagrafica', @anagen, :confirm => 'Confermi eliminazione?', :method => :delete %>
-<%= link_to 'Modifica anagrafica', edit_anagen_path %>
-<%= link_to 'Aggiungi indirizzo', new_anaind_path(:id => @anagen.id) %>
+<div class="row">
+  <div class="twelve columns">
+    <div class="panel pagetitle">
+      <%= @title %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="twelve columns">
+    <ul class="button-group [radius, rounded]">
+      <li>
+        <%= link_to 'Indietro', anagens_path, :class => "button radius small" %>
+      </li>
+      <li>
+        <%= link_to 'Modifica anagrafica', edit_anagen_path(@anagen), :class => "button radius small" %>
+      </li>
+      <li>
+        <%= link_to 'Elimina anagrafica', @anagen, :confirm => 'Confermi eliminazione?',
+                                                   :method => :delete, :class => "button radius small" %>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="row">
+  <div class="twelve columns">
+    <fieldset>
+      <legend> Dati anagrafica </legend>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @anagen, "Codice:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @anagen.codice %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @anagen, "Tipo:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= Anagen::TIPO[@anagen.tipo] %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @anagen, "Denominazione:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @anagen.denomin %>
+        </div>
+      </div>
+      <% unless @anagen.tipo == "G" %>
+        <div class="row">
+          <div class="two columns offset-by-one">
+            <%= label @anagen, "Luogo di nascita:", :class => "right" %>
+          </div>
+          <div class="nine columns left">
+            <%= @anagen.localita.descriz unless @anagen.localita.nil? %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="two columns offset-by-one">
+            <%= label @anagen, "Data di nascita:", :class => "right" %>
+          </div>
+          <div class="nine columns left">
+            <%= @anagen.dtnas.strftime('%d-%m-%Y') unless @anagen.dtnas.nil? %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="two columns offset-by-one">
+            <%= label @anagen, "Sesso:", :class => "right" %>
+          </div>
+          <div class="nine columns left">
+            <%= @anagen.sesso %>
+          </div>
+        </div>
+      <% end %>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @anagen, "Codice fiscale:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @anagen.codfis %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @anagen, "Partita iva:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @anagen.pariva %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @anagen, "Telefono:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @anagen.telefono %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @anagen, "Fax:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @anagen.fax %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @anagen, "E-mail:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @anagen.email %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="two columns offset-by-one">
+          <%= label @anagen, "Sito Web:", :class => "right" %>
+        </div>
+        <div class="nine columns left">
+          <%= @anagen.web %>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <th width="30%">Indirizzo</th>
+          <th width="30%">Localita</th>
+          <th width="10%">Cap</th>
+          <th width="6%">Sede</th>
+          <th width="6%">Sped.</th>
+          <th width="6%">Mag.</th>
+          <th width="9%">Rif.</th>
+          <th width="3%"></th>
+        </thead>
+        <tbody>
+          <%= render :partial => '/anainds/line',
+                     :collection => @anagen.anainds unless @anagen.anainds.empty? %>
+        </tbody>
+      </table>
+    </fieldset>
+  </div>
+</div>
+<div class="row">
+  <div class="twelve columns">
+    <ul class="button-group [radius, rounded]">
+      <li>
+        <%= link_to 'Aggiungi indirizzo', new_anaind_path(:id => @anagen.id), :class => "button radius small" %>
+      </li>
+    </ul>
+  </div>
+</div>

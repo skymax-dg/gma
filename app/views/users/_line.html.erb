@@ -1,0 +1,8 @@
+<tr>
+  <td><%= line.login %></td>
+  <td>
+		<%= link_to 'V', line, :class => "button radius tiny", :title => "Visualizza" %>
+		<%= link_to 'M', edit_user_path(line), :class => "button radius tiny", :title => "Modifica" %>
+		<%= link_to 'C', line, :confirm => 'Confermi?', :method => :delete, :class => "button radius tiny", :title => "Cancella" %>
+  </td>
+</tr>

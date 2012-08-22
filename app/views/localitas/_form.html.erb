@@ -4,66 +4,31 @@
     <div class="twelve columns">
       <fieldset>
         <legend> Dati localita' </legend>
-        <div class="row">
-          <div class="one columns"><%= f.label "uno" %></div>
-          <div class="one columns"><%= f.label "due" %></div>
-          <div class="one columns"><%= f.label "tre" %></div>
-          <div class="one columns"><%= f.label "qua" %></div>
-          <div class="one columns"><%= f.label "cin" %></div>
-          <div class="one columns"><%= f.label "sei" %></div>
-          <div class="one columns"><%= f.label "set" %></div>
-          <div class="one columns"><%= f.label "ott" %></div>
-          <div class="one columns"><%= f.label "nov" %></div>
-          <div class="one columns"><%= f.label "die" %></div>
-          <div class="one columns"><%= f.label "und" %></div>
-          <div class="one columns"><%= f.label "dod" %></div>
+        <div class="ten columns offset-by-one">
+          <%= f.label "Descrizione" %>
+          <%= f.text_field :descriz %>
         </div>
-
-        <div class="row">
-          <div class="two columns offset-by-one">
-            <%= f.label "Descrizione", :class=>"inline" %>
-          </div>
-          <div class="six columns">
-            <%= f.text_field :descriz %>
-          </div>
-          <div class="three columns"></div>
+        <div class="four columns offset-by-one">
+          <%= f.label "Cap" %>
+          <%= f.text_field :cap %>
         </div>
-        <div class="row">
-          <div class="two columns offset-by-one">
-            <%= f.label "Provincia", :class=>"inline" %>
-          </div>
-          <div class="one columns">
-            <%= f.text_field :prov %>
-          </div>
-          <div class="one columns">
-            <%= f.label "Cap", :class=>"inline" %>
-          </div>
-          <div class="two columns">
-            <%= f.text_field :cap %>
-          </div>
-          <div class="one columns">
-            <%= f.label "CodFis", :class=>"inline" %>
-          </div>
-          <div class="one columns">
-            <%= f.text_field :codfis %>
-          </div>
-          <div class="three columns"></div>
+        <div class="three columns">
+          <%= f.label "Provincia" %>
+          <%= f.text_field :prov %>
         </div>
-        <div class="row">
-          <div class="two columns offset-by-one">
-            <%= f.label "Stato/Nazione" %>
-          </div>
-          <div class="six columns">
-            <%= collection_select :localita,     :paese_id, Paese.all,
-                                  :id, :descriz %>
-          </div>
-          <div class="three columns"></div>
+        <div class="three columns">
+          <%= f.label "CodFis" %>
+          <%= f.text_field :codfis %>
         </div>
-        <div class="row">
-          <div class="four columns offset-by-one">
-            <%= f.submit "SALVA", :class => "button radius small" %>
-            <%= link_to 'ANNULLA', localitas_path, :class => "button radius small" %>
-          </div>
+        <div class="ten columns offset-by-one">
+          <%= f.label "Stato/Nazione" %>
+          <%= collection_select :localita,     :paese_id, Paese.all,
+                                :id, :descriz %>
+        </div>
+        <hr />
+        <div class="ten columns offset-by-one">
+          <%= f.submit 'SALVA', :class => "button radius small" %>
+          <%= link_to 'ANNULLA', localitas_path, :class => "button radius small" %>
         </div>
       </fieldset>
     </div>

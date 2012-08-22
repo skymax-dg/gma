@@ -1,34 +1,40 @@
 <%= render :partial => 'shared/error_messages', :locals => {:f => @article} %>
 <%= form_for(@article) do |f| %>
-
   <div class="field">
     <%= f.hidden_field :azienda %>
   </div>
-  <div class="field">
-    <b> <%= f.label :codice %> </b> <br />
-    <%= f.text_field :codice %>
-  </div>
-  <div class="field">
-    <b> <%= f.label :descrizione %> </b> <br />
-    <%= f.text_field :descriz %>
-  </div>
-  <div class="field">
-    <b> <%= f.label :Prezzo %> </b> <br />
-    <%= f.text_field :prezzo %>
-  </div>
+  <div class="row">
+    <div class="twelve columns">
+      <fieldset>
+        <legend> Dati articolo </legend>
 
 
-  <div class="field">
-    <b> <%= f.label :Categoria %> </b> <br />
-    <%= select(:article, :categ, Article::CATEG.invert.sort)%>
-  </div>
-
-
-  <div class="field">
-    <b> <%= f.label :Iva %> </b> <br />
-    <%= collection_select :article, :iva_id, Iva.all, :id, :descriz, {:include_blank => true} %>
-  </div>
-  <div class="actions">
-    <%= f.submit "SALVA"%>
+        <div class="five columns offset-by-one">
+          <%= f.label :codice %>
+          <%= f.text_field :codice %>
+        </div>
+        <div class="five columns">
+          <%= f.label :Categoria %>
+          <%= select(:article, :categ, Article::CATEG.invert.sort) %>
+        </div>
+        <div class="ten columns offset-by-one">
+          <%= f.label :descrizione %>
+          <%= f.text_field :descriz %>
+        </div>
+        <div class="five columns offset-by-one">
+          <%= f.label :Prezzo %>
+          <%= f.text_field :prezzo %>
+        </div>
+        <div class="five columns">
+          <%= f.label :Iva %>
+          <%= collection_select :article, :iva_id, Iva.all, :id, :descriz, {:include_blank => true} %>
+        </div>
+        <hr />
+        <div class="ten columns offset-by-one">
+          <%= f.submit 'SALVA', :class => "button radius small" %>
+          <%= link_to 'ANNULLA', articles_path, :class => "button radius small" %>
+        </div>
+      </fieldset>
+    </div>
   </div>
 <% end %>
