@@ -263,3 +263,8 @@ form.new_micropost textarea {
   height: 4em;
   margin-bottom: 0;
 }
+
+.pagetitle {
+  font-size: 26px;
+  font-weight: bold;
+}

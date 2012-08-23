@@ -184,7 +184,7 @@
         <%= link_to 'Aggiungi riga', new_rigdoc_path(:id => @tesdoc.id), :class => "button radius small" %>
       </li>
       <li>
-        <%= link_to 'Carica righe da file', upload_xls_tesdoc_path, :class => "button radius small" %>
+        <%= link_to 'Carica righe da file', upload_xls_tesdoc_path(:id => @tesdoc.id), :class => "button radius small" %>
       </li>
       <li>
         <%= link_to '1 riga per articolo', add1row4article_tesdoc_path, :class => "button radius small" %>

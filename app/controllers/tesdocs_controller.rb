@@ -10,6 +10,8 @@ class TesdocsController < ApplicationController
 before_filter :authenticate
 
   def upload_xls
+    @title = "SCELTA FILE XLS PER CARICAMENTO RIGHE DOCUMENTO"
+    @tesdoc = Tesdoc.find(params[:id])
   end
 
   def index
@@ -20,6 +22,12 @@ before_filter :authenticate
 
   def addrow_fromxls
     tfile = params[:file]
+
+    if tfile.nil?
+      flash[:error] = "File non specificato o non disponibile"
+      redirect_to upload_xls_tesdoc_path(:id => params[:id]) and return
+    end
+    @title = "REPORT caricamento automatico:"
     time=Time.now()
     str="_#{time.year.to_s}_#{time.month.to_s}_#{time.day.to_s}_#{time.hour.to_s}_#{time.min.to_s}_#{time.sec.to_s}.xls"
     tname = tfile.original_filename.gsub(".xls", str)
@@ -167,8 +175,6 @@ before_filter :authenticate
           colrig = {:col_article_codice => 11, :col_descriz => 14, :col_qta => 15,
                     :col_prezzo         => 12, :col_prgrig  => 8}
           #col_sconto => 0
-          #col_seguefatt =>
-          #col_tipo_doc =>
           @errors, @success = Tesdoc.tesrigdocbyxls(book, sheet, rowini, coltes, colrig)
           if @errors.count == 0
             flash[:notice] = "CARICAMENTO COMPLETATO con SUCCESSO."
@@ -186,6 +192,7 @@ before_filter :authenticate
   end
 
   def filter
+    @title = "Elenco Documenti (#{Causmag::TIPO_DOC[se_tipo_doc.to_i]})"
     @tpfilter  = params[:tpfilter]
     @desfilter = params[:desfilter].strip
     @clifilter = params[:clifilter]
