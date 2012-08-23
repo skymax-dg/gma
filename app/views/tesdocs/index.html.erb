@@ -26,19 +26,23 @@
           </ul>
         </div>
       </div>
-      <table>
-        <thead>
-          <th width="12%">Nr doc</th>
-          <th width="13%">Del</th>
-          <th width="35%">Causale</th>
-          <th width="35%">ContoAnagrafica</th>
-          <th width="5%"></th>
-        </thead>
-        <tbody>
-            <%= render :partial => 'line', :collection => @tesdocs unless @tesdocs.nil?||@tesdocs.empty? %>
-        </tbody>
-      </table>
-      <%= will_paginate @tesdocs unless @tesdocs.nil? %>
+      <% unless @tesdocs.nil?||@tesdocs.empty? %>
+        <table>
+          <thead>
+            <tr>
+              <th style="text-align: right; width: 12%">Nr doc</th>
+              <th width="13%">Del</th>
+              <th width="35%">Causale</th>
+              <th width="35%">ContoAnagrafica</th>
+              <th width="5%"></th>
+            </tr>
+          </thead>
+          <tbody>
+              <%= render :partial => 'line', :collection => @tesdocs %>
+          </tbody>
+        </table>
+        <%= will_paginate @tesdocs unless @tesdocs.nil? %>
+      <% end %>
     </div>
   </div>
 </div>

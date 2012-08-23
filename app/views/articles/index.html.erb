@@ -33,9 +33,6 @@
       <li>
         <%= link_to 'Nuovo Articolo', new_article_path, :class => "button radius small" %>
       </li>
-      <li>
-        <%= link_to "Indietro", articles_path, :class => "button radius small" %>
-      </li>
     </ul>
   </div>
 </div>
@@ -44,11 +41,13 @@
     <div class="panel">
       <table>
         <thead>
-          <th width="12%">Codice</th>
-          <th width="6%">Categ.</th>
-          <th width="58%">Descrizione</th>
-          <th width="6%">Prezzo</th>
-          <th width="18%"></th>
+          <tr>
+            <th width="12%">Codice</th>
+            <th width="6%">Categ.</th>
+            <th width="54%">Descrizione</th>
+            <th style="text-align: right; width: 10%">Prezzo</th>
+            <th width="18%"></th>
+          </tr>
         </thead>
         <tbody>
             <%= render :partial => 'line', :collection => @articles unless @articles.empty? %>

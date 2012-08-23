@@ -1,13 +1,11 @@
 <tr>
-	<td><%= line.descriz %></td>
-	<td><%= line.prov %></td>
-	<td><%= line.cap %></td>
-	<td><%= line.paese.descriz %></td>
-	<td><%= line.codfis %></td>
+  <td><%= line.descriz %></td>
+  <td><%= line.prov %></td>
+  <td><%= line.cap %></td>
+  <td><%= line.paese.descriz %></td>
+  <td><%= line.codfis %></td>
 
-	<td>
-		<%= link_to 'V', line, :class => "button radius tiny", :title => "Visualizza" %>
-		<%= link_to 'M', edit_localita_path(line), :class => "button radius tiny", :title => "Modifica" %>
-		<%= link_to 'C', line, :confirm => 'Confermi?', :method => :delete, :class => "button radius tiny", :title => "Cancella" %>
-	</td>
+  <td>
+    <%= render :partial => 'shared/btn_vmc', :locals => {:v_edit => edit_localita_path(line), :line => line} %>
+  </td>
 </tr>

@@ -1,10 +1,17 @@
 class ContosController < ApplicationController
 before_filter :authenticate
+  def filter
+    @tpfilter  = params[:tpfilter]
+    @desfilter = params[:desfilter].strip
+    @contos = Conto.filter(@tpfilter, @desfilter, current_user.azienda, current_annoese, params[:page])
+    render "index"
+  end
+
   def index
     @title = "Elenco Conti"
-    @contos = Conto.azdanno(current_user.azienda, current_annoese).paginate(:page => params[:page],
-                                                                            :per_page => 10,
-                                                                            :order => [:codice])
+    #@contos = Conto.azdanno(current_user.azienda, current_annoese).paginate(:page => params[:page],
+    #                                                                        :per_page => 10,
+    #                                                                        :order => [:codice])
   end
 
   def anagen_exit

@@ -11,9 +11,6 @@
       <li>
         <%= link_to 'Nuovo CodiceIva/Esenzione', new_iva_path, :class => "button radius small" %>
       </li>
-      <li>
-        <%= link_to "Indietro", ivas_path, :class => "button radius small" %>
-      </li>
     </ul>
   </div>
 </div>
@@ -22,12 +19,14 @@
     <div class="panel">
       <table>
         <thead>
-          <th width="8%">Codice</th>
-          <th width="12%">Descr.</th>
-          <th width="53%">Descr.Estesa</th>
-          <th width="5%">Aliquota</th>
-          <th width="5%">Esenzione</th>
-          <th width="17%"></th>
+          <tr>
+            <th style="text-align: right; width: 8%">Codice</th>
+            <th width="12%">Descr.</th>
+            <th width="53%">Descr.Estesa</th>
+            <th style="text-align: right; width: 5%">Aliquota</th>
+            <th width="5%">Esenzione</th>
+            <th width="17%"></th>
+          </tr>
         </thead>
         <tbody>
             <%= render :partial => 'line', :collection => @ivas unless @ivas.empty? %>

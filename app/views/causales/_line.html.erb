@@ -3,10 +3,7 @@
   <td><%= Causale::TIPOREG[line.tiporeg] %></td>
   <td><%= Causale::TIPOIVA[line.tipoiva] %></td>
   <td><%= line.contoiva %></td>
-	<td>
-		<%= link_to 'V', line, :class => "button radius tiny", :title => "Visualizza" %>
-		<%= link_to 'M', edit_causale_path(line), :class => "button radius tiny", :title => "Modifica" %>
-		<%= link_to 'C', line, :confirm => 'Confermi?', :method => :delete,
-		                       :class => "button radius tiny", :title => "Cancella" %>
-	</td>
+  <td>
+    <%= render :partial => 'shared/btn_vmc', :locals => {:v_edit => edit_causale_path(line), :line => line} %>
+  </td>
 </tr>

@@ -148,12 +148,14 @@
       <legend> Imponibili </legend>
       <table>
         <thead>
-          <th align=left  width="20%">Categoria</th>
-          <th align=left  width="31%">Tipo imponibile</th>
-          <th align=right width="13%">Imponibile</th>
-          <th align=right width="09%">Aliquota</th>
-          <th align=right width="11%">Imposta</th>
-          <th align=right width="16%">Totale</th>
+          <tr>
+            <th align=left  width="20%">Categoria</th>
+            <th align=left  width="31%">Tipo imponibile</th>
+            <th style="text-align: right; width: 13%">Imponibile</th>
+            <th style="text-align: right; width: 09%">Aliquota</th>
+            <th style="text-align: right; width: 11%">Imposta</th>
+            <th style="text-align: right; width: 16%">Totale</th>
+          </tr>
         </thead>
         <tbody>
           <% @subtot_iva.each_key do |categ| %>
@@ -164,10 +166,10 @@
           <tr>
             <td><b>TOTALI:</b></td>
             <td></td>
-            <td align=right > <b> <%= number_to_currency(@subtot_iva[:T][:T][:impon]) %> </b> </td>
+            <td style="text-align: right;"><b><%= number_to_currency(@subtot_iva[:T][:T][:impon]) %></b></td>
             <td></td>
-            <td align=right > <b> <%= number_to_currency(@subtot_iva[:T][:T][:imposta]) %> </b> </td>
-            <td align=right > <b> <%= number_to_currency(@subtot_iva[:T][:T][:tot]) %> </b> </td>
+            <td style="text-align: right;"><b><%= number_to_currency(@subtot_iva[:T][:T][:imposta]) %></b></td>
+            <td style="text-align: right;"><b><%= number_to_currency(@subtot_iva[:T][:T][:tot]) %></b></td>
           </tr>
         </tbody>
       </table>
@@ -200,13 +202,14 @@
       <legend> Dettaglio righe </legend>
       <table>
         <thead>
-          <th align=left  width="12%"> Codice articolo </b> </th>
-          <th align=left  width="35%"> Descrizione </th>
-          <th align=right width="5%"> Qta'</th>
-          <th align=right width="10%"> Prezzo </th>
-          <th align=right width="8%"> Sconto </th>
-          <th align=right width="13%"> Imponibile </th>
-          <th width="17%"></th>
+          <tr>
+            <th style="text-align: left;  width: 15%"> Codice articolo </th>
+            <th style="text-align: right; width: 05%"> Qta'</th>
+            <th style="text-align: right; width: 20%"> Prezzo </th>
+            <th style="text-align: right; width: 15%"> Sconto </th>
+            <th style="text-align: right; width: 20%"> Imponibile </th>
+            <th width="20%"></th>
+          </tr>
         </thead>
         <tbody>
           <%= render :partial => '/rigdocs/line', :collection => @rigdocs unless @rigdocs.empty? %>

@@ -11,9 +11,6 @@
       <li>
         <%= link_to "Nuova Causale", new_causmag_path, :class => "button radius small" %>
       </li>
-      <li>
-        <%= link_to "Indietro", causmags_path, :class => "button radius small" %>
-      </li>
     </ul>
   </div>
 </div>
@@ -22,12 +19,14 @@
     <div class="panel">
       <table>
         <thead>
-          <th width="10%">Grp</th>
-          <th width="55%">Descrizione</th>
-          <th width="10%">Tipo</th>
-          <th width="5%">Mag</th>
-          <th width="5%">Cnt</th>
-          <th width="15%"></th>
+          <tr>
+            <th width="10%">Grp</th>
+            <th width="55%">Descrizione</th>
+            <th width="10%">Tipo</th>
+            <th width="5%">Mag</th>
+            <th width="5%">Cnt</th>
+            <th width="15%"></th>
+          </tr>
         </thead>
         <tbody>
             <%= render :partial => 'line', :collection => @causmags unless @causmags.empty? %>

@@ -4,8 +4,6 @@
   <td><%= Conto::TIPOCONTO[line.tipoconto] %></td>
   <td><%= Conto::TIPOPEO[line.tipopeo] %></td>
   <td>
-    <%= link_to 'V', line, :class => "button radius tiny", :title => "Visualizza" %>
-    <%= link_to 'M', edit_conto_path(line), :class => "button radius tiny", :title => "Modifica" %>
-    <%= link_to 'C', line, :confirm => 'Confermi?', :method => :delete, :class => "button radius tiny", :title => "Cancella" %>
+    <%= render :partial => 'shared/btn_vmc', :locals => {:v_edit => edit_conto_path(line), :line => line} %>
   </td>
 </tr>

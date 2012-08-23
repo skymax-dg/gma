@@ -11,10 +11,8 @@
 
 
 <br /> <br /> <br />
-<b> <% if @errors.count > 0 %>
-      "Nessun articolo caricato, correggere gli errori per poter procedere al caricamento."
-    <% end %>
-</b>
+<% if @errors.count > 0 %>
+  <b>"Nessun articolo caricato, correggere gli errori per poter procedere al caricamento."</b>
+<% end %>
 <br /> <br /> <br />
-<%#= link_to 'Indietro', :back %>
 <%= link_to 'Indietro', @tesdoc %>

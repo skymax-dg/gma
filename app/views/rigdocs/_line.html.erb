@@ -1,12 +1,12 @@
 <tr>
   <td><%= line.article.codice unless line.article.nil? %></td>
-  <td><%= line.descriz %></td>
-  <td align=right ><%= line.qta %></td>
-  <td align=right ><%= number_to_currency(line.prezzo) %></td>
-  <td align=right ><%= line.sconto %></td>
-  <td align=right ><%= number_to_currency(line.qta * line.prezzo) %></td>
+  <td style="text-align: right;"><%= line.qta %></td>
+  <td style="text-align: right;"><%= number_to_currency(line.prezzo) %></td>
+  <td style="text-align: right;"><%= line.sconto %></td>
+  <td style="text-align: right;"><%= number_to_currency(line.qta * line.prezzo) %></td>
   <td>
-    <%= link_to 'D', line, :class => "button radius tiny", :title => "Dettaglio" %>
+    <%= link_to 'D', line,
+                     :class => "button radius tiny", :title => "Dettaglio" %>
     <%= link_to 'S', up_rigdoc_path(:id => line.id),
                      :class => "button radius tiny", :title => "Sposta su'" %>
     <%= link_to 'G', down_rigdoc_path(:id => line.id),

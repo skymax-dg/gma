@@ -233,10 +233,6 @@ before_filter :authenticate
     end
   end
 
-  def choose_tipo_doc
-    clear_tipo_doc
-  end
-
   def show
     @title = "Mostra Documento (#{Causmag::TIPO_DOC[se_tipo_doc.to_i]})"
     @tesdoc = Tesdoc.find(params[:id])

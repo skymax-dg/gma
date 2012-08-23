@@ -12,7 +12,11 @@ Gma::Application.routes.draw do
   
   resources :users
 
-  resources :localitas
+  resources :localitas do
+    collection do
+      get :filter
+    end
+  end
 
   resources :paeses
 
@@ -24,6 +28,7 @@ Gma::Application.routes.draw do
 
   resources :contos do
     collection do
+      get :filter
       get :anagen_exit
     end
   end
@@ -51,6 +56,7 @@ Gma::Application.routes.draw do
 
   resources :anagens do
     collection do
+      get :filter
       get :chg_tipo
     end
   end
@@ -65,15 +71,12 @@ Gma::Application.routes.draw do
   resources :tesdocs do
     collection do
       get :filter
-      get :choose_tipo_doc
       get :addtesrigdoc_fromxls
     end
     member do
       get :add1row4article
       get :delrowqta0
       get :stp
-#      get :stp_ddt1
-#      get :stp_fat1
       get :ges_datisped
       post :addrow_fromxls
       get :upload_xls

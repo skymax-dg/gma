@@ -8,32 +8,40 @@
 <div class="row">
   <div class="twelve columns">
     <div class="panel">
-      <%= will_paginate @localitas %>
-      <table>
-        <thead>
-          <th width="40%">Descrizione</th>
-          <th width="3%">Prv.</th>
-          <th width="6%">Cap</th>
-          <th width="30%">Paese</th>
-          <th width="6%">C.F.</th>
-          <th width="15%"></th>
-        </thead>
-        <tbody>
-            <%= render :partial => 'line', :collection => @localitas unless @localitas.empty? %>
-        </tbody>
-      </table>
-      <div class="row">
-        <div class="twelve columns">
-          <ul class="button-group [radius, rounded]">
-            <li>
-              <%= link_to "Nuova citta'", new_localita_path, :class => "button radius" %>
-            </li>
-            <li>
-              <%= link_to "Indietro", localitas_path, :class => "button radius" %>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <%= render :partial => 'filter' %>
     </div>
   </div>
 </div>
+<div class="row">
+  <div class="twelve columns">
+    <ul class="button-group [radius, rounded]">
+      <li>
+        <%= link_to "Nuova citta'", new_localita_path, :class => "button radius small" %>
+      </li>
+    </ul>
+  </div>
+</div>
+<% unless @localitas.nil?||@localitas.empty? %>
+  <div class="row">
+    <div class="twelve columns">
+      <div class="panel">
+        <table>
+          <thead>
+            <tr>
+              <th width="40%">Descrizione</th>
+              <th width="3%">Prv.</th>
+              <th width="6%">Cap</th>
+              <th width="30%">Paese</th>
+              <th width="6%">C.F.</th>
+              <th width="15%"></th>
+            </tr>
+          </thead>
+          <tbody>
+              <%= render :partial => 'line', :collection => @localitas unless @localitas.empty? %>
+          </tbody>
+        </table>
+        <%= will_paginate @localitas %>
+      </div>
+    </div>
+  </div>
+<% end %>

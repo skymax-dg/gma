@@ -1,8 +1,15 @@
 class AnagensController < ApplicationController
 before_filter :authenticate
+  def filter
+    @tpfilter  = params[:tpfilter]
+    @desfilter = params[:desfilter].strip
+    @anagens = Anagen.filter(@tpfilter, @desfilter, params[:page])
+    render "index"
+  end
+
   def index
     @title = "Elenco Soggetti/Societa'"
-    @anagens = Anagen.paginate(:page => params[:page], :per_page => 10, :order => [:denomin])
+    #@anagens = Anagen.paginate(:page => params[:page], :per_page => 10, :order => [:denomin])
   end
 
   def show

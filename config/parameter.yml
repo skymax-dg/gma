@@ -1,7 +1,7 @@
 ELNCAZND:
   9: EIFIS EDITORE
 ANAGEN:
-  TIPO SOGGETTO:
+  TIPO_SOGGETTO:
     F: 'Pers.fisica'
     G: 'Pers.giuridica'
     I: 'Ditta individ.'
@@ -14,9 +14,9 @@ ANAIND:
     4: 'Sec3'
 CAUSMAG:
   TIPO_DOC:
-    0: 'Contab.'
-    1: 'Ddt'
-    2: 'Generici'
+    0: 'Doc.Contabili'
+    1: 'Doc.Trasporto'
+    2: 'Doc.Generici'
   TIPO:
     E: 'Entrata'
     U: 'Uscita'

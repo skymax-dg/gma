@@ -5,8 +5,6 @@
   <td><%= Causmag::MOVIMPMAG[line.movimpmag] %></td>
   <td><%= Causmag::CONTABILE[line.contabile] %></td>
   <td>
-    <%= link_to 'V', line, :class => "button radius tiny", :title => "Visualizza" %>
-    <%= link_to 'M', edit_causmag_path(line), :class => "button radius tiny", :title => "Modifica" %>
-    <%= link_to 'C', line, :confirm => 'Confermi?', :method => :delete, :class => "button radius tiny", :title => "Cancella" %>
+    <%= render :partial => 'shared/btn_vmc', :locals => {:v_edit => edit_causmag_path(line), :line => line} %>
   </td>
 </tr>

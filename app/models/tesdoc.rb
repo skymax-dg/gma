@@ -269,7 +269,7 @@ class Tesdoc < ActiveRecord::Base
   end
 
   def self.filter (tp, des, tpc, tipo_doc, causmag, conto, azienda, annoese, page)
-    # Esegure la ricerca nei documenti in base ai filtri impsotati
+    # Esegure la ricerca nei documenti in base ai filtri impostati
 
     hsh = {"RS" => "denomin", "CF" => "codfis", "PI" => "pariva"}
     hshvar = Hash.new
@@ -290,7 +290,6 @@ class Tesdoc < ActiveRecord::Base
     
     includes(:causmag, :conto =>[:anagen]).where([whcausmag + whconto + whana, hshvar]).azdanno(
       azienda, annoese).paginate(:page => page, :per_page => 10, :order => "data_doc DESC, causmag_id, num_doc") unless hsh[tp].nil?
-#      current_user.azienda, current_annoese).paginate(:page => page, :per_page => 10) unless hsh[tp].nil?
   end
 
   def self.art_mov_vend(idart, idanagen, nrmag, anarif, azienda, tp)

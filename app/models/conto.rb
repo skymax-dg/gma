@@ -16,6 +16,27 @@ class Conto < ActiveRecord::Base
   TIPOCONTO = $ParAzienda['CONTO']['TIPOCONTO']
   TIPOPEO = $ParAzienda['CONTO']['TIPOPEO']
 
+  def self.filter (tp, des, azienda, annoese, page)
+    # Esegure la ricerca del conto in base ai filtri impostati
+
+    hsh = {"DE" => "descriz", "RS" => "denomin", "CC" => "codice"}
+    hshvar = Hash.new
+    whconto = "" 
+    whanagen = ""
+    if des.strip.length > 0
+      whconto = " contos.#{hsh[tp]} like :d" if tp=="DE" 
+      hshvar[:d] = "%#{des}%" if tp=="DE"
+      whconto = " CAST(contos.#{hsh[tp]} AS text) like :d" if tp=="CC"
+      hshvar[:d] = "%#{des}%" if tp=="CC"
+      whanagen = " anagens.#{hsh[tp]} like :e" if tp=="RS"
+      hshvar[:e] = "%#{des}%" if tp=="RS"
+    end
+    includes(:anagen).where([whanagen + whconto, hshvar]).azdanno(azienda, annoese).paginate(
+      :page => page,
+      :per_page => 10,
+      :order => "contos.codice ASC") unless hsh[tp].nil?
+  end
+
   def codice_toobig4integer
     errors.add(:codice, "Valore massimo consentito: 2147483647") if self.codice > 2147483647
   end

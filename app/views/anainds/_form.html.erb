@@ -7,9 +7,15 @@
         <div class="ten columns offset-by-one">
           <%= hidden_field(:anaind, :anagen_id) %>
           <%= f.label "Indirizzo valido come:" %>
-          <%= check_box :anaind, :flsl, {}, 'S', 'N' %> <b> Sede legale </b> <br /> 
-          <%= check_box :anaind, :flsp, {}, 'S', 'N' %> <b> Indirizzo di spedizione </b> <br />
-          <%= check_box :anaind, :flmg, {}, 'S', 'N' %> <b> Indirizzo di magazzino </b> <br /> <br />
+        </div>
+        <div class="ten columns offset-by-one">
+          <%= check_box :anaind, :flsl, {}, 'S', 'N' %> Sede legale
+        </div>
+        <div class="ten columns offset-by-one">
+          <%= check_box :anaind, :flsp, {}, 'S', 'N' %> Indirizzo di spedizione
+        </div>
+        <div class="ten columns offset-by-one">
+          <%= check_box :anaind, :flmg, {}, 'S', 'N' %> Indirizzo di magazzino
         </div>
         <div class="ten columns offset-by-one">
           <%= f.label "Indirizzo" %>

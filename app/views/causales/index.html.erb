@@ -11,9 +11,6 @@
       <li>
         <%= link_to 'Nuova Causale', new_causale_path, :class => "button radius small" %>
       </li>
-      <li>
-        <%= link_to 'Indietro', causales_path, :class => "button radius small" %>
-      </li>
     </ul>
   </div>
 </div>
@@ -22,11 +19,13 @@
     <div class="panel">
       <table>
         <thead>
-          <th width="50%">Descrizione</th>
-          <th width="11%">Tipo REG</th>
-          <th width="11%">Tipo IVA</th>
-          <th width="13%">Conto IVA</th>
-          <th width="15%"></th>
+          <tr>
+            <th width="50%">Descrizione</th>
+            <th width="11%">Tipo REG</th>
+            <th width="11%">Tipo IVA</th>
+            <th width="13%">Conto IVA</th>
+            <th width="15%"></th>
+          </tr>
         </thead>
         <tbody>
             <%= render :partial => 'line', :collection => @causales unless @causales.empty? %>

@@ -7,32 +7,40 @@
 </div>
 <div class="row">
   <div class="twelve columns">
-    <ul class="button-group [radius, rounded]">
-      <li>
-        <%= link_to 'Nuovo Conto', new_conto_path, :class => "button radius small" %>
-      </li>
-      <li>
-        <%= link_to "Indietro", contos_path, :class => "button radius small" %>
-      </li>
-    </ul>
+    <div class="panel">
+      <%= render :partial => 'filter' %>
+    </div>
   </div>
 </div>
 <div class="row">
   <div class="twelve columns">
-    <div class="panel">
-      <table>
-        <thead>
-          <th width="11%">Codice</th>
-          <th width="60%">Descrizione</th>
-          <th width="7%">Riferim.</th>
-          <th width="7%">Tipo</th>
-          <th width="15%"></th>
-        </thead>
-        <tbody>
-            <%= render :partial => 'line', :collection => @contos unless @contos.empty? %>
-        </tbody>
-      </table>
-      <%= will_paginate @contos %>
-    </div>
+    <ul class="button-group [radius, rounded]">
+      <li>
+        <%= link_to 'Nuovo Conto', new_conto_path, :class => "button radius small" %>
+      </li>
+    </ul>
   </div>
 </div>
+<% unless @contos.nil?||@contos.empty? %>
+  <div class="row">
+    <div class="twelve columns">
+      <div class="panel">
+        <table>
+          <thead>
+            <tr>
+              <th width="11%">Codice</th>
+              <th width="60%">Descrizione</th>
+              <th width="7%">Riferim.</th>
+              <th width="7%">Tipo</th>
+              <th width="15%"></th>
+            </tr>
+          </thead>
+          <tbody>
+              <%= render :partial => 'line', :collection => @contos unless @contos.empty? %>
+          </tbody>
+        </table>
+        <%= will_paginate @contos %>
+      </div>
+    </div>
+  </div>
+<% end %>

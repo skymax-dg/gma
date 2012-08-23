@@ -2,11 +2,8 @@
   <td><%= line.codice %></td>
   <td><%= Article::CATEG[line.categ] %> </td>
   <td><%= line.descriz %></td>
-  <td><%= line.prezzo %></td>
-	<td>
-		<%= link_to 'V', line, :class => "button radius tiny", :title => "Visualizza" %>
-		<%= link_to 'M', edit_article_path(line), :class => "button radius tiny", :title => "Modifica" %>
-		<%= link_to 'C', line, :confirm => 'Confermi?',        :method => :delete,
-		                       :class => "button radius tiny", :title => "Cancella" %>
-	</td>
+  <td style="text-align: right;"><%= number_to_currency(line.prezzo) %></td>
+  <td>
+    <%= render :partial => 'shared/btn_vmc', :locals => {:v_edit => edit_article_path(line), :line => line} %>
+  </td>
 </tr>

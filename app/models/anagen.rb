@@ -23,7 +23,20 @@ class Anagen < ActiveRecord::Base
   validates :fax,      :length => { :maximum => 20}
   validates :web,      :length => { :maximum => 50}
 
-  TIPO = $ParAzienda['ANAGEN']['TIPO SOGGETTO']
+  TIPO = $ParAzienda['ANAGEN']['TIPO_SOGGETTO']
+
+
+  def self.filter (tp, des, page)
+    # Esegure la ricerca delle anagrafiche soggetto in base ai filtri impostati
+
+    hsh = {"RS" => "denomin", "CF" => "codfis", "PI" => "pariva"}
+    hshvar = Hash.new
+    whana = "" 
+    whana = " anagens.#{hsh[tp]} like :d" unless des == ""
+    hshvar[:d] = "%#{des}%" unless des == ""
+    where([whana, hshvar]).paginate(:page => page, :per_page => 10,
+                                    :order => "denomin ASC") unless hsh[tp].nil?
+  end
 
   def sedelegale
     sl={}
