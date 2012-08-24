@@ -26,6 +26,7 @@ before_filter :authenticate
     if @paese.save
       redirect_to @paese, :notice => 'Nazione/Stato inserito con successo.' 
     else
+      @title = "Nuovo Stato/Nazione"
       flash[:error] = "Il salvataggio del paese non e' andato a buon fine"
       render :action => "new"
     end
@@ -36,6 +37,7 @@ before_filter :authenticate
     if @paese.update_attributes(params[:paese])
       redirect_to @paese, :notice => 'Nazione/Stato aggiornato con successo.'
     else
+      @title = "Modifica Stato/Nazione"
       flash[:error] = "Il salvataggio del paese non e' andato a buon fine"
       render :action => "edit"
     end

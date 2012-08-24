@@ -1,5 +1,4 @@
-<h1><%= @title %></h1>
-
+<%= render :partial => 'shared/main_title', :locals => {:t => @title, :record => @login} %>
 <div class="row">
   <div class="twelve columns">
     <ul class="button-group [radius, rounded]">

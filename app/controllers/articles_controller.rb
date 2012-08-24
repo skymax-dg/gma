@@ -60,6 +60,7 @@ before_filter :authenticate
 
     @artmov = Tesdoc.art_mov_vend(@id, @idanagen, @nrmag,
                                   @anarif, current_user.azienda, @tp)
+    @tp == "M" ? @title = "Stampa Movimenti di magazzino" : @title = "Stampa Vendite per titolo"
     if @artmov.count == 0
       render 'mov_vend_notfound'
     else
@@ -75,6 +76,7 @@ before_filter :authenticate
     @grpmag = params[:grpmag]||""
     @artmov = Tesdoc.art_mov_vend("all", @idanagen, @nrmag,
                                   @anarif, current_user.azienda, @tp)
+    @tp == "M" ? @title = "Stampa Movimenti di magazzino" : @title = "Stampa Vendite per titolo"
     if @artmov.count == 0
       render 'mov_vend_notfound'
     else
@@ -92,6 +94,7 @@ before_filter :authenticate
 
     @artmov = Tesdoc.art_mov_vend(@id, @idanagen, @nrmag,
                                   @anarif, current_user.azienda, @tp)
+    @tp == "M" ? @title = "Export (XLS) Movimenti di magazzino" : @title = "Export (XLS) Vendite per titolo"
     if @artmov.count == 0
       render 'mov_vend_notfound'
     else
@@ -107,6 +110,7 @@ before_filter :authenticate
     @grpmag = params[:grpmag]||""
     @artmov = Tesdoc.art_mov_vend("all", @idanagen, @nrmag,
                                   @anarif, current_user.azienda, @tp)
+    @tp == "M" ? @title = "Export (XLS) Movimenti di magazzino" : @title = "Export (XLS) Vendite per titolo"
     if @artmov.count == 0
       render 'mov_vend_notfound'
     else
@@ -140,6 +144,7 @@ before_filter :authenticate
     if @article.save
       redirect_to @article, :notice => 'Articolo inserito con successo.'
     else
+      @title = "Nuovo Articolo"
       flash[:error] = "Il salvataggio dell'articolo non e' andato a buon fine"
       render :action => "new"
     end
@@ -150,6 +155,7 @@ before_filter :authenticate
     if @article.update_attributes(params[:article])
       redirect_to @article, :notice => 'Articolo aggiornato con successo.'
     else
+      @title = "Modifica Articolo"
       flash[:error] = "Il salvataggio dell'articolo non e' andato a buon fine"
       render :action => "edit"
     end

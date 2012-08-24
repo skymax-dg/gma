@@ -3,6 +3,7 @@ before_filter :authenticate
   def create
     @anagen = Anagen.find(params[:anaind][:anagen_id])
     @anaind = @anagen.anainds.build(params[:anaind])# La Build setta @anaind.anagen_id = @anagen.id
+    @title = "Nuovo Indirizzo"
     if Anaind.nrmagexist(@anaind.id, @anaind.anagen_id, @anaind.nrmag)
       flash.now[:error] = "Indirizzo gia' esistente per il magazzino: #{@anaind.nrmag}"
       render :action => :new
@@ -62,6 +63,7 @@ before_filter :authenticate
   def update
     @anaind = Anaind.find(params[:id])
     anaind = params[:anaind]
+    @title = "Modifica Indirizzo"
     if Anaind.nrmagexist(params[:id].to_i, anaind[:anagen_id].to_i, anaind[:nrmag].to_i)
       flash[:error] = "Indirizzo gia' esistente per il magazzino: #{anaind[:nrmag]}"
       render :action => :edit

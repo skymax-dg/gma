@@ -261,6 +261,7 @@ before_filter :authenticate
     if @tesdoc.save
       redirect_to @tesdoc, :notice => 'Testata documento inserita con successo.'
     else
+      @title = "Nuovo Documento (#{Causmag::TIPO_DOC[se_tipo_doc.to_i]})"
       @causmag = Causmag.find(params[:tesdoc][:causmag_id])
       @conto = Conto.find(params[:tesdoc][:conto_id])
       @tesdoc.azienda = current_user.azienda
@@ -278,6 +279,7 @@ before_filter :authenticate
     if @tesdoc.update_attributes(params[:tesdoc])
       redirect_to @tesdoc, :notice => 'Testata docuemnto aggiornata con successo.'
     else
+      @title = "Modifica Testata documento (#{Causmag::TIPO_DOC[se_tipo_doc.to_i]})"
       flash[:error] = "Il salvataggio del documento non e' andato a buon fine"
       render 'edit' 
     end

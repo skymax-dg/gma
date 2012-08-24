@@ -1,34 +1,28 @@
+<%= render :partial => 'shared/main_title', :locals => {:t => @title, :record => nil} %>
 <div class="row">
-  <div class="twelve columns">
-    <div class="panel pagetitle">
-      <%= @title %>
+  <div class="row">
+    <div class="twelve columns">
+      <ul class="button-group [radius, rounded]">
+        <li>
+          <%= link_to 'Indietro', @tesdoc, :class => "button radius small" %>
+        </li>
+      </ul>
     </div>
   </div>
-  <div class="row">
-    <div class="row">
-      <div class="twelve columns">
-        <ul class="button-group [radius, rounded]">
-          <li>
-            <%= link_to 'Indietro', @tesdoc, :class => "button radius small" %>
-          </li>
-        </ul>
-      </div>
+  <div class="twelve columns">
+    <% if @errors.count > 0 %>
+      <fieldset>
+        <legend> ELENCO ERRORI (Nessun articolo caricato) </legend>
+        <%= render(:partial => 'shared/lineerror', :collection => @errors) %>
+      </fieldset>
     </div>
-    <div class="twelve columns">
-      <% if @errors.count > 0 %>
-        <fieldset>
-          <legend> ELENCO ERRORI (Nessun articolo caricato) </legend>
-          <%= render(:partial => 'shared/lineerror', :collection => @errors) %>
-        </fieldset>
-      </div>
-      <% end %>
-      <% if @success.count > 0 %>
-        <fieldset>
-          <legend> ELENCO SUCCESSI </legend>
-          <%= render(:partial => 'shared/linesuccess', :collection => @success) %>
-        </fieldset>
-      </div>
-      <% end %>
+    <% end %>
+    <% if @success.count > 0 %>
+      <fieldset>
+        <legend> ELENCO SUCCESSI </legend>
+        <%= render(:partial => 'shared/linesuccess', :collection => @success) %>
+      </fieldset>
     </div>
+    <% end %>
   </div>
 </div>

@@ -41,13 +41,15 @@ before_filter :authenticate
   def create
     @conto = Conto.new(params[:conto])
     if not compat_tipoconto(@conto.tipoconto, @conto.anagen_id.nil?)
+      @title = "Nuovo Conto"
       flash.alert = "Per la tipologia #{Conto::TIPOCONTO["C"]}/#{Conto::TIPOCONTO["F"]} " +
                     "e' obbligatorio specificare una anagrafica soggetto"
       render :action => "new"
     else
       if @conto.save
-        redirect_to @conto, :notice => 'Piano dei conti inserita con successo.'
+        redirect_to @conto, :notice => 'Piano dei conti inserito con successo.'
       else
+        @title = "Nuovo Conto"
         flash[:error] = "Il salvataggio del piano dei conti non e' andato a buon fine"
         render :action => "new"
       end
@@ -57,12 +59,14 @@ before_filter :authenticate
   def update
     @conto = Conto.find(params[:id])
     if not compat_tipoconto(params[:conto][:tipoconto], params[:conto][:anagen_id].nil?)
+      @title = "Modifica Conto"
       flash.alert = "Per la tipologia #{Conto::TIPOCONTO["C"]}/#{Conto::TIPOCONTO["F"]} " +
                     "e' obbligatorio specificare una anagrafica soggetto"
     else
       if @conto.update_attributes(params[:conto])
         redirect_to @conto, :notice => 'Piano dei conti aggiornato con successo.'
       else
+        @title = "Modifica Conto"
         flash[:error] = "Il salvataggio del piano dei conti non e' andato a buon fine"
         render :action => "edit"
       end

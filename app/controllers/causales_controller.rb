@@ -28,6 +28,7 @@ before_filter :authenticate
     if @causale.save
       redirect_to @causale, :notice => 'Causale contabile inserita con successo.'
     else
+      @title = "Nuova Causale contabile"
       flash[:error] = "Il salvataggio della causale non e' andato a buon fine"
       render :action => "new"
     end
@@ -38,6 +39,7 @@ before_filter :authenticate
     if @causale.update_attributes(params[:causale])
       redirect_to @causale, :notice => 'Causale contabile aggiornata con successo.'
     else
+      @title = "Modifica Causale contabile"
       flash[:error] = "Il salvataggio della causale non e' andato a buon fine"
       render :action => "edit"
     end

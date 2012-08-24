@@ -27,6 +27,7 @@ before_filter :authenticate
 
   def create
     @causmag = Causmag.new(params[:causmag])
+    @title = "Nuova Causale di magazzino"
     if not compat_contabile(@causmag.contabile, @causmag.causale_id.nil?)
       flash[:error_explanation] = "incoerenza fra 'causale contabile' e flag 'contabile'"
       render :action => "new"
@@ -42,6 +43,7 @@ before_filter :authenticate
 
   def update
     @causmag = Causmag.find(params[:id])
+    @title = "Modifica Causale di magazzino"
     if not compat_contabile(params[:causmag][:contabile], params[:causmag][:causale_id] == "")
       flash[:error_explanation] = "ERRORE!!! Incoerenza fra 'causale contabile' e flag 'contabile'"
       render :action => "edit"

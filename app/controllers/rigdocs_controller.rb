@@ -49,6 +49,7 @@ before_filter :authenticate
     if @rigdoc.save
       redirect_to @tesdoc, :notice => 'Riga documento aggiunta con successo.'
     else
+      @title = "Nuova Riga documento"
       flash[:error] = "Il salvataggio della riga non e' andato a buon fine"
       render 'new'
     end
@@ -69,6 +70,7 @@ before_filter :authenticate
     if @rigdoc.update_attributes(params[:rigdoc])
       redirect_to @rigdoc, :notice => 'Testata documento modificata con successo.'
     else
+      @title = "Modifica Riga documento"
       flash[:error] = "Il salvataggio della riga non e' andato a buon fine"
       render 'edit'
     end

@@ -1,10 +1,4 @@
-<div class="row">
-  <div class="twelve columns">
-    <div class="panel pagetitle">
-      <%= @title %>
-    </div>
-  </div>
-</div>
+<%= render :partial => 'shared/main_title', :locals => {:t => @title, :record => @iva} %>
 <%= render 'form' %>
 <div class="row">
   <div class="twelve columns">

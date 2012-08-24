@@ -1,0 +1,8 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="panel pagetitle">
+      <%= t %>
+    </div>
+    <%= render :partial => 'shared/error_messages', :locals => {:f => record} unless record.nil? %>
+  </div>
+</div>

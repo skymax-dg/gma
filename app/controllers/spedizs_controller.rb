@@ -26,6 +26,7 @@ class SpedizsController < ApplicationController
     if @spediz.save
       redirect_to @spediz.tesdoc, :notice => 'Dati spedizione inseriti con successo.'
     else
+      @title = "Inserisci Dati spedizione/pagamento"
       flash[:error] = "Il salvataggio dei dati spedizione non e' andato a buon fine"
       render 'new'
     end
@@ -36,6 +37,8 @@ class SpedizsController < ApplicationController
     if @spediz.update_attributes(params[:spediz])
       redirect_to @spediz.tesdoc, :notice => 'Dati spedizione aggiornati.'
     else
+      @title = "Modifica Dati spedizione/pagamento"
+      flash[:error] = "Il salvataggio dei dati spedizione non e' andato a buon fine"
       render :action => "edit"
     end
   end

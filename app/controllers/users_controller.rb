@@ -2,8 +2,8 @@
 class UsersController < ApplicationController
 before_filter :authenticate, :except => [:new, :create]
  def new
+    @title = "Creazione utente"
     @user = User.new
-  	@title = "Creazione utente"
   end
 
   def create
@@ -36,7 +36,7 @@ before_filter :authenticate, :except => [:new, :create]
       flash[:success] = "Utente aggiornato con successo."
       redirect_to user_path
     else
-      @title = "Modifica user"
+      @title = "Modifica Utente"
       render 'edit'
     end
   end

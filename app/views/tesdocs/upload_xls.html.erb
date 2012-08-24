@@ -1,32 +1,26 @@
-<div class="row">
-  <div class="twelve columns">
-    <div class="panel pagetitle">
-      <%= @title %>
-    </div>
-  </div>
-  </div><%= form_tag 'addrow_fromxls', :multipart => true do %>
-    <div class="row">
-      <div class="twelve columns">
-        <fieldset>
-          <legend> Elabora file </legend>
-          <div class="ten columns offset-by-one">
-    		    <label for="file">File excel da caricare </label>
-            <%= file_field_tag "file" %>
-          </div>
-          <div class="ten columns offset-by-one">
-            <%= submit_tag %>
-          </div>
-        </fieldset>
-      </div>
-    </div>
-  <% end %>
+<%= render :partial => 'shared/main_title', :locals => {:t => @title, :record => nil} %>
+</div><%= form_tag 'addrow_fromxls', :multipart => true do %>
   <div class="row">
     <div class="twelve columns">
-      <ul class="button-group [radius, rounded]">
-        <li>
-          <%= link_to 'Indietro', @tesdoc, :class => "button radius small" %>
-        </li>
-      </ul>
+      <fieldset>
+        <legend> Elabora file </legend>
+        <div class="ten columns offset-by-one">
+  		    <label for="file">File excel da caricare </label>
+          <%= file_field_tag "file" %>
+        </div>
+        <div class="ten columns offset-by-one">
+          <%= submit_tag %>
+        </div>
+      </fieldset>
     </div>
+  </div>
+<% end %>
+<div class="row">
+  <div class="twelve columns">
+    <ul class="button-group [radius, rounded]">
+      <li>
+        <%= link_to 'Indietro', @tesdoc, :class => "button radius small" %>
+      </li>
+    </ul>
   </div>
 </div>

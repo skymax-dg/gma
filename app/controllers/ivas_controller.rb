@@ -24,8 +24,9 @@ class IvasController < ApplicationController
     @iva.aliq = 0 if @iva.flese == "S" # Se si tratta di esenzione l'aliquota viene impostata a 0
 
     if @iva.save
-      redirect_to @iva, notice => 'Iva was successfully created.'
+      redirect_to @iva, :notice => 'Codice Iva/Esenzione inserito con successo.'
     else
+      @title = "Nuovo Tipo Iva/Esenzione"
       render action => "new"
     end
   end
@@ -35,8 +36,9 @@ class IvasController < ApplicationController
     @iva.aliq = 0 if @iva.flese == "S" # Se si tratta di esenzione l'aliquota viene impostata a 0
 
     if @iva.update_attributes(params[:iva])
-      redirect_to @iva, notice => 'Iva was successfully updated.'
+      redirect_to @iva, :notice => 'Codice Iva/Esenzione aggiornato con successo.'
     else
+      @title = "Modifica Tipo Iva/Esenzione"
       render action => "edit"
     end
   end

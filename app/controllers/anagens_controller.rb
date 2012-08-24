@@ -41,6 +41,7 @@ before_filter :authenticate
     if @anagen.save
       redirect_to @anagen, :notice => 'Anagrafica soggetti creata con successo.'
     else
+      @title = "Nuovo Soggetto/Societa'"
       flash[:error] = "Il salvataggio dell'anagrafica non e' andato a buon fine"
       render :action => "new"
     end
@@ -51,6 +52,7 @@ before_filter :authenticate
     if @anagen.update_attributes(params[:anagen])
       redirect_to @anagen, :notice => 'Anagrafica soggetti aggiornata con successo.'
     else
+      @title = "Modifica Soggetto/Societa'"
       flash[:error] = "Il salvataggio dell'anagrafica non e' andato a buon fine"
       render :action => "edit"
     end

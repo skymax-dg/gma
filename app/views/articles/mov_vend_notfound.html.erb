@@ -1,10 +1,15 @@
-<h1> <%= @tp == 'M' ? "Movimenti di magazzino" : "Vendite per titolo" %> </h1>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-
-<h2> Nessun movimento di <%= @tp == 'M' ? " Magazzino " : " Vendita " %> trovato </h2>
-
-<%= link_to 'Indietro', :back %>
+<%= render :partial => 'shared/main_title', :locals => {:t => @title, :record => nil} %>
+<div class="row">
+  <div class="twelve columns">
+    <fieldset>
+      <div class="ten columns offset-by-one">
+        <h4> Nessun movimento di <%= @tp == 'M' ? " Magazzino " : " Vendita " %> trovato </h4>
+        <div class="row">
+          <div class="twelve columns">
+            <%= link_to 'Indietro', :back, :class => "button radius small" %>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</div>

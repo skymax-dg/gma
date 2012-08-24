@@ -1,30 +1,4 @@
-<h1> <%= @title %> </h1>
-<br/>
-<%= form_tag(:mov_vend_xls_article, :method => :get) do %>
-  <div class="field">
-    Articolo: <%= @article.desest1 %>
-  </div>
-  <div class="field">
-    <b> <%= label_tag "Cliente: " %> </b> <br />
-    <%= select_tag(:idanagen,
-                   options_from_collection_for_select(@anagens, :id, :denomin),
-                   {:include_blank => ""}) unless @anagens.nil?%>
-    <%= @tp == "M" ? "Le movimentazioni di " : "Le vendite di " %>
-    <b> <%= Anagen.find(current_user.azienda).denomin %> <b/>
-    <%= check_box_tag :anarif, 'S' %>
-  </div>
-  <div class="field">
-    <b> <%= label_tag "Magazzino: " %> </b> <br />
-    <% mag = Hash.new %>
-    <% Anaind::NRMAG.each {|k,v|mag[k]=v unless k==0} %>
-    <%= select_tag(:nrmag, options_for_select(mag.invert.sort), {:include_blank => "", :selected => "", :disabled => @tp=="V"}) %>
-    raggruppati:
-    <%= check_box_tag :grpmag, 'S', checked = @tp=="V", {:disabled => @tp=="V"}%>
-    <%= hidden_field_tag :tp, @tp %>
-  </div>
-
-  <%= submit_tag 'EXPORT(XLS)' %>
-  <br />
-  <br />
-  <%= link_to 'Indietro', @article %>
-<% end %>
+<%= render :partial => 'shared/main_title', :locals => {:t => @title, :record => nil} %>
+<%= render :partial => 'stp_filter', :locals => {:url => :mov_vend_xls_article, 
+                                                 :sub_label => 'EXPORT(XLS)',
+                                                 :url_back => @article} %>
