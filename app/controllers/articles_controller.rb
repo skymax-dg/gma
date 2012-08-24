@@ -14,6 +14,7 @@ before_filter :authenticate
       render :action => "show"
     end
     @tp == "M" ? @title = "Stampa Movimenti di magazzino" : @title = "Stampa Vendite per titolo"
+    @all = false
   end
 
   def filter_mov_vend_xls
@@ -26,6 +27,7 @@ before_filter :authenticate
       render :action => "show"
     end
     @tp == "M" ? @title = "Export (XLS) Movimenti di magazzino" : @title = "Export (XLS) Vendite per titolo"
+    @all = false
   end
 
   def filter_mov_vend_all
@@ -37,6 +39,7 @@ before_filter :authenticate
       render :action => "index"
     end
     @tp == "M" ? @title = "Stampa Movimenti di magazzino" : @title = "Stampa Vendite per titolo"
+    @all = true
   end
 
   def filter_mov_vend_all_xls
@@ -48,6 +51,7 @@ before_filter :authenticate
       render :action => "index"
     end
     @tp == "M" ? @title = "Export (XLS) Movimenti di magazzino" : @title = "Export (XLS) Vendite per titolo"
+    @all = true
   end
 
   def stp_mov_vend

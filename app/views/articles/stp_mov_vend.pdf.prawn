@@ -30,7 +30,7 @@
           pdf.text desmag,
                        :size => 12, :style => :bold, :align => :left
           pdf.move_down 10
-          col_head = ["Data_doc", "Numero", "Causale", "Mag.", "Car.", "Scar.", "Giac.", "Impe.", "Disp."]
+          col_head = ["Data_doc", "Nr.", "Causale", "Mag", "Car", "Scar", "Giac", "Imp", "Disp"]
           giac = 0
           tcar = 0
           tsca = 0
@@ -64,7 +64,7 @@
           @tb = Array.new
           Tesdoc.ven_artanagen(art.id, @idanagen, @anarif).each do |r|
             dt_doc  = r.attributes["data_doc"]
-            num     = r.attributes["numero"]
+            num     = r.attributes["Nr."]
             cau     = r.attributes["causale"]
             tipomov = r.attributes["tipomov"]
             qta     = r.attributes["qta"].to_i
@@ -96,7 +96,7 @@
           @tb << ["TOTALI:", "", "", tven, tres, "", tfatt, taccr, prg]
           @tb.insert(0, col_head) # inserisco riga intestazione
         end
-        pdf.table(@tb) do |tab|
+        pdf.table(@tb, :column_widths =>{0=>70}) do |tab|
           tab.row(0).font_style = :bold
           tab.row(tab.row_length-1).font_style = :bold
           tab.header = true

@@ -1,6 +1,7 @@
 class SessionsController < ApplicationController
   def new
     @title = "Accesso"
+    @user = User.new
     @login = params[:login]
   end
 

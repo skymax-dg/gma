@@ -1,16 +1,38 @@
 <header>
   <nav class="round">
-  	<ul>
-	    <li><%= link_to "Menu", root_path %></li>
-		  <% if signed_in? %>
-				<li><%= link_to "Users", users_path %></li>
-				<li><%= link_to "Profile", current_user %></li>
-				<li><%= link_to "Settings", edit_user_path(current_user) %></li>
-				<li><%= link_to "LogOut(#{current_user.login})", signout_path , :method => :delete %></li>
-				<li><%= link_to "CambiaAnno(#{current_annoese.to_s})", new_session_path(:login => current_user.login) %></li>
-			<% else %>
-				<li><%= link_to "Connetti", new_session_path %></li>
-			<% end %>
-		</ul>
+    <ul>
+      <li><%= link_to "Menu", root_path %></li>
+      <% if signed_in? %>
+        <li><%= link_to "Users", users_path %></li>
+        <li><%= link_to "Profile", current_user %></li>
+        <li><%= link_to "Settings", edit_user_path(current_user) %></li>
+        <li><%= link_to "LogOut(#{current_user.login})", signout_path , :method => :delete %></li>
+        <li><%= link_to "CambiaAnno(#{current_annoese.to_s})", new_session_path(:login => current_user.login) %></li>
+      <% else %>
+        <li><%= link_to "Connetti", new_session_path %></li>
+      <% end %>
+    </ul>
   </nav>
+
+  <div class="row">
+    <div class="six columns offset-by-three">
+      <ul class="nav-bar">
+        <li class="active"><%= link_to "Menu  G.M.A.", root_path %></li>
+        <% if signed_in? %>
+          <li class="has-flyout">
+            <%= link_to "Utente", users_path %>
+            <ul class="flyout">
+              <li><%= link_to "Profile", current_user %></li>
+              <li><%= link_to "Settings", edit_user_path(current_user) %></li>
+              <li><%= link_to "LogOut(#{current_user.login})", signout_path, :method => :delete %></li>
+            </ul>
+          </li>
+          <li class="active"><%= link_to "Cambia Anno  ( #{current_annoese.to_s} )", new_session_path(:login => current_user.login) %></li>
+        <% else %>
+          <li class="active"><%= link_to "Connetti", new_session_path %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
 </header>

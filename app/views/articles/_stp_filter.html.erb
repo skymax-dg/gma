@@ -5,12 +5,19 @@
       <%= form_tag(url, :method => :get) do %>
 <br />
         <div class="row">
-          <div class="one columns offset-by-one">
-            <b> Articolo: </b>
-          </div>
-          <div class="ten columns">
-            <b> <%= "#{@article.desest1}" %> </b>
-          </div>
+
+          <% if @all == true %>
+            <div class="eleven columns offset-by-one">
+              <b> TUTTI GLI ARTICOLI DI MAGAZZINO </b>
+            </div>
+          <% else %>
+            <div class="one columns offset-by-one">
+              <b> Articolo: </b>
+            </div>
+            <div class="ten columns">
+              <b> <%= "#{@article.desest1}" %> </b>
+            </div>
+          <% end %>
         </div>
 <br />
         <% mag = Hash.new %>
