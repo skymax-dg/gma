@@ -20,7 +20,7 @@ test:
 
 production:
     adapter: postgresql
-    database: gma_prd
+    database: gma_dev
     username: postgres
     password: Postgre_sql
     host: localhost

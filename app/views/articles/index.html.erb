@@ -23,6 +23,13 @@
 </div>
 <div class="row">
   <div class="twelve columns">
+    <div class="panel">
+      <%= render :partial => 'filter' %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="twelve columns">
     <ul class="button-group [radius, rounded] small">
       <li>
         <%= link_to 'Nuovo Articolo', new_article_path, :class => "button radius small" %>
@@ -30,6 +37,7 @@
     </ul>
   </div>
 </div>
+<% unless @articles.nil?||@articles.empty? %>
 <div class="row">
   <div class="twelve columns">
     <div class="panel">
@@ -51,3 +59,4 @@
     </div>
   </div>
 </div>
+<% end %>

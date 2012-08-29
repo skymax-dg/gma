@@ -11,7 +11,7 @@ before_filter :authenticate, :except => [:new, :create]
     if @user.save
       sign_in @user
       set_year Time.now.year
-      flash[:success] = "Benvenuto in GMA!"
+      flash[:success] = "Benvenuto in GMA! #{user.login}"
       redirect_to @user
     else
 	  	@title = "Creazione utente"

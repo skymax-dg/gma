@@ -10,7 +10,7 @@
         </div>
         <div class="five columns">
           <%= f.label :tipo %>
-          <%= select(:anagen, :tipo, Anagen::TIPO.invert.sort, { :prompt => true },
+          <%= f.select(:tipo, Anagen::TIPO.invert.sort, { :prompt => true}, 
                      {:data => {:remote => true, :url => url_for(:controller => :anagens,
                                                                  :action => :chg_tipo)}}) %>
         </div>

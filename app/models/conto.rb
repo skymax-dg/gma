@@ -4,6 +4,8 @@ class Conto < ActiveRecord::Base
   has_many :tesdocs
   belongs_to :anagen
 
+  default_scope :order => 'contos.descriz ASC'
+
   attr_accessible :annoese, :azienda, :codice, :descriz, :anagen_id, :tipoconto, :tipopeo, :cntrpartita, :sconto
 
   validates :annoese, :azienda, :codice, :descriz, :tipoconto, :tipopeo, :sconto, :presence => true

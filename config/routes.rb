@@ -47,6 +47,7 @@ Gma::Application.routes.draw do
       get :mov_vend_xls
     end
     collection do
+      get :filter
       get :filter_mov_vend_all
       get :stp_mov_vend_all
       get :filter_mov_vend_all_xls

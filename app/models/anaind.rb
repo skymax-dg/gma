@@ -20,7 +20,7 @@ class Anaind < ActiveRecord::Base
   end
 
   def ind_completo
-    "#{self.indir} #{self.cap} #{self.desloc}"
+    "#{self.indir} #{self.desloc}"
   end
 
   def self.nrmagexist(id, anagen_id, nrmag)

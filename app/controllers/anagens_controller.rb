@@ -1,6 +1,7 @@
 class AnagensController < ApplicationController
 before_filter :authenticate
   def filter
+    @title = "Elenco Soggetti/Societa'"
     @tpfilter  = params[:tpfilter]
     @desfilter = params[:desfilter].strip
     @anagens = Anagen.filter(@tpfilter, @desfilter, params[:page])

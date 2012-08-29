@@ -16,6 +16,18 @@ class Article < ActiveRecord::Base
 
   CATEG = $ParAzienda['ARTICLE']['CATEG']
 
+  def self.filter (tp, des, page)
+    # Esegure la ricerca articoli in base ai filtri impostati
+
+    hsh = {"DE" => "descriz", "CO" => "codice"}
+    hshvar = Hash.new
+    whart = "" 
+    whart = " articles.#{hsh[tp]} like :d" unless des == ""
+    hshvar[:d] = "%#{des}%" unless des == ""
+    where([whart, hshvar]).paginate(:page => page, :per_page => 10,
+                                    :order => "codice ASC") unless hsh[tp].nil?
+  end
+
   def self.chk_art_xls(azienda, xls, wks, rownr, colnr)
     # Controlla che nel file excel xls nello sheet wks(0base), partendo dalla riga rownr,
     # ogni valore della colonna colnr corrisponda ad un codice articolo nel DB 

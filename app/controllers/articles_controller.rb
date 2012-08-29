@@ -122,9 +122,17 @@ before_filter :authenticate
     end
   end
 
+  def filter
+    @title = "Elenco Articoli"
+    @tpfilter  = params[:tpfilter]
+    @desfilter = params[:desfilter].strip
+    @articles = Article.filter(@tpfilter, @desfilter, params[:page])
+    render "index"
+  end
+
   def index
     @title = "Elenco Articoli"
-    @articles = Article.azienda(current_user.azienda).paginate(:page => params[:page], :per_page => 25, :order => [:codice])
+    #@articles = Article.azienda(current_user.azienda).paginate(:page => params[:page], :per_page => 25, :order => [:codice])
   end
 
   def show

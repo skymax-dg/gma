@@ -14,7 +14,9 @@ class SessionsController < ApplicationController
     else
       sign_in user
       set_year params[:session][:annoese]
-      redirect_back_or user # Va alla pagina memorizzata o alla user => UserPage
+      flash[:success] = "Benvenuto in GMA! #{user.login}"
+      redirect_to root_path
+      #redirect_back_or user # Va alla pagina memorizzata o alla user => UserPage
     end
   end
 

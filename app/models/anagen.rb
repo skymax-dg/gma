@@ -6,6 +6,8 @@ class Anagen < ActiveRecord::Base
   has_many :anainds, :dependent => :destroy
   belongs_to :localita, :foreign_key => "luogonas_id"
   
+#  default_scope :order => 'anagens.denomin ASC' Non funziona perchè c'è una select max
+
   attr_accessible :codice, :tipo, :denomin, :codfis, :pariva, :dtnas, :luogonas_id, :sesso,
                   :telefono, :email, :fax, :web, :sconto
 
