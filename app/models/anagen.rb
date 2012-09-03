@@ -13,8 +13,8 @@ class Anagen < ActiveRecord::Base
 
   validates :codice, :tipo, :denomin, :presence => true
   validates :codice, :denomin, :uniqueness => true
-#validates :codfis, :uniqueness => true, :if => :lenghtplus0?
-#validates :pariva, :uniqueness => true, :if => :lenghtplus0?
+  validates :codfis, :uniqueness => true, :if => "codfis.strip.length > 0"
+  validates :pariva, :uniqueness => true, :if => "pariva.strip.length > 0"
 
   # Fare un validate su :tipo con i valori ammessi
   validates :tipo,     :length => {:maximum => 1}
@@ -28,7 +28,6 @@ class Anagen < ActiveRecord::Base
   validates :web,      :length => {:maximum => 50}
 
   TIPO = $ParAzienda['ANAGEN']['TIPO_SOGGETTO']
-
 
   def self.filter (tp, des, page)
     # Esegure la ricerca delle anagrafiche soggetto in base ai filtri impostati

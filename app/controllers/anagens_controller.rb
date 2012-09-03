@@ -39,60 +39,22 @@ before_filter :authenticate
 
   def create
     @anagen = Anagen.new(params[:anagen])
-
-    if Anagen.find_by_codice(params[:anagen][:codice])
-      error = "Codice"
-    elsif Anagen.find_by_denomin(params[:anagen][:denomin])
-      error = "Ragione sociale"
-    elsif params[:anagen][:pariva].strip.length > 0 && Anagen.find_by_pariva(params[:anagen][:pariva])
-      error = "Partita Iva"
-    elsif params[:anagen][:codfis].strip.length > 0 && Anagen.find_by_codfis(params[:anagen][:codfis])
-      error = "Partita Iva"
-    else  
-      error = nil
-    end
-
-    if error.nil?
-      if @anagen.save
-        redirect_to @anagen, :notice => 'Anagrafica soggetti creata con successo.'
-      else
-        @title = "Nuovo Soggetto/Societa'"
-        flash[:error] = "Il salvataggio dell'anagrafica non e' andato a buon fine"
-        render :action => "new"
-      end
+    if @anagen.save
+      redirect_to @anagen, :notice => 'Anagrafica soggetti creata con successo.'
     else
       @title = "Nuovo Soggetto/Societa'"
-      flash[:error] = "Salvataggio fallito: Esiste un'anagrafica con uguale #{error}"
+      flash[:error] = "Il salvataggio dell'anagrafica non e' andato a buon fine"
       render :action => "new"
     end
   end
 
   def update
     @anagen = Anagen.find(params[:id])
-
-#if Anagen.find_by_codice(params[:anagen][:codice])
-#  error = "Codice"
-#elsif Anagen.find_by_denomin(params[:anagen][:denomin])
-#  error = "Ragione sociale"
-#elsif params[:anagen][:pariva].strip.length > 0 && Anagen.find_by_pariva(params[:anagen][:pariva])
-#  error = "Partita Iva"
-#elsif params[:anagen][:codfis].strip.length > 0 && Anagen.find_by_codfis(params[:anagen][:codfis])
-#  error = "Partita Iva"
-#else  
-#  error = nil
-#end
-
-    if error.nil?
-      if @anagen.update_attributes(params[:anagen])
-        redirect_to @anagen, :notice => 'Anagrafica soggetti aggiornata con successo.'
-      else
-        @title = "Modifica Soggetto/Societa'"
-        flash[:error] = "Il salvataggio dell'anagrafica non e' andato a buon fine"
-        render :action => "edit"
-      end
+    if @anagen.update_attributes(params[:anagen])
+      redirect_to @anagen, :notice => 'Anagrafica soggetti aggiornata con successo.'
     else
       @title = "Modifica Soggetto/Societa'"
-      flash[:error] = "Salvataggio fallito: Esiste un'anagrafica con uguale #{error}"
+      flash[:error] = "Il salvataggio dell'anagrafica non e' andato a buon fine"
       render :action => "edit"
     end
   end
