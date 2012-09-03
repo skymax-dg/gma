@@ -30,6 +30,10 @@ class Rigdoc < ActiveRecord::Base
     self.qta * self.prezzo
   end
 
+  def imp_list
+    self.qta * self.article.prezzo
+  end
+
   def imposta
     self.iva.aliq > 0 && self.impon > 0 ? self.impon * self.iva.aliq / 100 : 0;
   end

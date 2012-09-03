@@ -13,44 +13,37 @@
                                          :method => :delete, :class => "button radius small" %>
       </li>
     </ul>
-  </div>
-</div>
-<div class="row">
-  <div class="twelve columns">
-    <fieldset>
-      <legend> Dati causale contabile </legend>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @causale, "Descrizione:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @causale.descriz %>
-        </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @causale, "Descrizione:", :class => "right" %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @causale, "Conto IVA:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @causale.contoiva %>
-        </div>
+      <div class="ten columns">
+        <%= @causale.descriz %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @causale, "Tipo IVA:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= Causale::TIPOIVA[@causale.tipoiva] %>
-        </div>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @causale, "Conto IVA:", :class => "right" %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @causale, "Tipo REG:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= Causale::TIPOREG[@causale.tiporeg] %>
-        </div>
+      <div class="ten columns">
+        <%= @causale.contoiva %>
       </div>
-    </fieldset>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @causale, "Tipo IVA:", :class => "right" %>
+      </div>
+      <div class="ten columns">
+        <%= Causale::TIPOIVA[@causale.tipoiva] %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @causale, "Tipo REG:", :class => "right" %>
+      </div>
+      <div class="ten columns">
+        <%= Causale::TIPOREG[@causale.tiporeg] %>
+      </div>
+    </div>
   </div>
 </div>

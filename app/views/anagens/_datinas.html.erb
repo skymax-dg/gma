@@ -3,12 +3,13 @@
   <% @anagen.dtnas = "" %>
   <% @anagen.sesso = "" %>
 <% else %>
-  <div class="four columns offset-by-one">
+  <div class="five columns">
     <%= label @anagen.luogonas_id, "Luogo di nascita" %>
     <%= collection_select :anagen, :luogonas_id,
                           Localita.all, :id, :descriz,
                           {:include_blank => true} %>
   </div>
+  <div class="two columns"></div>
   <div class="three columns">
     <%= label @anagen.dtnas, "Data di nascita" %>
     <%#= date_select :anagen,
@@ -19,8 +20,8 @@
                      :include_blank => true} %>
     <%= text_field :anagen, :dtnas %>
   </div>
-  <div class="three columns">
+  <div class="two columns">
     <%= label @anagen.sesso, "Sesso" %>
-    <%= select(:anagen, :sesso, ["M","F"], { :include_blank => true })%>
+    <%= select(:anagen, :sesso, [["Maschile", "M"],["Femminile", "F"]], { :include_blank => true })%>
   </div>
 <% end %>

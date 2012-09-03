@@ -1,78 +1,59 @@
-<div class="row">
-  <div class="twelve columns">
-    <fieldset>
-      <legend> Filtro movimenti </legend>
-      <%= form_tag(url, :method => :get) do %>
-<br />
-        <div class="row">
-
-          <% if @all == true %>
-            <div class="eleven columns offset-by-one">
-              <b> TUTTI GLI ARTICOLI DI MAGAZZINO </b>
-            </div>
-          <% else %>
-            <div class="one columns offset-by-one">
-              <b> Articolo: </b>
-            </div>
-            <div class="ten columns">
-              <b> <%= "#{@article.desest1}" %> </b>
-            </div>
-          <% end %>
-        </div>
-<br />
-        <% mag = Hash.new %>
-        <% Anaind::NRMAG.each {|k,v|mag[k]=v unless k==0} %>
-        <%= hidden_field_tag :tp, @tp %>
-        <div class="row">
-          <div class="one columns offset-by-one">
-            <b> Cliente: </b>
-          </div>
-          <div class="nine columns">
-            <%= select_tag(:idanagen,
-                           options_from_collection_for_select(@anagens, :id, :denomin),
-                           {:include_blank => ""}) unless @anagens.nil?%>
-          </div>
-          <div class="one columns"></div>
-        </div>
-<br />
-        <div class="row">
-          <div class="one columns offset-by-one">
-            <%= check_box_tag :anarif, 'S' %>
-          </div>
-          <div class="ten columns">
-            <b>
-              <%= @tp == "M" ? "Solo le movimentazioni di:" : "Solo le vendite di:" %>
-              <%= Anagen.find(current_user.azienda).denomin %>
-            </b>
-          </div>
-        </div>
-<br />
-        <div class="row">
-          <div class="one columns offset-by-one">
-            <b> <%= "Magazz.: " %> </b>
-          </div>
-          <div class="four columns">
-            <%= select_tag(:nrmag, options_for_select(mag.invert.sort), {:include_blank => "", :selected => "", :disabled => @tp=="V"}) %>
-          </div>
-          <div class="six columns"></div>
-        </div>
-<br />
-        <div class="row">
-          <div class="one columns offset-by-one">
-            <%= check_box_tag :grpmag, 'S', checked = @tp=="V", {:disabled => @tp=="V"}%>
-          </div>
-          <div class="two columns">
-            <b> <%= "Magazzini unificati: " %> </b>
-          </div>
-          <div class="eight columns"></div>
-        </div>
-        <hr />
-        <div class="ten columns offset-by-one">
-          <%= submit_tag sub_label, :class => "button radius small" %>
-
-          <%= link_to 'Indietro', url_back, :class => "button radius small" %>
-        </div>
-      <% end %>
-    </fieldset>
+<%= form_tag(url, :method => :get) do %>
+  <% mag = Hash.new %>
+  <% Anaind::NRMAG.each {|k,v|mag[k]=v unless k==0} %>
+  <%= hidden_field_tag :tp, @tp %>
+  <div class="row">
+    <% if @all == true %>
+      <div class="twelve columns">
+        <%= label_tag url, "TUTTI GLI ARTICOLI DI MAGAZZINO" %>
+      </div>
+    <% else %>
+      <div class="one columns">
+        <%= label_tag url, "Articolo:", :class=>"right" %>
+      </div>
+      <div class="eleven columns">
+        <%= "#{@article.desest1}" %>
+      </div>
+    <% end %>
   </div>
-</div>
+  <div class="row">
+    <div class="one columns">
+      <%= label_tag url, "Cliente:", :class=>"right" %>
+    </div>
+    <div class="eleven columns">
+      <%= select_tag(:idanagen,
+                     options_from_collection_for_select(@anagens, :id, :denomin),
+                     {:include_blank => true}) unless @anagens.nil?%>
+    </div>
+  </div>
+  <div class="row">
+    <div class="one columns">
+      <%= check_box_tag :anarif, 'S', false, :class=>"right" %>
+    </div>
+    <div class="eleven columns">
+        <%= @tp == "M" ? "Solo le movimentazioni di:" : "Solo le vendite di:" %>
+        <%= Anagen.find(current_user.azienda).denomin %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="one columns">
+      <%= check_box_tag :grpmag, 'S', checked = @tp=="V", {:disabled => @tp=="V", :class=>"right"} %>
+    </div>
+    <div class="eleven columns">
+      <%= label_tag url, "Magazzini unificati:" %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="one columns">
+      <%= label_tag url, "Magazz:", :class=>"right" %>
+    </div>
+    <div class="eleven columns">
+      <%= select_tag(:nrmag, options_for_select(mag.invert.sort), {:include_blank => true, :selected => "", :disabled => @tp=="V"}) %>
+    </div>
+    <div class="twelve columns">
+      <%= submit_tag sub_label, :class => "button radius small" %>
+
+      <%= link_to 'Indietro', url_back, :class => "button radius small" %>
+    </div>
+  </div>
+<% end %>

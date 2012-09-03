@@ -1,4 +1,5 @@
 <header>
+<!--
   <nav class="round">
     <ul>
       <% if signed_in? %>
@@ -13,6 +14,87 @@
       <% end %>
     </ul>
   </nav>
+
+-->
+
+  <% if signed_in? %>
+  <div class="row">
+    <div class="seven columns">
+      <ul class="nav-bar">
+        <li class="has-flyout">
+          <%= link_to "DOCUMENTI", "#" %>
+          <ul class="flyout">
+            <% Tesdoc::TIPO_DOC.each do |k, v| %>
+              <li> <%= link_to v.upcase, tesdocs_path(:tipo_doc => k) %> </li>
+            <% end %>
+          </ul>
+        </li>
+        <li class="has-flyout">
+          <%= link_to "ANAGRAFICA", "#" %>
+          <ul class="flyout">
+            <li> <%= link_to "ARTICOLI", articles_path %> </li>
+            <li> <%= link_to "CITTA'", localitas_path %> </li>
+            <li> <%= link_to "SOGGETTI", anagens_path %> </li>
+            <li> <%= link_to "IVA/ESENZIONI", ivas_path %> </li>
+            <li> <%= link_to "STATI/NAZIONI", paeses_path %> </li>
+          </ul>
+        </li>
+        <li class="has-flyout">
+          <%= link_to "CAUSALI", "#" %>
+          <ul class="flyout">
+            <li> <%= link_to "CAUSALI CONTABILI", causales_path %> </li>
+            <li> <%= link_to "CAUSALI MAGAZZINO", causmags_path %> </li>
+          </ul>
+        </li>
+        <li class="has-flyout">
+          <%= link_to "CONTI", "#" %>
+          <ul class="flyout">
+            <li> <%= link_to "CLIENTI/FORNITORI", contos_path %> </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="four columns">
+      <ul class="nav-bar">
+        <li class="active">
+          <%= link_to "CAMBIA ANNO (#{current_annoese.to_s})", new_session_path(:login => current_user.login) %>
+        </li>
+        <li class="active"><%= link_to ".ESCI.", signout_path, :method => :delete %></li>
+      </ul>
+    </div>
+  </div>
+  <% end %>
+
+<!--
+  <% if signed_in? %>
+  <div class="row">
+    <ul class="nav-bar">
+      <li class="has-flyout">
+        <%= link_to "Menu  G.M.A.", root_path %>
+          <ul class="flyout">
+          <li> <%= link_to "ARCHIVIO DOCUMENTI", "#" %> </li>
+          <li> <%= link_to "ANAGRAFICA SOGGETTI", anagens_path %> </li>
+          <li> <%= link_to "ARTICOLI", articles_path %> </li>
+          <li> <%= link_to "CAUSALI CONTABILI", causales_path %> </li>
+          <li> <%= link_to "CAUSALI MAGAZZINO", causmags_path %> </li>
+          <li> <%= link_to "CITTA'", localitas_path %> </li>
+          <li> <%= link_to "CONTI CLIENTI/FORNITORI", contos_path %> </li>
+          <li> <%= link_to "IVA/ESENZIONI", ivas_path %> </li>
+          <li> <%= link_to "STATI/NAZIONI", paeses_path %> </li>
+        </ul>
+      </li>
+      <% if signed_in? %>
+        <li class="active"><%= link_to "Utente", users_path %></li>
+        <li class="active"><%= link_to "Profile", current_user %></li>
+        <li class="active"><%= link_to "Settings", edit_user_path(current_user) %></li>
+        <li class="active"><%= link_to "Cambia Anno  ( #{current_annoese.to_s} )", new_session_path(:login => current_user.login) %></li>
+        <li class="active"><%= link_to "LogOut(#{current_user.login})", signout_path, :method => :delete %></li>
+      <% else %>
+        <li class="active"><%= link_to "Connetti", new_session_path %></li>
+      <% end %>
+    </ul>
+  </div>
+  <% end %>
 
   <div class="row">
     <div class="six columns offset-by-three">
@@ -34,4 +116,5 @@
       </ul>
     </div>
   </div>
+-->
  </header>

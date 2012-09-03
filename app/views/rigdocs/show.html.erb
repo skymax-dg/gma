@@ -13,76 +13,69 @@
                                        :method => :delete, :class => "button radius small" %>
       </li>
     </ul>
-  </div>
-</div>
-<div class="row">
-  <div class="twelve columns">
-    <fieldset>
-      <legend> Dati riga documento </legend>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @rigdoc, "Descrizione riga:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @rigdoc.descriz %>
-        </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @rigdoc, "Descrizione riga:", :class => "right" %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @rigdoc, "Codice articolo:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @rigdoc.article.codice unless @rigdoc.article.nil? %>
-        </div>
+      <div class="ten columns">
+        <%= @rigdoc.descriz %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @rigdoc, "Descrizione articolo:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @rigdoc.article.descriz unless @rigdoc.article.nil? %>
-        </div>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @rigdoc, "Codice articolo:", :class => "right" %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @rigdoc, "Quantita':", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @rigdoc.qta %>
-        </div>
+      <div class="ten columns">
+        <%= @rigdoc.article.codice unless @rigdoc.article.nil? %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @rigdoc, "Prezzo:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @rigdoc.prezzo %>
-        </div>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @rigdoc, "Descriz articolo:", :class => "right" %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @rigdoc, "Sconto:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @rigdoc.sconto %>
-        </div>
+      <div class="ten columns">
+        <%= @rigdoc.article.descriz unless @rigdoc.article.nil? %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @rigdoc, "Iva:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @rigdoc.iva.descriz %>
-        </div>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @rigdoc, "Quantita':", :class => "right" %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @rigdoc, "Totale di riga:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @rigdoc.prezzo * @rigdoc.qta %>
-        </div>
+      <div class="ten columns">
+        <%= @rigdoc.qta %>
       </div>
-    </fieldset>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @rigdoc, "Prezzo:", :class => "right" %>
+      </div>
+      <div class="ten columns">
+        <%= @rigdoc.prezzo %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @rigdoc, "Sconto:", :class => "right" %>
+      </div>
+      <div class="ten columns">
+        <%= @rigdoc.sconto %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @rigdoc, "Iva:", :class => "right" %>
+      </div>
+      <div class="ten columns">
+        <%= @rigdoc.iva.descriz %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @rigdoc, "Totale di riga:", :class => "right" %>
+      </div>
+      <div class="ten columns">
+        <%= @rigdoc.prezzo * @rigdoc.qta %>
+      </div>
+    </div>
   </div>
 </div>

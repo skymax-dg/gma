@@ -13,20 +13,13 @@
                                        :method => :delete, :class => "button radius small" %>
       </li>
     </ul>
-  </div>
-</div>
-<div class="row">
-  <div class="twelve columns">
-    <fieldset>
-      <legend> Dati utente </legend>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @user, "Nome utente:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @user.login %>
-        </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @user, "Nome utente:", :class => "right" %>
       </div>
-    </fieldset>
+      <div class="ten columns">
+        <%= @user.login %>
+      </div>
+    </div>
   </div>
 </div>

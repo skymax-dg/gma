@@ -13,44 +13,37 @@
                                        :method => :delete, :class => "button radius small" %>
       </li>
     </ul>
-  </div>
-</div>
-<div class="row">
-  <div class="twelve columns">
-    <fieldset>
-      <legend> Dati stato/nazione </legend>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @paese, "Descrizione:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @paese.descriz %>
-        </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @paese, "Descrizione:", :class => "right" %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @paese, "Tipo:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= Paese::TPEU[@paese.tpeu] %>
-        </div>
+      <div class="ten columns left">
+        <%= @paese.descriz %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @paese, "Codice belfiore:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @paese.codfis %>
-        </div>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @paese, "Tipo:", :class => "right" %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @paese, "Prefisso partita iva:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @paese.prepiva %>
-        </div>
+      <div class="ten columns left">
+        <%= Paese::TPEU[@paese.tpeu] %>
       </div>
-    </fieldset>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @paese, "Codice belfiore:", :class => "right" %>
+      </div>
+      <div class="ten columns left">
+        <%= @paese.codfis %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @paese, "Prefisso partita iva:", :class => "right" %>
+      </div>
+      <div class="ten columns left">
+        <%= @paese.prepiva %>
+      </div>
+    </div>
   </div>
 </div>

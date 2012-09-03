@@ -4,21 +4,18 @@
       <legend> Ricerca conto </legend>
       <%= form_tag(:filter_contos, :method => :get) do %>
         <div class="three columns">
-          <%= label :filter_contos, "Ricerca per" %>
           <%= select_tag("tpfilter",
                          options_for_select([["Descrizione", "DE"],
                                              ["Ragione sociale", "RS"],
                                              ["Codice conto", "CC"]], @tpfilter)) %>
         </div>
         <div class="five columns">
-          <%= label :filter_contos, "." %>
           <%= text_field_tag "desfilter", @desfilter %>
         </div>
-        <div class="twelve columns">
-          <%= submit_tag 'FILTRA', :class => "button radius small" %>
+        <div class="four columns">
+          <%= submit_tag 'RICERCA', :class => "button radius small", :title => "Esegui Ricerca" %>
         </div>
       <% end %>
     </fieldset>
   </div>
 </div>
-<hr />

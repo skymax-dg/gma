@@ -6,34 +6,30 @@
         <%= link_to "Nuovo Utente", new_user_path, :class => "button radius small" %>
       </li>
     </ul>
-  </div>
-</div>
-<%= form_for(:session, :url => sessions_path) do |f| %>
-<div class="row">
-    <div class="twelve columns">
-      <fieldset>
-        <legend> Dati login </legend>
-        <div class="ten columns offset-by-one">
+    <%= form_for(:session, :url => sessions_path) do |f| %>
+      <div class="row">
+        <div class="five columns">
           <%= f.label :login %>
           <%= f.text_field :login, :value => @login%>
         </div>
-        <div class="ten columns offset-by-one">
+        <div class="two columns"></div>
+        <div class="five columns">
           <%= f.label :password %>
           <%= f.password_field :pwd %>
         </div>
-        <div class="five columns offset-by-one">
+        <div class="five columns">
           <%= f.label :azienda %>
           <%= select(:session, :azienda, (StaticData::ELNCAZND).invert.sort) %>
         </div>
+        <div class="two columns"></div>
         <div class="five columns">
           <%= f.label :annoese %>
           <%= f.number_field :annoese, :value => Time.now.year %>
         </div>
-        <hr />
-        <div class="ten columns offset-by-one">
+        <div class="twelve columns">
           <%= f.submit "ENTRA", :class => "button radius small" %>
         </div>
-      </fieldset>
-    </div>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>

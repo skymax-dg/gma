@@ -6,23 +6,19 @@
         <%= link_to 'Nuovo utente', new_user_path, :class => "button radius small" %>
       </li>
     </ul>
-  </div>
-</div>
-<div class="row">
-  <div class="twelve columns">
-    <div class="panel">
-      <table>
-        <thead>
-          <tr>
-            <th width="85%">Login</th>
-            <th width="15%">........................</th>
-          </tr>
-        </thead>
-        <tbody>
-          <%= render :partial => 'line', :collection => @users unless @users.empty? %>
-        </tbody>
-      </table>
-      <%= will_paginate @users %>
-    </div>
+    <% unless @users.nil?||@users.empty? %>
+    <table>
+      <thead>
+        <tr>
+          <th width="85%">Login</th>
+          <th width="15%">........................</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render :partial => 'line', :collection => @users %>
+      </tbody>
+    </table>
+    <%= will_paginate @users %>
+    <% end %>
   </div>
 </div>

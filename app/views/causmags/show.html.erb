@@ -13,100 +13,93 @@
                                           :method => :delete, :class => "button radius small" %>
       </li>
     </ul>
-  </div>
-</div>
-<div class="row">
-  <div class="twelve columns">
-    <fieldset>
-      <legend>Dati causali di magazzino</legend>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @causmag, "Gruppo:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= Causmag::TIPO_DOC[@causmag.tipo_doc] %>
-        </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @causmag, "Gruppo:", :class => "right" %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @causmag, "Descrizione:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @causmag.descriz %>
-        </div>
+      <div class="ten columns left">
+        <%= Causmag::TIPO_DOC[@causmag.tipo_doc] %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @causmag, "Tipo:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= Causmag::TIPO[@causmag.tipo] %>
-        </div>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @causmag, "Descrizione:", :class => "right" %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @causmag, "Movimento contabile:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= Causmag::CONTABILE[@causmag.contabile] %>
-        </div>
+      <div class="ten columns left">
+        <%= @causmag.descriz %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @causmag, "Movimento di magazzino:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= Causmag::MOVIMPMAG[@causmag.movimpmag] %>
-        </div>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @causmag, "Tipo:", :class => "right" %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @causmag, "Magazzino di origine:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= Causmag::NRMAG[@causmag.nrmagsrc] %>
-        </div>
+      <div class="ten columns left">
+        <%= Causmag::TIPO[@causmag.tipo] %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @causmag, "Magazzino di destinazione:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= Causmag::NRMAG[@causmag.nrmagdst] %>
-        </div>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @causmag, "Movimento contabile:", :class => "right" %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @causmag, "Descrizione causale:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @causmag.des_caus %>
-        </div>
+      <div class="ten columns left">
+        <%= Causmag::CONTABILE[@causmag.contabile] %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @causmag, "Causale contabile:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @causmag.causale.descriz unless @causmag.causale.nil? %>
-        </div>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @causmag, "Movimento di magazzino:", :class => "right" %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @causmag, "Causale di trasporto:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @causmag.caus_tra unless @causmag.caus_tra.nil? %>
-        </div>
+      <div class="ten columns left">
+        <%= Causmag::MOVIMPMAG[@causmag.movimpmag] %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @causmag, "Modulo di stampa:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @causmag.modulo %>
-        </div>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @causmag, "Magazzino di origine:", :class => "right" %>
       </div>
-    </fieldset>
+      <div class="ten columns left">
+        <%= Causmag::NRMAG[@causmag.nrmagsrc] %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @causmag, "Magazzino di destinazione:", :class => "right" %>
+      </div>
+      <div class="ten columns left">
+        <%= Causmag::NRMAG[@causmag.nrmagdst] %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @causmag, "Descrizione causale:", :class => "right" %>
+      </div>
+      <div class="ten columns left">
+        <%= @causmag.des_caus %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @causmag, "Causale contabile:", :class => "right" %>
+      </div>
+      <div class="ten columns left">
+        <%= @causmag.causale.descriz unless @causmag.causale.nil? %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @causmag, "Causale di trasporto:", :class => "right" %>
+      </div>
+      <div class="ten columns left">
+        <%= @causmag.caus_tra unless @causmag.caus_tra.nil? %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @causmag, "Modulo di stampa:", :class => "right" %>
+      </div>
+      <div class="ten columns left">
+        <%= @causmag.modulo %>
+      </div>
+    </div>
   </div>
 </div>

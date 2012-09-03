@@ -1,52 +1,48 @@
 <%#= render :partial => 'shared/error_messages', :locals => {:f => @anaind} %>
 <%= form_for @anaind do |f| %>
   <div class="row">
+    <%= hidden_field(:anaind, :anagen_id) %>
     <div class="twelve columns">
-      <fieldset>
-        <legend> Dati indirizzo </legend>
-        <div class="ten columns offset-by-one">
-          <%= hidden_field(:anaind, :anagen_id) %>
-          <%= f.label "Indirizzo valido come:" %>
-        </div>
-        <div class="ten columns offset-by-one">
-          <%= check_box :anaind, :flsl, {}, 'S', 'N' %> Sede legale
-        </div>
-        <div class="ten columns offset-by-one">
-          <%= check_box :anaind, :flsp, {}, 'S', 'N' %> Indirizzo di spedizione
-        </div>
-        <div class="ten columns offset-by-one">
-          <%= check_box :anaind, :flmg, {}, 'S', 'N' %> Indirizzo di magazzino
-        </div>
-        <div class="ten columns offset-by-one">
-          <%= f.label "Indirizzo" %>
-          <%= f.text_field :indir %>
-        </div>
-        <div class="four columns offset-by-one">
-          <%= f.label "Localita" %>
-          <%= collection_select(:anaind, :localita_id, Localita.all, :id, :descriz,
-                                {:include_blank => true},
-                                  {:data => {:remote => true, :url => url_for(:controller => :anainds,
-                                                                              :action => :descrizloc)}})%>
-        </div>
-        <div class="three columns">
-          <%= f.label "Cap" %>
-          <%= f.text_field :cap %>
-        </div>
-        <div class="three columns">
-          <%= f.label "Indirizzo valido per:" %>
-          <%= select(:anaind, :nrmag, (Anaind::NRMAG).invert.sort) %>
-        </div>
-        <div class="ten columns offset-by-one">
-          <%= f.text_field(:desloc, {:data => {:remote => true,
-                                               :url => url_for(:controller => :anainds,
-                                                               :action => :reset_locid)}}) %>
-        </div>
-        <hr />
-        <div class="ten columns offset-by-one">
-          <%= f.submit 'SALVA', :class => "button radius small" %>
-          <%= link_to 'ANNULLA', @anaind, :class => "button radius small" %>
-        </div>
-      </fieldset>
+      <%= f.label "Indirizzo valido come:" %>
+    </div>
+    <div class="twelve columns">
+      <%= check_box :anaind, :flsl, {}, 'S', 'N' %> Sede legale
+    </div>
+    <div class="twelve columns">
+      <%= check_box :anaind, :flsp, {}, 'S', 'N' %> Indirizzo di spedizione
+    </div>
+    <div class="twelve columns">
+      <%= check_box :anaind, :flmg, {}, 'S', 'N' %> Indirizzo di magazzino
+    </div>
+    <div class="twelve columns">
+      <%= f.label "Via e Nr civico" %>
+      <%= f.text_field :indir %>
+    </div>
+    <div class="five columns">
+      <%= f.label "Localita' codificata" %>
+      <%= collection_select(:anaind, :localita_id, Localita.all, :id, :descriz,
+                            {:include_blank => true},
+                              {:data => {:remote => true, :url => url_for(:controller => :anainds,
+                                                                          :action => :descrizloc)}})%>
+    </div>
+    <div class="two columns"></div>
+    <div class="one columns">
+      <%= f.label "Cap" %>
+      <%= f.text_field :cap %>
+    </div>
+    <div class="four columns">
+      <%= f.label "Valido per il magazzino:" %>
+      <%= select(:anaind, :nrmag, (Anaind::NRMAG).invert.sort) %>
+    </div>
+    <div class="twelve columns">
+      <%= f.label "Localita'-stato:" %>
+      <%= f.text_field(:desloc, {:data => {:remote => true,
+                                           :url => url_for(:controller => :anainds,
+                                                           :action => :reset_locid)}}) %>
+    </div>
+    <div class="twelve columns">
+      <%= f.submit 'SALVA', :class => "button radius small" %>
+      <%= link_to 'ANNULLA', @anaind, :class => "button radius small" %>
     </div>
   </div>
 <% end %>

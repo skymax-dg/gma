@@ -3,22 +3,6 @@
     <fieldset>
       <legend> Ricerca documenti </legend>
       <%= form_tag(:filter_tesdocs, :method => :get) do %>
-        <div class="three columns">
-          <%= label :filter_tesdocs, "Ricerca per" %>
-          <%= select_tag("tpfilter",
-                         options_for_select([["Ragione sociale", "RS"], ["Codice fiscale", "CF"],
-                                             ["Partiva iva", "PI"]], @tpfilter)) %>
-        </div>
-        <div class="five columns">
-          <%= label :filter_tesdocs, "." %>
-          <%= text_field_tag "desfilter", @desfilter %>
-        </div>
-        <div class="four columns">
-          <%= label :filter_tesdocs, "cli/for/alt" %>
-          <%= check_box_tag 'clifilter', 'C', @clifilter %>
-          <%= check_box_tag 'forfilter', 'F', @forfilter %>
-          <%= check_box_tag 'altfilter', 'A', @altfilter %>
-        </div>
         <div class="six columns">
           <%= label :filter_tesdocs, "Causale di magazzino" %>
           <%= select_tag("causmagfilter",
@@ -32,14 +16,27 @@
           <%= select_tag("contofilter",
                          options_from_collection_for_select(@contos, :id, 
                                                             :desest1, {:selected => @contofilter.to_i}),
-                         {:include_blank => ""}) %>
+                         {:include_blank => true}) %>
         </div>
-<hr />
-        <div class="twelve columns">
-          <%= submit_tag 'FILTRA', :class => "button radius small" %>
+        <div class="two columns">
+          <%= select_tag("tpfilter",
+                         options_for_select([["Ragione sociale", "RS"], ["Codice fiscale", "CF"],
+                                             ["Partiva iva", "PI"]], @tpfilter)) %>
         </div>
+        <div class="four columns">
+          <%= text_field_tag "desfilter", @desfilter %>
+        </div>
+        <div class="two columns">
+          <%= label :filter_tesdocs, "cli/for/alt" %>
+          <%= check_box_tag 'clifilter', 'C', @clifilter %>
+          <%= check_box_tag 'forfilter', 'F', @forfilter %>
+          <%= check_box_tag 'altfilter', 'A', @altfilter %>
+        </div>
+        <div class="two columns">
+          <%= submit_tag 'RICERCA', :class => "button radius small right" %>
+        </div>
+        <div class="two columns"></div>
       <% end %>
     </fieldset>
   </div>
 </div>
-<hr />

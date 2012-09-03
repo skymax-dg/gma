@@ -12,18 +12,20 @@ class Anagen < ActiveRecord::Base
                   :telefono, :email, :fax, :web, :sconto
 
   validates :codice, :tipo, :denomin, :presence => true
-  validates :codice, :uniqueness => true
+  validates :codice, :denomin, :uniqueness => true
+#validates :codfis, :uniqueness => true, :if => :lenghtplus0?
+#validates :pariva, :uniqueness => true, :if => :lenghtplus0?
 
   # Fare un validate su :tipo con i valori ammessi
-  validates :tipo,     :length => { :maximum => 1}
-  validates :denomin,  :length => { :maximum => 150}
-  validates :codfis,   :length => { :maximum => 16}
-  validates :pariva,   :length => { :maximum => 11}
-  validates :sesso,    :length => { :maximum => 1}
-  validates :telefono, :length => { :maximum => 20}
-  validates :email,    :length => { :maximum => 50}
-  validates :fax,      :length => { :maximum => 20}
-  validates :web,      :length => { :maximum => 50}
+  validates :tipo,     :length => {:maximum => 1}
+  validates :denomin,  :length => {:maximum => 150}
+  validates :codfis,   :length => {:maximum => 16}
+  validates :pariva,   :length => {:maximum => 11}
+  validates :sesso,    :length => {:maximum => 1}
+  validates :telefono, :length => {:maximum => 20}
+  validates :email,    :length => {:maximum => 50}
+  validates :fax,      :length => {:maximum => 20}
+  validates :web,      :length => {:maximum => 50}
 
   TIPO = $ParAzienda['ANAGEN']['TIPO_SOGGETTO']
 

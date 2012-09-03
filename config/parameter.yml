@@ -24,9 +24,9 @@ CAUSMAG:
     V: 'Rnd.Vnd.'
     R: 'Rnd.Resi'
   MOVIMPMAG:
-    M: 'Mov'
-    I: 'Imp'
-    N: 'No'
+    M: 'Movimenta'
+    I: 'Impegna'
+    N: 'Nessuna'
   MAGCLI:
     C: 'Car'
     S: 'Sca'

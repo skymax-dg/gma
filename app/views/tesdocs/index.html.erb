@@ -1,43 +1,35 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
 <div class="row">
   <div class="twelve columns">
-    <div class="panel">
-      <%= render :partial => 'filter' %>
-    </div>
-    <div class="panel">
-      <div class="row">
-        <div class="twelve columns">
-          <ul class="button-group [radius, rounded]">
-            <li>
-              <%= link_to 'Aggiungi documento', new_tesdoc_path(:causmag => @causmagfilter||"",
-                                                                :conto   => @contofilter||""), :remote => true,
-                                                                :class => "button radius small" %>
-            </li>
-            <li>
-              <%= link_to 'Carica Testate e righe doc', addtesrigdoc_fromxls_tesdocs_path, 
-                          :confirm => 'Confermi caricamento da Exel?', :class => "button radius small" %>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <% unless @tesdocs.nil?||@tesdocs.empty? %>
-        <table>
-          <thead>
-            <tr>
-              <th style="text-align: right; width: 12%">Nr doc</th>
-              <th width="13%">Del</th>
-              <th width="35%">Causale</th>
-              <th width="35%">ContoAnagrafica</th>
-              <th width="5%"></th>
-            </tr>
-          </thead>
-          <tbody>
-              <%= render :partial => 'line', :collection => @tesdocs %>
-          </tbody>
-        </table>
-        <%= will_paginate @tesdocs unless @tesdocs.nil? %>
-      <% end %>
-    </div>
+    <ul class="button-group [radius, rounded]">
+      <li>
+        <%= link_to 'Aggiungi documento', new_tesdoc_path(:causmag => @causmagfilter||"",
+                                                          :conto   => @contofilter||""), :remote => true,
+                                                          :class => "button radius small" %>
+      </li>
+      <li>
+        <%= link_to 'Carica Testate e righe doc', addtesrigdoc_fromxls_tesdocs_path, 
+                    :confirm => 'Confermi caricamento da Exel?', :class => "button radius small" %>
+      </li>
+    </ul>
+    <%= render :partial => 'filter' %>
+    <% unless @tesdocs.nil?||@tesdocs.empty? %>
+      <table>
+        <thead>
+          <tr>
+            <th style="text-align: right; width: 12%">Nr doc</th>
+            <th width="13%">Del</th>
+            <th width="30%">Causale</th>
+            <th width="40%">ContoAnagrafica</th>
+            <th width="5%"></th>
+          </tr>
+        </thead>
+        <tbody>
+            <%= render :partial => 'line', :collection => @tesdocs %>
+        </tbody>
+      </table>
+      <%= will_paginate @tesdocs %>
+    <% end %>
   </div>
 </div>
 

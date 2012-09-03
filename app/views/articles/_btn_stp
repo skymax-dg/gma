@@ -1,0 +1,21 @@
+<ul class="button-group [radius, rounded]">
+  <% if @article.nil? %>
+    <li><%= link_to 'Stampa Movimenti', filter_mov_vend_all_articles_path(:tp => "M"),
+                                        :class => "button radius small" %></li>
+    <li><%= link_to 'Stampa Movimenti(XLS)', filter_mov_vend_all_xls_articles_path(:tp => "M"),
+                                             :class => "button radius small" %></li>
+    <li><%= link_to 'Vendite per distributore', filter_mov_vend_all_articles_path(:tp => "V"),
+                                                :class => "button radius small" %></li>
+    <li><%= link_to 'Vendite per distributore(XLS)', filter_mov_vend_all_xls_articles_path(:tp => "V"),
+                                                     :class => "button radius small" %></li>
+  <% else %>
+    <li><%= link_to 'Stampa Movimenti', filter_mov_vend_article_path(:tp => "M"),
+                                        :class => "button radius small" %></li>
+    <li><%= link_to 'Stampa Movimenti(XLS)', filter_mov_vend_xls_article_path(:tp => "M"),
+                                             :class => "button radius small" %></li>
+    <li><%= link_to 'Vendite per distributore', filter_mov_vend_article_path(:tp => "V"), 
+                                                :class => "button radius small" %></li>
+    <li><%= link_to 'Vendite per distributore(XLS)', filter_mov_vend_xls_article_path(:tp => "V"),
+                                                     :class => "button radius small" %></li>
+  <% end %>
+</ul>

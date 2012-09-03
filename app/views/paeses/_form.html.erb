@@ -2,30 +2,25 @@
 <%= form_for(@paese) do |f| %>
   <div class="row">
     <div class="twelve columns">
-      <fieldset>
-        <legend> Dati stato/nazione </legend>
-        <div class="ten columns offset-by-one">
-          <%= f.label "Descrizione" %>
-          <%= f.text_field :descriz %>
-        </div>
-        <div class="four columns offset-by-one">
-          <%= f.label "Tipo/Appartenenza" %>
-          <%= select(:paese, :tpeu, Paese::TPEU.invert.sort, { :prompt => true }) %>
-        </div>
-        <div class="three columns">
-          <%= f.label "Codice belfiore (CF)" %>
-          <%= f.text_field :codfis %>
-        </div>
-        <div class="three columns">
-          <%= f.label "Prefisso Partita Iva" %>
-          <%= f.text_field :prepiva %>
-        </div>
-        <hr />
-        <div class="ten columns offset-by-one">
-          <%= f.submit "SALVA", :class => "button radius small" %>
-          <%= link_to 'ANNULLA', paeses_path, :class => "button radius small" %>
-        </div>
-      </fieldset>
+      <%= f.label "Descrizione" %>
+      <%= f.text_field :descriz %>
+    </div>
+    <div class="three columns">
+      <%= f.label "Codice belfiore (CF)" %>
+      <%= f.text_field :codfis %>
+    </div>
+    <div class="two columns">
+      <%= f.label "Prefisso ParIva" %>
+      <%= f.text_field :prepiva %>
+    </div>
+    <div class="two columns"></div>
+    <div class="two columns">
+      <%= f.label "Tipo/Appartenenza" %>
+      <%= select(:paese, :tpeu, Paese::TPEU.invert.sort, { :prompt => true }) %>
+    </div>
+    <div class="twelve columns">
+      <%= f.submit "SALVA", :class => "button radius small" %>
+      <%= link_to 'ANNULLA', paeses_path, :class => "button radius small" %>
     </div>
   </div>
 <% end %>

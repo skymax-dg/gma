@@ -14,67 +14,60 @@
       </li>
     </ul>
   </div>
-</div>
-<div class="row">
-  <div class="twelve columns">
-    <fieldset>
-      <legend> Dati Conto </legend>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @conto, "Codice:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @conto.codice %>
-        </div>
-      </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @conto, "Descrizione:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @conto.descriz %>
-        </div>
-      </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @conto, "Anagrafica:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @conto.anagen.denomin %>
-        </div>
-      </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @conto, "Riferimento:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= Conto::TIPOCONTO[@conto.tipoconto] %>
-        </div>
-      </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @conto, "Tipo conto:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= Conto::TIPOPEO[@conto.tipopeo] %>
-        </div>
-      </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @conto, "Contropartita:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= Conto::TIPOPEO[@conto.cntrpartita] %>
-        </div>
-      </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @conto, "Sconto:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= Conto::TIPOPEO[@conto.sconto] %>
-        </div>
-      </div>
-    </fieldset>
+  <div class="row">
+    <div class="two columns">
+      <%= label @conto, "Codice:", :class => "right" %>
+    </div>
+    <div class="ten columns">
+      <%= @conto.codice %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="two columns">
+      <%= label @conto, "Descrizione:", :class => "right" %>
+    </div>
+    <div class="ten columns">
+      <%= @conto.descriz %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="two columns">
+      <%= label @conto, "Anagrafica:", :class => "right" %>
+    </div>
+    <div class="ten columns">
+      <%= @conto.anagen.denomin %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="two columns">
+      <%= label @conto, "Riferimento:", :class => "right" %>
+    </div>
+    <div class="ten columns">
+      <%= Conto::TIPOCONTO[@conto.tipoconto] %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="two columns">
+      <%= label @conto, "Tipo conto:", :class => "right" %>
+    </div>
+    <div class="ten columns">
+      <%= Conto::TIPOPEO[@conto.tipopeo] %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="two columns">
+      <%= label @conto, "Contropartita:", :class => "right" %>
+    </div>
+    <div class="ten columns">
+      <%= Conto::TIPOPEO[@conto.cntrpartita] %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="two columns">
+      <%= label @conto, "Sconto:", :class => "right" %>
+    </div>
+    <div class="ten columns">
+      <%= Conto::TIPOPEO[@conto.sconto] %>
+    </div>
   </div>
 </div>

@@ -6,85 +6,81 @@
   <%= f.hidden_field :conto_id %>
   <%= f.hidden_field :causmag_id %>
   <div class="row">
+    <div class="five columns">
+      <%= f.label "Anno:" %>
+      <%= @tesdoc.annoese %>
+      <%#= f.text_field :annoese, :size => 3, :disabled => true %>
+    </div>
+    <div class="two columns"></div>
+    <div class="five columns">
+      <%= f.label "Tipo:" %>
+      <%#= select(:tesdoc, :tipo_doc, Tesdoc::TIPO_DOC.invert.sort, {}, {:disabled => true}) %>
+      <%= Tesdoc::TIPO_DOC[@tesdoc.tipo_doc] %>
+    </div>
+    <div class="five columns">
+      <%= f.label "Causale:" %>
+      <%= @causmag.descriz %>
+    </div>
+    <div class="two columns"></div>
+    <div class="five columns">
+      <%= f.label "Descrizione estesa:" %>
+      <%= @causmag.des_caus %>
+    </div>
+    <div class="five columns">
+      <%= f.label "Merce in:" %>
+      <%= Causmag::TIPO[@causmag.tipo] %>
+    </div>
+    <div class="two columns"></div>
+    <div class="five columns">
+      <%= f.label "Movimento contabile:" %>
+      <%= Causmag::CONTABILE[@causmag.contabile] %>
+    </div>
+    <div class="seven columns">
+      <%= f.label "Conto anagrafica:" %>
+      <%= @conto.desest1 %>
+    </div>
+    <div class="five columns">
+      <%= f.label "Impatto sul magazzino:" %>
+      <%= Causmag::MOVIMPMAG[@causmag.movimpmag] %>
+    </div>
+    <div class="five columns">
+      <%= f.label "Nr documento:" %>
+      <%= f.number_field :num_doc %>
+    </div>
+    <div class="two columns"></div>
+    <div class="five columns">
+      <%= f.label "Data:" %>
+      <%= f.text_field :data_doc %>
+      <%#= f.date_select :data_doc, :use_month_numbers => true, :order => [:day, :month, :year] %>
+    </div>
     <div class="twelve columns">
-      <fieldset>
-        <legend> Dati documento </legend>
-        <div class="five columns offset-by-one">
-          <%= f.label "Anno:" %>
-          <%= @tesdoc.annoese %>
-          <%#= f.text_field :annoese, :size => 3, :disabled => true %>
-        </div>
-        <div class="five columns">
-          <%= f.label "Tipo:" %>
-          <%#= select(:tesdoc, :tipo_doc, Tesdoc::TIPO_DOC.invert.sort, {}, {:disabled => true}) %>
-          <%= Tesdoc::TIPO_DOC[@tesdoc.tipo_doc] %>
-        </div>
-        <div class="five columns offset-by-one">
-          <%= f.label "Nr documento:" %>
-          <%= f.number_field :num_doc %>
-        </div>
-        <div class="five columns">
-          <%= f.label "Data:" %>
-          <%= f.text_field :data_doc %>
-          <%#= f.date_select :data_doc, :use_month_numbers => true, :order => [:day, :month, :year] %>
-        </div>
-        <div class="ten columns offset-by-one">
-          <%= f.label "Descrizione:" %>
-          <%= f.text_field :descriz %>
-        </div>
-        <div class="five columns offset-by-one">
-          <%= f.label "Causale:" %>
-          <%= @causmag.descriz %>
-        </div>
-        <div class="five columns">
-          <%= f.label "Descrizione estesa:" %>
-          <%= @causmag.des_caus %>
-        </div>
-<hr />
-        <div class="four columns offset-by-one">
-          <%= f.label "Merce in:" %>
-          <%= Causmag::TIPO[@causmag.tipo] %>
-        </div>
-        <div class="three columns">
-          <%= f.label "Movimento contabile:" %>
-          <%= Causmag::CONTABILE[@causmag.contabile] %>
-        </div>
-        <div class="three columns">
-          <%= f.label "Impatto sul magazzino:" %>
-          <%= Causmag::MOVIMPMAG[@causmag.movimpmag] %>
-        </div>
-<hr />
-        <div class="ten columns offset-by-one">
-          <%= f.label "Conto anagrafica:" %>
-          <%= @conto.desest1 %>
-        </div>
-<hr />
-        <div class="five columns offset-by-one">
-          <%= f.label "Magazzino Origine" %>
-        </div>
-        <div class="five columns">
-          <%= f.label "Magazzino Destinazione" %>
-        </div>
-        <%= render :partial => 'magsrcdst', :locals => {:tesdoc=>@tesdoc, :causmag=>@causmag,
-                                                        :act_new=>@act_new} %>
-<hr />
-        <div class="four columns offset-by-one">
-          <%= f.label "Segue fattura: " %>
-          <%= select(:tesdoc, :seguefatt, Tesdoc::SEGUEFATT.invert.sort)%>
-        </div>
-        <div class="three columns">
-          <%= f.label "sconto" %>
-          <%= f.text_field :sconto %>
-        </div>
-        <div class="three columns">
-          <%= f.label "aliquota iva:" %>
-          <%= collection_select :tesdoc, :iva_id, Iva.all, :id, :descriz, {:include_blank => true} %>
-        </div>
-        <hr />
-        <div class="ten columns offset-by-one">
-          <%= f.submit "SALVA TESTATA", :class => "button radius small" %>
-        </div>
-      </fieldset>
+      <%= f.label "Descrizione:" %>
+      <%= f.text_field :descriz %>
+    </div>
+    <div class="five columns">
+      <%= f.label "Magazzino Origine" %>
+    </div>
+    <div class="two columns"></div>
+    <div class="five columns">
+      <%= f.label "Magazzino Destinazione" %>
+    </div>
+    <%= render :partial => 'magsrcdst', :locals => {:tesdoc=>@tesdoc, :causmag=>@causmag,
+                                                    :act_new=>@act_new} %>
+    <div class="two columns">
+      <%= f.label "Segue fattura: " %>
+      <%= select(:tesdoc, :seguefatt, Tesdoc::SEGUEFATT.invert.sort)%>
+    </div>
+    <div class="three columns">
+      <%= f.label "aliquota iva:" %>
+      <%= collection_select :tesdoc, :iva_id, Iva.all, :id, :descriz, {:include_blank => true} %>
+    </div>
+    <div class="two columns"></div>
+    <div class="five columns">
+      <%= f.label "sconto" %>
+      <%= f.number_field :sconto %>
+    </div>
+    <div class="twelve columns">
+      <%= f.submit "SALVA TESTATA", :class => "button radius small" %>
     </div>
   </div>
 <% end %>

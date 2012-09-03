@@ -13,52 +13,45 @@
                                           :method => :delete, :class => "button radius small" %>
       </li>
     </ul>
-  </div>
-</div>
-<div class="row">
-  <div class="twelve columns">
-    <fieldset>
-      <legend> Dati localita' </legend>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @localita, "Descrizione:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @localita.descriz %>
-        </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @localita, "Descrizione:", :class => "right" %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @localita, "Provincia:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @localita.prov %>
-        </div>
+      <div class="ten columns">
+        <%= @localita.descriz %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @localita, "CAP:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @localita.cap %>
-        </div>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @localita, "Provincia:", :class => "right" %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @localita, "Cod Fisc:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @localita.codfis %>
-        </div>
+      <div class="ten columns">
+        <%= @localita.prov %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @localita, "Stato/Nazione", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @localita.paese.descriz %>
-        </div>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @localita, "CAP:", :class => "right" %>
       </div>
-    </fieldset>
+      <div class="ten columns">
+        <%= @localita.cap %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @localita, "Cod Fisc:", :class => "right" %>
+      </div>
+      <div class="ten columns">
+        <%= @localita.codfis %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @localita, "Stato/Nazione", :class => "right" %>
+      </div>
+      <div class="ten columns">
+        <%= @localita.paese.descriz %>
+      </div>
+    </div>
   </div>
 </div>

@@ -4,9 +4,10 @@
 <% nrmagdst = act_new == 1 ? causmag.nrmagdst : tesdoc.nrmagdst %>
 <% if magsrc[nrmagsrc].nil? then magsrcsel = 0 else magsrcsel = nrmagsrc end %>
 <% if magdst[nrmagdst].nil? then magdstsel = 0 else magdstsel = nrmagdst end %>
-<div class="five columns offset-by-one">
+<div class="five columns">
   <%= select(:tesdoc, :nrmagsrc, magsrc.invert.sort, :selected => magsrcsel) %>
 </div>
+<div class="two columns"></div>
 <div class="five columns">
   <%= select(:tesdoc, :nrmagdst, magdst.invert.sort, :selected => magdstsel) %>
 </div>

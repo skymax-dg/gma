@@ -6,11 +6,7 @@
         <%= link_to 'Nuovo CodiceIva/Esenzione', new_iva_path, :class => "button radius small" %>
       </li>
     </ul>
-  </div>
-</div>
-<div class="row">
-  <div class="twelve columns">
-    <div class="panel">
+    <% unless @ivas.nil?||@ivas.empty? %>
       <table>
         <thead>
           <tr>
@@ -23,10 +19,10 @@
           </tr>
         </thead>
         <tbody>
-            <%= render :partial => 'line', :collection => @ivas unless @ivas.empty? %>
+            <%= render :partial => 'line', :collection => @ivas %>
         </tbody>
       </table>
       <%= will_paginate @ivas %>
-    </div>
+    <% end %>
   </div>
 </div>

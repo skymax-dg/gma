@@ -7,9 +7,9 @@ class Article < ActiveRecord::Base
   attr_accessible :codice, :descriz, :prezzo, :azienda, :categ, :iva_id
 
   validates :codice, :descriz, :azienda, :categ, :iva_id, :presence => true
-  validates :codice, :descriz, :uniqueness => true
-  validates :codice,  :length => { :maximum => 10}
-  validates :descriz, :length => { :maximum => 50}
+  validates :codice, :descriz, :uniqueness => {:case_sensitive => false}
+  validates :codice,  :length => {:maximum => 10}
+  validates :descriz, :length => {:maximum => 50}
   
   scope :azienda, lambda { |azd| {:conditions => ['articles.azienda = ?', azd]}}
   default_scope :order => 'articles.codice ASC' 

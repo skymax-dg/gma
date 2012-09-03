@@ -111,6 +111,7 @@ ActiveRecord::Schema.define(:version => 20120806140630) do
 
   add_index "contos", ["azienda", "annoese", "codice"], :name => "idx_contos_on_codice", :unique => true
   add_index "contos", ["azienda", "annoese", "descriz"], :name => "idx_contos_on_descriz"
+  add_index "contos", ["azienda", "annoese", "anagen_id", "tipoconto"], {:name => "idx_contos_on_tipoconto_anagen_id", :unique => true}
 
   create_table "ivas", :force => true do |t|
     t.integer  "codice",                                                  :null => false

@@ -1,46 +1,16 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
 <div class="row">
   <div class="twelve columns">
-    <ul class="button-group [radius, rounded]">
-      <li>
-        <%= link_to 'Stampa Movimenti', filter_mov_vend_all_articles_path(:tp => "M"),
-            :class => "button radius small" %>
-      </li>
-      <li>
-        <%= link_to 'Stampa Movimenti(XLS)',  filter_mov_vend_all_xls_articles_path(:tp => "M"),
-            :class => "button radius small" %> <br />
-      </li>
-      <li>
-        <%= link_to 'Stampa Vendite',   filter_mov_vend_all_articles_path(:tp => "V"),
-            :class => "button radius small" %>
-      </li>
-      <li>
-        <%= link_to 'Stampa Vendite(XLS)',  filter_mov_vend_all_xls_articles_path(:tp => "V"),
-            :class => "button radius small" %>  <br />
-      </li>
-    </ul>
-  </div>
-</div>
-<div class="row">
-  <div class="twelve columns">
-    <div class="panel">
-      <%= render :partial => 'filter' %>
+    <div class="button-bar">
+      <ul class="button-group [radius, rounded] small">
+        <li>
+          <%= link_to 'Nuovo Articolo', new_article_path, :class => "button radius small" %>
+        </li>
+      </ul>
+      <%= render :partial => 'btn_stp' %>
     </div>
-  </div>
-</div>
-<div class="row">
-  <div class="twelve columns">
-    <ul class="button-group [radius, rounded] small">
-      <li>
-        <%= link_to 'Nuovo Articolo', new_article_path, :class => "button radius small" %>
-      </li>
-    </ul>
-  </div>
-</div>
-<% unless @articles.nil?||@articles.empty? %>
-<div class="row">
-  <div class="twelve columns">
-    <div class="panel">
+    <%= render :partial => 'filter' %>
+    <% unless @articles.nil?||@articles.empty? %>
       <table>
         <thead>
           <tr>
@@ -52,11 +22,10 @@
           </tr>
         </thead>
         <tbody>
-            <%= render :partial => 'line', :collection => @articles unless @articles.empty? %>
+            <%= render :partial => 'line', :collection => @articles %>
         </tbody>
       </table>
       <%= will_paginate @articles %>
-    </div>
+    <% end %>
   </div>
 </div>
-<% end %>

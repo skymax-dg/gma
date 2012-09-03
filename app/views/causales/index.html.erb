@@ -6,11 +6,7 @@
         <%= link_to 'Nuova Causale', new_causale_path, :class => "button radius small" %>
       </li>
     </ul>
-  </div>
-</div>
-<div class="row">
-  <div class="twelve columns">
-    <div class="panel">
+    <% unless @causales.nil?||@causales.empty? %>
       <table>
         <thead>
           <tr>
@@ -22,10 +18,10 @@
           </tr>
         </thead>
         <tbody>
-            <%= render :partial => 'line', :collection => @causales unless @causales.empty? %>
+            <%= render :partial => 'line', :collection => @causales %>
         </tbody>
       </table>
       <%= will_paginate @causales %>
-    </div>
+    <% end %>
   </div>
 </div>

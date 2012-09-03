@@ -6,11 +6,7 @@
         <%= link_to "Nuova Causale", new_causmag_path, :class => "button radius small" %>
       </li>
     </ul>
-  </div>
-</div>
-<div class="row">
-  <div class="twelve columns">
-    <div class="panel">
+    <% unless @causmags.nil?||@causmags.empty? %>
       <table>
         <thead>
           <tr>
@@ -23,10 +19,10 @@
           </tr>
         </thead>
         <tbody>
-            <%= render :partial => 'line', :collection => @causmags unless @causmags.empty? %>
+            <%= render :partial => 'line', :collection => @causmags %>
         </tbody>
       </table>
-      <%= will_paginate @causmags %>
-    </div>
+    <%= will_paginate @causmags %>
+    <% end %>
   </div>
 </div>

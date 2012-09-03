@@ -6,11 +6,7 @@
         <%= link_to 'Nuovo stato/nazione', new_paese_path, :class => "button radius small" %>
       </li>
     </ul>
-  </div>
-</div>
-<div class="row">
-  <div class="twelve columns">
-    <div class="panel">
+    <% unless @paeses.nil?||@paeses.empty? %>
       <table>
         <thead>
           <tr>
@@ -22,10 +18,10 @@
           </tr>
         </thead>
         <tbody>
-            <%= render :partial => 'line', :collection => @paeses unless @paeses.empty? %>
+            <%= render :partial => 'line', :collection => @paeses %>
         </tbody>
       </table>
       <%= will_paginate @paeses %>
-    </div>
+    <% end %>
   </div>
 </div>

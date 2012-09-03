@@ -1,75 +1,52 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
 <div class="row">
   <div class="twelve columns">
-    <ul class="button-group [radius, rounded]">
-      <li>
-        <%= link_to 'Indietro', articles_path, :class => "button radius small" %>
-      </li>
-      <li>
-        <%= link_to 'Modifica', edit_article_path(@article), :class => "button radius small" %>
-      </li>
-      <li>
-        <%= link_to 'Elimina', @article, :confirm => 'Confermi eliminazione?',
-                                         :method => :delete, :class => "button radius small" %>
-      </li>
-    </ul>
-    <ul class="button-group [radius, rounded]">
-      <li>
-		<%= link_to 'Movimenti magazzino', filter_mov_vend_article_path(:tp => "M"),
-		                                   :class => "button radius small" %>
-      </li>
-      <li>
-		<%= link_to 'Movimenti magazzino XLS', filter_mov_vend_xls_article_path(:tp => "M"),
-		                                       :class => "button radius small" %>
-      </li>
-      <li>
-		<%= link_to 'Vendite per distributore', filter_mov_vend_article_path(:tp => "V"), 
-		                                        :class => "button radius small" %>
-      </li>
-      <li>
-		<%= link_to 'Vendite per distributore XLS', filter_mov_vend_xls_article_path(:tp => "V"),
-		                                            :class => "button radius small" %>
-      </li>
-    </ul>
-  </div>
-</div>
-<div class="row">
-  <div class="twelve columns">
-    <fieldset>
-      <legend> Dati articolo </legend>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @article, "Codice:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @article.codice %>
-        </div>
+    <div class="button-bar">
+      <ul class="button-group [radius, rounded]">
+        <li>
+          <%= link_to 'Indietro', articles_path, :class => "button radius small" %>
+        </li>
+        <li>
+          <%= link_to 'Modifica', edit_article_path(@article), :class => "button radius small" %>
+        </li>
+        <li>
+          <%= link_to 'Elimina', @article, :confirm => 'Confermi eliminazione?',
+                                           :method => :delete, :class => "button radius small" %>
+        </li>
+      </ul>
+      <%= render :partial => 'btn_stp' %>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @article, "Codice:", :class => "right" %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @article, "Categoria:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= Article::CATEG[@article.categ] %>
-        </div>
+      <div class="ten columns left">
+        <%= @article.codice %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @article, "Descrizione:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @article.descriz %>
-        </div>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @article, "Categoria:", :class => "right" %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @article, "Prezzo:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @article.prezzo %>
-        </div>
+      <div class="ten columns left">
+        <%= Article::CATEG[@article.categ] %>
       </div>
-
-    </fieldset>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @article, "Descrizione:", :class => "right" %>
+      </div>
+      <div class="ten columns left">
+        <%= @article.descriz %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @article, "Prezzo:", :class => "right" %>
+      </div>
+      <div class="ten columns left">
+        <%= @article.prezzo %>
+      </div>
+    </div>
   </div>
 </div>

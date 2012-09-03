@@ -4,20 +4,17 @@
       <legend> Ricerca citta' </legend>
       <%= form_tag(:filter_localitas, :method => :get) do %>
         <div class="three columns">
-          <%= label :filter_localitas, "Ricerca per" %>
           <%= select_tag("tpfilter",
                          options_for_select([["Descrizione", "DE"], ["CAP", "CP"],
                                              ["Nazione", "NA"]], @tpfilter)) %>
         </div>
         <div class="five columns">
-          <%= label :filter_localitas, "." %>
           <%= text_field_tag "desfilter", @desfilter %>
         </div>
-        <div class="twelve columns">
-          <%= submit_tag 'FILTRA', :class => "button radius small" %>
+        <div class="four columns">
+          <%= submit_tag 'RICERCA', :class => "button radius small", :title => "Esegui Ricerca" %>
         </div>
       <% end %>
     </fieldset>
   </div>
 </div>
-<hr />

@@ -1,0 +1,20 @@
+<div class="panel">
+  <div class="row">
+    <div class="two columns" style="font-size:x-small;">
+        Copyrights 2012
+    </div>
+    <div class="two columns" style="font-size:x-small;">
+      SKYMAX_DG
+    </div>
+    <div class="two columns" style="font-size:x-small;">
+      Ver. 1.1.1
+    </div>
+    <div class="four columns"></div>
+    <div class="two columns" style="font-size:x-small;">
+      Login:
+      <% if signed_in? %>
+        <%= link_to " #{current_user.login}", edit_user_path(current_user) %>
+      <% end %>
+    </div>
+  </div>
+</div>

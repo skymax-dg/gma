@@ -2,29 +2,24 @@
 <%= form_for(@user) do |f| %>
   <div class="row">
     <div class="twelve columns">
-      <fieldset>
-        <legend> Dati utente </legend>
-        <div class="four columns offset-by-one">
-          <%= f.label "Nome utente:" %>
-          <%= f.text_field :login %>
-        </div>
-        <div class="three columns">
-          <%= f.label "Password" %>
-          <%= f.password_field :pwd %>
-        </div>
-        <div class="three columns">
-          <%= f.label "Conferma Password", "Confirmation" %>
-          <%= f.password_field :pwd_confirmation %>
-        </div>
-        <div class="three columns offset-by-one">
-          <%= f.label :azienda %>
-          <%= select(:user, :azienda, (StaticData::ELNCAZND).invert.sort) %>
-        </div>
-        <hr />
-        <div class="ten columns offset-by-one">
-          <%= f.submit 'REGISTRA', :class => "button radius small" %>
-        </div>
-      </fieldset>
+      <%= f.label "Nome utente:" %>
+      <%= f.text_field :login %>
+    </div>
+    <div class="five columns">
+      <%= f.label "Password" %>
+      <%= f.password_field :pwd %>
+    </div>
+    <div class="two columns"></div>
+    <div class="five columns">
+      <%= f.label "Conferma Password", "Confirmation" %>
+      <%= f.password_field :pwd_confirmation %>
+    </div>
+    <div class="three columns">
+      <%= f.label :azienda %>
+      <%= select(:user, :azienda, (StaticData::ELNCAZND).invert.sort) %>
+    </div>
+    <div class="twelve columns">
+      <%= f.submit 'SALVA', :class => "button radius small" %>
     </div>
   </div>
 <% end %>

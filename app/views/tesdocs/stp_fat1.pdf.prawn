@@ -66,24 +66,28 @@
   end
   pdf.move_down 10
   pdf.text "DETTAGLIO ARTICOLI", :size => 14, :style => :bold, :align => :center
-  @tb = Array.new(1, ["CODICE", "DESCRIZIONE", "Q.TA", "PRZ.\nLIST.", "PRZ.\nSCN.", "IMPON.", "IVA"])
+  @tb = Array.new(1, ["CODICE", "DESCRIZIONE", "Q.TA", "PRZ.\nLIST.", "TOT.\nLIST.", "PRZ.\nSCN.", "IMPON.", "IVA"])
   @tqta=0
+  @tlist=0
   @timpon=0
   @timposta=0
   @tesdoc.rigdocs.each do |r|
-    @tb<<[""&&r.article&&r.article.codice, r.descriz,     r.qta, number_with_precision(0&&r.article&&r.article.prezzo),
+    @tb<<[""&&r.article&&r.article.codice, r.descriz, r.qta, 
+          number_with_precision(0&&r.article&&r.article.prezzo), number_with_precision(r.imp_list),
           number_with_precision(r.prezzo), number_with_precision(r.impon), ""&&r.iva&&r.iva.descriz]
     @tqta+=r.qta
     @timpon+=r.impon
+    @tlist+=r.imp_list
   end
-  @tb << ["TOTALE", "", @tqta, "", "", number_with_precision(@timpon), ""]#number_with_precision(@timposta)]
+  @tb << ["TOTALE", "", @tqta, "", number_with_precision(@tlist), "", number_with_precision(@timpon), ""]#number_with_precision(@timposta)]
 
   #Creazione e stampa tabella articoli
-  tab = pdf.make_table(@tb, :column_widths=>{0=>80, 1=>245, 2=>30, 3=>35, 4=>35, 5=>50, 6=>50}, :cell_style => {:size => 8})
+  tab = pdf.make_table(@tb, :column_widths=>{0=>80, 1=>195, 2=>30, 3=>35, 4=>50, 5=>35, 6=>50, 7=>50},
+                            :cell_style => {:size => 8})
   tab.row(0).font_style = :bold
   tab.row(tab.row_length-1).font_style = :bold
   tab.header = true
-  tab.column(2..5).style :align => :right
+  tab.column(2..6).style :align => :right
   tab.draw
 
   pdf.move_down 27

@@ -1,11 +1,7 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => @causale} %>
 <%= render 'form' %>
-<div class="row">
-  <div class="twelve columns">
-    <ul class="button-group [radius, rounded]">
-      <li>
-        <%= link_to 'Visualizza', @causale, :class => "button radius small" %>
-      </li>
-    </ul>
-  </div>
-</div>
+<ul class="button-group [radius, rounded]">
+  <li>
+    <%= link_to 'Visualizza', @causale, :class => "button radius small" %>
+  </li>
+</ul>

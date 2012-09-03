@@ -1,34 +1,27 @@
 <%#= render :partial => 'shared/error_messages', :locals => {:f => @causale} %>
 <%= form_for(@causale) do |f| %>
-  <div class="field">
-    <%= f.hidden_field :azienda %>
-  </div>
+  <%= f.hidden_field :azienda %>
   <div class="row">
     <div class="twelve columns">
-      <fieldset>
-        <legend> Dati Causale contabile </legend>
-        <div class="ten columns offset-by-one">
-          <%= f.label "Descrizione" %>
-          <%= f.text_field :descriz %>
-        </div>
-        <div class="four columns offset-by-one">
-          <%= f.label "Conto IVA" %>
-          <%= f.text_field :contoiva %>
-        </div>
-        <div class="three columns">
-          <%= f.label "tipologia REG" %>
-          <%= select(:causale, :tiporeg, Causale::TIPOREG.invert.sort, { :prompt => true }) %>
-        </div>
-        <div class="three columns">
-          <%= f.label "tipologia IVA" %>
-          <%= select(:causale, :tipoiva, Causale::TIPOIVA.invert.sort, { :prompt => true }) %>
-        </div>
-        <hr />
-        <div class="ten columns offset-by-one">
-          <%= f.submit 'SALVA', :class => "button radius small" %>
-          <%= link_to 'ANNULLA', causales_path, :class => "button radius small" %>
-        </div>
-      </fieldset>
+      <%= f.label "Descrizione" %>
+      <%= f.text_field :descriz %>
+    </div>
+    <div class="five columns">
+      <%= f.label "Conto IVA" %>
+      <%= f.number_field :contoiva %>
+    </div>
+    <div class="two columns"></div>
+    <div class="two columns">
+      <%= f.label "tipologia REG" %>
+      <%= select(:causale, :tiporeg, Causale::TIPOREG.invert.sort, { :prompt => true }) %>
+    </div>
+    <div class="two columns">
+      <%= f.label "tipologia IVA" %>
+      <%= select(:causale, :tipoiva, Causale::TIPOIVA.invert.sort, { :prompt => true }) %>
+    </div>
+    <div class="twelve columns">
+      <%= f.submit 'SALVA', :class => "button radius small" %>
+      <%= link_to 'ANNULLA', causales_path, :class => "button radius small" %>
     </div>
   </div>
 <% end %>

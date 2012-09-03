@@ -13,52 +13,45 @@
                                      :method => :delete, :class => "button radius small" %>
       </li>
     </ul>
-  </div>
-</div>
-<div class="row">
-  <div class="twelve columns">
-    <fieldset>
-      <legend> Dati iva/esenzione </legend>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @iva, "Codice:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @iva.codice %>
-        </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @iva, "Codice:", :class => "right" %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @iva, "Descrizione:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @iva.descriz %>
-        </div>
+      <div class="ten columns">
+        <%= @iva.codice %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @iva, "Descrizione estesa(REPORT):", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @iva.desest %>
-        </div>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @iva, "Descrizione:", :class => "right" %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @iva, "Aliquota:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @iva.aliq %>
-        </div>
+      <div class="ten columns">
+        <%= @iva.descriz %>
       </div>
-      <div class="row">
-        <div class="two columns offset-by-one">
-          <%= label @iva, "Esenzione:", :class => "right" %>
-        </div>
-        <div class="nine columns left">
-          <%= @iva.flese %>
-        </div>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @iva, "Descrizione estesa(REPORT):", :class => "right" %>
       </div>
-    </fieldset>
+      <div class="ten columns">
+        <%= @iva.desest %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @iva, "Aliquota:", :class => "right" %>
+      </div>
+      <div class="ten columns">
+        <%= @iva.aliq %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="two columns">
+        <%= label @iva, "Esenzione:", :class => "right" %>
+      </div>
+      <div class="ten columns">
+        <%= @iva.flese %>
+      </div>
+    </div>
   </div>
 </div>

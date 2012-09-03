@@ -277,7 +277,7 @@ before_filter :authenticate
   def update
     @tesdoc = Tesdoc.find(params[:id])
     if @tesdoc.update_attributes(params[:tesdoc])
-      redirect_to @tesdoc, :notice => 'Testata docuemnto aggiornata con successo.'
+      redirect_to @tesdoc, :notice => 'Testata documento aggiornata con successo.'
     else
       @title = "Modifica Testata documento (#{Causmag::TIPO_DOC[se_tipo_doc.to_i]})"
       flash[:error] = "Il salvataggio del documento non e' andato a buon fine"
