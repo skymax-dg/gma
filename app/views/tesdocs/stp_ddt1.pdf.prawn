@@ -142,9 +142,9 @@
                 :at => [2, 40], :size => 10, :style => :bold
   pdf.draw_text "Ora del ritiro",
                 :at => [130, 40], :size => 10, :style => :bold
-  pdf.draw_text @datispe&&@datispe.dtrit.strftime("%d/%m/%Y"),
+  pdf.draw_text @datispe&&@datispe.dtrit&&@datispe.dtrit.strftime("%d/%m/%Y"),
                 :at => [5, 27], :size => 10
-  pdf.draw_text @datispe&&@datispe.orarit.strftime("%H:%M"),
+  pdf.draw_text @datispe&&@datispe.orarit&&@datispe.orarit.strftime("%H:%M"),
                 :at => [135, 27], :size => 10
 
 	# spazio pe la firma

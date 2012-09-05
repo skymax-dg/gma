@@ -35,7 +35,7 @@
       <%= label @conto, "Anagrafica:", :class => "right" %>
     </div>
     <div class="ten columns">
-      <%= @conto.anagen.denomin %>
+      <%= @conto.anagen&&@conto.anagen.denomin %>
     </div>
   </div>
   <div class="row">

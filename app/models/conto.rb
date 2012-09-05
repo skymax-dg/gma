@@ -1,4 +1,4 @@
-include ContosHelper
+#include ContosHelper
 class Conto < ActiveRecord::Base
   before_destroy :require_no_tesdocs
   has_many :tesdocs
@@ -12,6 +12,8 @@ class Conto < ActiveRecord::Base
   validates :descriz, :length => { :maximum => 150}
   validates :codice, :numericality => { :only_integer => true }
   validate :codice_toobig4integer #(non mettendo niente la validazione scatta su create e update), :on => :create
+  validates_uniqueness_of :codice, :scope => [:azienda, :annoese]
+  validates_uniqueness_of :anagen_id, :scope => [:azienda, :annoese, :tipoconto]
   
   scope :azdanno, lambda { |azd, anno| {:conditions => ['contos.azienda = ? and contos.annoese = ?', azd, anno]}}
 
