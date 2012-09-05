@@ -1,25 +1,23 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
 <div class="row">
-  <div class="twelve columns">
-    <div class="button-bar">
-      <ul class="button-group [radius, rounded]">
-        <li>
-          <%= link_to 'Indietro', anagens_path, :class => "button radius small" %>
-        </li>
-        <li>
-          <%= link_to 'Modifica anagrafica', edit_anagen_path(@anagen), :class => "button radius small" %>
-        </li>
-        <li>
-          <%= link_to 'Elimina anagrafica', @anagen, :confirm => 'Confermi eliminazione?',
-                                                     :method => :delete, :class => "button radius small" %>
-        </li>
-      </ul>
-      <ul class="button-group [radius, rounded]">
-        <li>
-          <%= link_to 'Aggiungi indirizzo', new_anaind_path(:id => @anagen.id), :class => "button radius small" %>
-        </li>
-      </ul>
-    </div>
+  <div class="twelve columns button-bar">
+    <ul class="button-group">
+      <li>
+        <%= link_to 'Indietro', anagens_path, :class => "button radius small" %>
+      </li>
+      <li>
+        <%= link_to 'Modifica anagrafica', edit_anagen_path(@anagen), :class => "button radius small" %>
+      </li>
+      <li>
+        <%= link_to 'Elimina anagrafica', @anagen, :confirm => 'Confermi eliminazione?',
+                                                   :method => :delete, :class => "button radius small" %>
+      </li>
+    </ul>
+    <ul class="button-group">
+      <li>
+        <%= link_to 'Aggiungi indirizzo', new_anaind_path(:id => @anagen.id), :class => "button radius small" %>
+      </li>
+    </ul>
   </div>
   <div class="row">
     <div class="two columns">

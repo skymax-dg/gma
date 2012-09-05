@@ -1,15 +1,7 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
-<div class="row">
-  <div class="twelve columns">
-    <div class="button-bar">
-      <ul class="button-group [radius, rounded]">
-        <li><%= link_to 'Indietro', :back, :class => "button radius small" %></li>
-      </ul>
-    </div>
-    <div class="row">
-      <div class="twelve columns">
-        <h2> Nessun movimento di <%= @tp == 'M' ? " Magazzino " : " Vendita " %> trovato </h2>
-      </div>
-    </div>
-  </div>
+<div class="button-bar">
+  <ul class="button-group">
+    <li><%= link_to 'Indietro', :back, :class => "button radius small" %></li>
+  </ul>
 </div>
+<h2> Nessun movimento di <%= @tp == 'M' ? " Magazzino " : " Vendita " %> trovato </h2>

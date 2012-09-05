@@ -1,105 +1,101 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
+<ul class="button-group">
+  <li>
+    <%= link_to 'Indietro', causmags_path, :class => "button radius small" %>
+  </li>
+  <li>
+    <%= link_to 'Modifica', edit_causmag_path(@causmag), :class => "button radius small" %>
+  </li>
+  <li>
+    <%= link_to 'Elimina', @causmag, :confirm => 'Confermi eliminazione?',
+                                      :method => :delete, :class => "button radius small" %>
+  </li>
+</ul>
 <div class="row">
-  <div class="twelve columns">
-    <ul class="button-group [radius, rounded]">
-      <li>
-        <%= link_to 'Indietro', causmags_path, :class => "button radius small" %>
-      </li>
-      <li>
-        <%= link_to 'Modifica', edit_causmag_path(@causmag), :class => "button radius small" %>
-      </li>
-      <li>
-        <%= link_to 'Elimina', @causmag, :confirm => 'Confermi eliminazione?',
-                                          :method => :delete, :class => "button radius small" %>
-      </li>
-    </ul>
-    <div class="row">
-      <div class="two columns">
-        <%= label @causmag, "Gruppo:", :class => "right" %>
-      </div>
-      <div class="ten columns left">
-        <%= Causmag::TIPO_DOC[@causmag.tipo_doc] %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="two columns">
-        <%= label @causmag, "Descrizione:", :class => "right" %>
-      </div>
-      <div class="ten columns left">
-        <%= @causmag.descriz %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="two columns">
-        <%= label @causmag, "Tipo:", :class => "right" %>
-      </div>
-      <div class="ten columns left">
-        <%= Causmag::TIPO[@causmag.tipo] %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="two columns">
-        <%= label @causmag, "Movimento contabile:", :class => "right" %>
-      </div>
-      <div class="ten columns left">
-        <%= Causmag::CONTABILE[@causmag.contabile] %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="two columns">
-        <%= label @causmag, "Movimento di magazzino:", :class => "right" %>
-      </div>
-      <div class="ten columns left">
-        <%= Causmag::MOVIMPMAG[@causmag.movimpmag] %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="two columns">
-        <%= label @causmag, "Magazzino di origine:", :class => "right" %>
-      </div>
-      <div class="ten columns left">
-        <%= Causmag::NRMAG[@causmag.nrmagsrc] %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="two columns">
-        <%= label @causmag, "Magazzino di destinazione:", :class => "right" %>
-      </div>
-      <div class="ten columns left">
-        <%= Causmag::NRMAG[@causmag.nrmagdst] %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="two columns">
-        <%= label @causmag, "Descrizione causale:", :class => "right" %>
-      </div>
-      <div class="ten columns left">
-        <%= @causmag.des_caus %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="two columns">
-        <%= label @causmag, "Causale contabile:", :class => "right" %>
-      </div>
-      <div class="ten columns left">
-        <%= @causmag.causale.descriz unless @causmag.causale.nil? %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="two columns">
-        <%= label @causmag, "Causale di trasporto:", :class => "right" %>
-      </div>
-      <div class="ten columns left">
-        <%= @causmag.caus_tra unless @causmag.caus_tra.nil? %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="two columns">
-        <%= label @causmag, "Modulo di stampa:", :class => "right" %>
-      </div>
-      <div class="ten columns left">
-        <%= @causmag.modulo %>
-      </div>
-    </div>
+  <div class="two columns">
+    <%= label @causmag, "Gruppo:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= Causmag::TIPO_DOC[@causmag.tipo_doc] %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @causmag, "Descrizione:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= @causmag.descriz %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @causmag, "Tipo:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= Causmag::TIPO[@causmag.tipo] %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @causmag, "Movimento contabile:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= Causmag::CONTABILE[@causmag.contabile] %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @causmag, "Movimento di magazzino:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= Causmag::MOVIMPMAG[@causmag.movimpmag] %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @causmag, "Magazzino di origine:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= Causmag::NRMAG[@causmag.nrmagsrc] %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @causmag, "Magazzino di destinazione:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= Causmag::NRMAG[@causmag.nrmagdst] %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @causmag, "Descrizione causale:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= @causmag.des_caus %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @causmag, "Causale contabile:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= @causmag.causale.descriz unless @causmag.causale.nil? %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @causmag, "Causale di trasporto:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= @causmag.caus_tra unless @causmag.caus_tra.nil? %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @causmag, "Modulo di stampa:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= @causmag.modulo %>
   </div>
 </div>

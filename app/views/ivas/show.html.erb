@@ -1,57 +1,53 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
+<ul class="button-group">
+  <li>
+    <%= link_to 'Indietro', ivas_path, :class => "button radius small" %>
+  </li>
+  <li>
+    <%= link_to 'Modifica', edit_iva_path(@iva), :class => "button radius small" %>
+  </li>
+  <li>
+    <%= link_to 'Elimina', @iva, :confirm => 'Confermi eliminazione?',
+                                 :method => :delete, :class => "button radius small" %>
+  </li>
+</ul>
 <div class="row">
-  <div class="twelve columns">
-    <ul class="button-group [radius, rounded]">
-      <li>
-        <%= link_to 'Indietro', ivas_path, :class => "button radius small" %>
-      </li>
-      <li>
-        <%= link_to 'Modifica', edit_iva_path(@iva), :class => "button radius small" %>
-      </li>
-      <li>
-        <%= link_to 'Elimina', @iva, :confirm => 'Confermi eliminazione?',
-                                     :method => :delete, :class => "button radius small" %>
-      </li>
-    </ul>
-    <div class="row">
-      <div class="two columns">
-        <%= label @iva, "Codice:", :class => "right" %>
-      </div>
-      <div class="ten columns">
-        <%= @iva.codice %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="two columns">
-        <%= label @iva, "Descrizione:", :class => "right" %>
-      </div>
-      <div class="ten columns">
-        <%= @iva.descriz %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="two columns">
-        <%= label @iva, "Descrizione estesa(REPORT):", :class => "right" %>
-      </div>
-      <div class="ten columns">
-        <%= @iva.desest %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="two columns">
-        <%= label @iva, "Aliquota:", :class => "right" %>
-      </div>
-      <div class="ten columns">
-        <%= @iva.aliq %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="two columns">
-        <%= label @iva, "Esenzione:", :class => "right" %>
-      </div>
-      <div class="ten columns">
-        <%= @iva.flese %>
-      </div>
-    </div>
+  <div class="two columns">
+    <%= label @iva, "Codice:", :class => "right" %>
+  </div>
+  <div class="ten columns">
+    <%= @iva.codice %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @iva, "Descrizione:", :class => "right" %>
+  </div>
+  <div class="ten columns">
+    <%= @iva.descriz %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @iva, "Descrizione estesa(REPORT):", :class => "right" %>
+  </div>
+  <div class="ten columns">
+    <%= @iva.desest %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @iva, "Aliquota:", :class => "right" %>
+  </div>
+  <div class="ten columns">
+    <%= @iva.aliq %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @iva, "Esenzione:", :class => "right" %>
+  </div>
+  <div class="ten columns">
+    <%= @iva.flese %>
   </div>
 </div>

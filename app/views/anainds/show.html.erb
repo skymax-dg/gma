@@ -1,51 +1,47 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
+<ul class="button-group">
+  <li>
+    <%= link_to 'Indietro', @anaind.anagen, :class => "button radius small" %>
+  </li>
+  <li>
+    <%= link_to 'Modifica', edit_anaind_path, :class => "button radius small" %>
+  </li>
+  <li>
+    <%= link_to 'Elimina', @anaind, :confirm => 'Confermi eliminazione?',
+                                    :method => :delete, :class => "button radius small" %>
+  </li>
+</ul>
 <div class="row">
-  <div class="twelve columns">
-    <ul class="button-group [radius, rounded]">
-      <li>
-        <%= link_to 'Indietro', @anaind.anagen, :class => "button radius small" %>
-      </li>
-      <li>
-        <%= link_to 'Modifica', edit_anaind_path, :class => "button radius small" %>
-      </li>
-      <li>
-        <%= link_to 'Elimina', @anaind, :confirm => 'Confermi eliminazione?',
-                                        :method => :delete, :class => "button radius small" %>
-      </li>
-    </ul>
+  <div class="two columns">
+    <%= label @anaind, "Indirizzo:", :class => "right" %>
   </div>
-  <div class="row">
-    <div class="two columns">
-      <%= label @anaind, "Indirizzo:", :class => "right" %>
-    </div>
-    <div class="ten columns left">
-      <%= @anaind.indir %>
-    </div>
+  <div class="ten columns left">
+    <%= @anaind.indir %>
   </div>
-  <div class="row">
-    <div class="two columns">
-      <%= label @anaind, "Localita':", :class => "right" %>
-    </div>
-    <div class="ten columns left">
-      <%= @anaind.desloc %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="two columns">
-      <%= label @anaind, "Valido come:", :class => "right" %>
-    </div>
-    <div class="ten columns left">
-      <%= @anaind.decoflgs %>
-    </div>
-  </div>
-  <% if @anaind.flmg == "S" %>
-    <div class="row">
-    <div class="two columns">
-        <%= label @anaind, "Rif. magazzino:", :class => "right" %>
-      </div>
-      <div class="ten columns left">
-        <%= Anaind::NRMAG[@anaind.nrmag] %>
-      </div>
-    </div>
-  <% end %>
 </div>
+<div class="row">
+  <div class="two columns">
+    <%= label @anaind, "Localita':", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= @anaind.desloc %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @anaind, "Valido come:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= @anaind.decoflgs %>
+  </div>
+</div>
+<% if @anaind.flmg == "S" %>
+  <div class="row">
+  <div class="two columns">
+      <%= label @anaind, "Rif. magazzino:", :class => "right" %>
+    </div>
+    <div class="ten columns left">
+      <%= Anaind::NRMAG[@anaind.nrmag] %>
+    </div>
+  </div>
+<% end %>

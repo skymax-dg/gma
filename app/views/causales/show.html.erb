@@ -1,49 +1,45 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
+<ul class="button-group">
+  <li>
+    <%= link_to 'Indietro', causales_path, :class => "button radius small" %>
+  </li>
+  <li>
+    <%= link_to 'Modifica', edit_causale_path(@causale), :class => "button radius small" %>
+  </li>
+  <li>
+    <%= link_to 'Elimina', @causale, :confirm => 'Confermi eliminazione?',
+                                     :method => :delete, :class => "button radius small" %>
+  </li>
+</ul>
 <div class="row">
-  <div class="twelve columns">
-    <ul class="button-group [radius, rounded]">
-      <li>
-        <%= link_to 'Indietro', causales_path, :class => "button radius small" %>
-      </li>
-      <li>
-        <%= link_to 'Modifica', edit_causale_path(@causale), :class => "button radius small" %>
-      </li>
-      <li>
-        <%= link_to 'Elimina', @causale, :confirm => 'Confermi eliminazione?',
-                                         :method => :delete, :class => "button radius small" %>
-      </li>
-    </ul>
-    <div class="row">
-      <div class="two columns">
-        <%= label @causale, "Descrizione:", :class => "right" %>
-      </div>
-      <div class="ten columns">
-        <%= @causale.descriz %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="two columns">
-        <%= label @causale, "Conto IVA:", :class => "right" %>
-      </div>
-      <div class="ten columns">
-        <%= @causale.contoiva %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="two columns">
-        <%= label @causale, "Tipo IVA:", :class => "right" %>
-      </div>
-      <div class="ten columns">
-        <%= Causale::TIPOIVA[@causale.tipoiva] %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="two columns">
-        <%= label @causale, "Tipo REG:", :class => "right" %>
-      </div>
-      <div class="ten columns">
-        <%= Causale::TIPOREG[@causale.tiporeg] %>
-      </div>
-    </div>
+  <div class="two columns">
+    <%= label @causale, "Descrizione:", :class => "right" %>
+  </div>
+  <div class="ten columns">
+    <%= @causale.descriz %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @causale, "Conto IVA:", :class => "right" %>
+  </div>
+  <div class="ten columns">
+    <%= @causale.contoiva %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @causale, "Tipo IVA:", :class => "right" %>
+  </div>
+  <div class="ten columns">
+    <%= Causale::TIPOIVA[@causale.tipoiva] %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @causale, "Tipo REG:", :class => "right" %>
+  </div>
+  <div class="ten columns">
+    <%= Causale::TIPOREG[@causale.tiporeg] %>
   </div>
 </div>

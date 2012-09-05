@@ -1,27 +1,23 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
-<div class="row">
-  <div class="twelve columns">
-    <ul class="button-group [radius, rounded]">
-      <li>
-        <%= link_to 'Nuovo stato/nazione', new_paese_path, :class => "button radius small" %>
-      </li>
-    </ul>
-    <% unless @paeses.nil?||@paeses.empty? %>
-      <table>
-        <thead>
-          <tr>
-            <th width="57%">Descrizione</th>
-            <th width="10%">Tipo</th>
-            <th width="8%">C.F.</th>
-            <th width="10%">Pref.P.I.</th>
-            <th width="15%"></th>
-          </tr>
-        </thead>
-        <tbody>
-            <%= render :partial => 'line', :collection => @paeses %>
-        </tbody>
-      </table>
-      <%= will_paginate @paeses %>
-    <% end %>
-  </div>
-</div>
+<ul class="button-group">
+  <li>
+    <%= link_to 'Nuovo stato/nazione', new_paese_path, :class => "button radius small" %>
+  </li>
+</ul>
+<% unless @paeses.nil?||@paeses.empty? %>
+  <table>
+    <thead>
+      <tr>
+        <th width="57%">Descrizione</th>
+        <th width="10%">Tipo</th>
+        <th width="8%">C.F.</th>
+        <th width="10%">Pref.P.I.</th>
+        <th width="15%"></th>
+      </tr>
+    </thead>
+    <tbody>
+        <%= render :partial => 'line', :collection => @paeses %>
+    </tbody>
+  </table>
+  <%= will_paginate @paeses %>
+<% end %>

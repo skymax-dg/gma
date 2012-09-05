@@ -34,9 +34,4 @@ Gma::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
-
-#  config.gem "prawn" sembra non serva
-
-#by alex
-#config.log_level = :info
 end

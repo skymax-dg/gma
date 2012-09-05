@@ -1,27 +1,23 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
-<div class="row">
-  <div class="twelve columns">
-    <ul class="button-group [radius, rounded]">
-      <li>
-        <%= link_to 'Nuova Causale', new_causale_path, :class => "button radius small" %>
-      </li>
-    </ul>
-    <% unless @causales.nil?||@causales.empty? %>
-      <table>
-        <thead>
-          <tr>
-            <th width="50%">Descrizione</th>
-            <th width="11%">Tipo REG</th>
-            <th width="11%">Tipo IVA</th>
-            <th width="13%">Conto IVA</th>
-            <th width="15%"></th>
-          </tr>
-        </thead>
-        <tbody>
-            <%= render :partial => 'line', :collection => @causales %>
-        </tbody>
-      </table>
-      <%= will_paginate @causales %>
-    <% end %>
-  </div>
-</div>
+<ul class="button-group">
+  <li>
+    <%= link_to 'Nuova Causale', new_causale_path, :class => "button radius small" %>
+  </li>
+</ul>
+<% unless @causales.nil?||@causales.empty? %>
+  <table>
+    <thead>
+      <tr>
+        <th width="50%">Descrizione</th>
+        <th width="11%">Tipo REG</th>
+        <th width="11%">Tipo IVA</th>
+        <th width="13%">Conto IVA</th>
+        <th width="15%"></th>
+      </tr>
+    </thead>
+    <tbody>
+        <%= render :partial => 'line', :collection => @causales %>
+    </tbody>
+  </table>
+  <%= will_paginate @causales %>
+<% end %>

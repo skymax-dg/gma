@@ -1,4 +1,4 @@
-<ul class="button-group [radius, rounded]">
+<ul class="button-group">
   <% if @article.nil? %>
     <li><%= link_to 'Stampa Movimenti', filter_mov_vend_all_articles_path(:tp => "M"),
                                         :class => "button radius small" %></li>

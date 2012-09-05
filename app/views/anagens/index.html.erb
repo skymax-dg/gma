@@ -1,30 +1,26 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
-<div class="row">
-  <div class="twelve columns">
-    <div class="button-bar">
-      <ul class="button-group [radius, rounded]">
-        <li>
-          <%= link_to 'Nuova Anagrafica', new_anagen_path, :class => "button radius small" %>
-        </li>
-      </ul>
-    </div>
-    <%= render :partial => 'filter' %>
-    <% unless @anagens.nil?||@anagens.empty? %>
-      <table>
-        <thead>
-          <tr>
-            <th width="6%">Codice</th>
-            <th width="10%">Tipo</th>
-            <th width="65%">Nominat./Ragione sociale</th>
-            <th width="15%">P.I.-C.F.</th>
-            <th width="4%"></th>
-          </tr>
-        </thead>
-        <tbody>
-            <%= render :partial => 'line', :collection => @anagens %>
-        </tbody>
-      </table>
-      <%= will_paginate @anagens %>
-    <% end %>
-  </div>
+<div class="button-bar">
+  <ul class="button-group">
+    <li>
+      <%= link_to 'Nuova Anagrafica', new_anagen_path, :class => "button radius small" %>
+    </li>
+  </ul>
 </div>
+<%= render :partial => 'filter' %>
+<% unless @anagens.nil?||@anagens.empty? %>
+  <table>
+    <thead>
+      <tr>
+        <th width="6%">Codice</th>
+        <th width="10%">Tipo</th>
+        <th width="65%">Nominat./Ragione sociale</th>
+        <th width="15%">P.I.-C.F.</th>
+        <th width="4%"></th>
+      </tr>
+    </thead>
+    <tbody>
+        <%= render :partial => 'line', :collection => @anagens %>
+    </tbody>
+  </table>
+  <%= will_paginate @anagens %>
+<% end %>

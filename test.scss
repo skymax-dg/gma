@@ -1,0 +1,14 @@
+
+@mixin blue_button(){
+  background: #336699;
+  font-weight: bold;
+  color: white;
+  padding: 10px; }
+
+.checkout_button {
+  @include blue_button }
+
+.checkout_button2{
+  @include blue_button();
+  background: darken(#336699, 10%);
+  }

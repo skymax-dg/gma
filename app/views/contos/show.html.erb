@@ -1,73 +1,69 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
+<ul class="button-group">
+  <li>
+    <%= link_to 'Indietro', contos_path, :class => "button radius small" %>
+  </li>
+  <li>
+    <%= link_to 'Modifica', edit_conto_path(@conto), :class => "button radius small" %>
+  </li>
+  <li>
+    <%= link_to 'Elimina', @conto, :confirm => 'Confermi eliminazione?',
+                                   :method => :delete, :class => "button radius small" %>
+  </li>
+</ul>
 <div class="row">
-  <div class="twelve columns">
-    <ul class="button-group [radius, rounded]">
-      <li>
-        <%= link_to 'Indietro', contos_path, :class => "button radius small" %>
-      </li>
-      <li>
-        <%= link_to 'Modifica', edit_conto_path(@conto), :class => "button radius small" %>
-      </li>
-      <li>
-        <%= link_to 'Elimina', @conto, :confirm => 'Confermi eliminazione?',
-                                       :method => :delete, :class => "button radius small" %>
-      </li>
-    </ul>
+  <div class="two columns">
+    <%= label @conto, "Codice:", :class => "right" %>
   </div>
-  <div class="row">
-    <div class="two columns">
-      <%= label @conto, "Codice:", :class => "right" %>
-    </div>
-    <div class="ten columns">
-      <%= @conto.codice %>
-    </div>
+  <div class="ten columns">
+    <%= @conto.codice %>
   </div>
-  <div class="row">
-    <div class="two columns">
-      <%= label @conto, "Descrizione:", :class => "right" %>
-    </div>
-    <div class="ten columns">
-      <%= @conto.descriz %>
-    </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @conto, "Descrizione:", :class => "right" %>
   </div>
-  <div class="row">
-    <div class="two columns">
-      <%= label @conto, "Anagrafica:", :class => "right" %>
-    </div>
-    <div class="ten columns">
-      <%= @conto.anagen&&@conto.anagen.denomin %>
-    </div>
+  <div class="ten columns">
+    <%= @conto.descriz %>
   </div>
-  <div class="row">
-    <div class="two columns">
-      <%= label @conto, "Riferimento:", :class => "right" %>
-    </div>
-    <div class="ten columns">
-      <%= Conto::TIPOCONTO[@conto.tipoconto] %>
-    </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @conto, "Anagrafica:", :class => "right" %>
   </div>
-  <div class="row">
-    <div class="two columns">
-      <%= label @conto, "Tipo conto:", :class => "right" %>
-    </div>
-    <div class="ten columns">
-      <%= Conto::TIPOPEO[@conto.tipopeo] %>
-    </div>
+  <div class="ten columns">
+    <%= @conto.anagen&&@conto.anagen.denomin %>
   </div>
-  <div class="row">
-    <div class="two columns">
-      <%= label @conto, "Contropartita:", :class => "right" %>
-    </div>
-    <div class="ten columns">
-      <%= Conto::TIPOPEO[@conto.cntrpartita] %>
-    </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @conto, "Riferimento:", :class => "right" %>
   </div>
-  <div class="row">
-    <div class="two columns">
-      <%= label @conto, "Sconto:", :class => "right" %>
-    </div>
-    <div class="ten columns">
-      <%= Conto::TIPOPEO[@conto.sconto] %>
-    </div>
+  <div class="ten columns">
+    <%= Conto::TIPOCONTO[@conto.tipoconto] %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @conto, "Tipo conto:", :class => "right" %>
+  </div>
+  <div class="ten columns">
+    <%= Conto::TIPOPEO[@conto.tipopeo] %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @conto, "Contropartita:", :class => "right" %>
+  </div>
+  <div class="ten columns">
+    <%= Conto::TIPOPEO[@conto.cntrpartita] %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @conto, "Sconto:", :class => "right" %>
+  </div>
+  <div class="ten columns">
+    <%= Conto::TIPOPEO[@conto.sconto] %>
   </div>
 </div>

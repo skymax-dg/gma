@@ -1,21 +1,17 @@
-<div class="row">
-  <div class="twelve columns">
-    <fieldset>
-      <legend> Ricerca conto </legend>
-      <%= form_tag(:filter_contos, :method => :get) do %>
-        <div class="three columns">
-          <%= select_tag("tpfilter",
-                         options_for_select([["Descrizione", "DE"],
-                                             ["Ragione sociale", "RS"],
-                                             ["Codice conto", "CC"]], @tpfilter)) %>
-        </div>
-        <div class="five columns">
-          <%= text_field_tag "desfilter", @desfilter %>
-        </div>
-        <div class="four columns">
-          <%= submit_tag 'RICERCA', :class => "button radius small", :title => "Esegui Ricerca" %>
-        </div>
-      <% end %>
-    </fieldset>
-  </div>
-</div>
+<fieldset>
+  <legend> Ricerca conto </legend>
+  <%= form_tag(:filter_contos, :method => :get) do %>
+    <div class="three columns">
+      <%= select_tag("tpfilter",
+                     options_for_select([["Descrizione", "DE"],
+                                         ["Ragione sociale", "RS"],
+                                         ["Codice conto", "CC"]], @tpfilter)) %>
+    </div>
+    <div class="five columns">
+      <%= text_field_tag "desfilter", @desfilter %>
+    </div>
+    <div class="four columns">
+      <%= submit_tag 'RICERCA', :class => "button radius small", :title => "Esegui Ricerca" %>
+    </div>
+  <% end %>
+</fieldset>

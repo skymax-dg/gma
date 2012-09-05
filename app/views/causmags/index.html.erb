@@ -1,28 +1,24 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
-<div class="row">
-  <div class="twelve columns">
-    <ul class="button-group [radius, rounded]">
-      <li>
-        <%= link_to "Nuova Causale", new_causmag_path, :class => "button radius small" %>
-      </li>
-    </ul>
-    <% unless @causmags.nil?||@causmags.empty? %>
-      <table>
-        <thead>
-          <tr>
-            <th width="10%">Grp</th>
-            <th width="55%">Descrizione</th>
-            <th width="10%">Tipo</th>
-            <th width="5%">Mag</th>
-            <th width="5%">Cnt</th>
-            <th width="15%"></th>
-          </tr>
-        </thead>
-        <tbody>
-            <%= render :partial => 'line', :collection => @causmags %>
-        </tbody>
-      </table>
-    <%= will_paginate @causmags %>
-    <% end %>
-  </div>
-</div>
+<ul class="button-group">
+  <li>
+    <%= link_to "Nuova Causale", new_causmag_path, :class => "button radius small" %>
+  </li>
+</ul>
+<% unless @causmags.nil?||@causmags.empty? %>
+  <table>
+    <thead>
+      <tr>
+        <th width="10%">Grp</th>
+        <th width="55%">Descrizione</th>
+        <th width="10%">Tipo</th>
+        <th width="5%">Mag</th>
+        <th width="5%">Cnt</th>
+        <th width="15%"></th>
+      </tr>
+    </thead>
+    <tbody>
+        <%= render :partial => 'line', :collection => @causmags %>
+    </tbody>
+  </table>
+<%= will_paginate @causmags %>
+<% end %>

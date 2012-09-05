@@ -42,7 +42,7 @@ before_filter :authenticate
     @conto = Conto.new(params[:conto])
     if (@conto.tipoconto=="C"||@conto.tipoconto=="F")&&@conto.anagen_id.nil?
       @title = "Nuovo Conto"
-      flash.alert = "Per la tipologia #{Conto::TIPOCONTO["C"]}/#{Conto::TIPOCONTO["F"]} " +
+      flash.alert = "Per un conto #{Conto::TIPOCONTO["C"]}/#{Conto::TIPOCONTO["F"]} " +
                     "e' obbligatorio specificare una anagrafica soggetto"
       render :action => "new"
     else
@@ -62,7 +62,7 @@ before_filter :authenticate
     @conto.anagen_id=params[:conto][:anagen_id]
     if (@conto.tipoconto=="C"||@conto.tipoconto=="F")&&@conto.anagen_id.nil?
       @title = "Modifica Conto"
-      flash.alert = "Per la tipologia #{Conto::TIPOCONTO["C"]}/#{Conto::TIPOCONTO["F"]} " +
+      flash.alert = "Per un conto #{Conto::TIPOCONTO["C"]}/#{Conto::TIPOCONTO["F"]} " +
                     "e' obbligatorio specificare una anagrafica soggetto"
       render :action => "edit"
     else

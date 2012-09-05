@@ -1,28 +1,24 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
-<div class="row">
-  <div class="twelve columns">
-    <ul class="button-group [radius, rounded] small">
-      <li>
-        <%= link_to 'Nuovo Conto', new_conto_path, :class => "button radius small" %>
-      </li>
-    </ul>
-    <%= render :partial => 'filter' %>
-    <% unless @contos.nil?||@contos.empty? %>
-      <table>
-        <thead>
-          <tr>
-            <th width="11%">Codice</th>
-            <th width="60%">Descrizione</th>
-            <th width="7%">Riferim.</th>
-            <th width="7%">Tipo</th>
-            <th width="15%"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <%= render :partial => 'line', :collection => @contos %>
-        </tbody>
-      </table>
-      <%= will_paginate @contos %>
-    <% end %>
-  </div>
-</div>
+<ul class="button-group">
+  <li>
+    <%= link_to 'Nuovo Conto', new_conto_path, :class => "button radius small" %>
+  </li>
+</ul>
+<%= render :partial => 'filter' %>
+<% unless @contos.nil?||@contos.empty? %>
+  <table>
+    <thead>
+      <tr>
+        <th width="11%">Codice</th>
+        <th width="60%">Descrizione</th>
+        <th width="7%">Riferim.</th>
+        <th width="7%">Tipo</th>
+        <th width="15%"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render :partial => 'line', :collection => @contos %>
+    </tbody>
+  </table>
+  <%= will_paginate @contos %>
+<% end %>

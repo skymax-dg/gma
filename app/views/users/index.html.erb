@@ -1,24 +1,20 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
-<div class="row">
-  <div class="twelve columns">
-    <ul class="button-group [radius, rounded]">
-      <li>
-        <%= link_to 'Nuovo utente', new_user_path, :class => "button radius small" %>
-      </li>
-    </ul>
-    <% unless @users.nil?||@users.empty? %>
-    <table>
-      <thead>
-        <tr>
-          <th width="85%">Login</th>
-          <th width="15%">........................</th>
-        </tr>
-      </thead>
-      <tbody>
-        <%= render :partial => 'line', :collection => @users %>
-      </tbody>
-    </table>
-    <%= will_paginate @users %>
-    <% end %>
-  </div>
-</div>
+<ul class="button-group">
+  <li>
+    <%= link_to 'Nuovo utente', new_user_path, :class => "button radius small" %>
+  </li>
+</ul>
+<% unless @users.nil?||@users.empty? %>
+<table>
+  <thead>
+    <tr>
+      <th width="85%">Login</th>
+      <th width="15%">........................</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render :partial => 'line', :collection => @users %>
+  </tbody>
+</table>
+<%= will_paginate @users %>
+<% end %>

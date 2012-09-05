@@ -1,31 +1,27 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
-<div class="row">
-  <div class="twelve columns">
-    <div class="button-bar">
-      <ul class="button-group [radius, rounded] small">
-        <li>
-          <%= link_to 'Nuovo Articolo', new_article_path, :class => "button radius small" %>
-        </li>
-      </ul>
-      <%= render :partial => 'btn_stp' %>
-    </div>
-    <%= render :partial => 'filter' %>
-    <% unless @articles.nil?||@articles.empty? %>
-      <table>
-        <thead>
-          <tr>
-            <th width="12%">Codice</th>
-            <th width="6%">Categ.</th>
-            <th width="54%">Descrizione</th>
-            <th style="text-align: right; width: 10%">Prezzo</th>
-            <th width="18%"></th>
-          </tr>
-        </thead>
-        <tbody>
-            <%= render :partial => 'line', :collection => @articles %>
-        </tbody>
-      </table>
-      <%= will_paginate @articles %>
-    <% end %>
-  </div>
+<div class="button-bar">
+  <ul class="button-group">
+    <li>
+      <%= link_to 'Nuovo Articolo', new_article_path, :class => "button radius small" %>
+    </li>
+  </ul>
+  <%= render :partial => 'btn_stp' %>
 </div>
+<%= render :partial => 'filter' %>
+<% unless @articles.nil?||@articles.empty? %>
+  <table>
+    <thead>
+      <tr>
+        <th width="12%">Codice</th>
+        <th width="6%">Categ.</th>
+        <th width="54%">Descrizione</th>
+        <th style="text-align: right; width: 10%">Prezzo</th>
+        <th width="18%"></th>
+      </tr>
+    </thead>
+    <tbody>
+        <%= render :partial => 'line', :collection => @articles %>
+    </tbody>
+  </table>
+  <%= will_paginate @articles %>
+<% end %>

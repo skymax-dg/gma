@@ -1,49 +1,45 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
+<ul class="button-group">
+  <li>
+    <%= link_to 'Indietro', paeses_path, :class => "button radius small" %>
+  </li>
+  <li>
+    <%= link_to 'Modifica', edit_paese_path(@paese), :class => "button radius small" %>
+  </li>
+  <li>
+    <%= link_to 'Elimina', @paese, :confirm => 'Confermi eliminazione?',
+                                   :method => :delete, :class => "button radius small" %>
+  </li>
+</ul>
 <div class="row">
-  <div class="twelve columns">
-    <ul class="button-group [radius, rounded]">
-      <li>
-        <%= link_to 'Indietro', paeses_path, :class => "button radius small" %>
-      </li>
-      <li>
-        <%= link_to 'Modifica', edit_paese_path(@paese), :class => "button radius small" %>
-      </li>
-      <li>
-        <%= link_to 'Elimina', @paese, :confirm => 'Confermi eliminazione?',
-                                       :method => :delete, :class => "button radius small" %>
-      </li>
-    </ul>
-    <div class="row">
-      <div class="two columns">
-        <%= label @paese, "Descrizione:", :class => "right" %>
-      </div>
-      <div class="ten columns left">
-        <%= @paese.descriz %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="two columns">
-        <%= label @paese, "Tipo:", :class => "right" %>
-      </div>
-      <div class="ten columns left">
-        <%= Paese::TPEU[@paese.tpeu] %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="two columns">
-        <%= label @paese, "Codice belfiore:", :class => "right" %>
-      </div>
-      <div class="ten columns left">
-        <%= @paese.codfis %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="two columns">
-        <%= label @paese, "Prefisso partita iva:", :class => "right" %>
-      </div>
-      <div class="ten columns left">
-        <%= @paese.prepiva %>
-      </div>
-    </div>
+  <div class="two columns">
+    <%= label @paese, "Descrizione:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= @paese.descriz %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @paese, "Tipo:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= Paese::TPEU[@paese.tpeu] %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @paese, "Codice belfiore:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= @paese.codfis %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @paese, "Prefisso partita iva:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= @paese.prepiva %>
   </div>
 </div>

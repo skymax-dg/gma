@@ -1,0 +1,88 @@
+/* Personalizzazione di Foundation */
+
+.nav-bar
+{
+  background-color: #000;
+  color: rgba(18, 60, 108, 0.7);
+  margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 30px;
+  margin-left: 0px;
+  padding-top: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+}
+
+/* Alex */
+label
+{
+  font-weight: bold;
+}
+
+hr
+{
+  margin: 10px;
+}
+
+select
+{
+  margin-bottom: 10px;
+}
+
+fieldset
+{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+input[type="text"],input[type="password"],input[type="date"],input[type="datetime"],input[type="email"],input[type="number"],input[type="search"],input[type="tel"],input[type="time"],input[type="url"]
+{
+  padding:2px;
+  height:20px;
+}
+
+table tbody tr td
+{
+  padding:0px 10px;
+}
+
+div.panel
+{
+  padding:10px;
+  margin-top: 10px;
+}
+
+select
+{
+  height:20px !important;
+}
+
+
+/*
+ul.nav-bar
+{
+  font-size: 12px !important;
+  height:30px !important;
+}
+
+li.has-flyout
+{
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  height:30px !important;
+}
+
+a {font-size:12px !important;}
+
+
+ul.nav-bar {
+  background-color: grey;
+  white-space: nowrap;
+
+list-style-type: none;
+margin-top: 10px;
+}
+*/

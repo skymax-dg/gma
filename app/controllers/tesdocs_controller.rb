@@ -1,6 +1,3 @@
-#require 'spreadsheet'
-#Spreadsheet.client_encoding = 'UTF-8'
-
 require "prawn"
 #require "prawn/layout"
 require "prawn/measurement_extensions"

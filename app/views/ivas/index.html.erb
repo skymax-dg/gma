@@ -1,28 +1,24 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
-<div class="row">
-  <div class="twelve columns">
-    <ul class="button-group [radius, rounded]">
-      <li>
-        <%= link_to 'Nuovo CodiceIva/Esenzione', new_iva_path, :class => "button radius small" %>
-      </li>
-    </ul>
-    <% unless @ivas.nil?||@ivas.empty? %>
-      <table>
-        <thead>
-          <tr>
-            <th style="text-align: right; width: 8%">Codice</th>
-            <th width="12%">Descr.</th>
-            <th width="53%">Descr.Estesa</th>
-            <th style="text-align: right; width: 5%">Aliquota</th>
-            <th width="5%">Esenzione</th>
-            <th width="17%"></th>
-          </tr>
-        </thead>
-        <tbody>
-            <%= render :partial => 'line', :collection => @ivas %>
-        </tbody>
-      </table>
-      <%= will_paginate @ivas %>
-    <% end %>
-  </div>
-</div>
+<ul class="button-group">
+  <li>
+    <%= link_to 'Nuovo CodiceIva/Esenzione', new_iva_path, :class => "button radius small" %>
+  </li>
+</ul>
+<% unless @ivas.nil?||@ivas.empty? %>
+  <table>
+    <thead>
+      <tr>
+        <th style="text-align: right; width: 8%">Codice</th>
+        <th width="12%">Descr.</th>
+        <th width="53%">Descr.Estesa</th>
+        <th style="text-align: right; width: 5%">Aliquota</th>
+        <th width="5%">Esenzione</th>
+        <th width="17%"></th>
+      </tr>
+    </thead>
+    <tbody>
+        <%= render :partial => 'line', :collection => @ivas %>
+    </tbody>
+  </table>
+  <%= will_paginate @ivas %>
+<% end %>
