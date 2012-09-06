@@ -1,0 +1,23 @@
+$fielddate: anagen_dtnas,spediz_dtrit;
+
+#anagen_dtnas_3i{width: 60px;}
+#dfspediz_dtrit_3i{width: 60px;}
+
+@each $v in $fielddate {
+  ##{$v}_3i{width: 30px;}
+}
+
+table thead tr th{
+  .float {
+    text-align: right;}
+  .integer {
+    text-align: right;}
+  .currency {
+    text-align: right;}}
+table thead tr td {
+  .float {
+    text-align: right;}
+  .integer {
+    text-align: right;}
+  .currency {
+    text-align: right;}}
