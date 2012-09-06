@@ -2,7 +2,7 @@
   <td style="text-align: right;"><%= line.codice %></td>
   <td><%= line.descriz %></td>
   <td><%= line.desest %></td>
-  <td style="text-align: right;"><%= line.aliq %></td>
+  <td class="float"><%= line.aliq %></td>
   <td><%= line.flese %></td>
   <td>
     <%= render :partial => 'shared/btn_vmc', :locals => {:v_edit => edit_iva_path(line), :line => line} %>
