@@ -51,14 +51,14 @@
       </div>
       <div class="five columns">
         <%= f.label "data ritiro:" %>
-        <%#= f.date_select :dtrit, :use_month_numbers => true, :order => [:day, :month, :year] %>
-        <%= f.text_field :dtrit %>
+        <%= f.date_select :dtrit, {:use_month_numbers => true, :order => [:day, :month, :year]}, :class=>"date" %>
+        <%#= f.text_field :dtrit %>
       </div>
       <div class="two columns"></div>          
       <div class="five columns">
         <%= f.label "ora ritiro:" %>
-        <%#= f.time_select :orarit %>
-        <%= f.text_field :orarit %>
+        <%= f.time_select :orarit,{}, :class=>"time" %>
+        <%#= f.text_field :orarit %>
       </div>
     <% end %>
     <% if @spediz.tesdoc.causmag.contabile == "S" %>

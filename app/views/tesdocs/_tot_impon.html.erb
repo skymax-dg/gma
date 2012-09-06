@@ -1,8 +1,8 @@
 <tr>
   <td><%= Article::CATEG[categ] %></td>
   <td><%= subtot[:desest] %></td>
-  <td style="text-align: right;"><%= number_with_precision(subtot[:impon]) %> </td>
-  <td style="text-align: right;"><%= number_with_precision(subtot[:aliq]) %></td>
-  <td style="text-align: right;"><%= number_with_precision(subtot[:imposta]) %></td>
-  <td style="text-align: right;"><%= number_with_precision(subtot[:tot]) %></td>
+  <td class="currency"><%= number_with_precision(subtot[:impon]) %> </td>
+  <td class="float"><%= number_with_precision(subtot[:aliq]) %></td>
+  <td class="currency"><%= number_with_precision(subtot[:imposta]) %></td>
+  <td class="currency"><%= number_with_precision(subtot[:tot]) %></td>
 </tr>

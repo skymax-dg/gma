@@ -16,6 +16,34 @@
 
 /* Alex */
 
+$datefield: anagen_dtnas, spediz_dtrit, tesdoc_data_doc;
+$timefield: spediz_orarit;
+
+$wday: 40px;
+$wmonth: 40px;
+$wyear: 55px;
+$whour: 40px;
+$wminute: 40px;
+
+@each $v in $datefield {
+  select {
+    &##{$v}_3i{width: $wday;}
+    &##{$v}_2i{width: $wmonth;}
+    &##{$v}_1i{width: $wyear;}
+  }
+}
+
+@each $v in $timefield {
+  select {
+    &##{$v}_4i{width: $whour;}
+    &##{$v}_5i{width: $wminute;}
+  }
+}
+
+FFFselect{
+  &.date {width: 60px;}
+  &.time {width: 40px;}}
+
 table thead tr th{
   &.float {
     text-align: right;}
@@ -33,8 +61,6 @@ table tbody tr td {
     text-align: right;}}
 
 
-
-
 label
 {
   font-weight: bold;
@@ -48,6 +74,7 @@ hr
 select
 {
   margin-bottom: 10px;
+  height:20px !important;
 }
 
 fieldset
@@ -67,12 +94,6 @@ div.panel
   padding:10px;
   margin-top: 10px;
 }
-
-select
-{
-  height:20px !important;
-}
-
 
 /* Personalizzazioni SKYMAX */
 /*

@@ -14,6 +14,7 @@ class Spediz < ActiveRecord::Base
   UM       = $ParAzienda['SPEDIZ']['UM']
 
   def ind_sped # Indirizzi disponibili
-    self.tesdoc.conto.anagen.anainds.where(:flsp => "S")
+    return self.tesdoc.conto.anagen.anainds.where(:flsp => "S") if self.tesdoc.conto&&self.tesdoc.conto.anagen&&self.tesdoc.conto.anagen.anainds
+    return []
   end
 end

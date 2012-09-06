@@ -130,12 +130,12 @@
 <table>
   <thead>
     <tr>
-      <th align=left  width="20%">Categoria</th>
-      <th align=left  width="31%">Tipo imponibile</th>
-      <th style="text-align: right; width: 13%">Imponibile</th>
-      <th style="text-align: right; width: 09%">Aliquota</th>
-      <th style="text-align: right; width: 11%">Imposta</th>
-      <th style="text-align: right; width: 16%">Totale</th>
+      <th width="20%">Categoria</th>
+      <th width="31%">Tipo imponibile</th>
+      <th class="currency" width="13%">Imponibile</th>
+      <th class="float" width="09%">Aliquota</th>
+      <th class="currency" width="11%">Imposta</th>
+      <th class="currency" width="16%">Totale</th>
     </tr>
   </thead>
   <tbody>
@@ -147,10 +147,10 @@
     <tr>
       <td><b>TOTALI:</b></td>
       <td></td>
-      <td style="text-align: right;"><b><%= number_to_currency(@subtot_iva[:T][:T][:impon]) %></b></td>
+      <td class="currency"><b><%= number_to_currency(@subtot_iva[:T][:T][:impon]) %></b></td>
       <td></td>
-      <td style="text-align: right;"><b><%= number_to_currency(@subtot_iva[:T][:T][:imposta]) %></b></td>
-      <td style="text-align: right;"><b><%= number_to_currency(@subtot_iva[:T][:T][:tot]) %></b></td>
+      <td class="currency"><b><%= number_to_currency(@subtot_iva[:T][:T][:imposta]) %></b></td>
+      <td class="currency"><b><%= number_to_currency(@subtot_iva[:T][:T][:tot]) %></b></td>
     </tr>
   </tbody>
 </table>
@@ -172,11 +172,11 @@
   <table>
     <thead>
       <tr>
-        <th style="text-align: left;  width: 15%"> Codice articolo </th>
-        <th style="text-align: right; width: 05%"> Qta'</th>
-        <th style="text-align: right; width: 20%"> Prezzo </th>
-        <th style="text-align: right; width: 15%"> Sconto </th>
-        <th style="text-align: right; width: 20%"> Imponibile </th>
+        <th width="15%"> Codice articolo </th>
+        <th class="integer" width="05%"> Qta'</th>
+        <th class="currency" width="20%"> Prezzo </th>
+        <th class="float" width="15%"> Sconto </th>
+        <th class="currency" width="20%"> Imponibile </th>
         <th width="20%"></th>
       </tr>
     </thead>

@@ -97,7 +97,7 @@
   tab.draw
 
 	#note
-  if (not @datispe.nil?) && @datispe.corriere == "GLS" && @anad.email.length > 0
+  if (not @datispe.nil?) && @datispe.corriere == "GLS" && @anad.email && @anad.email.length > 0
     @datispe.note = "INVIO NOTIFICA: #{@anad.email}\n" + @datispe.note||""
   end
   unless @datispe.nil? || @datispe.note.nil? || @datispe.note.strip.length == 0

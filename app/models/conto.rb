@@ -52,7 +52,8 @@ class Conto < ActiveRecord::Base
   end
 
   def desest1
-    self.codice.to_s + " " + Conto::TIPOCONTO[self.tipoconto] + " " + self.anagen.denomin
+    return "#{self.codice.to_s} #{Conto::TIPOCONTO[self.tipoconto]} #{self.anagen.denomin}" if self.anagen
+    return "#{self.codice.to_s} #{Conto::TIPOCONTO[self.tipoconto]}"
   end
   
   def self.findbytipoconto(azienda, annoese, tipoconto)
