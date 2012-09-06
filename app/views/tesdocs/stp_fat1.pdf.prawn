@@ -49,7 +49,7 @@
                :at => [2, 619], :width => 240, :height => 15, :size => 12, :style => :bold
   # do per scontato che se è stata specificata una causale di trasporto allora il documeno deve riportare anche
   # i dati DDT.
-  @datispe&&@datispe.corriere&&@datispe.corriere.strip.length > 0 ? ddt = 1 : ddt=0
+  @datispe && @datispe.corriere && (not @datispe.corriere.blank?) ? ddt = 1 : ddt=0
 
   if ddt == 1
     pdf.bounding_box [0,605], :width => 530, :height => 30 do
@@ -116,7 +116,7 @@
   tab.draw
 
   #dati pagamento
-  unless @datispe.nil? || @datispe.pagam.nil? || @datispe.pagam.strip.length == 0
+  unless @datispe.nil? || @datispe.pagam.nil? || @datispe.pagam.blank?
     #Esegue salto pagina se non è rimasto abbastanza spazio per le note
     pdf.cursor < 300 ? pdf.start_new_page : pdf.move_cursor_to(310)
     
@@ -129,7 +129,7 @@
   end
 
   #note
-  unless @datispe.nil? || @datispe.note.nil? || @datispe.note.strip.length == 0
+  unless @datispe.nil? || @datispe.note.nil? || @datispe.note.blank?
     #Esegue salto pagina se non è rimasto abbastanza spazio per le note
     pdf.start_new_page if pdf.cursor < 180
     

@@ -45,7 +45,7 @@
     pdf.stroke_bounds
   end
 
-	unless @datispe.nil? || "#{@datispe.dest1}#{@datispe.dest2}".strip.length == 0
+	unless @datispe.nil? || "#{@datispe.dest1}#{@datispe.dest2}".blank?
     pdf.text_box "Luogo di consegna",
                  :at => [245, 700], :height => 15, :size => 12, :style => :bold
 
@@ -97,10 +97,10 @@
   tab.draw
 
 	#note
-  if (not @datispe.nil?) && @datispe.corriere == "GLS" && @anad.email && @anad.email.length > 0
+  if (not @datispe.nil?) && @datispe.corriere == "GLS" && @anad.email && (not @anad.email.blank?)
     @datispe.note = "INVIO NOTIFICA: #{@anad.email}\n" + @datispe.note||""
   end
-  unless @datispe.nil? || @datispe.note.nil? || @datispe.note.strip.length == 0
+  unless @datispe.nil? || @datispe.note.nil? || @datispe.note.blank?
     #Esegue salto pagina se non è rimasto abbastanza spazio per le note
     pdf.start_new_page if pdf.cursor < 175
     

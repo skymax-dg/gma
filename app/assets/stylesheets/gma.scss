@@ -44,21 +44,43 @@ FFFselect{
   &.date {width: 60px;}
   &.time {width: 40px;}}
 
-table thead tr th{
-  &.float {
-    text-align: right;}
-  &.integer {
-    text-align: right;}
-  &.currency {
-    text-align: right;}}
-table tbody tr td {
-  padding:0px 10px;
-  &.float {
-    text-align: right;}
-  &.integer {
-    text-align: right;}
-  &.currency {
-    text-align: right;}}
+table {
+  thead, tbody, tfoot {
+    tr {
+      th td {
+        padding:0px 10px;
+        &.float {
+          text-align: right;}
+        &.integer {
+          text-align: right;}
+        &.currency {
+          text-align: right;}}}}}
+
+table {
+  thead tr th {
+    padding:0px 10px;
+    &.float {
+      text-align: right;}
+    &.integer {
+      text-align: right;}
+    &.currency {
+      text-align: right;}}
+  tbody tr td {
+    padding:0px 10px;
+    &.float {
+      text-align: right;}
+    &.integer {
+      text-align: right;}
+    &.currency {
+      text-align: right;}}
+  tfoot tr td {
+    padding:0px 10px;
+    &.float {
+      text-align: right;}
+    &.integer {
+      text-align: right;}
+    &.currency {
+      text-align: right;}}}
 
 
 label

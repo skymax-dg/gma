@@ -27,7 +27,7 @@ class Conto < ActiveRecord::Base
     hshvar = Hash.new
     whconto = "" 
     whanagen = ""
-    if des.strip.length > 0
+    if (not des.blank?)
       whconto = " contos.#{hsh[tp]} like :d" if tp=="DE" 
       hshvar[:d] = "%#{des}%" if tp=="DE"
       whconto = " CAST(contos.#{hsh[tp]} AS text) like :d" if tp=="CC"

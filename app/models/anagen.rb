@@ -13,8 +13,8 @@ class Anagen < ActiveRecord::Base
 
   validates :codice, :tipo, :denomin, :presence => true
   validates :codice, :denomin, :uniqueness => true
-  validates :codfis, :uniqueness => true, :if => "codfis.strip.length > 0"
-  validates :pariva, :uniqueness => true, :if => "pariva.strip.length > 0"
+  validates :codfis, :uniqueness => true, :unless => "codfis.blank?"
+  validates :pariva, :uniqueness => true, :unless => "pariva.blank?"
 
   # Fare un validate su :tipo con i valori ammessi
   validates :tipo,     :length => {:maximum => 1}
@@ -62,7 +62,7 @@ class Anagen < ActiveRecord::Base
   end
 
   def pi_or_cf
-    self.pariva&&self.pariva.strip.length > 0 ? self.pariva : self.codfis||""
+    self.pariva && (not self.pariva.blank?) ? self.pariva : self.codfis||""
   end
 
   def self.findbytpconto(azienda, tipoconto)
