@@ -7,9 +7,9 @@
   <td>
     <%= link_to 'D', line,
                      :class => "button radius tiny", :title => "Dettaglio" %>
-    <%= link_to 'S', up_rigdoc_path(:id => line.id),
+    <%= link_to 'S', up_rigdoc_path(:id=>line.id, :page=>@page),
                      :class => "button radius tiny", :title => "Sposta su'" %>
-    <%= link_to 'G', down_rigdoc_path(:id => line.id),
+    <%= link_to 'G', down_rigdoc_path(:id => line.id, :page=>@page),
                      :class => "button radius tiny", :title => "Sposta giu'" %>
   </td>
 </tr>

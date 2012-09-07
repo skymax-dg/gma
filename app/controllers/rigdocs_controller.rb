@@ -3,13 +3,13 @@ before_filter :authenticate
   def down
     @rigdoc = Rigdoc.find(params[:id])
     @rigdoc.move :down
-    redirect_to @rigdoc.tesdoc
+    redirect_to tesdoc_url(@rigdoc.tesdoc.id, :page=>params[:page])
   end
 
   def up
     @rigdoc = Rigdoc.find(params[:id])
     @rigdoc.move :up
-    redirect_to @rigdoc.tesdoc
+    redirect_to tesdoc_url(@rigdoc.tesdoc.id, :page=>params[:page])
   end
 
   def article_exit

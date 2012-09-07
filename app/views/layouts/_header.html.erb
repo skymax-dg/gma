@@ -13,11 +13,11 @@
         <li class="has-flyout">
           <%= link_to "ANAGRAFICA", "#" %>
           <ul class="flyout">
+            <li> <%= link_to "SOGGETTI", anagens_path %> </li>
             <li> <%= link_to "ARTICOLI", articles_path %> </li>
             <li> <%= link_to "CITTA'", localitas_path %> </li>
-            <li> <%= link_to "SOGGETTI", anagens_path %> </li>
-            <li> <%= link_to "IVA/ESENZIONI", ivas_path %> </li>
             <li> <%= link_to "STATI/NAZIONI", paeses_path %> </li>
+            <li> <%= link_to "IVA/ESENZIONI", ivas_path %> </li>
           </ul>
         </li>
         <li class="has-flyout">
@@ -33,10 +33,10 @@
             <li> <%= link_to "CLIENTI/FORNITORI", contos_path %> </li>
           </ul>
         </li>
-        <li class="active" style="float:right">
+        <li style="float:right">
           <%= link_to "ESCI", signout_path, :method => :delete %>
         </li>
-        <li class="active" style="float:right">
+        <li style="float:right">
           <%= link_to "CAMBIA ANNO (#{current_annoese.to_s})", new_session_path(:login => current_user.login) %>
         </li>
       </ul>

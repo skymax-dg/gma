@@ -240,8 +240,10 @@ before_filter :authenticate
   def show
     @title = "Mostra Documento (#{Causmag::TIPO_DOC[se_tipo_doc.to_i]})"
     @tesdoc = Tesdoc.find(params[:id])
+    @page = params[:page]
+#    aaa
     @rigdocs = @tesdoc.rigdocs.sort{|a,b|a.prgrig<=>b.prgrig}
-    @rigdocs = @rigdocs.paginate(:page => params[:page], :per_page => 10)
+    @rigdocs = @rigdocs.paginate(:page => @page, :per_page => 10)
     @subtot_iva = @tesdoc.subtot_iva
   end
 
