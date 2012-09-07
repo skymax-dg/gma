@@ -16,6 +16,9 @@
 
 /* Alex */
 
+/* Setto la larghezza giusta per i campi date_field e time_field
+   le variabili $datefield e $timefield devono essere aggiornate
+   con gli eventuali nuovi campi date/time */
 $datefield: anagen_dtnas, spediz_dtrit, tesdoc_data_doc;
 $timefield: spediz_orarit;
 
@@ -40,48 +43,12 @@ $wminute: 40px;
   }
 }
 
-FFFselect{
-  &.date {width: 60px;}
-  &.time {width: 40px;}}
-
+/* Sulla table html si deve aver classificato il tipo di campo se: intero, decimale o valuta */
 table {
-  thead, tbody, tfoot {
-    tr {
-      th td {
-        padding:0px 10px;
-        &.float {
-          text-align: right;}
-        &.integer {
-          text-align: right;}
-        &.currency {
-          text-align: right;}}}}}
-
-table {
-  thead tr th {
+  thead tr th, tbody tr td, tfoot tr td {
     padding:0px 10px;
-    &.float {
-      text-align: right;}
-    &.integer {
-      text-align: right;}
-    &.currency {
-      text-align: right;}}
-  tbody tr td {
-    padding:0px 10px;
-    &.float {
-      text-align: right;}
-    &.integer {
-      text-align: right;}
-    &.currency {
-      text-align: right;}}
-  tfoot tr td {
-    padding:0px 10px;
-    &.float {
-      text-align: right;}
-    &.integer {
-      text-align: right;}
-    &.currency {
-      text-align: right;}}}
-
+    &.float, &.integer, &.currency {
+      text-align: center;}}}
 
 label
 {
