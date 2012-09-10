@@ -12,6 +12,13 @@
 //
 //= require jquery
 //= require jquery_ujs
+
 //= require foundation
 //= require foundation/app
+
 //= require_tree .
+
+//= require jquery-1.8.0.min
+//= require jquery-ui-1.8.23.custom.min
+
+//= require jquery-ui-timepicker-addon

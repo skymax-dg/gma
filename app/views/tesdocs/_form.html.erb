@@ -1,4 +1,8 @@
 <%#= render :partial => 'shared/error_messages', :locals => {:f => @tesdoc} %>
+<%#= wmx_date_select(@tesdoc, @tesdoc.data_doc, {:use_month_numbers=>true, :order=>[:day, :month, :year]},
+ "dataalex") %>
+
+
 <%= form_for(@tesdoc) do |f| %>
   <%= f.hidden_field :azienda %>
   <%= f.hidden_field :annoese %>
@@ -49,9 +53,9 @@
     </div>
     <div class="two columns"></div>
     <div class="five columns">
-      <%= f.label "Data:" %>
-      <%= f.date_select :data_doc, {:use_month_numbers=>true, :order=>[:day, :month, :year]}, :class=>"date" %>
-      <%#= f.text_field :data_doc %>
+      <%#= f.label "Data:" %>
+      <%#= f.date_select :data_doc, {:use_month_numbers=>true, :order=>[:day, :month, :year]}, :class=>"date" %>
+      <%= jdate_field(:tesdoc, :data_doc, "Data", :date=>true, :value => @tesdoc.data_doc) %>
     </div>
     <div class="twelve columns">
       <%= f.label "Descrizione:" %>

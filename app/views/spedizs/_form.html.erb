@@ -50,15 +50,30 @@
         <%= f.text_field :dest2 %>
       </div>
       <div class="five columns">
-        <%= f.label "data ritiro:" %>
-        <%= f.date_select :dtrit, {:use_month_numbers => true, :order => [:day, :month, :year]}, :class=>"date" %>
-        <%#= f.text_field :dtrit %>
+        <%#= jdate_field(:spediz, :dtrit, "Data ritiro", :date=>true, :value => @spediz.dtrit) %>
+        <%#= f.label "data ritiro:" %>
+        <%#= f.date_select :dtrit, {:use_month_numbers => true, :order => [:day, :month, :year]}, :class=>"date" %>
       </div>
       <div class="two columns"></div>          
       <div class="five columns">
+        <%= jdate_field(:spediz, :orarit, "Ora ritiro", :mytime=>true, :value => @spediz.orarit.strftime("%H:%M"))%>
         <%= f.label "ora ritiro:" %>
         <%= f.time_select :orarit,{}, :class=>"time" %>
-        <%#= f.text_field :orarit %>
+
+
+<!--
+-->
+        <div class="example-container">
+          <p>Show only the time picker without date picker</p>
+          <div>
+            <input type="text" name="example3" id="example3" value="" />
+          </div>
+        
+          <script>
+            $('#example3').timepicker({hour: "10", minute: "20"});
+          </script>
+        </div>
+
       </div>
     <% end %>
     <% if @spediz.tesdoc.causmag.contabile == "S" %>
