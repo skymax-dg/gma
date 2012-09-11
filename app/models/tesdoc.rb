@@ -24,6 +24,11 @@ class Tesdoc < ActiveRecord::Base
     return true
   end
 
+  def self.new_num_doc(tpd, anno, azd)
+    (self.maximum("num_doc", :conditions => ["tipo_doc = :tpd AND annoese = :ae AND azienda = :azd",
+                                             {:tpd=>tpd, :ae=>anno, :azd=>azd}]).to_i||0) + 1
+  end
+
   def add1row4article(azienda)
     newprg = self.lastprgrig + 1
     error = 0

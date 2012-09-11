@@ -86,7 +86,8 @@ Gma::Application.routes.draw do
 
   resources :rigdocs do
     collection do
-      get :article_exit
+      get :art_cod_exit
+      get :art_des_exit
     end
     member do
       get :up

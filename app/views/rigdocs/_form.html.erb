@@ -5,16 +5,19 @@
     <div class="five columns">
       <%= f.label "Codice Articolo" %>
       <%= collection_select(:rigdoc, :article_id, Article.all, :id, :codice,
-                             {:include_blank => true},
-                              {:data => {:remote => true, :url => url_for(:controller => :rigdocs,
-                                                                          :action => :article_exit)}})%>
+                            {:include_blank => true},
+                            {:data => {:remote => true, :url => url_for(:controller => :rigdocs,
+                                                                        :action => :art_cod_exit)}})%>
     </div>
-    <div class="seven columns">
-      <%= f.label "-" %>
-      <span id="article_descriz">
-        <%= @rigdoc.article.des_plus unless @rigdoc.article.nil? %>
-      </span>
+    <div class="two columns"></div>
+    <div class="five columns">
+      <%= f.label "Descrizione articolo" %>
+      <%= collection_select(:rigdoc, :article_id, Article.all, :id, :descriz,
+                            {:include_blank => true},
+                            {:data => {:remote => true, :url => url_for(:controller => :rigdocs,
+                                                                        :action => :art_des_exit)}})%>
     </div>
+
     <div class="twelve columns">
       <%= f.label "Descizione riga" %>
       <%= f.text_field :descriz %>

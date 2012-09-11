@@ -58,7 +58,8 @@ class Anagen < ActiveRecord::Base
   end
 
   def self.newcod()
-    (select("max(codice) as maxcod")[0].maxcod.to_i||0) + 1
+    (self.maximum("codice").to_i||0) + 1
+    #(select("max(codice) as maxcod")[0].maxcod.to_i||0) + 1
   end
 
   def pi_or_cf

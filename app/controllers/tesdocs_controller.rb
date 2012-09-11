@@ -231,6 +231,7 @@ before_filter :authenticate
           @tesdoc.conto_id = @conto.id
           @tesdoc.sconto = @conto.sconto
           @tesdoc.tipo_doc = @causmag.tipo_doc
+          @tesdoc.num_doc = Tesdoc.new_num_doc(@tesdoc.tipo_doc, @tesdoc.annoese, @tesdoc.azienda)
         end
       end
       format.js
