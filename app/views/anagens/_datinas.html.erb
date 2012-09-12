@@ -11,14 +11,14 @@
   </div>
   <div class="two columns"></div>
   <div class="three columns">
-    <%= label @anagen.dtnas, "Data di nascita" %>
-    <%= date_select :anagen,
+    <%= jdate_field(:anagen, :dtnas, "Data di nascita", :date=>true, :value => @anagen.dtnas, :readonly => true) %>
+    <%#= label @anagen.dtnas, "Data di nascita" %>
+    <%#= date_select :anagen,
                     :dtnas,
                     {:order => [:day, :month, :year],
                      :use_month_numbers => true,
                      :start_year => 1900,
                      :include_blank => true}, :class=>"date" %>
-    <%#= text_field :anagen, :dtnas %>
   </div>
   <div class="two columns">
     <%= label @anagen.sesso, "Sesso" %>

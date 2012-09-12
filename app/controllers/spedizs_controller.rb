@@ -22,6 +22,7 @@ class SpedizsController < ApplicationController
   end
 
   def create
+    params[:spediz][:dtrit]=params[:spediz][:dtrit].to_my_date if params[:spediz][:dtrit].is_date?
     @spediz = Tesdoc.find(params[:spediz][:tesdoc_id]).build_spediz(params[:spediz])
     if @spediz.save
       redirect_to @spediz.tesdoc, :notice => 'Dati spedizione inseriti con successo.'
@@ -33,6 +34,8 @@ class SpedizsController < ApplicationController
   end
 
   def update
+# la riga seguente è da rivedere ed implementare un custom validate
+params[:spediz][:dtrit]=params[:spediz][:dtrit].to_my_date if params[:spediz][:dtrit].is_date?
     @spediz = Spediz.find(params[:id])
     if @spediz.update_attributes(params[:spediz])
       redirect_to @spediz.tesdoc, :notice => 'Dati spedizione aggiornati.'

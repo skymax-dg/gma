@@ -16,7 +16,11 @@ module ApplicationHelper
       value = nil
     end
 
-    res = ''
+    if params[:readonly]
+      readonly = params[:readonly]
+    else
+      readonly = false
+    end
 
     if params[:date] || params[:time]
       size = 8
@@ -25,14 +29,30 @@ module ApplicationHelper
     end
 
     if value
-      res = "<label for=\"#{"%s_%s"%[key,name]}\">#{label}</label>#{text_field(key, name, :size => size, :value => value, :onchange => params[:onchange]) }"
+      res = "<label for=\"#{"%s_%s"%[key,name]}\">
+               #{label}
+             </label>
+             #{text_field(key, name, :size => size, :value => value, :onchange => params[:onchange]) }"
     else
-      res = "<label for=\"#{"%s_%s"%[key,name]}\">#{label}</label>#{text_field(key, name, :size => size, :tooltipText => params[:tooltip], :onchange => params[:onchange]) }"
+      res = "<label for=\"#{"%s_%s"%[key,name]}\">
+               #{label}
+             </label>
+             #{text_field(key, name, :size => size, :tooltipText => params[:tooltip], :onchange => params[:onchange]) }"
     end
 
     if params[:date]
       value = value.strftime("%d/%m/%Y") if value && value != ''
-      res << "<script> jQuery(function() {  jQuery( \"#%s_%s\" ).datepicker( jQuery.datepicker.regional[\"it\" ] ); jQuery( \"#%s_%s\" ).datepicker( \"setDate\",\"#{value}\" ); jQuery( \"#%s_%s\" ).datepicker( \"option\", \"changeYear\", true  ); }); </script>"%[key,name,key,name,key,name]
+      res << "<script>
+               jQuery
+               (function()
+                 {jQuery(\"#%s_%s\").datepicker
+                    (jQuery.datepicker.regional[\"it\" ]);
+                  jQuery(\"#%s_%s\").datepicker(\"setDate\", \"#{value}\");
+                  jQuery(\"#%s_%s\").datepicker(\"option\",  \"changeYear\", true);
+                  jQuery(\"#%s_%s\").datepicker(\"option\",  \"readonly\", \"#{readonly}\");
+                 }
+               );
+              </script>"%[key, name, key, name, key, name, key, name]
     end
     if params[:date_time]
       dname = "#{name}_date"
@@ -48,34 +68,14 @@ module ApplicationHelper
     end
 
     if params[:time]
-      #value = value.strftime("%d/%m/%Y H:M") if value && value != ''
-      res << "<script> jQuery('#%s_%s').timepicker({timeText: 'Orario', hourText: 'Ora', minuteText: 'Minuti', timeOnlyTitle: 'Selezionare orario', closeText: 'Conferma', currentText: 'Chiudi'});
-                       jQuery( \"#%s_%s\" ).timepicker( \"setDate\",\"#{value}\" ); 
-              </script>"
-              %[key,name,key,name]
-    end
-    if params[:mytime]
-res << "<script> jQuery( \"#%s_%s\" ).timepicker({timeText: 'Orario',
-                                                  hourText: 'Ora',
-                                                  minuteText: 'Minuti',
-                                                  timeOnlyTitle: 'Selezionare orario',
-                                                  closeText: 'Conferma',
-                                                  currentText: 'Chiudi',
-                                                  timeFormat: 'hh:mm',
-                                                  hour: \"#{value.strftime("%H")}\",
-                                                  minute: \"#{value.strftime("%M")}\"});
-        </script>"%[key,name]
-#      res << "<script>
-#               jQuery(
-#                function()
-#                 {jQuery( \"#%s_%s\" ).timepicker(jQuery.timepicker.regional[\"it\" ] );
-#                  jQuery( \"#%s_%s\" ).timepicker( \"hour\",\"#{value.strftime("%H")}\" );
-#                  jQuery( \"#%s_%s\" ).timepicker( \"minute\",\"#{value.strftime("%H")}\" );
-#                  jQuery( \"#%s_%s\" ).timepicker( \"option\", \"changeYear\", true  );
-#                 }
-#                );
-#              </script>"
-#              %[key,name,key,name,key,name]
+      res << "<script>
+               jQuery
+               (function()
+                 {jQuery(\"#%s_%s\").timepicker
+                    (jQuery.timepicker.regional[\"it\" ]);
+                 }
+               );
+              </script>"%[key, name, key, name]
     end
     raw res
   end

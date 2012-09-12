@@ -49,32 +49,19 @@
         <%= f.label "destinazione (riga 2)" %>
         <%= f.text_field :dest2 %>
       </div>
-      <div class="five columns">
-        <%#= jdate_field(:spediz, :dtrit, "Data ritiro", :date=>true, :value => @spediz.dtrit) %>
+      <div class="two columns">
+        <%= jdate_field(:spediz, :dtrit, "Data ritiro", :date=>true, :value => @spediz.dtrit, :readonly => true) %>
         <%#= f.label "data ritiro:" %>
         <%#= f.date_select :dtrit, {:use_month_numbers => true, :order => [:day, :month, :year]}, :class=>"date" %>
       </div>
-      <div class="two columns"></div>          
-      <div class="five columns">
-        <%= jdate_field(:spediz, :orarit, "Ora ritiro", :mytime=>true, :value => @spediz.orarit.strftime("%H:%M"))%>
-        <%= f.label "ora ritiro:" %>
-        <%= f.time_select :orarit,{}, :class=>"time" %>
-
-
-<!--
--->
-        <div class="example-container">
-          <p>Show only the time picker without date picker</p>
-          <div>
-            <input type="text" name="example3" id="example3" value="" />
-          </div>
-        
-          <script>
-            $('#example3').timepicker({hour: "10", minute: "20"});
-          </script>
-        </div>
-
+      <div class="one columns"></div>          
+      <div class="two columns">
+        <% #@spediz.orarit||@spediz.orarit = "00:00" %>
+        <%= jdate_field(:spediz, :orarit, "Ora ritiro", :time=>true, :value => "00:00"&&@spediz.orarit&&@spediz.orarit.strftime("%H:%M"))%>
+        <%#= f.label "ora ritiro:" %>
+        <%#= f.time_select :orarit,{}, :class=>"time" %>
       </div>
+      <div class="seven columns"></div>          
     <% end %>
     <% if @spediz.tesdoc.causmag.contabile == "S" %>
       <div class="five columns">

@@ -22,3 +22,5 @@
 //= require jquery-ui-1.8.23.custom.min
 
 //= require jquery-ui-timepicker-addon
+
+//= require jquery.ui.datepicker-it
