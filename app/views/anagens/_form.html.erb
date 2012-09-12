@@ -1,9 +1,10 @@
 <%#= render :partial => 'shared/error_messages', :locals => {:f => @anagen} %>
 <%= form_for(@anagen) do |f| %>
+  <%= f.hidden_field :codice %>
   <div class="row">
     <div class="five columns">
       <%= f.label "Codice" %>
-      <%= f.number_field :codice %>
+      <%= f.number_field :codice, :disabled => true %>
     </div>
     <div class="two columns"></div>
     <div class="five columns">

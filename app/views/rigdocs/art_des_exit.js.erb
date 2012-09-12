@@ -1,0 +1,35 @@
+//alert($("#rigdoc_prezzo").val());
+//if ($("#rigdoc_prezzo").val()==0)
+//{
+  prz = "<%=@article.prezzo%>";
+  scn = $("#rigdoc_sconto").val();
+  if (scn != 0)
+  {
+    prz = prz * (1 - scn / 100);
+  }
+  $("#rigdoc_prezzo").val(prz);
+//}
+
+
+$("#rigdoc_article_id option[value='<%=@article.id%>']").prop('selected', true)
+
+
+if ($("#rigdoc_descriz").val().trim().length==0)
+{
+  $("#rigdoc_descriz").val("<%=@article.descriz%>");
+}
+else if (confirm("Articolo cambiato, vuoi sostituire la descrizione riga?"))
+{
+  $("#rigdoc_descriz").val("<%=@article.descriz%>");
+}
+
+old_iva = $("#rigdoc_iva_id").val().trim()
+new_iva = "<%=@article.iva_id%>"
+if (old_iva.length==0)
+{
+  $("#rigdoc_iva_id").val(new_iva);
+}
+else if (new_iva != old_iva && confirm("L'Iva associata all'articolo risulta diversa dalla precedente, vuoi sostituire?"))
+{
+  $("#rigdoc_iva_id").val(new_iva);
+}

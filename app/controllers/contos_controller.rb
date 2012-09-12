@@ -31,6 +31,7 @@ before_filter :authenticate
     @conto = Conto.new
     @conto.azienda = current_user.azienda
     @conto.annoese = current_annoese
+    @conto.codice = Conto.new_codice(@conto.annoese, @conto.azienda)
   end
 
   def edit

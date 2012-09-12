@@ -20,6 +20,11 @@ class Conto < ActiveRecord::Base
   TIPOCONTO = $ParAzienda['CONTO']['TIPOCONTO']
   TIPOPEO = $ParAzienda['CONTO']['TIPOPEO']
 
+  def self.new_codice(anno, azd)
+    (self.maximum("codice", :conditions => ["annoese = :ae AND azienda = :azd",
+                                             {:ae=>anno, :azd=>azd}]).to_i||0) + 1
+  end
+
   def self.filter (tp, des, azienda, annoese, page)
     # Esegure la ricerca del conto in base ai filtri impostati
 
