@@ -12,7 +12,7 @@ class Article < ActiveRecord::Base
   validates :descriz, :length => {:maximum => 50}
   
   scope :azienda, lambda { |azd| {:conditions => ['articles.azienda = ?', azd]}}
-  default_scope :order => 'articles.codice ASC' 
+#  default_scope :order => 'articles.codice ASC' 
 
   CATEG = $ParAzienda['ARTICLE']['CATEG']
 

@@ -32,7 +32,7 @@ class Tesdoc < ActiveRecord::Base
   def add1row4article(azienda)
     newprg = self.lastprgrig + 1
     error = 0
-    Article.azienda(azienda).find(:all).each do |art|
+    Article.azienda(azienda).all(:order => :descriz).each do |art|
       rigdoc = self.rigdocs.build
       rigdoc.prgrig     = newprg
       rigdoc.article_id = art.id

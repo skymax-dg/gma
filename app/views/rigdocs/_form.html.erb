@@ -4,7 +4,7 @@
   <div class="row">
     <div class="five columns">
       <%= f.label "Codice Articolo" %>
-      <%= collection_select(:rigdoc, :article_id, Article.all, :id, :codice,
+      <%= collection_select(:rigdoc, :article_id, Article.all(:order => :codice), :id, :codice,
                             {:include_blank => true},
                             {:data => {:remote => true, :url => url_for(:controller => :rigdocs,
                                                                         :action => :art_cod_exit)}})%>
@@ -12,7 +12,7 @@
     <div class="two columns"></div>
     <div class="five columns">
       <%= f.label "Descrizione articolo" %>
-      <%= collection_select(:rigdoc, :article_id, Article.all, :id, :descriz,
+      <%= collection_select(:rigdoc, :article_id, Article.all(:order => :descriz), :id, :descriz,
                             {:include_blank => true},
                             {:data => {:remote => true, :url => url_for(:controller => :rigdocs,
                                                                         :action => :art_des_exit)}})%>
