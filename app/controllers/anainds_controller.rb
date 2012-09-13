@@ -5,15 +5,15 @@ before_filter :authenticate
     @anaind = @anagen.anainds.build(params[:anaind])# La Build setta @anaind.anagen_id = @anagen.id
     @title = "Nuovo Indirizzo"
     if Anaind.nrmagexist(@anaind.id, @anaind.anagen_id, @anaind.nrmag)
-      flash.now[:error] = "Indirizzo gia' esistente per il magazzino: #{@anaind.nrmag}"
+      flash.now[:alert] = "Indirizzo gia' esistente per il magazzino: #{@anaind.nrmag}"
       render :action => :new
       elsif not compat_mag(@anaind.flmg, @anaind.nrmag)
-        flash[:error] = "Magazzino di riferimento incompatibile con il check: Indirizzo di magazzino"
+        flash[:alert] = "Magazzino di riferimento incompatibile con il check: Indirizzo di magazzino"
         render :action => :new
         elsif @anaind.save
           redirect_to @anagen, :notice => 'Indirizzo anagrafico aggiunto con successo.'
         else
-          flash[:error] = "ERRORE !!! durante il salvataggio dell'indirizzo anagrafico"
+          flash[:alert] = "ERRORE !!! durante il salvataggio dell'indirizzo anagrafico"
           render :action => :new
     end
   end
@@ -65,15 +65,15 @@ before_filter :authenticate
     anaind = params[:anaind]
     @title = "Modifica Indirizzo"
     if Anaind.nrmagexist(params[:id].to_i, anaind[:anagen_id].to_i, anaind[:nrmag].to_i)
-      flash[:error] = "Indirizzo gia' esistente per il magazzino: #{anaind[:nrmag]}"
+      flash[:alert] = "Indirizzo gia' esistente per il magazzino: #{anaind[:nrmag]}"
       render :action => :edit
       elsif not compat_mag(anaind[:flmg],  anaind[:nrmag])
-        flash[:error] = "Magazzino di riferimento incompatibile con il check: Indirizzo di magazzino"
+        flash[:alert] = "Magazzino di riferimento incompatibile con il check: Indirizzo di magazzino"
         render :action => :edit
         elsif @anaind.update_attributes(params[:anaind])
          redirect_to @anaind, :notice => 'Indirizzo anagrafico modificato con successo.'
         else
-         flash[:error] = "ERRORE !!! durante il salvataggio dell'indirizzo anagrafico"
+         flash[:alert] = "ERRORE !!! durante il salvataggio dell'indirizzo anagrafico"
          render :action => :edit
     end
   end
@@ -82,9 +82,9 @@ before_filter :authenticate
     @anaind = Anaind.find(params[:id])
     begin
       @anaind.destroy
-      flash[:notice] = "Cancellazione Eseguita"
+      flash[:success] = "Cancellazione Eseguita"
     rescue
-      flash[:error] = $!.message
+      flash[:alert] = $!.message
     end
     redirect_to @anaind.anagen
   end

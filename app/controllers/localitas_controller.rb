@@ -35,7 +35,7 @@ before_filter :authenticate
       redirect_to @localita, :notice => 'Localita'' inserita con successo.'
     else
       @title = "Nuova Citta'"
-      flash[:error] = "Il salvataggio della localita' non e' andato a buon fine"
+      flash[:alert] = "Il salvataggio della localita' non e' andato a buon fine"
       render :action => "new"
     end
   end
@@ -46,7 +46,7 @@ before_filter :authenticate
       redirect_to @localita, :notice => 'Localita'' aggiornata con successo.'
     else
       @title = "Modifica Citta'"
-      flash[:error] = "Il salvataggio della localita' non e' andato a buon fine"
+      flash[:alert] = "Il salvataggio della localita' non e' andato a buon fine"
       render :action => "edit"
     end
   end
@@ -55,9 +55,9 @@ before_filter :authenticate
     @localita = Localita.find(params[:id])
     begin
       @localita.destroy
-      flash[:notice] = "Cancellazione Eseguita"
+      flash[:success] = "Cancellazione Eseguita"
     rescue
-      flash[:error] = $!.message
+      flash[:alert] = $!.message
     end
     redirect_to localitas_url
   end

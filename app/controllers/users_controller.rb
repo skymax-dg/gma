@@ -48,7 +48,7 @@ before_filter :authenticate, :except => [:new, :create]
 
   def destroy
     if current_user.id.to_s == params[:id]
-      flash[:error] = "Non e' possibile eliminare l'utente loggato."
+      flash[:alert] = "Non e' possibile eliminare l'utente loggato."
       redirect_to users_path
     else
       User.find(params[:id]).destroy
@@ -62,7 +62,7 @@ before_filter :authenticate, :except => [:new, :create]
     def correct_user
       @user = User.find(params[:id])
       redirect_to root_path, 
-                  :notice => "Nome utente e password non trovate" unless current_user?(@user) 
+                  :alert => "Nome utente e password non trovate" unless current_user?(@user) 
     end
 
 end

@@ -29,13 +29,13 @@ before_filter :authenticate
     @causmag = Causmag.new(params[:causmag])
     @title = "Nuova Causale di magazzino"
     if not compat_contabile(@causmag.contabile, @causmag.causale_id.nil?)
-      flash[:error_explanation] = "incoerenza fra 'causale contabile' e flag 'contabile'"
+      flash[:alert] = "incoerenza fra 'causale contabile' e flag 'contabile'"
       render :action => "new"
     else    
       if @causmag.save
         redirect_to @causmag, :notice => 'Causale di magazzino inserita con successo.'
       else
-        flash[:error] = "Il salvataggio della causale non e' andato a buon fine"
+        flash[:alert] = "Il salvataggio della causale non e' andato a buon fine"
         render :action => "new"
       end
     end
@@ -45,13 +45,13 @@ before_filter :authenticate
     @causmag = Causmag.find(params[:id])
     @title = "Modifica Causale di magazzino"
     if not compat_contabile(params[:causmag][:contabile], params[:causmag][:causale_id] == "")
-      flash[:error_explanation] = "ERRORE!!! Incoerenza fra 'causale contabile' e flag 'contabile'"
+      flash[:alert] = "ERRORE!!! Incoerenza fra 'causale contabile' e flag 'contabile'"
       render :action => "edit"
     else    
       if @causmag.update_attributes(params[:causmag])
         redirect_to @causmag, :notice => 'Causale di magazzino aggiornata con successo.'
       else
-        flash[:error] = "Il salvataggio della causale non e' andato a buon fine"
+        flash[:alert] = "Il salvataggio della causale non e' andato a buon fine"
         render :action => "edit"
       end
     end
@@ -61,9 +61,9 @@ before_filter :authenticate
     @causmag = Causmag.find(params[:id])
     begin
       @causmag.destroy
-      flash[:notice] = "Cancellazione Eseguita"
+      flash[:success] = "Cancellazione Eseguita"
     rescue
-      flash[:error] = $!.message
+      flash[:alert] = $!.message
     end
     redirect_to causmags_url
   end

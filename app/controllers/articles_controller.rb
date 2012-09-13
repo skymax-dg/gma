@@ -10,7 +10,7 @@ before_filter :authenticate
     @anagens = Anagen.findbytpconto(current_user.azienda, 'C')
     @contos = Conto.findbytipoconto(current_user.azienda, current_annoese, "C")
     if @anagens.empty?
-      flash[:error] = "Nessun conto cliente presente"
+      flash[:alert] = "Nessun conto cliente presente"
       render :action => "show"
     end
     @tp == "M" ? @title = "Stampa Movimenti di magazzino" : @title = "Stampa Vendite per titolo"
@@ -23,7 +23,7 @@ before_filter :authenticate
     @anagens = Anagen.findbytpconto(current_user.azienda, 'C')
     @contos = Conto.findbytipoconto(current_user.azienda, current_annoese, "C")
     if @anagens.empty?
-      flash[:error] = "Nessun conto cliente presente"
+      flash[:alert] = "Nessun conto cliente presente"
       render :action => "show"
     end
     @tp == "M" ? @title = "Export (XLS) Movimenti di magazzino" : @title = "Export (XLS) Vendite per titolo"
@@ -35,7 +35,7 @@ before_filter :authenticate
     @anagens = Anagen.findbytpconto(current_user.azienda, 'C')
     @contos = Conto.findbytipoconto(current_user.azienda, current_annoese, "C")
     if @anagens.empty?
-      flash[:error] = "Nessun conto cliente presente"
+      flash[:alert] = "Nessun conto cliente presente"
       render :action => "index"
     end
     @tp == "M" ? @title = "Stampa Movimenti di magazzino" : @title = "Stampa Vendite per titolo"
@@ -47,7 +47,7 @@ before_filter :authenticate
     @anagens = Anagen.findbytpconto(current_user.azienda, 'C')
     @contos = Conto.findbytipoconto(current_user.azienda, current_annoese, "C")
     if @anagens.empty?
-      flash[:error] = "Nessun conto cliente presente"
+      flash[:alert] = "Nessun conto cliente presente"
       render :action => "index"
     end
     @tp == "M" ? @title = "Export (XLS) Movimenti di magazzino" : @title = "Export (XLS) Vendite per titolo"
@@ -157,7 +157,7 @@ before_filter :authenticate
       redirect_to @article, :notice => 'Articolo inserito con successo.'
     else
       @title = "Nuovo Articolo"
-      flash[:error] = "Il salvataggio dell'articolo non e' andato a buon fine"
+      flash[:alert] = "Il salvataggio dell'articolo non e' andato a buon fine"
       render :action => "new"
     end
   end
@@ -168,7 +168,7 @@ before_filter :authenticate
       redirect_to @article, :notice => 'Articolo aggiornato con successo.'
     else
       @title = "Modifica Articolo"
-      flash[:error] = "Il salvataggio dell'articolo non e' andato a buon fine"
+      flash[:alert] = "Il salvataggio dell'articolo non e' andato a buon fine"
       render :action => "edit"
     end
   end
@@ -177,9 +177,9 @@ before_filter :authenticate
     @article = Article.find(params[:id])
     begin
       @article.destroy
-      flash[:notice] = "Cancellazione Eseguita"
+      flash[:success] = "Cancellazione Eseguita"
     rescue
-      flash[:error] = $!.message
+      flash[:alert] = $!.message
     end
     redirect_to articles_url
   end

@@ -1,15 +1,17 @@
 <% if f.errors.any? %>
-  <div class="twelve columns end error">
-    <div id="error_explanation">
-      <h2><%= pluralize(f.errors.count, "errore", "errori") %>
-        :Salvataggio dati NON riuscito:
-      </h2>
-      <p>Ci sono problemi con le informazioni seguenti:</p>
-      <ul>
-        <% f.errors.full_messages.each do |msg| %>
-          <li> <%= msg %> </li>
-        <% end %>
-      </ul>
+  <div class="row">
+    <div class="twelve columns end error">
+      <div class="alert-box alert" >
+        <div id="error_explanation">
+            <%= pluralize(f.errors.count, "errore", "errori") %>
+            :Salvataggio dati NON riuscito:
+          <ul>
+            <% f.errors.full_messages.each do |msg| %>
+              <li> <%= msg %> </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 <% end %>

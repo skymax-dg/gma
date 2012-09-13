@@ -43,7 +43,7 @@ before_filter :authenticate
     @conto = Conto.new(params[:conto])
     if (@conto.tipoconto=="C"||@conto.tipoconto=="F")&&@conto.anagen_id.nil?
       @title = "Nuovo Conto"
-      flash.alert = "Per un conto #{Conto::TIPOCONTO["C"]}/#{Conto::TIPOCONTO["F"]} " +
+      flash[:alert] = "Per un conto #{Conto::TIPOCONTO["C"]}/#{Conto::TIPOCONTO["F"]} " +
                     "e' obbligatorio specificare una anagrafica soggetto"
       render :action => "new"
     else
@@ -51,7 +51,7 @@ before_filter :authenticate
         redirect_to @conto, :notice => 'Piano dei conti inserito con successo.'
       else
         @title = "Nuovo Conto"
-        flash[:error] = "Il salvataggio del piano dei conti non e' andato a buon fine"
+        flash[:alert] = "Il salvataggio del piano dei conti non e' andato a buon fine"
         render :action => "new"
       end
     end
@@ -63,7 +63,7 @@ before_filter :authenticate
     @conto.anagen_id=params[:conto][:anagen_id]
     if (@conto.tipoconto=="C"||@conto.tipoconto=="F")&&@conto.anagen_id.nil?
       @title = "Modifica Conto"
-      flash.alert = "Per un conto #{Conto::TIPOCONTO["C"]}/#{Conto::TIPOCONTO["F"]} " +
+      flash[:alert] = "Per un conto #{Conto::TIPOCONTO["C"]}/#{Conto::TIPOCONTO["F"]} " +
                     "e' obbligatorio specificare una anagrafica soggetto"
       render :action => "edit"
     else
@@ -71,7 +71,7 @@ before_filter :authenticate
         redirect_to @conto, :notice => 'Piano dei conti aggiornato con successo.'
       else
         @title = "Modifica Conto"
-        flash[:error] = "Il salvataggio del piano dei conti non e' andato a buon fine"
+        flash[:alert] = "Il salvataggio del piano dei conti non e' andato a buon fine"
         render :action => "edit"
       end
     end
@@ -81,9 +81,9 @@ before_filter :authenticate
     @conto = Conto.find(params[:id])
     begin
       @conto.destroy
-      flash[:notice] = "Cancellazione Eseguita"
+      flash[:success] = "Cancellazione Eseguita"
     rescue
-      flash[:error] = $!.message
+      flash[:alert] = $!.message
     end
     redirect_to contos_url
   end

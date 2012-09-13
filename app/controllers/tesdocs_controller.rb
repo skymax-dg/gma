@@ -21,7 +21,7 @@ before_filter :authenticate
     tfile = params[:file]
 
     if tfile.nil?
-      flash[:error] = "File non specificato o non disponibile"
+      flash[:alert] = "File non specificato o non disponibile"
       redirect_to upload_xls_tesdoc_path(:id => params[:id]) and return
     end
     @title = "REPORT caricamento automatico:"
@@ -42,16 +42,16 @@ before_filter :authenticate
           raise "I seguenti articoli non sono presenti sulla banca dati" if @errors.count > 0
           @errors, @success = @tesdoc.rigdocbyxls(book, 0, 1, {:article_id_bycod => 0, :qta => 1, :prezzo => 2, :sconto => 3})
           if @errors.count == 0
-            flash[:notice] = "CARICAMENTO COMPLETATO con SUCCESSO."
+            flash[:success] = "CARICAMENTO COMPLETATO con SUCCESSO."
           else
-            flash[:error] = "Si sono verificati ERRORI durante il caricamento (CARICAMENTO PARZIALE)"
+            flash[:alert] = "Si sono verificati ERRORI durante il caricamento (CARICAMENTO PARZIALE)"
           end
         rescue
-          flash[:error] = $!.message
+          flash[:alert] = $!.message
         end
       end
     rescue Exception => e
-      flash[:error] = $!.message
+      flash[:alert] = $!.message
       @errors << "File bloccato da un'altra applicazione o non trovato: #{e.to_s}" #$?.exitstatus
     end
   end
@@ -70,7 +70,7 @@ before_filter :authenticate
 
     @datispe  = @tesdoc.spediz unless @tesdoc.spediz.nil?
     if @tesdoc.movmagint && @tesdoc.spediz.nil?
-      flash[:error] = "DATI DI SPEDIZIONE MANCANTI"
+      flash[:alert] = "DATI DI SPEDIZIONE MANCANTI"
       redirect_to @tesdoc
     elsif @tesdoc.causmag.modulo == "DDT"
       @tit_doc[1] = "(D.d.t.) D.P.R. 472 del 14-08-1996 - D.P.R. 696 del 21.12.1996"
@@ -83,13 +83,13 @@ before_filter :authenticate
     elsif @tesdoc.causmag.modulo == "FATTACC"
       render 'stp_fat1.pdf'
     elsif @tesdoc.causmag.modulo == "ORD"
-      flash[:error] = "MODULO DI STRAMPA NON TROVATO !!! (#{@tesdoc.causmag.modulo})"
+      flash[:alert] = "MODULO DI STRAMPA NON TROVATO !!! (#{@tesdoc.causmag.modulo})"
       redirect_to @tesdoc
     elsif @tesdoc.causmag.modulo == "PREV"
-      flash[:error] = "MODULO DI STRAMPA NON TROVATO !!! (#{@tesdoc.causmag.modulo})"
+      flash[:alert] = "MODULO DI STRAMPA NON TROVATO !!! (#{@tesdoc.causmag.modulo})"
       redirect_to @tesdoc
     elsif @tesdoc.causmag.modulo == "TRASF"
-      flash[:error] = "MODULO DI STRAMPA NON TROVATO !!! (#{@tesdoc.causmag.modulo})"
+      flash[:alert] = "MODULO DI STRAMPA NON TROVATO !!! (#{@tesdoc.causmag.modulo})"
       redirect_to @tesdoc
     end
   end
@@ -106,7 +106,7 @@ before_filter :authenticate
       @rifdoc   = {:nr => @tesdoc.num_doc, :dt => @tesdoc.data_doc}
       render 'stp_ddt1.pdf'
     else
-      flash[:error] = "STAMPA DDT FALLITA !!! -- Il Documento non movimenta il magazzino"
+      flash[:alert] = "STAMPA DDT FALLITA !!! -- Il Documento non movimenta il magazzino"
       redirect_to @tesdoc
     end
   end
@@ -141,7 +141,7 @@ before_filter :authenticate
         redirect_to new_spediz_path(:id => params[:id])
       end
     else
-      flash[:error] = "La causale del Documento non e' di tipo contabile e non movimenta il magazzino,
+      flash[:alert] = "La causale del Documento non e' di tipo contabile e non movimenta il magazzino,
                        dati spedizione/pagamento non necessari"
       redirect_to @tesdoc
     end
@@ -174,16 +174,16 @@ before_filter :authenticate
           #col_sconto => 0
           @errors, @success = Tesdoc.tesrigdocbyxls(book, sheet, rowini, coltes, colrig)
           if @errors.count == 0
-            flash[:notice] = "CARICAMENTO COMPLETATO con SUCCESSO."
+            flash[:success] = "CARICAMENTO COMPLETATO con SUCCESSO."
           else
-            flash[:error] = "Si sono verificati ERRORI durante il caricamento (CARICAMENTO PARZIALE)"
+            flash[:alert] = "Si sono verificati ERRORI durante il caricamento (CARICAMENTO PARZIALE)"
           end
         rescue
-          flash[:error] = $!.message
+          flash[:alert] = $!.message
         end
       end
     rescue Exception => e
-      flash[:error] = $!.message
+      flash[:alert] = $!.message
       @errors << "File bloccato da un'altra applicazione o non trovato: #{e.to_s}" #$?.exitstatus
     end
   end
@@ -269,7 +269,7 @@ before_filter :authenticate
       @tesdoc.causmag_id = @causmag.id
       @tesdoc.conto_id = @conto.id
       @tesdoc.sconto = @conto.sconto
-      flash[:error] = "Il salvataggio del documento non e' andato a buon fine"
+      flash[:alert] = "Il salvataggio del documento non e' andato a buon fine"
       render 'new'
     end
   end
@@ -280,7 +280,7 @@ before_filter :authenticate
       redirect_to @tesdoc, :notice => 'Testata documento aggiornata con successo.'
     else
       @title = "Modifica Testata documento (#{Causmag::TIPO_DOC[se_tipo_doc.to_i]})"
-      flash[:error] = "Il salvataggio del documento non e' andato a buon fine"
+      flash[:alert] = "Il salvataggio del documento non e' andato a buon fine"
       render 'edit' 
     end
   end
@@ -288,7 +288,7 @@ before_filter :authenticate
   def destroy
     @tesdoc = Tesdoc.find(params[:id])
     @tesdoc.destroy
-    flash[:notice] = "Cancellazione Eseguita"
+    flash[:success] = "Cancellazione Eseguita"
     redirect_to tesdocs_url
   end
 end

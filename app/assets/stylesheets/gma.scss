@@ -52,6 +52,9 @@ $wminute: 40px;
   }
 }
 
+.field_with_errors {@extend .error}
+
+
 /* Sulla table html si deve aver classificato il tipo di campo se: intero, decimale o valuta */
 table {
   thead tr th, tbody tr td, tfoot tr td {

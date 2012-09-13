@@ -1,5 +1,6 @@
 <%#= render :partial => 'shared/error_messages', :locals => {:f => @anagen} %>
-<%= form_for(@anagen) do |f| %>
+<%= form_for(@anagen, :html =>
+  {:class => 'custom'}) do |f| %>
   <%= f.hidden_field :codice %>
   <div class="row">
     <div class="five columns">
@@ -26,7 +27,9 @@
       <%= f.label "Codice Fiscale" %>
       <%= f.text_field :codfis %>
     </div>
-    <%= render(:partial => 'datinas') %>
+    <span id="datinas">
+      <%= render(:partial => 'datinas') %>
+    </span>
     <div class="five columns">
       <%= f.label "Telefono" %>
       <%= f.text_field :telefono %>

@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
     user = User.authenticate(params[:session][:login], params[:session][:pwd], params[:session][:azienda])
     if user.nil? 
       @title = "Accesso"
-      flash.now[:error] = "Login o password non valide."
+      flash.now[:alert] = "Login o password non valide."
       render 'new'
     else
       sign_in user

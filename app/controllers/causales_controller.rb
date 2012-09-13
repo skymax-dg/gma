@@ -29,7 +29,7 @@ before_filter :authenticate
       redirect_to @causale, :notice => 'Causale contabile inserita con successo.'
     else
       @title = "Nuova Causale contabile"
-      flash[:error] = "Il salvataggio della causale non e' andato a buon fine"
+      flash[:alert] = "Il salvataggio della causale non e' andato a buon fine"
       render :action => "new"
     end
   end
@@ -40,7 +40,7 @@ before_filter :authenticate
       redirect_to @causale, :notice => 'Causale contabile aggiornata con successo.'
     else
       @title = "Modifica Causale contabile"
-      flash[:error] = "Il salvataggio della causale non e' andato a buon fine"
+      flash[:alert] = "Il salvataggio della causale non e' andato a buon fine"
       render :action => "edit"
     end
   end
@@ -49,9 +49,9 @@ before_filter :authenticate
     @causale = Causale.find(params[:id])
     begin
       @causale.destroy
-      flash[:notice] = "Cancellazione Eseguita"
+      flash[:success] = "Cancellazione Eseguita"
     rescue
-      flash[:error] = $!.message
+      flash[:alert] = $!.message
     end
     redirect_to causales_url
   end

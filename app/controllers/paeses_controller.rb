@@ -27,7 +27,7 @@ before_filter :authenticate
       redirect_to @paese, :notice => 'Nazione/Stato inserito con successo.' 
     else
       @title = "Nuovo Stato/Nazione"
-      flash[:error] = "Il salvataggio del paese non e' andato a buon fine"
+      flash[:alert] = "Il salvataggio del paese non e' andato a buon fine"
       render :action => "new"
     end
   end
@@ -38,7 +38,7 @@ before_filter :authenticate
       redirect_to @paese, :notice => 'Nazione/Stato aggiornato con successo.'
     else
       @title = "Modifica Stato/Nazione"
-      flash[:error] = "Il salvataggio del paese non e' andato a buon fine"
+      flash[:alert] = "Il salvataggio del paese non e' andato a buon fine"
       render :action => "edit"
     end
   end
@@ -48,9 +48,9 @@ before_filter :authenticate
 
     begin
       @paese.destroy
-      flash[:notice] = "Cancellazione Eseguita"
+      flash[:success] = "Cancellazione Eseguita"
     rescue
-      flash[:error] = $!.message
+      flash[:alert] = $!.message
     end
     redirect_to paeses_url
   end

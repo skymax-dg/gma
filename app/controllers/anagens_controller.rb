@@ -43,7 +43,7 @@ before_filter :authenticate
       redirect_to @anagen, :notice => 'Anagrafica soggetti creata con successo.'
     else
       @title = "Nuovo Soggetto/Societa'"
-      flash[:error] = "Il salvataggio dell'anagrafica non e' andato a buon fine"
+      flash[:alert] = "Il salvataggio dell'anagrafica non e' andato a buon fine"
       render :action => "new"
     end
   end
@@ -54,7 +54,7 @@ before_filter :authenticate
       redirect_to @anagen, :notice => 'Anagrafica soggetti aggiornata con successo.'
     else
       @title = "Modifica Soggetto/Societa'"
-      flash[:error] = "Il salvataggio dell'anagrafica non e' andato a buon fine"
+      flash[:alert] = "Il salvataggio dell'anagrafica non e' andato a buon fine"
       render :action => "edit"
     end
   end
@@ -63,9 +63,9 @@ before_filter :authenticate
     @anagen = Anagen.find(params[:id])
     begin
       @anagen.destroy
-      flash[:notice] = "Cancellazione Eseguita"
+      flash[:success] = "Cancellazione Eseguita"
     rescue
-      flash[:error] = $!.message
+      flash[:alert] = $!.message
     end
     redirect_to anagens_url
   end
