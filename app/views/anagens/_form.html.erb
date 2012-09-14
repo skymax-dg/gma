@@ -1,6 +1,5 @@
 <%#= render :partial => 'shared/error_messages', :locals => {:f => @anagen} %>
-<%= form_for(@anagen, :html =>
-  {:class => 'custom'}) do |f| %>
+<%= form_for(@anagen) do |f| %>
   <%= f.hidden_field :codice %>
   <div class="row">
     <div class="five columns">
