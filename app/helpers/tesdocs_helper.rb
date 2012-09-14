@@ -26,8 +26,8 @@ module TesdocsHelper
     # mags = Hash[*Anaind::NRMAG.select{|k,v| [0].index(k)}.flatten]
     causmag = Causmag.find(idcausmag)
     conto = Conto.find(idconto)
-    # Se il movimento è di entrata/rend.resi il mag sorgente è uno tra quelli del conto
-    # Se il movimento è di uscita/rend.vendite il mag destinazione è uno tra quelli del conto
+    # Se il movimento è di entrata/rend.vendite il mag sorgente è uno tra quelli del conto
+    # Se il movimento è di uscita/rend.resi il mag destinazione è uno tra quelli del conto
     if (["E","V"].include?(causmag.tipo) and tp == "S") or (["U","R"].include?(causmag.tipo) and tp == "D")
       mags = conto.magsavailable([0])
     elsif (["E","T"].include?(causmag.tipo) and tp == "D") or (["U","T"].include?(causmag.tipo) and tp == "S")

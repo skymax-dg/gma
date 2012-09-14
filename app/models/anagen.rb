@@ -51,10 +51,17 @@ class Anagen < ActiveRecord::Base
     # Ricerco i magazzini inseriti sull'anagrafica, con il .map creo un array formato dai vari nrmag,
     # con il comando select applicato all'hash Anaind::NRMAG restituisco un altro hash formato
     # dai magazzini disponibili ovvero che hanno corrispondenza sull'array creato dal comando map
+#    mags = Anaind.find(:all,
+#                       :select => "nrmag",
+#                       :conditions => ["anagen_id = :anaid and flmg = 'S'", {:anaid => self.id}]).map{|c| c.nrmag}
+#    Hash[*Anaind::NRMAG.select{|k,v| (mags+inivalue).index(k)}.flatten]
+    magsplus=Hash.new
     mags = Anaind.find(:all,
-                       :select => "nrmag",
-                       :conditions => ["anagen_id = :anaid and flmg = 'S'", {:anaid => self.id}]).map{|c| c.nrmag}
-    Hash[*Anaind::NRMAG.select{|k,v| (mags+inivalue).index(k)}.flatten]
+                             :select => "nrmag, desloc",
+                             :conditions => ["anagen_id = :anaid and flmg = 'S'", {:anaid => self.id}]
+                             ).each{|m| magsplus[m.nrmag]=m.desloc}
+    inivalue.each{|v|magsplus[v]=Anaind::NRMAG[v]}
+    magsplus
   end
 
   def self.newcod()
