@@ -33,9 +33,10 @@ before_filter :authenticate
       render :action => "new"
     else    
       if @causmag.save
-        redirect_to @causmag, :notice => 'Causale di magazzino inserita con successo.'
+        flash[:success] = 'Causale di magazzino inserita con successo.'
+        redirect_to @causmag
       else
-        flash[:alert] = "Il salvataggio della causale non e' andato a buon fine"
+#        flash[:alert] = "Il salvataggio della causale non e' andato a buon fine"
         render :action => "new"
       end
     end
@@ -49,9 +50,10 @@ before_filter :authenticate
       render :action => "edit"
     else    
       if @causmag.update_attributes(params[:causmag])
-        redirect_to @causmag, :notice => 'Causale di magazzino aggiornata con successo.'
+        flash[:success] = 'Causale di magazzino aggiornata con successo.'
+        redirect_to @causmag
       else
-        flash[:alert] = "Il salvataggio della causale non e' andato a buon fine"
+#        flash[:alert] = "Il salvataggio della causale non e' andato a buon fine"
         render :action => "edit"
       end
     end

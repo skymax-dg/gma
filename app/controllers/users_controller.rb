@@ -58,11 +58,9 @@ before_filter :authenticate, :except => [:new, :create]
   end
   
   private
-
     def correct_user
       @user = User.find(params[:id])
       redirect_to root_path, 
                   :alert => "Nome utente e password non trovate" unless current_user?(@user) 
     end
-
 end

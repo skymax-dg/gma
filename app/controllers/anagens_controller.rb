@@ -40,10 +40,11 @@ before_filter :authenticate
   def create
     @anagen = Anagen.new(params[:anagen])
     if @anagen.save
-      redirect_to @anagen, :notice => 'Anagrafica soggetti creata con successo.'
+      flash[:success] = 'Anagrafica soggetti creata con successo.'
+      redirect_to @anagen
     else
       @title = "Nuovo Soggetto/Societa'"
-      flash[:alert] = "Il salvataggio dell'anagrafica non e' andato a buon fine"
+#      flash[:alert] = "Il salvataggio dell'anagrafica non e' andato a buon fine"
       render :action => "new"
     end
   end
@@ -51,10 +52,11 @@ before_filter :authenticate
   def update
     @anagen = Anagen.find(params[:id])
     if @anagen.update_attributes(params[:anagen])
-      redirect_to @anagen, :notice => 'Anagrafica soggetti aggiornata con successo.'
+      flash[:success] = 'Anagrafica soggetti aggiornata con successo.'
+      redirect_to @anagen
     else
       @title = "Modifica Soggetto/Societa'"
-      flash[:alert] = "Il salvataggio dell'anagrafica non e' andato a buon fine"
+#      flash[:alert] = "Il salvataggio dell'anagrafica non e' andato a buon fine"
       render :action => "edit"
     end
   end

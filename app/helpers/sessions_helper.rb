@@ -56,7 +56,8 @@ module SessionsHelper
   def deny_acess
     store_location
     # La redirect gestisce anche il mess. flash tramite il parametro :notice
-    redirect_to :new_session, :notice => "Accesso negato, effettuare il LOGIN per accedere a questa pagina"
+    flash[:alert] = "Accesso negato, e' necessaria l'AUTENTICAZIONE"
+    redirect_to :new_session
   end
 
   private

@@ -154,10 +154,11 @@ before_filter :authenticate
   def create
     @article = Article.new(params[:article])
     if @article.save
-      redirect_to @article, :notice => 'Articolo inserito con successo.'
+      flash[:success] = 'Articolo inserito con successo.'
+      redirect_to @article
     else
       @title = "Nuovo Articolo"
-      flash[:alert] = "Il salvataggio dell'articolo non e' andato a buon fine"
+#      flash[:alert] = "Il salvataggio dell'articolo non e' andato a buon fine"
       render :action => "new"
     end
   end
@@ -165,10 +166,11 @@ before_filter :authenticate
   def update
     @article = Article.find(params[:id])
     if @article.update_attributes(params[:article])
-      redirect_to @article, :notice => 'Articolo aggiornato con successo.'
+      flash[:success] = 'Articolo aggiornato con successo.'
+      redirect_to @article
     else
       @title = "Modifica Articolo"
-      flash[:alert] = "Il salvataggio dell'articolo non e' andato a buon fine"
+#      flash[:alert] = "Il salvataggio dell'articolo non e' andato a buon fine"
       render :action => "edit"
     end
   end

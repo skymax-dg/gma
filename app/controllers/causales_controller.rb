@@ -26,10 +26,11 @@ before_filter :authenticate
   def create
     @causale = Causale.new(params[:causale])
     if @causale.save
-      redirect_to @causale, :notice => 'Causale contabile inserita con successo.'
+      flash[:success] = 'Causale contabile inserita con successo.'
+      redirect_to @causale
     else
       @title = "Nuova Causale contabile"
-      flash[:alert] = "Il salvataggio della causale non e' andato a buon fine"
+#      flash[:alert] = "Il salvataggio della causale non e' andato a buon fine"
       render :action => "new"
     end
   end
@@ -37,10 +38,11 @@ before_filter :authenticate
   def update
     @causale = Causale.find(params[:id])
     if @causale.update_attributes(params[:causale])
-      redirect_to @causale, :notice => 'Causale contabile aggiornata con successo.'
+      flash[:success] = 'Causale contabile aggiornata con successo.'
+      redirect_to @causale
     else
       @title = "Modifica Causale contabile"
-      flash[:alert] = "Il salvataggio della causale non e' andato a buon fine"
+#      flash[:alert] = "Il salvataggio della causale non e' andato a buon fine"
       render :action => "edit"
     end
   end

@@ -48,10 +48,11 @@ before_filter :authenticate
     @rigdoc = @tesdoc.rigdocs.build(params[:rigdoc])
     @rigdoc.prgrig = newprg
     if @rigdoc.save
-      redirect_to @tesdoc, :notice => 'Riga documento aggiunta con successo.'
+      flash[:success] = 'Riga documento aggiunta con successo.'
+      redirect_to @tesdoc
     else
       @title = "Nuova Riga documento"
-      flash[:alert] = "Il salvataggio della riga non e' andato a buon fine"
+#      flash[:alert] = "Il salvataggio della riga non e' andato a buon fine"
       render 'new'
     end
   end
@@ -69,18 +70,23 @@ before_filter :authenticate
   def update
     @rigdoc = Rigdoc.find(params[:id])
     if @rigdoc.update_attributes(params[:rigdoc])
-      redirect_to @rigdoc, :notice => 'Testata documento modificata con successo.'
+      flash[:success] = 'Riga documento modificata con successo.'
+      redirect_to @rigdoc
     else
       @title = "Modifica Riga documento"
-      flash[:alert] = "Il salvataggio della riga non e' andato a buon fine"
+#      flash[:alert] = "Il salvataggio della riga non e' andato a buon fine"
       render 'edit'
     end
   end
 
   def destroy
     @rigdoc = Rigdoc.find(params[:id])
-    @rigdoc.destroy
-    flash[:success] = "Cancellazione Eseguita"
+    begin
+      @rigdoc.destroy
+      flash[:success] = "Cancellazione Eseguita"
+    rescue
+      flash[:alert] = $!.message
+    end
     redirect_to @rigdoc.tesdoc
   end
 end

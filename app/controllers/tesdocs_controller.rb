@@ -126,9 +126,11 @@ before_filter :authenticate
   def delrowqta0
     tesdoc = Tesdoc.find(params[:id])
     if tesdoc.delrowqta0
-      redirect_to tesdoc, :notice => 'Righe documento cancellate con successo.'
+      flash[:success] = 'Righe documento cancellate con successo.'
+      redirect_to tesdoc
     else
-      redirect_to tesdoc, :notice => 'Errori in cancellazione Righe.'
+      flash[:alert] = 'Errori in cancellazione Righe.'
+      redirect_to tesdoc
     end
   end
 
@@ -150,9 +152,11 @@ before_filter :authenticate
   def add1row4article
     tesdoc = Tesdoc.find(params[:id])
     if tesdoc.add1row4article(current_user.azienda)
-      redirect_to tesdoc, :notice => 'Righe documento aggiunte con successo.'
+      flash[:success] = 'Righe documento aggiunte con successo.'
+      redirect_to tesdoc
     else
-      redirect_to tesdoc, :notice => 'Errori in inserimento Righe.'
+      redirect_to tesdoc
+      flash[:alert] = 'Errori in inserimento Righe.'
     end
   end
 
@@ -259,7 +263,8 @@ before_filter :authenticate
   def create
     @tesdoc = Tesdoc.new(params[:tesdoc])
     if @tesdoc.save
-      redirect_to @tesdoc, :notice => 'Testata documento inserita con successo.'
+      flash[:success] = 'Testata documento inserita con successo.'
+      redirect_to @tesdoc
     else
       @title = "Nuovo Documento (#{Causmag::TIPO_DOC[se_tipo_doc.to_i]})"
       @causmag = Causmag.find(params[:tesdoc][:causmag_id])
@@ -269,7 +274,7 @@ before_filter :authenticate
       @tesdoc.causmag_id = @causmag.id
       @tesdoc.conto_id = @conto.id
       @tesdoc.sconto = @conto.sconto
-      flash[:alert] = "Il salvataggio del documento non e' andato a buon fine"
+#      flash[:alert] = "Il salvataggio del documento non e' andato a buon fine"
       render 'new'
     end
   end
@@ -277,18 +282,24 @@ before_filter :authenticate
   def update
     @tesdoc = Tesdoc.find(params[:id])
     if @tesdoc.update_attributes(params[:tesdoc])
-      redirect_to @tesdoc, :notice => 'Testata documento aggiornata con successo.'
+      flash[:success] = 'Testata documento aggiornata con successo.'
+      redirect_to @tesdoc
     else
       @title = "Modifica Testata documento (#{Causmag::TIPO_DOC[se_tipo_doc.to_i]})"
-      flash[:alert] = "Il salvataggio del documento non e' andato a buon fine"
+#      flash[:alert] = "Il salvataggio del documento non e' andato a buon fine"
       render 'edit' 
     end
   end
 
   def destroy
     @tesdoc = Tesdoc.find(params[:id])
-    @tesdoc.destroy
-    flash[:success] = "Cancellazione Eseguita"
+
+    begin
+      @tesdoc.destroy
+      flash[:success] = "Cancellazione Eseguita"
+    rescue
+      flash[:alert] = $!.message
+    end
     redirect_to tesdocs_url
   end
 end

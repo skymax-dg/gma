@@ -24,7 +24,8 @@ class IvasController < ApplicationController
     @iva.aliq = 0 if @iva.flese == "S" # Se si tratta di esenzione l'aliquota viene impostata a 0
 
     if @iva.save
-      redirect_to @iva, :notice => 'Codice Iva/Esenzione inserito con successo.'
+      flash[:success] = 'Codice Iva/Esenzione inserito con successo.'
+      redirect_to @iva
     else
       @title = "Nuovo Tipo Iva/Esenzione"
       render action => "new"
@@ -36,7 +37,8 @@ class IvasController < ApplicationController
     @iva.aliq = 0 if @iva.flese == "S" # Se si tratta di esenzione l'aliquota viene impostata a 0
 
     if @iva.update_attributes(params[:iva])
-      redirect_to @iva, :notice => 'Codice Iva/Esenzione aggiornato con successo.'
+      flash[:success] = 'Codice Iva/Esenzione aggiornato con successo.'
+      redirect_to @iva
     else
       @title = "Modifica Tipo Iva/Esenzione"
       render action => "edit"
@@ -45,7 +47,12 @@ class IvasController < ApplicationController
 
   def destroy
     @iva = Iva.find(params[:id])
-    @iva.destroy
+    begin
+      @iva.destroy
+      flash[:success] = "Cancellazione Eseguita"
+    rescue
+      flash[:alert] = $!.message
+    end
     redirect_to ivas_url
   end
 end

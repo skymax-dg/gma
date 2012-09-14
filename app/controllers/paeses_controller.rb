@@ -24,10 +24,11 @@ before_filter :authenticate
   def create
     @paese = Paese.new(params[:paese])
     if @paese.save
-      redirect_to @paese, :notice => 'Nazione/Stato inserito con successo.' 
+      flash[:success] = 'Nazione/Stato inserito con successo.'
+      redirect_to @paese
     else
       @title = "Nuovo Stato/Nazione"
-      flash[:alert] = "Il salvataggio del paese non e' andato a buon fine"
+#      flash[:alert] = "Il salvataggio del paese non e' andato a buon fine"
       render :action => "new"
     end
   end
@@ -35,10 +36,11 @@ before_filter :authenticate
   def update
     @paese = Paese.find(params[:id])
     if @paese.update_attributes(params[:paese])
-      redirect_to @paese, :notice => 'Nazione/Stato aggiornato con successo.'
+      flash[:success] = 'Nazione/Stato aggiornato con successo.'
+      redirect_to @paese
     else
       @title = "Modifica Stato/Nazione"
-      flash[:alert] = "Il salvataggio del paese non e' andato a buon fine"
+#      flash[:alert] = "Il salvataggio del paese non e' andato a buon fine"
       render :action => "edit"
     end
   end

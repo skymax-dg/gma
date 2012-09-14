@@ -25,10 +25,11 @@ class SpedizsController < ApplicationController
     params[:spediz][:dtrit]=params[:spediz][:dtrit].to_my_date if params[:spediz][:dtrit].is_date?
     @spediz = Tesdoc.find(params[:spediz][:tesdoc_id]).build_spediz(params[:spediz])
     if @spediz.save
-      redirect_to @spediz.tesdoc, :notice => 'Dati spedizione inseriti con successo.'
+      flash[:success] = 'Dati spedizione inseriti con successo.'
+      redirect_to @spediz.tesdoc
     else
       @title = "Inserisci Dati spedizione/pagamento"
-      flash[:alert] = "Il salvataggio dei dati spedizione non e' andato a buon fine"
+#      flash[:alert] = "Il salvataggio dei dati spedizione non e' andato a buon fine"
       render 'new'
     end
   end
@@ -38,16 +39,22 @@ class SpedizsController < ApplicationController
 params[:spediz][:dtrit]=params[:spediz][:dtrit].to_my_date if params[:spediz][:dtrit].is_date?
     @spediz = Spediz.find(params[:id])
     if @spediz.update_attributes(params[:spediz])
-      redirect_to @spediz.tesdoc, :notice => 'Dati spedizione aggiornati.'
+      flash[:success] = 'Dati spedizione aggiornati.'
+      redirect_to @spediz.tesdoc
     else
       @title = "Modifica Dati spedizione/pagamento"
-      flash[:alert] = "Il salvataggio dei dati spedizione non e' andato a buon fine"
+#      flash[:alert] = "Il salvataggio dei dati spedizione non e' andato a buon fine"
       render :action => "edit"
     end
   end
 
   def destroy
     @spediz = Spediz.find(params[:id])
-    @spediz.destroy
+    begin
+      @spediz.destroy
+      flash[:success] = "Cancellazione Eseguita"
+    rescue
+      flash[:alert] = $!.message
+    end
   end
 end

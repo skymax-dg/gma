@@ -11,9 +11,10 @@ before_filter :authenticate
         flash[:alert] = "Magazzino di riferimento incompatibile con il check: Indirizzo di magazzino"
         render :action => :new
         elsif @anaind.save
-          redirect_to @anagen, :notice => 'Indirizzo anagrafico aggiunto con successo.'
+          flash[:success] = 'Indirizzo anagrafico aggiunto con successo.'
+          redirect_to @anagen
         else
-          flash[:alert] = "ERRORE !!! durante il salvataggio dell'indirizzo anagrafico"
+#          flash[:alert] = "ERRORE !!! durante il salvataggio dell'indirizzo anagrafico"
           render :action => :new
     end
   end
@@ -71,9 +72,10 @@ before_filter :authenticate
         flash[:alert] = "Magazzino di riferimento incompatibile con il check: Indirizzo di magazzino"
         render :action => :edit
         elsif @anaind.update_attributes(params[:anaind])
-         redirect_to @anaind, :notice => 'Indirizzo anagrafico modificato con successo.'
+          flash[:success] = 'Indirizzo anagrafico modificato con successo.'
+          redirect_to @anaind
         else
-         flash[:alert] = "ERRORE !!! durante il salvataggio dell'indirizzo anagrafico"
+#         flash[:alert] = "ERRORE !!! durante il salvataggio dell'indirizzo anagrafico"
          render :action => :edit
     end
   end

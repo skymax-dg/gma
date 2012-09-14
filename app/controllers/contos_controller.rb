@@ -48,10 +48,11 @@ before_filter :authenticate
       render :action => "new"
     else
       if @conto.save
-        redirect_to @conto, :notice => 'Piano dei conti inserito con successo.'
+        flash[:success] = 'Piano dei conti inserito con successo.'
+        redirect_to @conto
       else
         @title = "Nuovo Conto"
-        flash[:alert] = "Il salvataggio del piano dei conti non e' andato a buon fine"
+#        flash[:alert] = "Il salvataggio del piano dei conti non e' andato a buon fine"
         render :action => "new"
       end
     end
@@ -68,10 +69,11 @@ before_filter :authenticate
       render :action => "edit"
     else
       if @conto.update_attributes(params[:conto])
-        redirect_to @conto, :notice => 'Piano dei conti aggiornato con successo.'
+        flash[:success] = 'Piano dei conti aggiornato con successo.'
+        redirect_to @conto
       else
         @title = "Modifica Conto"
-        flash[:alert] = "Il salvataggio del piano dei conti non e' andato a buon fine"
+#        flash[:alert] = "Il salvataggio del piano dei conti non e' andato a buon fine"
         render :action => "edit"
       end
     end
