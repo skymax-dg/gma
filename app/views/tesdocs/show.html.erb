@@ -22,9 +22,6 @@
   </ul>
   <ul class="button-group">
     <li>
-      <%= link_to 'Dati spediz./pagam.', ges_datisped_tesdoc_path, :class => "button radius small" %>
-    </li>
-    <li>
       <%= link_to 'Stampa', stp_tesdoc_path, :class => "button radius small" %>
     </li>
   </ul>
@@ -157,36 +154,69 @@
     </tr>
   </tfoot>
 </table>
-<ul class="button-group">
-  <li>
-    <%= link_to 'Aggiungi riga', new_rigdoc_path(:id => @tesdoc.id), :class => "button radius small" %>
+
+
+
+<dl class="tabs">
+  <dd class="active"><a href="#listrow">Elenco righe</a></dd>
+  <dd>
+    <%#= link_to 'Dati spediz./pagam.', ges_datisped_tesdoc_path, :class => "button radius small" %>
+    <a href="#sped_pag">Spedizione/Pagamento</a>
+  </dd>
+</dl>
+
+
+
+
+<ul class="tabs-content">
+  <li class="active" id="listrowTab">
+    <ul class="button-group">
+      <li>
+        <%= link_to 'Aggiungi riga', new_rigdoc_path(:id => @tesdoc.id), :class => "button radius small" %>
+      </li>
+      <li>
+        <%= link_to 'Carica righe da file', upload_xls_tesdoc_path(:id => @tesdoc.id), :class => "button radius small" %>
+      </li>
+      <li>
+        <%= link_to '1 riga per articolo', add1row4article_tesdoc_path, :class => "button radius small" %>
+      </li>
+      <li>
+        <%= link_to 'Canc.righe con qta=0', delrowqta0_tesdoc_path, :class => "button radius small" %>
+      </li>
+    </ul>
+    <% unless @rigdocs.nil?||@rigdocs.empty? %>
+      <table class="full-tab">
+        <thead>
+          <tr>
+            <th width="17%"> Codice articolo </th>
+            <th width="40%"> Descrizione</th>
+            <th class="numeric" width="5%"> Qta'</th>
+            <th class="numeric" width="10%"> Prezzo </th>
+            <th class="numeric" width="5%"> Scn </th>
+            <th class="numeric" width="10%"> Imponibile </th>
+            <th width="13%"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= render :partial => '/rigdocs/line', :collection => @rigdocs %>
+        </tbody>
+      </table>
+      <%= will_paginate @rigdocs %>
+    <% end %>
   </li>
-  <li>
-    <%= link_to 'Carica righe da file', upload_xls_tesdoc_path(:id => @tesdoc.id), :class => "button radius small" %>
-  </li>
-  <li>
-    <%= link_to '1 riga per articolo', add1row4article_tesdoc_path, :class => "button radius small" %>
-  </li>
-  <li>
-    <%= link_to 'Canc.righe con qta=0', delrowqta0_tesdoc_path, :class => "button radius small" %>
+  <li id="sped_pagTab">
+      <ul class="button-group">
+        <li>
+          <% if @spediz %>
+            <%= link_to 'Modifica spediz./pagam.', ges_datisped_tesdoc_path, :class => "button radius small" %>
+          <% else %>
+            <%= link_to 'Inserisci spediz./pagam.', ges_datisped_tesdoc_path, :class => "button radius small" %>
+          <% end %>
+        </li>
+      </ul>
+    <% if @spediz %>
+      <%= render '/spedizs/show' %>
+    <% end %>
   </li>
 </ul>
-<% unless @rigdocs.nil?||@rigdocs.empty? %>
-  <table class="full-tab">
-    <thead>
-      <tr>
-        <th width="17%"> Codice articolo </th>
-        <th width="40%"> Descrizione</th>
-        <th class="numeric" width="5%"> Qta'</th>
-        <th class="numeric" width="10%"> Prezzo </th>
-        <th class="numeric" width="5%"> Scn </th>
-        <th class="numeric" width="10%"> Imponibile </th>
-        <th width="13%"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <%= render :partial => '/rigdocs/line', :collection => @rigdocs %>
-    </tbody>
-  </table>
-  <%= will_paginate @rigdocs %>
-<% end %>
+

@@ -32,6 +32,7 @@ before_filter :authenticate
   def chg_tipo
     @anagen = Anagen.new
     @anagen.tipo = params[:anagen][:tipo]
+    @anagen.dtnas = '01/01/1980' if @anagen.tipo == 'F' || @anagen.tipo == 'I'
     respond_to do |format|
       format.js
     end

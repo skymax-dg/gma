@@ -1,45 +1,64 @@
 <header>
   <% if signed_in? %>
+<!-- End Header and Nav -->
     <div class="row">
-      <ul class="nav-bar twelve columns">
-        <li class="has-flyout">
-          <%= link_to "DOCUMENTI", "#" %>
-          <ul class="flyout">
-            <% Tesdoc::TIPO_DOC.each do |k, v| %>
-              <li> <%= link_to v.upcase, tesdocs_path(:tipo_doc => k) %> </li>
-            <% end %>
+      <nav class="top-bar">
+        <ul>
+          <!-- Title Area -->
+          <li class="name">
+          <h1>
+            <a href="#">G.M.A.</a>
+          </h1>
+          </li>
+          <li class="toggle-topbar"><a href="#"></a></li>
+        </ul>
+
+        <section>
+          <!-- Right Nav Section -->
+          <ul class="left">
+            <li class="divider"></li>
+            <li class="has-dropdown">
+              <a href="#" class="">
+                DOCUMENTI
+              </a>
+              <ul class="dropdown">
+                <% Tesdoc::TIPO_DOC.each do |k, v| %>
+                  <li> <%= link_to v.upcase, tesdocs_path(:tipo_doc => k) %> </li>
+                <% end %>
+              </ul>
+            </li>
+            <li class="has-dropdown">
+              <a href="#" class="">ANAGRAFICA</a>
+              <ul class="dropdown">
+                <li> <%= link_to "SOGGETTI", anagens_path %> </li>
+                <li> <%= link_to "ARTICOLI", articles_path %> </li>
+                <li> <%= link_to "CITTA'", localitas_path %> </li>
+                <li> <%= link_to "STATI/NAZIONI", paeses_path %> </li>
+                <li> <%= link_to "IVA/ESENZIONI", ivas_path %> </li>
+              </ul>
+            </li>
+            <li class="has-dropdown">
+              <a href="#" class="">CAUSALI</a>
+              <ul class="dropdown">
+                <li> <%= link_to "CONTABILI", causales_path %> </li>
+                <li> <%= link_to "DI MAGAZZINO", causmags_path %> </li>
+              </ul>
+            </li>
+            <li class="has-dropdown">
+              <a href="#" class="">PIANO DEI CONTI</a>
+              <ul class="dropdown">
+                <li> <%= link_to "CLIENTI/FORNITORI", contos_path %> </li>
+              </ul>
+            </li>
           </ul>
-        </li>
-        <li class="has-flyout">
-          <%= link_to "ANAGRAFICA", "#" %>
-          <ul class="flyout">
-            <li> <%= link_to "SOGGETTI", anagens_path %> </li>
-            <li> <%= link_to "ARTICOLI", articles_path %> </li>
-            <li> <%= link_to "CITTA'", localitas_path %> </li>
-            <li> <%= link_to "STATI/NAZIONI", paeses_path %> </li>
-            <li> <%= link_to "IVA/ESENZIONI", ivas_path %> </li>
+          <ul class="right">
+            <li class="divider"></li>
+            <li><%= link_to "ESCI", signout_path, :method => :delete %></li>
+            <li class="divider"></li>
+            <li><%= link_to "CAMBIA ANNO (#{current_annoese.to_s})", new_session_path(:login => current_user.login) %></li>
           </ul>
-        </li>
-        <li class="has-flyout">
-          <%= link_to "CAUSALI", "#" %>
-          <ul class="flyout">
-            <li> <%= link_to "CAUSALI CONTABILI", causales_path %> </li>
-            <li> <%= link_to "CAUSALI MAGAZZINO", causmags_path %> </li>
-          </ul>
-        </li>
-        <li class="has-flyout">
-          <%= link_to "PIANO DEI CONTI", "#" %>
-          <ul class="flyout">
-            <li> <%= link_to "CLIENTI/FORNITORI", contos_path %> </li>
-          </ul>
-        </li>
-        <li style="float:right">
-          <%= link_to "ESCI", signout_path, :method => :delete %>
-        </li>
-        <li style="float:right">
-          <%= link_to "CAMBIA ANNO (#{current_annoese.to_s})", new_session_path(:login => current_user.login) %>
-        </li>
-      </ul>
+        </section>
+      </nav>
     </div>
   <% end %>
 </header>

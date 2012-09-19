@@ -75,7 +75,7 @@ module ApplicationHelper
                     (jQuery.timepicker.regional[\"it\" ]);
                  }
                );
-              </script>"%[key, name, key, name]
+              </script>"%[key, name]
     end
     raw res
   end
