@@ -68,7 +68,7 @@ before_filter :authenticate
     if Anaind.nrmagexist(params[:id].to_i, anaind[:anagen_id].to_i, anaind[:nrmag].to_i)
       flash[:alert] = "Indirizzo gia' esistente per il magazzino: #{anaind[:nrmag]}"
       render :action => :edit
-      elsif not compat_mag(anaind[:flmg],  anaind[:nrmag])
+      elsif not compat_mag(anaind[:flmg],  anaind[:nrmag].to_i)
         flash[:alert] = "Magazzino di riferimento incompatibile con il check: Indirizzo di magazzino"
         render :action => :edit
         elsif @anaind.update_attributes(params[:anaind])
