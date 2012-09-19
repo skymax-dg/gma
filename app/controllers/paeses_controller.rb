@@ -54,6 +54,6 @@ before_filter :authenticate
     rescue
       flash[:alert] = $!.message
     end
-    redirect_to paeses_url
+    redirect_to @paese
   end
 end

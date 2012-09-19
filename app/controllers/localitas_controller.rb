@@ -61,6 +61,6 @@ before_filter :authenticate
     rescue
       flash[:alert] = $!.message
     end
-    redirect_to localitas_url
+    redirect_to @localita
   end
 end

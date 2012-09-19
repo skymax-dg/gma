@@ -183,7 +183,7 @@ before_filter :authenticate
     rescue
       flash[:alert] = $!.message
     end
-    redirect_to articles_url
+    redirect_to @article
   end
 
 end

@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(:version => 20120806140630) do
     t.string   "pariva",      :limit => 11
     t.datetime "created_at",                 :null => false
     t.datetime "updated_at",                 :null => false
-    t.string   "denomin",     :limit => 150
+    t.string   "denomin",     :limit => 150, :null => false
     t.string   "telefono",    :limit => 20
     t.string   "email",       :limit => 50
     t.string   "fax",         :limit => 20

@@ -87,6 +87,6 @@ before_filter :authenticate
     rescue
       flash[:alert] = $!.message
     end
-    redirect_to anagens_url
+    redirect_to @anagen
   end
 end

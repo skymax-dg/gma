@@ -1,0 +1,44 @@
+<%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
+<%= form_tag(:stp_ind_tesdoc, :method => :get) do %>
+  <div class="button-bar">
+    <%= link_to 'Indietro', @tesdoc, :class => "button radius small" %>
+    <%= submit_tag 'STAMPA', :class => "button radius small" %>
+  </div>
+  <%= hidden_field_tag 'tesdoc_id', @tesdoc.id %>
+  <div class="row">
+    <div class="twelve columns">
+      <%= label_tag 'Presso' %>
+      <%= text_field_tag :presso, @presso %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="twelve columns">
+      <%= label_tag 'Prima riga indirizzo' %>
+      <%= text_field_tag :ind1, @ind1 %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="twelve columns">
+      <%= label_tag 'Seconda riga indirizzo' %>
+      <%= text_field_tag :ind2, @ind2 %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="twelve columns">
+      <%= label_tag 'Riferimento telefonico' %>
+      <%= text_field_tag :riftel, @riftel %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="twelve columns">
+      <%= label_tag 'Copie da stampare' %>
+      <%= text_field_tag :copie, @copie %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="twelve columns">
+      <%= label_tag 'Numera ogni pagina' %>
+      <%= check_box_tag :nrcopie, 'S', @nrcopie %>
+    </div>
+  </div>
+<% end %>

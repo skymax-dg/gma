@@ -56,6 +56,28 @@ before_filter :authenticate
     end
   end
 
+  def dati_ind
+    @title = "Stampa Indirizzi"
+    @tesdoc = Tesdoc.find(params[:id])
+
+    @tesdoc.spediz&&@tesdoc.spediz.presso&&(not @tesdoc.spediz.presso.blank?) ? @presso = @tesdoc.spediz.presso : @presso = @tesdoc.conto.anagen.denomin
+    @tesdoc.spediz ? @ind1 = @tesdoc.spediz.dest1 : @ind1 = ""
+    @tesdoc.spediz ? @ind2 = @tesdoc.spediz.dest2 : @ind2 = ""
+    @tesdoc.conto.anagen.telefono ? @riftel = @tesdoc.conto.anagen.telefono : @riftel = ""
+    @tesdoc.spediz ? @copie = @tesdoc.spediz.nrcolli.to_i : @copie = 1
+    @nrcopie = 'S'
+  end
+
+  def stp_ind
+    @presso = params[:presso]
+    @ind1 = params[:ind1]
+    @ind2 = params[:ind2]
+    @riftel = params[:riftel]
+    @copie = params[:copie].to_i
+    @nrcopie = params[:nrcopie]
+    render 'stp_ind.pdf'
+  end
+
   def stp
     @tesdoc   = Tesdoc.find(params[:id])
     @tit_doc  = []
@@ -300,6 +322,6 @@ before_filter :authenticate
     rescue
       flash[:alert] = $!.message
     end
-    redirect_to tesdocs_url
+    redirect_to @tesdoc
   end
 end

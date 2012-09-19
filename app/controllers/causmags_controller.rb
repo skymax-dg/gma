@@ -67,6 +67,6 @@ before_filter :authenticate
     rescue
       flash[:alert] = $!.message
     end
-    redirect_to causmags_url
+    redirect_to @causmag
   end
 end

@@ -53,6 +53,6 @@ class IvasController < ApplicationController
     rescue
       flash[:alert] = $!.message
     end
-    redirect_to ivas_url
+    redirect_to @iva
   end
 end
