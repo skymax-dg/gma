@@ -47,6 +47,12 @@
       <%= f.label "Sito Web" %>
       <%= f.text_field :web %>
     </div>
+    <div class="five columns">
+      <%= f.label "Inserisci Conto Cliente" %>
+      <%= check_box_tag 'ins_conto', 'S', true %>
+    </div>
+    <div class="two columns"></div>
+    <div class="five columns"></div>
     <hr />
     <div class="twelve columns">
       <%= f.submit 'SALVA', :class => "button radius small" %>
