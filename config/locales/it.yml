@@ -124,7 +124,7 @@ it:
         body: "Per favore ricontrolla:"
       messages:
         taken: "e' gia' in uso"
-#        record_invalid: "Validazione fallita: %{errors}"
+        record_invalid: "Validazione fallita: %{errors}"
 #        <<: *errors_messages
         blank: ": Campo Obbligatorio!"
       full_messages:

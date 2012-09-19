@@ -41,7 +41,25 @@ before_filter :authenticate
   def create
     @anagen = Anagen.new(params[:anagen])
     if @anagen.save
-      flash[:success] = 'Anagrafica soggetti creata con successo.'
+      if params[:ins_conto] == 'S'
+        @conto = Conto.new
+        @conto.azienda = current_user.azienda
+        @conto.annoese = current_annoese
+        @conto.codice = Conto.new_codice(@conto.annoese, @conto.azienda)
+        @conto.descriz = @anagen.denomin
+        @conto.tipoconto = 'C'
+        @conto.cntrpartita = nil
+        @conto.sconto = 0
+        @conto.anagen_id = @anagen.id
+        @conto.tipopeo = 'P'
+        if @conto.save
+          flash[:success] = 'Anagrafica soggetti e conto clienti creati con successo.'
+        else
+          flash[:success] = 'Anagrafica soggetti creata con successo. (PROBLEMI DURANTE LA CREAZIONE DEL CONTO CLIENTI)'
+        end
+      else
+        flash[:success] = 'Anagrafica soggetti creata con successo.'
+      end
       redirect_to @anagen
     else
       @title = "Nuovo Soggetto/Societa'"
@@ -70,6 +88,6 @@ before_filter :authenticate
     rescue
       flash[:alert] = $!.message
     end
-    redirect_to anagens_url
+    redirect_to @anagen
   end
 end

@@ -1,0 +1,106 @@
+<div class="row">
+  <div class="two columns">
+    <%= label @spediz, "Aspetto dei beni:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= Spediz::ASPETTO[@spediz.aspetto] %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @spediz, "Porto:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= Spediz::PORTO[@spediz.porto] %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @spediz, "Nr. colli:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= @spediz.nrcolli %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @spediz.corriere, "Corriere:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= Spediz::CORRIERE[@spediz.corriere] %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @spediz, "Valore:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= "#{Spediz::UM[@spediz.um]} #{@spediz.valore}" %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @spediz, "Presso:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= @spediz.presso %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @spediz, "Riferim. indirizzo", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= Anaind.find(@spediz.anaind_id).ind_completo if @spediz.anaind_id %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @spediz, "Destinaz.(riga 1):", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= @spediz.dest1 %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @spediz, "Destinaz.(riga 2):", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= @spediz.dest2 %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @spediz, "Data/ora ritiro:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= "#{@spediz.dtrit.strftime('%d-%m-%Y')} #{@spediz.orarit.strftime("%H:%M")}" if @spediz.dtrit %>
+  </div>
+</div>
+<% if @spediz.tesdoc.causmag.contabile == "S" %>
+  <div class="row">
+    <div class="two columns">
+      <%= label @spediz, "Pagamento", :class => "right" %>
+    </div>
+    <div class="ten columns left">
+      <%= @spediz.pagam %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="two columns">
+      <%= label @spediz, "Banca d'appoggio", :class => "right" %>
+    </div>
+    <div class="ten columns left">
+      <%= @spediz.banca %>
+    </div>
+  </div>
+<% end %>
+<div class="row">
+  <div class="two columns">
+    <%= label @spediz, "Annotazioni", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= @spediz.note %>
+  </div>
+</div>

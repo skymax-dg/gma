@@ -56,5 +56,6 @@ params[:spediz][:dtrit]=params[:spediz][:dtrit].to_my_date if params[:spediz][:d
     rescue
       flash[:alert] = $!.message
     end
+    redirect_to @spediz
   end
 end

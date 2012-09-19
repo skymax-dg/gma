@@ -10,7 +10,7 @@ class AddRemoveColumnToAnagen < ActiveRecord::Migration
     remove_column :anagens, :cognome
     remove_column :anagens, :nome
     remove_column :anagens, :ragsoc
-    add_column :anagens, :denomin, :string, :limit => 150
+    add_column :anagens, :denomin, :string, :limit => 150, :null => false
     add_column :anagens, :telefono, :string, :limit => 20
     add_column :anagens, :email, :string, :limit => 50
     add_column :anagens, :fax, :string, :limit => 20

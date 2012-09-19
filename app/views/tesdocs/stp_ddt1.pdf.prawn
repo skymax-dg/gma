@@ -83,7 +83,10 @@
   #Array Intestazione e righe
   @tb = Array.new(1,["CODICE", "DESCRIZIONE", "Q.TA'"])
   @tqta=0
-  @tesdoc.rigdocs.each {|r|@tb<<[""&&r.article&&r.article.codice, r.descriz, r.qta]&&@tqta+=r.qta}
+  @tesdoc.rigdocs.each do |r|
+    qta = r.qta > 0 ? r.qta : ""
+    @tb<<[""&&r.article&&r.article.codice, r.descriz, qta]&&@tqta+=r.qta
+  end
   @tb << ["TOTALE", "", @tqta]
 
   #Creazione e stampa tabella articoli

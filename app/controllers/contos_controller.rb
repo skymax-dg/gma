@@ -87,6 +87,6 @@ before_filter :authenticate
     rescue
       flash[:alert] = $!.message
     end
-    redirect_to contos_url
+    redirect_to @conto
   end
 end

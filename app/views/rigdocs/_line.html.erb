@@ -1,10 +1,10 @@
 <tr>
   <td><%= line.article.codice unless line.article.nil? %></td>
-  <td><%= line.article.descriz unless line.article.nil? %></td>
-  <td class="float"><%= line.qta %></td>
-  <td class="currency"><%= number_to_currency(line.prezzo) %></td>
-  <td class="float"><%= line.sconto %></td>
-  <td class="currency"><%= number_to_currency(line.qta * line.prezzo) %></td>
+  <td><%= line.descriz %></td>
+  <td class="float"><%= line.qta if line.qta > 0 %></td>
+  <td class="currency"><%= number_to_currency(line.prezzo) if line.qta > 0 %></td>
+  <td class="float"><%= line.sconto if line.qta > 0 %></td>
+  <td class="currency"><%= number_to_currency(line.qta * line.prezzo) if line.qta > 0 %></td>
   <td>
     <%= link_to 'D', line,
                      :class => "button radius tiny", :title => "Dettaglio" %>

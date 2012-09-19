@@ -72,9 +72,15 @@
   @timpon=0
   @timposta=0
   @tesdoc.rigdocs.each do |r|
-    @tb<<[""&&r.article&&r.article.codice, r.descriz, r.qta, 
-          number_with_precision(0&&r.article&&r.article.prezzo), number_with_precision(r.imp_list),
-          number_with_precision(r.prezzo), number_with_precision(r.impon), ""&&r.iva&&r.iva.descriz]
+    if r.qta > 0
+      @tb<<[""&&r.article&&r.article.codice, r.descriz, r.qta, 
+            number_with_precision(0&&r.article&&r.article.prezzo), number_with_precision(r.imp_list),
+            number_with_precision(r.prezzo), number_with_precision(r.impon), ""&&r.iva&&r.iva.descriz]
+    else
+      @tb<<[""&&r.article&&r.article.codice, r.descriz, "", 
+            "", "",
+            "", "", ""&&r.iva&&r.iva.descriz]
+    end
     @tqta+=r.qta
     @timpon+=r.impon
     @tlist+=r.imp_list

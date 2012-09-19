@@ -55,6 +55,6 @@ before_filter :authenticate
     rescue
       flash[:alert] = $!.message
     end
-    redirect_to causales_url
+    redirect_to @causale
   end
 end

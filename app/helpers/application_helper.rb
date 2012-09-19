@@ -49,10 +49,11 @@ module ApplicationHelper
                     (jQuery.datepicker.regional[\"it\" ]);
                   jQuery(\"#%s_%s\").datepicker(\"setDate\", \"#{value}\");
                   jQuery(\"#%s_%s\").datepicker(\"option\",  \"changeYear\", true);
+                  jQuery(\"#%s_%s\").datepicker(\"option\",  \"yearRange\", \"1920:2020\");
                   jQuery(\"#%s_%s\").datepicker(\"option\",  \"readonly\", \"#{readonly}\");
                  }
                );
-              </script>"%[key, name, key, name, key, name, key, name]
+              </script>"%[key, name, key, name, key, name, key, name, key, name]
     end
     if params[:date_time]
       dname = "#{name}_date"
