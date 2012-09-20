@@ -1,8 +1,8 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
 <%= form_tag(:stp_ind_tesdoc, :method => :get) do %>
   <div class="button-bar">
-    <%= link_to 'Indietro', @tesdoc, :class => "button radius small" %>
-    <%= submit_tag 'STAMPA', :class => "button radius small" %>
+    <%= link_to 'INDIETRO', @tesdoc, :class => "button radius small back foundicon-left-arrow" %>
+    <%= submit_tag 'STAMPA', :class => "button radius small print foundicon-graph" %>
   </div>
   <%= hidden_field_tag 'tesdoc_id', @tesdoc.id %>
   <div class="row">

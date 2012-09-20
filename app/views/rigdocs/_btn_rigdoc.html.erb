@@ -1,0 +1,14 @@
+<ul class="button-group">
+  <li>
+    <%= link_to 'NUOVA RIGA', new_rigdoc_path(:id => @tesdoc.id), :class => "button radius small new foundicon-add-doc" %>
+  </li>
+  <li>
+    <%= link_to 'IMPORTA RIGHE', upload_xls_tesdoc_path(:id => @tesdoc.id), :class => "button radius small import foundicon-inbox" %>
+  </li>
+  <li>
+    <%= link_to '1 RIGA PER ARTICOLO', add1row4article_tesdoc_path, :class => "button radius small new foundicon-add-doc" %>
+  </li>
+  <li>
+    <%= link_to 'ELIMINA RIGHE (QTA=0)', delrowqta0_tesdoc_path, :class => "button radius small alert foundicon-remove" %>
+  </li>
+</ul>

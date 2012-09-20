@@ -1,14 +1,14 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
 <ul class="button-group">
   <li>
-    <%= link_to 'Indietro', causales_path, :class => "button radius small" %>
+    <%= link_to 'INDIETRO', causales_path, :class => "button radius small back foundicon-left-arrow" %>
   </li>
   <li>
-    <%= link_to 'Modifica', edit_causale_path(@causale), :class => "button radius small" %>
+    <%= link_to 'MODIFICA', edit_causale_path(@causale), :class => "button radius small modify foundicon-edit" %>
   </li>
   <li>
-    <%= link_to 'Elimina', @causale, :confirm => 'Confermi eliminazione?',
-                                     :method => :delete, :class => "button radius small alert" %>
+    <%= link_to 'ELIMINA', @causale, :confirm => 'Confermi eliminazione?',
+                                     :method => :delete, :class => "button radius small alert foundicon-remove" %>
   </li>
 </ul>
 <div class="row">

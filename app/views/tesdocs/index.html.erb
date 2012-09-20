@@ -1,14 +1,16 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
 <ul class="button-group">
   <li>
-    <%= link_to 'Aggiungi documento', new_tesdoc_path(:causmag => @causmagfilter||"",
-                                                      :conto   => @contofilter||""), :remote => true,
-                                                      :class => "button radius small" %>
+    <%= link_to 'AGGIUNGI DOC.', new_tesdoc_path(:causmag => @causmagfilter||"",
+                                                 :conto   => @contofilter||""), :remote => true,
+                                                 :class => "button radius small new foundicon-add-doc" %>
   </li>
+<!--
   <li>
-    <%= link_to 'Carica Testate e righe doc', addtesrigdoc_fromxls_tesdocs_path, 
-                :confirm => 'Confermi caricamento da Exel?', :class => "button radius small" %>
+    <%= link_to 'IMPORTA DOCUMENTO', addtesrigdoc_fromxls_tesdocs_path, 
+                :confirm => 'Confermi caricamento da Exel?', :class => "button radius small import foundicon-inbox" %>
   </li>
+-->
 </ul>
 <%= render :partial => 'filter' %>
 <% unless @tesdocs.nil?||@tesdocs.empty? %>

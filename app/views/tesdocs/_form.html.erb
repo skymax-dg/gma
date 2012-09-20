@@ -80,7 +80,8 @@
       <%= f.number_field :sconto %>
     </div>
     <div class="twelve columns">
-      <%= f.submit "SALVA TESTATA", :class => "button radius small success" %>
+      <%= f.submit "SALVA", :class => "button radius small success foundicon-checkmark" %>
+      <%= link_to 'ANNULLA', :back, :class => "button radius small alert foundicon-trash" %>
     </div>
   </div>
 <% end %>

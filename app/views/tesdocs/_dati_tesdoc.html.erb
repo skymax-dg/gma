@@ -1,0 +1,98 @@
+<div class="row">
+  <div class="two columns">
+    <%= label @tesdoc, "Anno:", :class => "right" %>
+  </div>
+  <div class="four columns">
+    <%= @tesdoc.annoese %>
+  </div>
+  <div class="two columns">
+    <%= label @tesdoc, "Tipo documento:", :class => "right" %>
+  </div>
+  <div class="four columns">
+    <%= Tesdoc::TIPO_DOC[@tesdoc.tipo_doc] %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @tesdoc, "Nr documento:", :class => "right" %>
+  </div>
+  <div class="four columns">
+    <%= @tesdoc.num_doc %>
+  </div>
+  <div class="two columns">
+    <%= label @tesdoc, "Data documento:", :class => "right" %>
+  </div>
+  <div class="four columns">
+    <%= @tesdoc.data_doc.strftime('%d-%m-%Y') %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @tesdoc, "Descrizione:", :class => "right" %>
+  </div>
+  <div class="four columns">
+    <%= @tesdoc.descriz %>
+  </div>
+  <div class="two columns">
+    <%= label @tesdoc, "Causale:", :class => "right" %>
+  </div>
+  <div class="four columns">
+    <%= @tesdoc.causmag.descriz %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @tesdoc, "Conto anagrafica:", :class => "right" %>
+  </div>
+  <div class="four  columns">
+    <%= @tesdoc.conto.descriz %>
+  </div>
+  <div class="two columns">
+    <%= label @tesdoc, "Codice conto:", :class => "right" %>
+  </div>
+  <div class="four columns">
+    <%= @tesdoc.conto.codice %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @tesdoc, "Mag origine:", :class => "right" %>
+  </div>
+  <div class="four columns">
+    <%= Tesdoc::NRMAG[@tesdoc.nrmagsrc] %>
+  </div>
+  <div class="two columns">
+    <%= label @tesdoc, "Mag destinazione:", :class => "right" %>
+  </div>
+  <div class="four columns">
+    <%= Tesdoc::NRMAG[@tesdoc.nrmagdst] %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @tesdoc, "Segue fattura:", :class => "right" %>
+  </div>
+  <div class="four columns">
+    <%= Tesdoc::SEGUEFATT[@tesdoc.seguefatt] %>
+  </div>
+  <div class="two columns">
+    <%= label @tesdoc, "Sconto:", :class => "right" %>
+  </div>
+  <div class="four columns">
+    <%= @tesdoc.sconto %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @tesdoc, "Iva:", :class => "right" %>
+  </div>
+  <div class="four columns">
+    <% @tesdoc.iva.nil? ? "" : @tesdoc.iva.descriz %>
+  </div>
+  <div class="two columns">
+    <%= label @tesdoc, "Totale imponibile:", :class => "right" %>
+  </div>
+  <div class="four columns">
+    <%= number_to_currency(@tesdoc.imponibile) %>
+  </div>
+</div>

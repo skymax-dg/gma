@@ -1,14 +1,14 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
 <ul class="button-group">
   <li>
-    <%= link_to 'Indietro', @anaind.anagen, :class => "button radius small" %>
+    <%= link_to 'INDIETRO', @anaind.anagen, :class => "button radius small back foundicon-left-arrow" %>
   </li>
   <li>
-    <%= link_to 'Modifica', edit_anaind_path, :class => "button radius small" %>
+    <%= link_to 'MODIFICA', edit_anaind_path, :class => "button radius small modify foundicon-edit" %>
   </li>
   <li>
-    <%= link_to 'Elimina', @anaind, :confirm => 'Confermi eliminazione?',
-                                    :method => :delete, :class => "button radius small alert" %>
+    <%= link_to 'ELIMINA', @anaind, :confirm => 'Confermi eliminazione?',
+                                    :method => :delete, :class => "button radius small alert foundicon-remove" %>
   </li>
 </ul>
 <div class="row">

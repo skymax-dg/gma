@@ -2,14 +2,14 @@
 <div class="button-bar">
   <ul class="button-group">
     <li>
-      <%= link_to 'Indietro', articles_path, :class => "button radius small" %>
+      <%= link_to 'INDIETRO', articles_path, :class => "button radius small back foundicon-left-arrow" %>
     </li>
     <li>
-      <%= link_to 'Modifica', edit_article_path(@article), :class => "button radius small" %>
+      <%= link_to 'MODIFICA', edit_article_path(@article), :class => "button radius small modify foundicon-edit" %>
     </li>
     <li>
-      <%= link_to 'Elimina', @article, :confirm => 'Confermi eliminazione?',
-                                       :method => :delete, :class => "button radius small alert" %>
+      <%= link_to 'ELIMINA', @article, :confirm => 'Confermi eliminazione?',
+                                       :method => :delete, :class => "button radius small alert foundicon-remove" %>
     </li>
   </ul>
   <%= render :partial => 'btn_stp' %>

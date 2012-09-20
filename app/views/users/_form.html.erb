@@ -19,7 +19,8 @@
       <%= select(:user, :azienda, (StaticData::ELNCAZND).invert.sort) %>
     </div>
     <div class="twelve columns">
-      <%= f.submit 'SALVA', :class => "button radius small success" %>
+      <%= f.submit 'SALVA', :class => "button radius small success foundicon-checkmark" %>
+      <%= link_to 'ANNULLA', users_path, :class => "button radius small cancel foundicon-trash" %>
     </div>
   </div>
 <% end %>

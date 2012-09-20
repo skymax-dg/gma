@@ -1,7 +1,7 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => @user} %>
 <ul class="button-group">
   <li>
-    <%= link_to "Nuovo Utente", new_user_path, :class => "button radius small" %>
+    <%= link_to "NUOVO", new_user_path, :class => "button radius small new foundicon-add-doc" %>
   </li>
 </ul>
 <%= form_for(:session, :url => sessions_path) do |f| %>

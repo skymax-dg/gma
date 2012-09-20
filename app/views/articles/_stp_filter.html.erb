@@ -20,11 +20,12 @@
     <div class="one columns">
       <%= label_tag url, "Cliente:", :class=>"right" %>
     </div>
-    <div class="eleven columns">
+    <div class="five columns">
       <%= select_tag(:idanagen,
                      options_from_collection_for_select(@anagens, :id, :denomin),
                      {:include_blank => true}) unless @anagens.nil?%>
     </div>
+    <div class="six columns"></div>
   </div>
   <div class="row">
     <div class="one columns">
@@ -47,13 +48,14 @@
     <div class="one columns">
       <%= label_tag url, "Magazz:", :class=>"right" %>
     </div>
-    <div class="eleven columns">
+    <div class="five columns">
       <%= select_tag(:nrmag, options_for_select(mag.invert.sort), {:include_blank => true, :selected => "", :disabled => @tp=="V"}) %>
     </div>
+    <div class="six columns"></div>
     <div class="twelve columns">
-      <%= submit_tag sub_label, :class => "button radius small" %>
+      <%= submit_tag 'STAMPA', :class => "button radius small print foundicon-graph" %>
 
-      <%= link_to 'Indietro', url_back, :class => "button radius small" %>
+      <%= link_to 'INDIETRO', url_back, :class => "button radius small back foundicon-left-arrow" %>
     </div>
   </div>
 <% end %>

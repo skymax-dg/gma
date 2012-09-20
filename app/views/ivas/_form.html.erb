@@ -24,8 +24,9 @@
       <%= check_box :iva, :flese, {}, 'S', 'N' %>
     </div>
     <div class="twelve columns">
-      <%= f.submit "SALVA", :class => "button radius small success" %>
-      <%= link_to 'ANNULLA', ivas_path, :class => "button radius small alert" %>
+      <%= f.submit "SALVA", :class => "button radius small success foundicon-checkmark" %>
+      <%= link_to 'ANNULLA', :back, :class => "button radius small alert foundicon-trash" %>
+      <%#= link_to 'ANNULLA', ivas_path, :class => "button radius small alert" %>
     </div>
   </div>
 <% end %>

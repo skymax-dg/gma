@@ -7,7 +7,7 @@
           <!-- Title Area -->
           <li class="name">
           <h1>
-            <a href="#">G.M.A.</a>
+            <a href="#" class="foundicon-globe">G.M.A.</a>
           </h1>
           </li>
           <li class="toggle-topbar"><a href="#"></a></li>
@@ -18,7 +18,7 @@
           <ul class="left">
             <li class="divider"></li>
             <li class="has-dropdown">
-              <a href="#" class="">
+              <a href="#" class="foundicon-add-doc">
                 DOCUMENTI
               </a>
               <ul class="dropdown">
@@ -28,7 +28,7 @@
               </ul>
             </li>
             <li class="has-dropdown">
-              <a href="#" class="">ANAGRAFICA</a>
+              <a href="#" class="foundicon-address-book">ANAGRAFICA</a>
               <ul class="dropdown">
                 <li> <%= link_to "SOGGETTI", anagens_path %> </li>
                 <li> <%= link_to "ARTICOLI", articles_path %> </li>
@@ -38,14 +38,14 @@
               </ul>
             </li>
             <li class="has-dropdown">
-              <a href="#" class="">CAUSALI</a>
+              <a href="#" class="foundicon-settings">CAUSALI</a>
               <ul class="dropdown">
                 <li> <%= link_to "CONTABILI", causales_path %> </li>
                 <li> <%= link_to "DI MAGAZZINO", causmags_path %> </li>
               </ul>
             </li>
             <li class="has-dropdown">
-              <a href="#" class="">PIANO DEI CONTI</a>
+              <a href="#" class="foundicon-edit">PIANO DEI CONTI</a>
               <ul class="dropdown">
                 <li> <%= link_to "CLIENTI/FORNITORI", contos_path %> </li>
               </ul>
@@ -53,9 +53,9 @@
           </ul>
           <ul class="right">
             <li class="divider"></li>
-            <li><%= link_to "ESCI", signout_path, :method => :delete %></li>
+            <li><%= link_to "ESCI", signout_path, :method => :delete, :class=> "foundicon-left-arrow" %></li>
             <li class="divider"></li>
-            <li><%= link_to "CAMBIA ANNO (#{current_annoese.to_s})", new_session_path(:login => current_user.login) %></li>
+            <li><%= link_to "CAMBIA ANNO (#{current_annoese.to_s})", new_session_path(:login => current_user.login), :class=> "foundicon-refresh" %></li>
           </ul>
         </section>
       </nav>

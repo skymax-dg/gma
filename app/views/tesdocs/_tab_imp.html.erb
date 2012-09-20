@@ -1,0 +1,29 @@
+<table>
+  <thead>
+    <tr>
+      <th width="20%">Categoria</th>
+      <th width="31%">Tipo imponibile</th>
+      <th class="currency" width="13%">Imponibile</th>
+      <th class="float" width="09%">Aliquota</th>
+      <th class="currency" width="11%">Imposta</th>
+      <th class="currency" width="16%">Totale</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @subtot_iva.each_key do |categ| %>
+      <% @subtot_iva[categ].each_key do |idiva| %>
+        <%= render :partial => 'line_impon', :locals => {:categ=>categ, :subtot=>@subtot_iva[categ][idiva]} unless idiva == :T %>
+      <% end %>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td><b>TOTALI:</b></td>
+      <td></td>
+      <td class="currency"><b><%= number_to_currency(@subtot_iva[:T][:T][:impon]) %></b></td>
+      <td></td>
+      <td class="currency"><b><%= number_to_currency(@subtot_iva[:T][:T][:imposta]) %></b></td>
+      <td class="currency"><b><%= number_to_currency(@subtot_iva[:T][:T][:tot]) %></b></td>
+    </tr>
+  </tfoot>
+</table>

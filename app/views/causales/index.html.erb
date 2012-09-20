@@ -1,15 +1,15 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
 <ul class="button-group">
   <li>
-    <%= link_to 'Nuova Causale', new_causale_path, :class => "button radius small" %>
+    <%= link_to 'NUOVA', new_causale_path, :class => "button radius small new foundicon-add-doc" %>
   </li>
 </ul>
 <% unless @causales.nil?||@causales.empty? %>
   <table>
     <thead>
       <tr>
-        <th width="50%">Descrizione</th>
-        <th width="11%">Tipo REG</th>
+        <th width="48%">Descrizione</th>
+        <th width="13%">Tipo REG</th>
         <th width="11%">Tipo IVA</th>
         <th width="13%">Conto IVA</th>
         <th width="15%"></th>

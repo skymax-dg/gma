@@ -1,0 +1,30 @@
+<div class="button-bar">
+  <ul class="button-group">
+    <li>
+      <%= link_to 'INDIETRO',
+                  {:controller => :tesdocs,  :action => 'index', 
+                                             :tipo_doc => se_tipo_doc},
+                  :class => "button radius small back foundicon-left-arrow" %>
+    </li>
+    <li>
+      <%= link_to 'MODIFICA TESTATA', edit_tesdoc_path, :class => "button radius small modify foundicon-edit" %>
+    </li>
+    <li>
+      <%= link_to 'NUOVO', new_tesdoc_path(:causmag => @tesdoc.causmag_id||"",
+                                                        :conto => @tesdoc.conto_id||""),
+                  :class => "button radius small new foundicon-add-doc" %>
+    </li>
+    <li>
+      <%= link_to 'ELIMINA', @tesdoc, :confirm => 'Confermi eliminazione?',
+                                      :method => :delete, :class => "button radius small alert foundicon-remove" %>
+    </li>
+  </ul>
+  <ul class="button-group">
+    <li>
+      <%= link_to 'STAMPA DOC.', stp_tesdoc_path, :class => "button radius small print foundicon-graph" %>
+    </li>
+    <li>
+      <%= link_to 'STAMPA ETICHETTE', dati_ind_tesdoc_path, :class => "button radius small print foundicon-graph" %>
+    </li>
+  </ul>
+</div>

@@ -6,11 +6,11 @@
   <td class="float"><%= line.sconto if line.qta > 0 %></td>
   <td class="currency"><%= number_to_currency(line.qta * line.prezzo) if line.qta > 0 %></td>
   <td>
-    <%= link_to 'D', line,
-                     :class => "button radius tiny", :title => "Dettaglio" %>
-    <%= link_to 'S', up_rigdoc_path(:id=>line.id, :page=>@page),
-                     :class => "button radius tiny", :title => "Sposta su'" %>
-    <%= link_to 'G', down_rigdoc_path(:id => line.id, :page=>@page),
-                     :class => "button radius tiny", :title => "Sposta giu'" %>
+    <%= link_to '', line,
+                     :class => "button radius tiny detail foundicon-plus", :title => "Dettaglio" %>
+    <%= link_to '', up_rigdoc_path(:id=>line.id, :page=>@page),
+                     :class => "button radius tiny moveup foundicon-up-arrow", :title => "Sposta su'" %>
+    <%= link_to '', down_rigdoc_path(:id => line.id, :page=>@page),
+                     :class => "button radius tiny movedown foundicon-down-arrow", :title => "Sposta giu'" %>
   </td>
 </tr>

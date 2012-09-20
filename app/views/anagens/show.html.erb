@@ -3,19 +3,19 @@
   <div class="twelve columns button-bar">
     <ul class="button-group">
       <li>
-        <%= link_to 'Indietro', anagens_path, :class => "button radius small" %>
+        <%= link_to 'INDIETRO', anagens_path, :class => "button radius small cancel foundicon-left-arrow" %>
       </li>
       <li>
-        <%= link_to 'Modifica anagrafica', edit_anagen_path(@anagen), :class => "button radius small" %>
+        <%= link_to 'MODIFICA', edit_anagen_path(@anagen), :class => "button radius small modify foundicon-edit" %>
       </li>
       <li>
-        <%= link_to 'Elimina anagrafica', @anagen, :confirm => 'Confermi eliminazione?',
-                                                   :method => :delete, :class => "button radius small alert" %>
+        <%= link_to 'ELIMINA', @anagen, :confirm => 'Confermi eliminazione?',
+                                        :method => :delete, :class => "button radius small alert foundicon-remove" %>
       </li>
     </ul>
     <ul class="button-group">
       <li>
-        <%= link_to 'Aggiungi indirizzo', new_anaind_path(:id => @anagen.id), :class => "button radius small" %>
+        <%= link_to 'AGGIUNGI INDIRIZZO', new_anaind_path(:id => @anagen.id), :class => "button radius small new foundicon-add-doc" %>
       </li>
     </ul>
   </div>

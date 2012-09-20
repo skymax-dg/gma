@@ -79,7 +79,8 @@
       <%= f.text_area(:note, :rows => 8) %>
     </div>
     <div class="twelve columns">
-      <%= f.submit 'SALVA', :class => "button radius small success" %>
+      <%= f.submit 'SALVA', :class => "button radius small success foundicon-checkmark" %>
+      <%= link_to 'ANNULLA', :back, :class => "button radius small alert foundicon-trash" %>
     </div>
   </div>
 <% end %>

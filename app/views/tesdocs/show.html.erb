@@ -1,222 +1,28 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
-<div class="button-bar">
-  <ul class="button-group">
-    <li>
-      <%= link_to 'Indietro',
-                  {:controller => :tesdocs,  :action => 'index', 
-                                             :tipo_doc => se_tipo_doc},
-                  :class => "button radius small" %>
-    </li>
-    <li>
-      <%= link_to 'Modifica testata', edit_tesdoc_path, :class => "button radius small" %>
-    </li>
-    <li>
-      <%= link_to 'Aggiungi documento', new_tesdoc_path(:causmag => @tesdoc.causmag_id||"",
-                                                        :conto => @tesdoc.conto_id||""),
-                  :class => "button radius small" %>
-    </li>
-    <li>
-      <%= link_to 'Elimina documento', @tesdoc, :confirm => 'Confermi eliminazione?',
-                                      :method => :delete, :class => "button radius small" %>
-    </li>
-  </ul>
-  <ul class="button-group">
-    <li>
-      <%= link_to 'Stampa documento', stp_tesdoc_path, :class => "button radius small" %>
-    </li>
-    <li>
-      <%= link_to 'Stampa etichette', dati_ind_tesdoc_path, :class => "button radius small" %>
-    </li>
-  </ul>
-</div>
-<div class="row">
-  <div class="two columns">
-    <%= label @tesdoc, "Anno:", :class => "right" %>
-  </div>
-  <div class="four columns">
-    <%= @tesdoc.annoese %>
-  </div>
-  <div class="two columns">
-    <%= label @tesdoc, "Tipo documento:", :class => "right" %>
-  </div>
-  <div class="four columns">
-    <%= Tesdoc::TIPO_DOC[@tesdoc.tipo_doc] %>
-  </div>
-</div>
-<div class="row">
-  <div class="two columns">
-    <%= label @tesdoc, "Nr documento:", :class => "right" %>
-  </div>
-  <div class="four columns">
-    <%= @tesdoc.num_doc %>
-  </div>
-  <div class="two columns">
-    <%= label @tesdoc, "Data documento:", :class => "right" %>
-  </div>
-  <div class="four columns">
-    <%= @tesdoc.data_doc.strftime('%d-%m-%Y') %>
-  </div>
-</div>
-<div class="row">
-  <div class="two columns">
-    <%= label @tesdoc, "Descrizione:", :class => "right" %>
-  </div>
-  <div class="four columns">
-    <%= @tesdoc.descriz %>
-  </div>
-  <div class="two columns">
-    <%= label @tesdoc, "Causale:", :class => "right" %>
-  </div>
-  <div class="four columns">
-    <%= @tesdoc.causmag.descriz %>
-  </div>
-</div>
-<div class="row">
-  <div class="two columns">
-    <%= label @tesdoc, "Conto anagrafica:", :class => "right" %>
-  </div>
-  <div class="four  columns">
-    <%= @tesdoc.conto.descriz %>
-  </div>
-  <div class="two columns">
-    <%= label @tesdoc, "Codice conto:", :class => "right" %>
-  </div>
-  <div class="four columns">
-    <%= @tesdoc.conto.codice %>
-  </div>
-</div>
-<div class="row">
-  <div class="two columns">
-    <%= label @tesdoc, "Mag origine:", :class => "right" %>
-  </div>
-  <div class="four columns">
-    <%= Tesdoc::NRMAG[@tesdoc.nrmagsrc] %>
-  </div>
-  <div class="two columns">
-    <%= label @tesdoc, "Mag destinazione:", :class => "right" %>
-  </div>
-  <div class="four columns">
-    <%= Tesdoc::NRMAG[@tesdoc.nrmagdst] %>
-  </div>
-</div>
-<div class="row">
-  <div class="two columns">
-    <%= label @tesdoc, "Segue fattura:", :class => "right" %>
-  </div>
-  <div class="four columns">
-    <%= Tesdoc::SEGUEFATT[@tesdoc.seguefatt] %>
-  </div>
-  <div class="two columns">
-    <%= label @tesdoc, "Sconto:", :class => "right" %>
-  </div>
-  <div class="four columns">
-    <%= @tesdoc.sconto %>
-  </div>
-</div>
-<div class="row">
-  <div class="two columns">
-    <%= label @tesdoc, "Iva:", :class => "right" %>
-  </div>
-  <div class="four columns">
-    <% @tesdoc.iva.nil? ? "" : @tesdoc.iva.descriz %>
-  </div>
-  <div class="two columns">
-    <%= label @tesdoc, "Totale imponibile:", :class => "right" %>
-  </div>
-  <div class="four columns">
-    <%= number_to_currency(@tesdoc.imponibile) %>
-  </div>
-</div>
+<%= render :partial => 'btn_tesdoc' %>
+<%= render :partial => 'dati_tesdoc' %>
 <hr />
-<table>
-  <thead>
-    <tr>
-      <th width="20%">Categoria</th>
-      <th width="31%">Tipo imponibile</th>
-      <th class="currency" width="13%">Imponibile</th>
-      <th class="float" width="09%">Aliquota</th>
-      <th class="currency" width="11%">Imposta</th>
-      <th class="currency" width="16%">Totale</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @subtot_iva.each_key do |categ| %>
-      <% @subtot_iva[categ].each_key do |idiva| %>
-        <%= render :partial => 'tot_impon', :locals => {:categ=>categ, :subtot=>@subtot_iva[categ][idiva]} unless idiva == :T %>
-      <% end %>
-    <% end %>
-  </tbody>
-  <tfoot>
-    <tr>
-      <td><b>TOTALI:</b></td>
-      <td></td>
-      <td class="currency"><b><%= number_to_currency(@subtot_iva[:T][:T][:impon]) %></b></td>
-      <td></td>
-      <td class="currency"><b><%= number_to_currency(@subtot_iva[:T][:T][:imposta]) %></b></td>
-      <td class="currency"><b><%= number_to_currency(@subtot_iva[:T][:T][:tot]) %></b></td>
-    </tr>
-  </tfoot>
-</table>
-
-
-
 <dl class="tabs">
   <dd class="active"><a href="#listrow">Elenco righe</a></dd>
   <dd>
-    <%#= link_to 'Dati spediz./pagam.', ges_datisped_tesdoc_path, :class => "button radius small" %>
-    <a href="#sped_pag">Spedizione/Pagamento</a>
+    <a href="#sped">Spedizione/Pagamento</a>
+  </dd>
+  <dd>
+    <a href="#tot_imp">Totali Imponibili</a>
   </dd>
 </dl>
 
-
-
-
 <ul class="tabs-content">
-  <li class="active" id="listrowTab">
-    <ul class="button-group">
-      <li>
-        <%= link_to 'Aggiungi riga', new_rigdoc_path(:id => @tesdoc.id), :class => "button radius small" %>
-      </li>
-      <li>
-        <%= link_to 'Carica righe da file', upload_xls_tesdoc_path(:id => @tesdoc.id), :class => "button radius small" %>
-      </li>
-      <li>
-        <%= link_to '1 riga per articolo', add1row4article_tesdoc_path, :class => "button radius small" %>
-      </li>
-      <li>
-        <%= link_to 'Canc.righe con qta=0', delrowqta0_tesdoc_path, :class => "button radius small" %>
-      </li>
-    </ul>
-    <% unless @rigdocs.nil?||@rigdocs.empty? %>
-      <table class="full-tab">
-        <thead>
-          <tr>
-            <th width="17%"> Codice articolo </th>
-            <th width="40%"> Descrizione</th>
-            <th class="numeric" width="5%"> Qta'</th>
-            <th class="numeric" width="10%"> Prezzo </th>
-            <th class="numeric" width="5%"> Scn </th>
-            <th class="numeric" width="10%"> Imponibile </th>
-            <th width="13%"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <%= render :partial => '/rigdocs/line', :collection => @rigdocs %>
-        </tbody>
-      </table>
-      <%= will_paginate @rigdocs %>
-    <% end %>
+  <li id="tot_impTab">
+    <%= render :partial => 'tab_imp' %>
   </li>
-  <li id="sped_pagTab">
-      <ul class="button-group">
-        <li>
-          <% if @spediz %>
-            <%= link_to 'Modifica spediz./pagam.', ges_datisped_tesdoc_path, :class => "button radius small" %>
-          <% else %>
-            <%= link_to 'Inserisci spediz./pagam.', ges_datisped_tesdoc_path, :class => "button radius small" %>
-          <% end %>
-        </li>
-      </ul>
+
+  <li class="active" id="listrowTab">
+    <%= render :partial => '/rigdocs/btn_rigdoc' %>
+    <%= render :partial => '/rigdocs/tab_rigdoc' %>
+  </li>
+  <li id="spedTab">
+    <%= render :partial => '/spedizs/btn_spediz' %>
     <% if @spediz %>
       <%= render '/spedizs/show' %>
     <% end %>

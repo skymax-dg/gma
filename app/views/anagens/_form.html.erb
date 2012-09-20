@@ -57,8 +57,9 @@
     <% end %> 
     <hr />
     <div class="twelve columns">
-      <%= f.submit 'SALVA', :class => "button radius small success" %>
-      <%= link_to 'ANNULLA', anagens_path, :class => "button radius small alert" %>
+      <%= f.submit 'SALVA', :class => "button radius small success foundicon-checkmark" %>
+      <%#= link_to 'ANNULLA', anagens_path, :class => "button radius small alert" %>
+      <%= link_to 'ANNULLA', :back, :class => "button radius small alert foundicon-trash" %>
     </div>
   </div>
 <% end %>

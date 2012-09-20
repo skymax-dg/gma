@@ -12,8 +12,8 @@ before_filter :authenticate
   end
 
   def index
-    @title = "Elenco Documenti (#{Causmag::TIPO_DOC[se_tipo_doc.to_i]})"
     store_tipo_doc(params[:tipo_doc])
+    @title = "Elenco Documenti (#{Causmag::TIPO_DOC[se_tipo_doc.to_i]})"
     init_filter(current_user.azienda)
   end
 
@@ -258,7 +258,7 @@ before_filter :authenticate
           @tesdoc.sconto = @conto.sconto
           @tesdoc.tipo_doc = @causmag.tipo_doc
           @tesdoc.num_doc = Tesdoc.new_num_doc(@tesdoc.tipo_doc, @tesdoc.annoese, @tesdoc.azienda)
-@spediz = @tesdoc.build_spediz # La Build valorizza automaticamente il campo spediz.tesdoc_id
+          @spediz = @tesdoc.build_spediz # La Build valorizza automaticamente il campo spediz.tesdoc_id
         end
       end
       format.js
@@ -268,9 +268,8 @@ before_filter :authenticate
   def show
     @title = "Mostra Documento (#{Causmag::TIPO_DOC[se_tipo_doc.to_i]})"
     @tesdoc = Tesdoc.find(params[:id])
-@spediz = @tesdoc.spediz
+    @spediz = @tesdoc.spediz
     @page = params[:page]
-#    aaa
     @rigdocs = @tesdoc.rigdocs.sort{|a,b|a.prgrig<=>b.prgrig}
     @rigdocs = @rigdocs.paginate(:page => @page, :per_page => 10)
     @subtot_iva = @tesdoc.subtot_iva
@@ -280,7 +279,7 @@ before_filter :authenticate
     @title = "Modifica Testata documento (#{Causmag::TIPO_DOC[se_tipo_doc.to_i]})"
     @act_new = 0
     @tesdoc  = Tesdoc.find(params[:id])
-@spediz = @tesdoc.spediz
+    @spediz = @tesdoc.spediz
     @causmag = Causmag.find(@tesdoc.causmag_id)
     @conto   = Conto.find(@tesdoc.conto_id)
   end

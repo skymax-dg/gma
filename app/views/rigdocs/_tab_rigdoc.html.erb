@@ -1,0 +1,19 @@
+<% unless @rigdocs.nil?||@rigdocs.empty? %>
+  <table class="full-tab">
+    <thead>
+      <tr>
+        <th width="17%"> Codice articolo </th>
+        <th width="38%"> Descrizione</th>
+        <th class="numeric" width="5%"> Qta'</th>
+        <th class="numeric" width="10%"> Prezzo </th>
+        <th class="numeric" width="5%"> Scn </th>
+        <th class="numeric" width="10%"> Imponibile </th>
+        <th width="15%"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render :partial => '/rigdocs/line', :collection => @rigdocs %>
+    </tbody>
+  </table>
+  <%= will_paginate @rigdocs %>
+<% end %>

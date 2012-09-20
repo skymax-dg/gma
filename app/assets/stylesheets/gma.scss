@@ -26,14 +26,12 @@
 
 /* Alex */
 
+/*
 .large-icons
 {
-  display: block;
-  line-height: 1.4;
-  text-align: center;
-  font-size: 20px;
+  font-size: 28px;
 }
-
+*/
 
 /* Setto la larghezza giusta per i campi date_field e time_field
    le variabili $datefield e $timefield devono essere aggiornate
@@ -68,7 +66,7 @@ $wminute: 40px;
 /* Sulla table html si deve aver classificato il tipo di campo se: intero, decimale o valuta */
 table {
   thead tr th, tbody tr td, tfoot tr td {
-    padding:0px 10px;
+    padding:5px 10px;
     &.float, &.integer, &.currency {
       text-align: right;}}}
 
