@@ -75,6 +75,12 @@ label
   font-weight: bold;
 }
 
+div.row > div.columns > div.row > div.columns > label
+/* Serve a spaziare le righe sulla show */
+{
+  margin-bottom: 8px;
+}
+
 hr
 {
   margin: 10px;
@@ -83,7 +89,7 @@ hr
 select
 {
   margin-bottom: 10px;
-  height:20px !important;
+  height:25px !important;
 }
 
 fieldset
@@ -95,7 +101,7 @@ fieldset
 input[type="text"],input[type="password"],input[type="date"],input[type="datetime"],input[type="email"],input[type="number"],input[type="search"],input[type="tel"],input[type="time"],input[type="url"]
 {
   padding:2px;
-  height:20px;
+  height:25px;
 }
 
 div.panel
