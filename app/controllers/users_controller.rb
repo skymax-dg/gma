@@ -1,7 +1,10 @@
 # encoding: utf-8
 class UsersController < ApplicationController
-before_filter :authenticate, :except => [:new, :create]
- def new
+
+  before_filter :authenticate, :except => [:new, :create]
+  before_filter :force_fieldcase, :only => [:create, :update]
+
+  def new
     @title = "Creazione utente"
     @user = User.new
   end
@@ -62,5 +65,10 @@ before_filter :authenticate, :except => [:new, :create]
       @user = User.find(params[:id])
       redirect_to root_path, 
                   :alert => "Nome utente e password non trovate" unless current_user?(@user) 
+    end
+
+  private
+    def force_fieldcase
+      set_fieldcase(:user, [:login], [])
     end
 end

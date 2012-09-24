@@ -1,4 +1,8 @@
 class SpedizsController < ApplicationController
+
+  before_filter :authenticate
+  before_filter :force_fieldcase, :only => [:create, :update]
+
   def setind
     @anaind = Anaind.find(params[:spediz][:anaind_id])
     @des1 = @anaind.indir.strip
@@ -25,11 +29,11 @@ class SpedizsController < ApplicationController
     params[:spediz][:dtrit]=params[:spediz][:dtrit].to_my_date if params[:spediz][:dtrit].is_date?
     @spediz = Tesdoc.find(params[:spediz][:tesdoc_id]).build_spediz(params[:spediz])
     if @spediz.save
-      flash[:success] = 'Dati spedizione inseriti con successo.'
+      flash[:success] = "Dati spedizione inseriti con successo."
       redirect_to @spediz.tesdoc
     else
       @title = "Inserisci Dati spedizione/pagamento"
-#      flash[:alert] = "Il salvataggio dei dati spedizione non e' andato a buon fine"
+#      flash.now[:alert] = "Il salvataggio dei dati spedizione non e' andato a buon fine"
       render 'new'
     end
   end
@@ -39,11 +43,11 @@ class SpedizsController < ApplicationController
 params[:spediz][:dtrit]=params[:spediz][:dtrit].to_my_date if params[:spediz][:dtrit].is_date?
     @spediz = Spediz.find(params[:id])
     if @spediz.update_attributes(params[:spediz])
-      flash[:success] = 'Dati spedizione aggiornati.'
+      flash[:success] = "Dati spedizione aggiornati."
       redirect_to @spediz.tesdoc
     else
       @title = "Modifica Dati spedizione/pagamento"
-#      flash[:alert] = "Il salvataggio dei dati spedizione non e' andato a buon fine"
+#      flash.now[:alert] = "Il salvataggio dei dati spedizione non e' andato a buon fine"
       render :action => "edit"
     end
   end
@@ -58,4 +62,9 @@ params[:spediz][:dtrit]=params[:spediz][:dtrit].to_my_date if params[:spediz][:d
     end
     redirect_to @spediz
   end
+
+  private
+    def force_fieldcase
+      set_fieldcase(:spediz, [:pagamento, :banca], [])
+    end
 end

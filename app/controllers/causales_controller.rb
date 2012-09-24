@@ -2,9 +2,11 @@ class CausalesController < ApplicationController
 before_filter :authenticate
   def index
     @title = "Elenco Causali contabili"
+    flash_cnt(Causale.count) if params[:page].nil?
     @causales = Causale.azienda(current_user.azienda).paginate(:page => params[:page], 
                                                                :per_page => 10,
                                                                :order => [:descriz])
+store_location
   end
 
   def show
@@ -30,7 +32,7 @@ before_filter :authenticate
       redirect_to @causale
     else
       @title = "Nuova Causale contabile"
-#      flash[:alert] = "Il salvataggio della causale non e' andato a buon fine"
+#      flash.now[:alert] = "Il salvataggio della causale non e' andato a buon fine"
       render :action => "new"
     end
   end
@@ -42,7 +44,7 @@ before_filter :authenticate
       redirect_to @causale
     else
       @title = "Modifica Causale contabile"
-#      flash[:alert] = "Il salvataggio della causale non e' andato a buon fine"
+#      flash.now[:alert] = "Il salvataggio della causale non e' andato a buon fine"
       render :action => "edit"
     end
   end
@@ -55,6 +57,6 @@ before_filter :authenticate
     rescue
       flash[:alert] = $!.message
     end
-    redirect_to @causale
+redirect_back_or @causale
   end
 end

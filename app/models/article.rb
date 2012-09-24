@@ -8,7 +8,7 @@ class Article < ActiveRecord::Base
 
   validates :codice, :descriz, :azienda, :categ, :iva_id, :presence => true
   validates :codice, :descriz, :uniqueness => {:case_sensitive => false}
-  validates :codice,  :length => {:maximum => 10}
+  validates :codice,  :length => {:maximum => 20}
   validates :descriz, :length => {:maximum => 50}
   
   scope :azienda, lambda { |azd| {:conditions => ['articles.azienda = ?', azd]}}
@@ -19,13 +19,17 @@ class Article < ActiveRecord::Base
   def self.filter (tp, des, page)
     # Esegure la ricerca articoli in base ai filtri impostati
 
+    nrrecord = nil
     hsh = {"DE" => "descriz", "CO" => "codice"}
     hshvar = Hash.new
     whart = "" 
-    whart = " articles.#{hsh[tp]} like :d" unless des == ""
-    hshvar[:d] = "%#{des}%" unless des == ""
-    where([whart, hshvar]).paginate(:page => page, :per_page => 10,
-                                    :order => "codice ASC") unless hsh[tp].nil?
+    whart = " UPPER(articles.#{hsh[tp]}) like UPPER(:d)" unless des.blank?
+    hshvar[:d] = "%#{des}%" unless des.blank?
+
+    nrrecord = where([whart, hshvar]).count if page.nil?
+
+    return where([whart, hshvar]).paginate(:page => page, :per_page => 10,
+                                           :order => "codice ASC"), nrrecord unless hsh[tp].nil?
   end
 
   def self.chk_art_xls(azienda, xls, wks, rownr, colnr)
@@ -43,7 +47,7 @@ class Article < ActiveRecord::Base
   end
 
   def desest1
-    self.codice.to_s + " " + self.descriz
+    "#{self.codice} #{self.descriz}"
   end
 
   def des_plus
@@ -58,8 +62,8 @@ class Article < ActiveRecord::Base
                            FROM articles INNER JOIN rigdocs ON (articles.id = rigdocs.article_id)
                                          INNER JOIN tesdocs ON (rigdocs.tesdoc_id = tesdocs.id)
                                          INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
-                          WHERE causmags.movimpmag IN ('M', 'I') AND articles.id = " + id.to_s +
-                       " ORDER BY tesdocs.data_doc, tesdocs.num_doc")
+                          WHERE causmags.movimpmag IN ('M', 'I') AND articles.id = #{id} 
+                          ORDER BY tesdocs.data_doc, tesdocs.num_doc")
   end
 
   def exp_movart_xls(tp, artmov, idanagen, nrmag, anarif, grpmag)

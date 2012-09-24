@@ -1,9 +1,9 @@
 <div class="button-bar">
   <ul class="button-group">
     <li>
-      <%= link_to 'INDIETRO',
+      <%= link_to 'INDIETRO', resque_location(
                   {:controller => :tesdocs,  :action => 'index', 
-                                             :tipo_doc => se_tipo_doc},
+                                             :tipo_doc => se_tipo_doc}),
                   :class => "button radius small back foundicon-left-arrow" %>
     </li>
     <li>

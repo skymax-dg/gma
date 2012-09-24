@@ -1,5 +1,8 @@
 class AnaindsController < ApplicationController
-before_filter :authenticate
+
+  before_filter :authenticate
+  before_filter :force_fieldcase, :only => [:create, :update]
+
   def create
     @anagen = Anagen.find(params[:anaind][:anagen_id])
     @anaind = @anagen.anainds.build(params[:anaind])# La Build setta @anaind.anagen_id = @anagen.id
@@ -8,13 +11,13 @@ before_filter :authenticate
       flash.now[:alert] = "Indirizzo gia' esistente per il magazzino: #{@anaind.nrmag}"
       render :action => :new
       elsif not compat_mag(@anaind.flmg, @anaind.nrmag)
-        flash[:alert] = "Magazzino di riferimento incompatibile con il check: Indirizzo di magazzino"
+        flash.now[:alert] = "Magazzino di riferimento incompatibile con il check: Indirizzo di magazzino"
         render :action => :new
         elsif @anaind.save
           flash[:success] = 'Indirizzo anagrafico aggiunto con successo.'
           redirect_to @anagen
         else
-#          flash[:alert] = "ERRORE !!! durante il salvataggio dell'indirizzo anagrafico"
+#          flash.now[:alert] = "ERRORE !!! durante il salvataggio dell'indirizzo anagrafico"
           render :action => :new
     end
   end
@@ -66,16 +69,16 @@ before_filter :authenticate
     anaind = params[:anaind]
     @title = "Modifica Indirizzo"
     if Anaind.nrmagexist(params[:id].to_i, anaind[:anagen_id].to_i, anaind[:nrmag].to_i)
-      flash[:alert] = "Indirizzo gia' esistente per il magazzino: #{anaind[:nrmag]}"
+      flash.now[:alert] = "Indirizzo gia' esistente per il magazzino: #{anaind[:nrmag]}"
       render :action => :edit
       elsif not compat_mag(anaind[:flmg],  anaind[:nrmag].to_i)
-        flash[:alert] = "Magazzino di riferimento incompatibile con il check: Indirizzo di magazzino"
+        flash.now[:alert] = "Magazzino di riferimento incompatibile con il check: Indirizzo di magazzino"
         render :action => :edit
         elsif @anaind.update_attributes(params[:anaind])
           flash[:success] = 'Indirizzo anagrafico modificato con successo.'
           redirect_to @anaind
         else
-#         flash[:alert] = "ERRORE !!! durante il salvataggio dell'indirizzo anagrafico"
+#         flash.now[:alert] = "ERRORE !!! durante il salvataggio dell'indirizzo anagrafico"
          render :action => :edit
     end
   end
@@ -90,4 +93,9 @@ before_filter :authenticate
     end
     redirect_to @anaind.anagen
   end
+
+  private
+    def force_fieldcase
+      set_fieldcase(:anaind, [:desloc, :cap], [])
+    end
 end

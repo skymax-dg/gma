@@ -13,6 +13,7 @@ before_filter :authenticate
 
   def index
     store_tipo_doc(params[:tipo_doc])
+store_location
     @title = "Elenco Documenti (#{Causmag::TIPO_DOC[se_tipo_doc.to_i]})"
     init_filter(current_user.azienda)
   end
@@ -42,16 +43,16 @@ before_filter :authenticate
           raise "I seguenti articoli non sono presenti sulla banca dati" if @errors.count > 0
           @errors, @success = @tesdoc.rigdocbyxls(book, 0, 1, {:article_id_bycod => 0, :qta => 1, :prezzo => 2, :sconto => 3})
           if @errors.count == 0
-            flash[:success] = "CARICAMENTO COMPLETATO con SUCCESSO."
+            flash.now[:success] = "CARICAMENTO COMPLETATO con SUCCESSO."
           else
-            flash[:alert] = "Si sono verificati ERRORI durante il caricamento (CARICAMENTO PARZIALE)"
+            flash.now[:alert] = "Si sono verificati ERRORI durante il caricamento (CARICAMENTO PARZIALE)"
           end
         rescue
-          flash[:alert] = $!.message
+          flash.now[:alert] = $!.message
         end
       end
     rescue Exception => e
-      flash[:alert] = $!.message
+      flash.now[:alert] = $!.message
       @errors << "File bloccato da un'altra applicazione o non trovato: #{e.to_s}" #$?.exitstatus
     end
   end
@@ -148,10 +149,10 @@ before_filter :authenticate
   def delrowqta0
     tesdoc = Tesdoc.find(params[:id])
     if tesdoc.delrowqta0
-      flash[:success] = 'Righe documento cancellate con successo.'
+      flash[:success] = "Righe documento cancellate con successo."
       redirect_to tesdoc
     else
-      flash[:alert] = 'Errori in cancellazione Righe.'
+      flash[:alert] = "Errori in cancellazione Righe."
       redirect_to tesdoc
     end
   end
@@ -165,7 +166,7 @@ before_filter :authenticate
         redirect_to new_spediz_path(:id => params[:id])
       end
     else
-      flash[:alert] = "La causale del Documento non e' di tipo contabile e non movimenta il magazzino,
+      flash[:alert] = "La causale del Documento non e' di tipo contabile e non movimenta il magazzino, 
                        dati spedizione/pagamento non necessari"
       redirect_to @tesdoc
     end
@@ -174,11 +175,11 @@ before_filter :authenticate
   def add1row4article
     tesdoc = Tesdoc.find(params[:id])
     if tesdoc.add1row4article(current_user.azienda)
-      flash[:success] = 'Righe documento aggiunte con successo.'
+      flash[:success] = "Righe documento aggiunte con successo."
       redirect_to tesdoc
     else
+      flash[:alert] = "Errori in inserimento Righe."
       redirect_to tesdoc
-      flash[:alert] = 'Errori in inserimento Righe.'
     end
   end
 
@@ -200,16 +201,16 @@ before_filter :authenticate
           #col_sconto => 0
           @errors, @success = Tesdoc.tesrigdocbyxls(book, sheet, rowini, coltes, colrig)
           if @errors.count == 0
-            flash[:success] = "CARICAMENTO COMPLETATO con SUCCESSO."
+            flash.now[:success] = "CARICAMENTO COMPLETATO con SUCCESSO."
           else
-            flash[:alert] = "Si sono verificati ERRORI durante il caricamento (CARICAMENTO PARZIALE)"
+            flash.now[:alert] = "Si sono verificati ERRORI durante il caricamento (CARICAMENTO PARZIALE)"
           end
         rescue
-          flash[:alert] = $!.message
+          flash.now[:alert] = $!.message
         end
       end
     rescue Exception => e
-      flash[:alert] = $!.message
+      flash.now[:alert] = $!.message
       @errors << "File bloccato da un'altra applicazione o non trovato: #{e.to_s}" #$?.exitstatus
     end
   end
@@ -227,13 +228,16 @@ before_filter :authenticate
                                   {:tpd => se_tipo_doc, :azd => current_user.azienda}])
     @contos = Conto.find4docfilter([@clifilter,     @forfilter,           @altfilter], @tpfilter||"",
                                     @desfilter||"", current_user.azienda, current_annoese)
-    @tesdocs = Tesdoc.filter(@tpfilter, @desfilter,
-                             [@clifilter, @forfilter, @altfilter],
-                             se_tipo_doc,
-                             @causmagfilter,
-                             @contofilter,
-                             current_user.azienda, current_annoese,
-                             params[:page])
+    @tesdocs, nrrecord = Tesdoc.filter(@tpfilter, @desfilter,
+                                      [@clifilter, @forfilter, @altfilter],
+                                       se_tipo_doc,
+                                       @causmagfilter,
+                                       @contofilter,
+                                       current_user.azienda, current_annoese,
+                                       params[:page])
+    flash_cnt(nrrecord) if params[:page].nil?
+store_location
+
     render "index"
   end
   
@@ -242,7 +246,8 @@ before_filter :authenticate
     respond_to do |format|
       format.html do
         if params[:causmag].empty? or params[:causmag].nil? or params[:conto].empty? or params[:conto].nil?
-          flash[:success] = "Per creare un nuovo DOC e' necessario prima impostare Causale e MastroContabile nei filtri e cliccare il bottone FILTRA"
+          flash.now[:success] = "Per creare un nuovo DOC e' necessario prima impostare Causale e 
+                                 MastroContabile nei filtri e cliccare il bottone FILTRA"
           init_filter
           render "index"
         else
@@ -287,7 +292,7 @@ before_filter :authenticate
   def create
     @tesdoc = Tesdoc.new(params[:tesdoc])
     if @tesdoc.save
-      flash[:success] = 'Testata documento inserita con successo.'
+      flash[:success] = "Testata documento inserita con successo."
       redirect_to @tesdoc
     else
       @title = "Nuovo Documento (#{Causmag::TIPO_DOC[se_tipo_doc.to_i]})"
@@ -298,7 +303,7 @@ before_filter :authenticate
       @tesdoc.causmag_id = @causmag.id
       @tesdoc.conto_id = @conto.id
       @tesdoc.sconto = @conto.sconto
-#      flash[:alert] = "Il salvataggio del documento non e' andato a buon fine"
+#      flash.now[:alert] = "Il salvataggio del documento non e' andato a buon fine"
       render 'new'
     end
   end
@@ -306,11 +311,11 @@ before_filter :authenticate
   def update
     @tesdoc = Tesdoc.find(params[:id])
     if @tesdoc.update_attributes(params[:tesdoc])
-      flash[:success] = 'Testata documento aggiornata con successo.'
+      flash[:success] = "Testata documento aggiornata con successo."
       redirect_to @tesdoc
     else
       @title = "Modifica Testata documento (#{Causmag::TIPO_DOC[se_tipo_doc.to_i]})"
-#      flash[:alert] = "Il salvataggio del documento non e' andato a buon fine"
+#      flash.now[:alert] = "Il salvataggio del documento non e' andato a buon fine"
       render 'edit' 
     end
   end
@@ -324,6 +329,6 @@ before_filter :authenticate
     rescue
       flash[:alert] = $!.message
     end
-    redirect_to @tesdoc
+redirect_back_or @tesdoc
   end
 end

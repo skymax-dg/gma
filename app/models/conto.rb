@@ -28,22 +28,25 @@ class Conto < ActiveRecord::Base
   def self.filter (tp, des, azienda, annoese, page)
     # Esegure la ricerca del conto in base ai filtri impostati
 
+    nrrecord = nil
     hsh = {"DE" => "descriz", "RS" => "denomin", "CC" => "codice"}
     hshvar = Hash.new
     whconto = "" 
     whanagen = ""
     if (not des.blank?)
-      whconto = " contos.#{hsh[tp]} like :d" if tp=="DE" 
+      whconto = " UPPER(contos.#{hsh[tp]}) like UPPER(:d)" if tp=="DE" 
       hshvar[:d] = "%#{des}%" if tp=="DE"
-      whconto = " CAST(contos.#{hsh[tp]} AS text) like :d" if tp=="CC"
-      hshvar[:d] = "%#{des}%" if tp=="CC"
-      whanagen = " anagens.#{hsh[tp]} like :e" if tp=="RS"
+      whanagen = " UPPER(anagens.#{hsh[tp]}) like UPPER(:e)" if tp=="RS"
       hshvar[:e] = "%#{des}%" if tp=="RS"
+      whconto = " UPPER(CAST(contos.#{hsh[tp]} AS text)) like UPPER(:d)" if tp=="CC"
+      hshvar[:d] = "%#{des}%" if tp=="CC"
     end
-    includes(:anagen).where([whanagen + whconto, hshvar]).azdanno(azienda, annoese).paginate(
+    nrrecord = includes(:anagen).where([whanagen + whconto, hshvar]).azdanno(azienda, annoese).count if page.nil?
+
+    return includes(:anagen).where([whanagen + whconto, hshvar]).azdanno(azienda, annoese).paginate(
       :page => page,
       :per_page => 10,
-      :order => "contos.codice ASC") unless hsh[tp].nil?
+      :order => "contos.codice ASC"), nrrecord unless hsh[tp].nil?
   end
 
   def codice_toobig4integer
@@ -69,7 +72,7 @@ class Conto < ActiveRecord::Base
     # Filtra i conti referenziati dalle anagrafiche (anagen) in like sul dato CodFis/ParIva/Denomin
     hsh = {"RS" => "denomin", "CF" => "codfis", "PI" => "pariva"}
     hsh.default = "denomin"
-    whana = "anagens." + hsh[tpf] + " like '%" + des + "%' and "
+    whana = "anagens.#{hsh[tpf]} like '%#{des}%' and "
     includes(:anagen).where([whana + "contos.tipoconto IN (:tpc) and azienda = :azd and annoese = :anno",
                                         {:tpc => cfa, :azd => azienda, :anno => annoese}])
   end

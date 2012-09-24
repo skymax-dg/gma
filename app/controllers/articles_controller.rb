@@ -1,16 +1,18 @@
 require "prawn"
-#require "prawn/layout"
 require "prawn/measurement_extensions"
 
 class ArticlesController < ApplicationController
-before_filter :authenticate
+
+  before_filter :authenticate
+  before_filter :force_fieldcase, :only => [:create, :update]
+
   def filter_mov_vend
     @tp = params[:tp]
     @article = Article.find(params[:id]) unless params[:id].nil?
     @anagens = Anagen.findbytpconto(current_user.azienda, 'C')
     @contos = Conto.findbytipoconto(current_user.azienda, current_annoese, "C")
     if @anagens.empty?
-      flash[:alert] = "Nessun conto cliente presente"
+      flash.now[:alert] = "Nessun conto cliente presente"
       render :action => "show"
     end
     @tp == "M" ? @title = "Stampa Movimenti di magazzino" : @title = "Stampa Vendite per titolo"
@@ -23,7 +25,7 @@ before_filter :authenticate
     @anagens = Anagen.findbytpconto(current_user.azienda, 'C')
     @contos = Conto.findbytipoconto(current_user.azienda, current_annoese, "C")
     if @anagens.empty?
-      flash[:alert] = "Nessun conto cliente presente"
+      flash.now[:alert] = "Nessun conto cliente presente"
       render :action => "show"
     end
     @tp == "M" ? @title = "Export (XLS) Movimenti di magazzino" : @title = "Export (XLS) Vendite per titolo"
@@ -35,7 +37,7 @@ before_filter :authenticate
     @anagens = Anagen.findbytpconto(current_user.azienda, 'C')
     @contos = Conto.findbytipoconto(current_user.azienda, current_annoese, "C")
     if @anagens.empty?
-      flash[:alert] = "Nessun conto cliente presente"
+      flash.now[:alert] = "Nessun conto cliente presente"
       render :action => "index"
     end
     @tp == "M" ? @title = "Stampa Movimenti di magazzino" : @title = "Stampa Vendite per titolo"
@@ -47,7 +49,7 @@ before_filter :authenticate
     @anagens = Anagen.findbytpconto(current_user.azienda, 'C')
     @contos = Conto.findbytipoconto(current_user.azienda, current_annoese, "C")
     if @anagens.empty?
-      flash[:alert] = "Nessun conto cliente presente"
+      flash.now[:alert] = "Nessun conto cliente presente"
       render :action => "index"
     end
     @tp == "M" ? @title = "Export (XLS) Movimenti di magazzino" : @title = "Export (XLS) Vendite per titolo"
@@ -126,13 +128,15 @@ before_filter :authenticate
     @title = "Elenco Articoli"
     @tpfilter  = params[:tpfilter]
     @desfilter = params[:desfilter].strip
-    @articles = Article.filter(@tpfilter, @desfilter, params[:page])
+    @articles, nrrecord = Article.filter(@tpfilter, @desfilter, params[:page])
+    flash_cnt(nrrecord) if params[:page].nil?
+store_location
     render "index"
   end
 
   def index
     @title = "Elenco Articoli"
-    #@articles = Article.azienda(current_user.azienda).paginate(:page => params[:page], :per_page => 25, :order => [:codice])
+store_location
   end
 
   def show
@@ -158,7 +162,7 @@ before_filter :authenticate
       redirect_to @article
     else
       @title = "Nuovo Articolo"
-#      flash[:alert] = "Il salvataggio dell'articolo non e' andato a buon fine"
+#      flash.now[:alert] = "Il salvataggio dell'articolo non e' andato a buon fine"
       render :action => "new"
     end
   end
@@ -170,7 +174,7 @@ before_filter :authenticate
       redirect_to @article
     else
       @title = "Modifica Articolo"
-#      flash[:alert] = "Il salvataggio dell'articolo non e' andato a buon fine"
+#      flash.now[:alert] = "Il salvataggio dell'articolo non e' andato a buon fine"
       render :action => "edit"
     end
   end
@@ -183,7 +187,11 @@ before_filter :authenticate
     rescue
       flash[:alert] = $!.message
     end
-    redirect_to @article
+redirect_back_or @article
   end
 
+  private
+    def force_fieldcase
+      set_fieldcase(:article, [:codice], [])
+    end
 end

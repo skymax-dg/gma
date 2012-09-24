@@ -3,12 +3,15 @@ before_filter :authenticate
   def filter
     @tpfilter  = params[:tpfilter]
     @desfilter = params[:desfilter].strip
-    @contos = Conto.filter(@tpfilter, @desfilter, current_user.azienda, current_annoese, params[:page])
+    @contos, nrrecord = Conto.filter(@tpfilter, @desfilter, current_user.azienda, current_annoese, params[:page])
+    flash_cnt(nrrecord) if params[:page].nil?
+store_location
     render "index"
   end
 
   def index
     @title = "Elenco Conti"
+store_location
     #@contos = Conto.azdanno(current_user.azienda, current_annoese).paginate(:page => params[:page],
     #                                                                        :per_page => 10,
     #                                                                        :order => [:codice])
@@ -43,8 +46,8 @@ before_filter :authenticate
     @conto = Conto.new(params[:conto])
     if (@conto.tipoconto=="C"||@conto.tipoconto=="F")&&@conto.anagen_id.nil?
       @title = "Nuovo Conto"
-      flash[:alert] = "Per un conto #{Conto::TIPOCONTO["C"]}/#{Conto::TIPOCONTO["F"]} " +
-                    "e' obbligatorio specificare una anagrafica soggetto"
+      flash.now[:alert] = "Per un conto #{Conto::TIPOCONTO["C"]}/#{Conto::TIPOCONTO["F"]} 
+                           e' obbligatorio specificare una anagrafica soggetto"
       render :action => "new"
     else
       if @conto.save
@@ -52,7 +55,7 @@ before_filter :authenticate
         redirect_to @conto
       else
         @title = "Nuovo Conto"
-#        flash[:alert] = "Il salvataggio del piano dei conti non e' andato a buon fine"
+#        flash.now[:alert] = "Il salvataggio del piano dei conti non e' andato a buon fine"
         render :action => "new"
       end
     end
@@ -64,16 +67,16 @@ before_filter :authenticate
     @conto.anagen_id=params[:conto][:anagen_id]
     if (@conto.tipoconto=="C"||@conto.tipoconto=="F")&&@conto.anagen_id.nil?
       @title = "Modifica Conto"
-      flash[:alert] = "Per un conto #{Conto::TIPOCONTO["C"]}/#{Conto::TIPOCONTO["F"]} " +
-                    "e' obbligatorio specificare una anagrafica soggetto"
+      flash.now[:alert] = "Per un conto #{Conto::TIPOCONTO["C"]}/#{Conto::TIPOCONTO["F"]} 
+                           e' obbligatorio specificare una anagrafica soggetto"
       render :action => "edit"
     else
       if @conto.update_attributes(params[:conto])
-        flash[:success] = 'Piano dei conti aggiornato con successo.'
+        flash[:success] = "Piano dei conti aggiornato con successo."
         redirect_to @conto
       else
         @title = "Modifica Conto"
-#        flash[:alert] = "Il salvataggio del piano dei conti non e' andato a buon fine"
+#        flash.now[:alert] = "Il salvataggio del piano dei conti non e' andato a buon fine"
         render :action => "edit"
       end
     end
@@ -87,6 +90,6 @@ before_filter :authenticate
     rescue
       flash[:alert] = $!.message
     end
-    redirect_to @conto
+redirect_back_or @conto
   end
 end

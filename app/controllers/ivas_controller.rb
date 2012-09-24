@@ -1,7 +1,9 @@
 class IvasController < ApplicationController
   def index
     @title = "Elenco Tipi Iva/Esenzioni"
+    flash_cnt(Iva.count) if params[:page].nil?
     @ivas = Iva.paginate(:page => params[:page], :per_page => 10, :order => [:codice])
+store_location
   end
 
   def show
@@ -53,6 +55,6 @@ class IvasController < ApplicationController
     rescue
       flash[:alert] = $!.message
     end
-    redirect_to @iva
+redirect_back_or @iva
   end
 end

@@ -1,10 +1,15 @@
 class CausmagsController < ApplicationController
-before_filter :authenticate
+
+  before_filter :authenticate
+  before_filter :force_fieldcase, :only => [:create, :update]
+
   def index
     @title = "Elenco Causali di magazzino"
+    flash_cnt(Causmag.count) if params[:page].nil?
     @causmags = Causmag.azienda(current_user.azienda).paginate(:page     => params[:page], 
-                                                               :per_page => 20, 
+                                                               :per_page => 10, 
                                                                :order => [:tipo_doc, :descriz])
+store_location
   end
 
   def show
@@ -29,14 +34,14 @@ before_filter :authenticate
     @causmag = Causmag.new(params[:causmag])
     @title = "Nuova Causale di magazzino"
     if not compat_contabile(@causmag.contabile, @causmag.causale_id.nil?)
-      flash[:alert] = "incoerenza fra 'causale contabile' e flag 'contabile'"
+      flash.now[:alert] = "incoerenza fra 'causale contabile' e flag 'contabile'"
       render :action => "new"
     else    
       if @causmag.save
         flash[:success] = 'Causale di magazzino inserita con successo.'
         redirect_to @causmag
       else
-#        flash[:alert] = "Il salvataggio della causale non e' andato a buon fine"
+#        flash.now[:alert] = "Il salvataggio della causale non e' andato a buon fine"
         render :action => "new"
       end
     end
@@ -46,14 +51,14 @@ before_filter :authenticate
     @causmag = Causmag.find(params[:id])
     @title = "Modifica Causale di magazzino"
     if not compat_contabile(params[:causmag][:contabile], params[:causmag][:causale_id] == "")
-      flash[:alert] = "ERRORE!!! Incoerenza fra 'causale contabile' e flag 'contabile'"
+      flash.now[:alert] = "ERRORE!!! Incoerenza fra 'causale contabile' e flag 'contabile'"
       render :action => "edit"
     else    
       if @causmag.update_attributes(params[:causmag])
         flash[:success] = 'Causale di magazzino aggiornata con successo.'
         redirect_to @causmag
       else
-#        flash[:alert] = "Il salvataggio della causale non e' andato a buon fine"
+#        flash.now[:alert] = "Il salvataggio della causale non e' andato a buon fine"
         render :action => "edit"
       end
     end
@@ -67,6 +72,11 @@ before_filter :authenticate
     rescue
       flash[:alert] = $!.message
     end
-    redirect_to @causmag
+redirect_back_or @causmag
   end
+
+  private
+    def force_fieldcase
+      set_fieldcase(:causmag, [:modulo], [])
+    end
 end

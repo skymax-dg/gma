@@ -101,7 +101,7 @@
 
 	#note
   if (not @datispe.nil?) && @datispe.corriere == "GLS" && @anad.email && (not @anad.email.blank?)
-    @datispe.note = "INVIO NOTIFICA: #{@anad.email}\n" + @datispe.note||""
+    @datispe.note = "INVIO NOTIFICA: #{@anad.email}\n#{@datispe.note}"||""
   end
   unless @datispe.nil? || @datispe.note.nil? || @datispe.note.blank?
     #Esegue salto pagina se non è rimasto abbastanza spazio per le note

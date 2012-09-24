@@ -2,7 +2,7 @@
 <div class="button-bar">
   <ul class="button-group">
     <li>
-      <%= link_to 'INDIETRO', articles_path, :class => "button radius small back foundicon-left-arrow" %>
+      <%= link_to 'INDIETRO',  resque_location(articles_path), :class => "button radius small back foundicon-left-arrow" %>
     </li>
     <li>
       <%= link_to 'MODIFICA', edit_article_path(@article), :class => "button radius small modify foundicon-edit" %>

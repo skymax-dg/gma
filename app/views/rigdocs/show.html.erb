@@ -64,7 +64,7 @@
     <%= label @rigdoc, "Iva:", :class => "right" %>
   </div>
   <div class="ten columns">
-    <%= @rigdoc.iva.descriz %>
+    <%= @rigdoc.iva.descriz unless @rigdoc.iva.nil? %>
   </div>
 </div>
 <div class="row">

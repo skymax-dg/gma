@@ -10,7 +10,7 @@ class Paese < ActiveRecord::Base
   TPEU = $ParAzienda['PAESE']['TPEU']
   
   def self.findlike_des(descriz)
-    paeses = where("descriz like ?", "%" + descriz + "%")
+    paeses = where(["UPPER(descriz) like UPPER(:d)"], {:d=>"%#{descriz}%"})
     return 0, paeses if paeses.nil?
     return paeses.count, paeses
   end

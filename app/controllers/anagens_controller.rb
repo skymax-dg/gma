@@ -1,15 +1,20 @@
 class AnagensController < ApplicationController
-before_filter :authenticate
+
+  before_filter :authenticate
+  before_filter :force_fieldcase, :only => [:create, :update]
+
   def filter
     @title = "Elenco Soggetti/Societa'"
     @tpfilter  = params[:tpfilter]
     @desfilter = params[:desfilter].strip
-    @anagens = Anagen.filter(@tpfilter, @desfilter, params[:page])
+    @anagens, nrrecord = Anagen.filter(@tpfilter, @desfilter, params[:page])
+    flash_cnt(nrrecord) if params[:page].nil?
     render "index"
   end
 
   def index
     @title = "Elenco Soggetti/Societa'"
+store_location
     #@anagens = Anagen.paginate(:page => params[:page], :per_page => 10, :order => [:denomin])
   end
 
@@ -63,7 +68,7 @@ before_filter :authenticate
       redirect_to @anagen
     else
       @title = "Nuovo Soggetto/Societa'"
-#      flash[:alert] = "Il salvataggio dell'anagrafica non e' andato a buon fine"
+#      flash.now[:alert] = "Il salvataggio dell'anagrafica non e' andato a buon fine"
       render :action => "new"
     end
   end
@@ -75,7 +80,7 @@ before_filter :authenticate
       redirect_to @anagen
     else
       @title = "Modifica Soggetto/Societa'"
-#      flash[:alert] = "Il salvataggio dell'anagrafica non e' andato a buon fine"
+#      flash.now[:alert] = "Il salvataggio dell'anagrafica non e' andato a buon fine"
       render :action => "edit"
     end
   end
@@ -88,6 +93,11 @@ before_filter :authenticate
     rescue
       flash[:alert] = $!.message
     end
-    redirect_to @anagen
+redirect_back_or @anagen
   end
+
+  private
+    def force_fieldcase
+      set_fieldcase(:anagen, [:codfis, :pariva, :fax, :telefono], [:email, :web])
+    end
 end

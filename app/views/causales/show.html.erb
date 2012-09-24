@@ -1,7 +1,7 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
 <ul class="button-group">
   <li>
-    <%= link_to 'INDIETRO', causales_path, :class => "button radius small back foundicon-left-arrow" %>
+    <%= link_to 'INDIETRO', resque_location(causales_path), :class => "button radius small back foundicon-left-arrow" %>
   </li>
   <li>
     <%= link_to 'MODIFICA', edit_causale_path(@causale), :class => "button radius small modify foundicon-edit" %>

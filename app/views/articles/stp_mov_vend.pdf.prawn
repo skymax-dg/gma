@@ -10,14 +10,14 @@
   end
   @artmov.each do |dataart|
     art = Article.find(dataart.attributes["artid"])
-    desart = 'ARTICOLO: ' + art.codice + '    ' + art.descriz
+    desart = "ARTICOLO: #{art.codice}    #{art.descriz}"
     Tesdoc.anagen_mov_artic(art.id, @idanagen, @nrmag, @anarif, @tp).each do |tesdoc|
       if @anarif == "S"
         idanagen = ""
       else
         idanagen = tesdoc.attributes["idanagen"]
         pdf.move_down 10
-        desanagen = 'ANAGRAFICA: ' + Anagen.find(idanagen).denomin
+        desanagen = "ANAGRAFICA: #{Anagen.find(idanagen).denomin}"
         pdf.text desanagen,
                      :size => 12, :style => :bold, :align => :left
       end

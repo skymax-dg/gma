@@ -1,17 +1,20 @@
 class LocalitasController < ApplicationController
-before_filter :authenticate
+
+  before_filter :authenticate
+  before_filter :force_fieldcase, :only => [:create, :update]
+
   def filter
     @tpfilter  = params[:tpfilter]
     @desfilter = params[:desfilter].strip
-    @localitas = Localita.filter(@tpfilter, @desfilter, params[:page])
+    @localitas, nrrecord = Localita.filter(@tpfilter, @desfilter, params[:page])
+    flash_cnt(nrrecord) if params[:page].nil?
+store_location
     render "index"
   end
 
   def index
+store_location
     @title = "Elenco Citta'"
-#    @localitas = Localita.paginate(:page => params[:page], :per_page => 10, :order => [:descriz])
-#    @des = ""
-#    @localitas = Localita.where("descriz like '%#{@des}%'").paginate(:page => params[:page], :per_page => 10, :order => [:descriz])
   end
 
   def show
@@ -32,11 +35,11 @@ before_filter :authenticate
   def create
     @localita = Localita.new(params[:localita])
     if @localita.save
-      flash[:success] = 'Localita'' inserita con successo.'
+      flash[:success] = "Localita' inserita con successo."
       redirect_to @localita
     else
       @title = "Nuova Citta'"
-#      flash[:alert] = "Il salvataggio della localita' non e' andato a buon fine"
+#      flash.now[:alert] = "Il salvataggio della localita' non e' andato a buon fine"
       render :action => "new"
     end
   end
@@ -44,11 +47,11 @@ before_filter :authenticate
   def update
     @localita = Localita.find(params[:id])
     if @localita.update_attributes(params[:localita])
-      flash[:success] = 'Localita'' aggiornata con successo.'
+      flash[:success] = "Localita' aggiornata con successo."
       redirect_to @localita
     else
       @title = "Modifica Citta'"
-#      flash[:alert] = "Il salvataggio della localita' non e' andato a buon fine"
+#      flash.now[:alert] = "Il salvataggio della localita' non e' andato a buon fine"
       render :action => "edit"
     end
   end
@@ -61,6 +64,11 @@ before_filter :authenticate
     rescue
       flash[:alert] = $!.message
     end
-    redirect_to @localita
+redirect_back_or @localita
   end
+
+  private
+    def force_fieldcase
+      set_fieldcase(:localita, [:prov, :cap, :codfis], [])
+    end
 end

@@ -31,14 +31,19 @@ class Anagen < ActiveRecord::Base
 
   def self.filter (tp, des, page)
     # Esegure la ricerca delle anagrafiche soggetto in base ai filtri impostati
-
     hsh = {"RS" => "denomin", "CF" => "codfis", "PI" => "pariva"}
+    nrrecord = nil
     hshvar = Hash.new
     whana = "" 
-    whana = " anagens.#{hsh[tp]} like :d" unless des == ""
-    hshvar[:d] = "%#{des}%" unless des == ""
-    where([whana, hshvar]).paginate(:page => page, :per_page => 10,
-                                    :order => "denomin ASC") unless hsh[tp].nil?
+    whana = " UPPER(anagens.#{hsh[tp]}) like UPPER(:d)" unless des.blank?
+    hshvar[:d] = "%#{des}%" unless des.blank?
+
+    # Se il param. page non è valorizzato allora stiamo facendo una nuova ricerca altrimenti
+    # abbiamo richiesto una pagina successiva o precedente e non serve la count
+    nrrecord = where([whana, hshvar]).count if page.nil?
+
+    return where([whana, hshvar]).paginate(:page => page, :per_page => 10,
+                                           :order => "denomin ASC"), nrrecord unless hsh[tp].nil?
   end
 
   def sedelegale
@@ -76,9 +81,8 @@ class Anagen < ActiveRecord::Base
   def self.findbytpconto(azienda, tipoconto)
     find_by_sql("SELECT DISTINCT anagens.id, anagens.denomin 
                    FROM anagens INNER JOIN contos ON (anagens.id = contos.anagen_id)
-                  WHERE contos.tipoconto = '#{tipoconto.to_s}" +
-                  "' AND contos.azienda = #{azienda.to_s}" +
-                " ORDER BY anagens.denomin")
+                  WHERE contos.tipoconto = '#{tipoconto.to_s}' AND contos.azienda = #{azienda.to_s} 
+                  ORDER BY anagens.denomin")
   end
   private
     def require_no_contos

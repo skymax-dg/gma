@@ -3,13 +3,13 @@ before_filter :authenticate
   def down
     @rigdoc = Rigdoc.find(params[:id])
     @rigdoc.move :down
-    redirect_to tesdoc_url(@rigdoc.tesdoc.id, :page=>params[:page])
+redirect_back_or tesdoc_url(@rigdoc.tesdoc.id, :page=>params[:page])
   end
 
   def up
     @rigdoc = Rigdoc.find(params[:id])
     @rigdoc.move :up
-    redirect_to tesdoc_url(@rigdoc.tesdoc.id, :page=>params[:page])
+redirect_back_or tesdoc_url(@rigdoc.tesdoc.id, :page=>params[:page])
   end
 
   def art_cod_exit
@@ -48,11 +48,11 @@ before_filter :authenticate
     @rigdoc = @tesdoc.rigdocs.build(params[:rigdoc])
     @rigdoc.prgrig = newprg
     if @rigdoc.save
-      flash[:success] = 'Riga documento aggiunta con successo.'
+      flash[:success] = "Riga documento aggiunta con successo."
       redirect_to @tesdoc
     else
       @title = "Nuova Riga documento"
-#      flash[:alert] = "Il salvataggio della riga non e' andato a buon fine"
+#      flash.now[:alert] = "Il salvataggio della riga non e' andato a buon fine"
       render 'new'
     end
   end
@@ -70,11 +70,11 @@ before_filter :authenticate
   def update
     @rigdoc = Rigdoc.find(params[:id])
     if @rigdoc.update_attributes(params[:rigdoc])
-      flash[:success] = 'Riga documento modificata con successo.'
+      flash[:success] = "Riga documento modificata con successo."
       redirect_to @rigdoc
     else
       @title = "Modifica Riga documento"
-#      flash[:alert] = "Il salvataggio della riga non e' andato a buon fine"
+#      flash.now[:alert] = "Il salvataggio della riga non e' andato a buon fine"
       render 'edit'
     end
   end
