@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   
   # Return user if the submitted password and email match with db information.
   def self.authenticate(login, submitted_password, azienda)
-    user = find_by_login_and_azienda(upcase(login), azienda)
+    user = find_by_login_and_azienda(login.upcase, azienda)
     return nil if user.nil? # user not found 
     return user if user.has_password?(submitted_password) # Password match
     # return nil otherwise
