@@ -8,7 +8,7 @@ while nr <= @copie do
                :at => [45, 750], :height => 25, :size => 24, :style => :bold
   pdf.formatted_text_box [{:text => "Presso: #{@presso.upcase}\n", :styles => [:bold], :size => 20},
                           {:text => "#{@ind1}\n#{@ind2}\n", :size => 20},
-                          {:text => "Telefono: #{@riftel.upcase}", :styles => [:bold], :size => 20}
+                          {:text => "Telefono: #{@riftel}", :styles => [:bold], :size => 20}
                           ],
                          :at => [60,715], :width => 568, :height => 200,
                          :overflow => :shrink_to_fit, :size => 20, :min_font_size => 12
@@ -22,7 +22,7 @@ while nr <= @copie do
                  :at => [45, 320], :height => 25, :size => 24, :style => :bold
     pdf.formatted_text_box [{:text => "Presso: #{@presso.upcase}\n", :styles => [:bold], :size => 20},
                             {:text => "#{@ind1}\n#{@ind2}\n", :size => 20},
-                            {:text => "Telefono: #{@riftel.upcase}", :styles => [:bold], :size => 20}
+                            {:text => "Telefono: #{@riftel}", :styles => [:bold], :size => 20}
                             ],
                            :at => [60,285], :width => 568, :height => 200,
                            :overflow => :shrink_to_fit, :size => 20, :min_font_size => 12
