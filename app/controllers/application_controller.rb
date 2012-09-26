@@ -4,8 +4,8 @@ class ApplicationController < ActionController::Base
   include TesdocsHelper
 
   def set_fieldcase(model, fld_upcase = [], fld_dwcase = [])
-    fld_upcase.each {|v| params[model][v]=params[model][v].upcase}
-    fld_dwcase.each {|v| params[model][v]=params[model][v].downcase}
+    fld_upcase.each {|v| params[model][v]=params[model][v].upcase if params[model][v]}
+    fld_dwcase.each {|v| params[model][v]=params[model][v].downcase if params[model][v]}
   end
 
   def flash_cnt(nrrecord)
