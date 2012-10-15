@@ -26,7 +26,7 @@ class SpedizsController < ApplicationController
   end
 
   def create
-    params[:spediz][:dtrit]=params[:spediz][:dtrit].to_my_date if params[:spediz][:dtrit].is_date?
+    params[:spediz][:dtrit]=params[:spediz][:dtrit].to_my_date if params[:spediz][:dtrit]&&params[:spediz][:dtrit].is_date?
     @spediz = Tesdoc.find(params[:spediz][:tesdoc_id]).build_spediz(params[:spediz])
     if @spediz.save
       flash[:success] = "Dati spedizione inseriti con successo."
