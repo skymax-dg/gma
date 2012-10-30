@@ -26,11 +26,8 @@ class SpedizsController < ApplicationController
   end
 
   def create
-    if params[:spediz][:dtrit]&&params[:spediz][:dtrit].is_date?
-      params[:spediz][:dtrit]=params[:spediz][:dtrit].to_my_date
-    else
-      params[:spediz][:dtrit]="00:00:00".to_my_date
-    end
+    params[:spediz][:dtrit]=params[:spediz][:dtrit].to_my_date if params[:spediz][:dtrit]&&params[:spediz][:dtrit].is_date?
+    params[:spediz][:orarit]="00:00:00" if params[:spediz][:orarit].nil? || params[:spediz][:orarit]=""
     @spediz = Tesdoc.find(params[:spediz][:tesdoc_id]).build_spediz(params[:spediz])
     if @spediz.save
       flash[:success] = "Dati spedizione inseriti con successo."
@@ -44,11 +41,8 @@ class SpedizsController < ApplicationController
 
   def update
 # la riga seguente è da rivedere ed implementare un custom validate
-    if params[:spediz][:dtrit]&&params[:spediz][:dtrit].is_date?
-      params[:spediz][:dtrit]=params[:spediz][:dtrit].to_my_date
-    else
-      params[:spediz][:dtrit]="00:00:00".to_my_date
-    end
+params[:spediz][:dtrit]=params[:spediz][:dtrit].to_my_date if params[:spediz][:dtrit]&&params[:spediz][:dtrit].is_date?
+    params[:spediz][:orarit]="00:00:00" if params[:spediz][:orarit].nil? || params[:spediz][:orarit]=""
     @spediz = Spediz.find(params[:id])
     if @spediz.update_attributes(params[:spediz])
       flash[:success] = "Dati spedizione aggiornati."
