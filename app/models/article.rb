@@ -66,10 +66,10 @@ class Article < ActiveRecord::Base
                           ORDER BY tesdocs.data_doc, tesdocs.num_doc")
   end
 
-  def exp_movart_xls(tp, artmov, idanagen, nrmag, anarif, grpmag)
+  def self.exp_movart_xls(tp, artmov, idanagen, nrmag, anarif, azienda, grpmag)
     book = Spreadsheet::Workbook.new # istanzio il workbook (file xls)
-    formatbold = Spreadsheet::Format.new :weight=>:bold, :bottom=>true, :top=>true, :left=>true, :right=>true
-    formatbord = Spreadsheet::Format.new :bottom=>true, :top=>true, :left=>true, :right=>true
+    formatbold = Spreadsheet::Format.new :weight=>:bold, :border=>:thin
+    formatbord = Spreadsheet::Format.new :border=>:thin
     shmovart = book.create_worksheet :name => 'Movimenti' # istanzio lo sheet
 
     if tp == "M"
@@ -84,7 +84,7 @@ class Article < ActiveRecord::Base
     artmov.each do |dataart|
       art = Article.find(dataart.attributes["artid"])
       Tesdoc.anagen_mov_artic(art.id, idanagen, nrmag, anarif, tp).each do |tesdoc|
-        anarif == "S" ? idanagen = current_user.azienda : idanagen = tesdoc.attributes["idanagen"]
+        anarif == "S" ? idanagen = azienda : idanagen = tesdoc.attributes["idanagen"]
         desanagen = Anagen.find(idanagen).denomin
         Tesdoc.mag_mov_artic_anagen(art.id, idanagen, nrmag, anarif, grpmag, tp).each do |tesdoc|
           if tp == "M"
@@ -161,13 +161,9 @@ class Article < ActiveRecord::Base
     end
     data = StringIO.new('')
     book.write(data)
-    send_data(data.string, {
-      :disposition => 'attachment',
-      :encoding => 'utf8',
-      :stream => false,
-      :type => 'application/excel',
-      :filename => './mov_art.xls'})
+    return data.string
   end
+
   private
     def require_no_rigdocs
       self.errors.add :base, "Almeno una riga documento fa riferimento all'articolo che si desidera eliminare."
