@@ -87,7 +87,7 @@
     qta = r.qta > 0 ? r.qta : ""
     @tb<<[""&&r.article&&r.article.codice, r.descriz, qta]&&@tqta+=r.qta
   end
-  @tb << ["TOTALE", "", @tqta]
+  @tb << ["TOTALE", "", @tqta==0 ? "" : @tqta]
 
   #Creazione e stampa tabella articoli
   tab = pdf.make_table(@tb, :column_widths=>{0=>120,1=>357, 2=>50})
