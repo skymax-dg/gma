@@ -15,9 +15,9 @@
       <ul class="left">
         <li class="divider"></li>
         <li class="has-dropdown">
-          <a href="#" class="foundicon-add-doc">
-            DOCUMENTI
-          </a>
+<a href="#" class="foundicon-add-doc">
+DOCUMENTI
+</a>
           <ul class="dropdown">
             <% Tesdoc::TIPO_DOC.each do |k, v| %>
               <li> <%= link_to v.upcase, tesdocs_path(:tipo_doc => k) %> </li>
@@ -25,7 +25,9 @@
           </ul>
         </li>
         <li class="has-dropdown">
-          <a href="#" class="foundicon-address-book">ANAGRAFICA</a>
+          <a href="#" class="foundicon-address-book">
+            ANAGRAFICA
+          </a>
           <ul class="dropdown">
             <li> <%= link_to "SOGGETTI", anagens_path %> </li>
             <li> <%= link_to "ARTICOLI", articles_path %> </li>
@@ -35,14 +37,18 @@
           </ul>
         </li>
         <li class="has-dropdown">
-          <a href="#" class="foundicon-settings">CAUSALI</a>
+          <a href="#" class="foundicon-settings">
+            CAUSALI
+          </a>
           <ul class="dropdown">
             <li> <%= link_to "CONTABILI", causales_path %> </li>
             <li> <%= link_to "DI MAGAZZINO", causmags_path %> </li>
           </ul>
         </li>
         <li class="has-dropdown">
-          <a href="#" class="foundicon-edit">PIANO DEI CONTI</a>
+          <a href="#" class="foundicon-edit">
+            PIANO DEI CONTI
+          </a>
           <ul class="dropdown">
             <li> <%= link_to "CLIENTI/FORNITORI", contos_path %> </li>
           </ul>
