@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120806140630) do
+ActiveRecord::Schema.define(:version => 20121207104300) do
 
   create_table "anagens", :force => true do |t|
     t.integer  "codice",                     :null => false
@@ -91,9 +91,11 @@ ActiveRecord::Schema.define(:version => 20120806140630) do
     t.integer  "causale_id"
     t.string   "magcli",     :limit => 1,   :default => "N"
     t.string   "caus_tra",   :limit => 50
+    t.integer  "grp_prg"
   end
 
   add_index "causmags", ["azienda", "descriz"], :name => "idx_causmags_on_descriz", :unique => true
+  add_index "causmags", ["grp_prg"], :name => "index_causmags_on_grp_prg"
 
   create_table "contos", :force => true do |t|
     t.integer  "azienda",                                                                   :null => false
@@ -111,7 +113,6 @@ ActiveRecord::Schema.define(:version => 20120806140630) do
 
   add_index "contos", ["azienda", "annoese", "codice"], :name => "idx_contos_on_codice", :unique => true
   add_index "contos", ["azienda", "annoese", "descriz"], :name => "idx_contos_on_descriz"
-  add_index "contos", ["azienda", "annoese", "anagen_id", "tipoconto"], {:name => "idx_contos_on_tipoconto_anagen_id", :unique => true}
 
   create_table "ivas", :force => true do |t|
     t.integer  "codice",                                                  :null => false

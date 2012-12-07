@@ -50,6 +50,11 @@
       <%= f.label "Modulo" %>
       <%= f.text_field :modulo %>
     </div>
+    <div class="two columns"></div>
+    <div class="five columns">
+      <%= f.label "Gruppo progressivi" %>
+      <%= f.text_field :grp_prg %>
+    </div>
     <div class="twelve columns">
       <%= f.submit "SALVA", :class => "button radius small success foundicon-checkmark" %>
       <%= link_to 'ANNULLA', resque_location(:back), :class => "button radius small alert foundicon-remove" %>

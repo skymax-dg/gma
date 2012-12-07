@@ -24,9 +24,13 @@ class Tesdoc < ActiveRecord::Base
     return true
   end
 
-  def self.new_num_doc(tpd, anno, azd)
-    (self.maximum("num_doc", :conditions => ["tipo_doc = :tpd AND annoese = :ae AND azienda = :azd",
-                                             {:tpd=>tpd, :ae=>anno, :azd=>azd}]).to_i||0) + 1
+  def self.new_num_doc(g_p, tpd, anno, azd)
+#    (self.maximum("num_doc", :conditions => ["tipo_doc = :tpd AND annoese = :ae AND azienda = :azd",
+#                                             {:tpd=>tpd, :ae=>anno, :azd=>azd}]).to_i||0) + 1
+    (self.maximum("num_doc", :include => :causmag, :conditions => ["causmags.grp_prg = :g_p AND tesdocs.annoese = :ae AND tesdocs.azienda = :azd",
+                                             {:g_p=>g_p, :ae=>anno, :azd=>azd}]).to_i||0) + 1
+#    (self.maximum("num_doc", :conditions => ["grpprg = :g_p AND annoese = :ae AND azienda = :azd",
+#                                             {:g_p=>g_p, :ae=>anno, :azd=>azd}]).to_i||0) + 1
   end
 
   def add1row4article(azienda)
@@ -297,7 +301,7 @@ class Tesdoc < ActiveRecord::Base
                azdanno(azienda, annoese).
                  paginate(:page => page, 
                           :per_page => 10, 
-                          :order => "data_doc DESC, causmag_id, num_doc"), nrrecord unless hsh[tp].nil?
+                          :order => "data_doc DESC, num_doc, causmag_id"), nrrecord unless hsh[tp].nil?
   end
 
   def self.art_mov_vend(idart, idanagen, nrmag, anarif, azienda, tp)
