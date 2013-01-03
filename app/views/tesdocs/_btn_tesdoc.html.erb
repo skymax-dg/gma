@@ -20,6 +20,9 @@
     </li>
   </ul>
   <ul class="button-group">
+<li>
+  <%= link_to 'STAMPA D.D.T.', stp_tesdoc_path(:doc=>:ddt), :class => "button radius small print foundicon-graph" if @tesdoc.causmag.modulo == "FATTACC" %>
+</li>
     <li>
       <%= link_to 'STAMPA DOC.', stp_tesdoc_path, :class => "button radius small print foundicon-graph" %>
     </li>

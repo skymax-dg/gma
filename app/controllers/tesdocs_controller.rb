@@ -95,7 +95,7 @@ store_location
     if @tesdoc.movmagint && @tesdoc.spediz.nil?
       flash[:alert] = "DATI DI SPEDIZIONE MANCANTI"
       redirect_to @tesdoc
-    elsif @tesdoc.causmag.modulo == "DDT"
+    elsif @tesdoc.causmag.modulo == "DDT" || params[:doc] == 'ddt'
       @tit_doc[1] = "(D.d.t.) D.P.R. 472 del 14-08-1996 - D.P.R. 696 del 21.12.1996"
       @datispe  = @tesdoc.spediz
       render 'stp_ddt1.pdf'
