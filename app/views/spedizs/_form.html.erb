@@ -1,8 +1,8 @@
 <%#= render :partial => 'shared/error_messages', :locals => {:f => @spediz} %>
 <%= form_for(@spediz) do |f| %>
   <%= f.hidden_field :tesdoc_id %>
-  <div class="row">
-    <% if @spediz.tesdoc.movmagint %>
+  <% if @spediz.tesdoc.movmagint %>
+    <div class="row">
       <div class="five columns">
         <%= f.label "aspetto dei beni:" %>
         <%= select(:spediz, :aspetto, Spediz::ASPETTO.invert.sort, {:include_blank => true}) %>
@@ -16,6 +16,8 @@
         <%= f.label "nr colli:" %>
         <%= f.number_field :nrcolli %>
       </div>
+    </div>
+    <div class="row">
       <div class="five columns">
         <%= f.label "corriere:" %>
         <%= select(:spediz, :corriere, Spediz::CORRIERE.invert.sort, {:include_blank => true}) %>
@@ -29,6 +31,8 @@
         <%= f.label "valore:" %>
         <%= f.number_field :valore %>
       </div>
+    </div>
+    <div class="row">
       <div class="twelve columns">
         <%= f.label "Indirizzo:" %>
         <%=collection_select :spediz, :anaind_id,
@@ -37,18 +41,26 @@
                              {:data => {:remote => true,
                                         :url => url_for(:controller => :spedizs, :action => :setind)}} %>
       </div>
+    </div>
+    <div class="row">
       <div class="twelve columns">
         <%= f.label "Presso: " %>
         <%= f.text_field :presso %>
       </div>
+    </div>
+    <div class="row">
       <div class="twelve columns">
         <%= f.label "destinazione (riga 1)" %>
         <%= f.text_field :dest1 %>
       </div>
+    </div>
+    <div class="row">
       <div class="twelve columns">
         <%= f.label "destinazione (riga 2)" %>
         <%= f.text_field :dest2 %>
       </div>
+    </div>
+    <div class="row">
       <div class="two columns">
         <%= jdate_field(:spediz, :dtrit, "Data ritiro", :date=>true, :value => @spediz.dtrit, :readonly => true) %>
         <%#= f.label "data ritiro:" %>
@@ -62,21 +74,26 @@
         <%#= f.time_select :orarit,{}, :class=>"time" %>
       </div>
       <div class="seven columns"></div>          
+    </div>
     <% end %>
     <% if @spediz.tesdoc.causmag.contabile == "S" %>
-      <div class="five columns">
-        <%= f.label "Pagamento:" %>
-        <%= f.text_area(:pagam, :rows => 6) %>
-      </div>
-      <div class="two columns"></div>          
-      <div class="five columns">
-        <%= f.label "Banca d'appoggio:" %>
-        <%= f.text_area(:banca, :rows => 6) %>
+      <div class="row">
+        <div class="five columns">
+          <%= f.label "Pagamento:" %>
+          <%= f.text_area(:pagam, :rows => 6) %>
+        </div>
+        <div class="two columns"></div>          
+        <div class="five columns">
+          <%= f.label "Banca d'appoggio:" %>
+          <%= f.text_area(:banca, :rows => 6) %>
+        </div>
       </div>
     <% end %>
-    <div class="twelve columns">
-      <%= f.label "annotaz./contrass.:" %>
-      <%= f.text_area(:note, :rows => 8) %>
+    <div class="row">
+      <div class="twelve columns">
+        <%= f.label "annotaz/contrass:" %>
+        <%= f.text_area(:note, :rows => 8) %>
+      </div>
     </div>
     <div class="twelve columns">
       <%= f.submit 'SALVA', :class => "button radius small success foundicon-checkmark" %>

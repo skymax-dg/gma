@@ -42,7 +42,7 @@ class SpedizsController < ApplicationController
   def update
 # la riga seguente è da rivedere ed implementare un custom validate
 params[:spediz][:dtrit]=params[:spediz][:dtrit].to_my_date if params[:spediz][:dtrit]&&params[:spediz][:dtrit].is_date?
-    params[:spediz][:orarit]="00:00:00" if params[:spediz][:orarit].nil? || params[:spediz][:orarit]=""
+    params[:spediz][:orarit]="00:00:00" if params[:spediz][:orarit].nil? || params[:spediz][:orarit]==""
     @spediz = Spediz.find(params[:id])
     if @spediz.update_attributes(params[:spediz])
       flash[:success] = "Dati spedizione aggiornati."

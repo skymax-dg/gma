@@ -5,7 +5,7 @@ class Causmag < ActiveRecord::Base
   belongs_to :causale
 
   attr_accessible :azienda,  :tipo_doc, :descriz, :des_caus,  :tipo,       :movimpmag,
-                  :nrmagsrc, :nrmagdst, :magcli,  :contabile, :causale_id, :modulo, :caus_tra
+                  :nrmagsrc, :nrmagdst, :magcli,  :contabile, :causale_id, :modulo, :caus_tra, :grp_prg
 
   validates :azienda,   :descriz,  :contabile, :tipo,
             :movimpmag, :nrmagsrc, :nrmagdst,  :magcli, :presence => true
