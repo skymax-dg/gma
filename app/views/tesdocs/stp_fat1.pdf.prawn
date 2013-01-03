@@ -45,7 +45,7 @@
   pdf.bounding_box [0,625], :width => 240, :height => 20 do
     pdf.stroke_bounds
   end
-  pdf.text_box "DOCUMENTO Nr. #{@rifdoc[:nr]} del #{@rifdoc[:dt].strftime("%d/%m/%Y")}",
+  pdf.text_box "DOCUM.Nr. #{@rifdoc[:nr]}/#{@rifdoc[:dt].strftime("%Y")} del #{@rifdoc[:dt].strftime("%d/%m/%Y")}",
                :at => [2, 619], :width => 240, :height => 15, :size => 12, :style => :bold
   # do per scontato che se è stata specificata una causale di trasporto allora il documeno deve riportare anche
   # i dati DDT.
