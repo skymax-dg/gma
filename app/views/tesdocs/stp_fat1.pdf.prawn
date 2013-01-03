@@ -139,7 +139,7 @@
     #Esegue salto pagina se non è rimasto abbastanza spazio per le note
     pdf.start_new_page if pdf.cursor < 180
     
-    pdf.text_box "Annotazioni/Contrassegno: #{@datispe.note}",
+    pdf.text_box "Annotazioni: #{@datispe.note}",
                  :at => [2, 178], :width => 80, :height => 12, :size => 10, :style => :bold
     pdf.text_box "#{@datispe.note}",
                  :at => [70, 178], :width => 450, :height => 105, :size => 8
