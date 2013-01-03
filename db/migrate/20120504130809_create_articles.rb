@@ -4,7 +4,7 @@ class CreateArticles < ActiveRecord::Migration
       t.integer :azienda, :null => false
       t.string  :codice, :limit => 20, :null => false
       t.string  :descriz, :limit => 100, :null => false
-      t.decimal :prezzo, :precision => 8, :scale => 2, :default => 0, :null => false
+      t.decimal :prezzo, :precision => 12, :scale => 6, :default => 0, :null => false
 
       t.timestamps
     end

@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(:version => 20121207104300) do
     t.integer  "azienda",                                                                   :null => false
     t.string   "codice",     :limit => 20,                                                  :null => false
     t.string   "descriz",    :limit => 100,                                                 :null => false
-    t.decimal  "prezzo",                    :precision => 8, :scale => 2, :default => 0.0,  :null => false
+    t.decimal  "prezzo",                    :precision => 12, :scale => 6, :default => 0.0, :null => false
     t.datetime "created_at",                                                                :null => false
     t.datetime "updated_at",                                                                :null => false
     t.string   "categ",      :limit => 2,                                 :default => "GE", :null => false

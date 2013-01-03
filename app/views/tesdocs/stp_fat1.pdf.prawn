@@ -139,7 +139,7 @@
     #Esegue salto pagina se non è rimasto abbastanza spazio per le note
     pdf.start_new_page if pdf.cursor < 180
     
-    pdf.text_box "Annotazioni: #{@datispe.note}",
+    pdf.text_box "Annotazioni/Contrassegno: #{@datispe.note}",
                  :at => [2, 178], :width => 80, :height => 12, :size => 10, :style => :bold
     pdf.text_box "#{@datispe.note}",
                  :at => [70, 178], :width => 450, :height => 105, :size => 8
@@ -174,7 +174,7 @@
                   :at => [2, 40], :size => 10, :style => :bold
     pdf.draw_text "Ora del ritiro",
                   :at => [130, 40], :size => 10, :style => :bold
-    pdf.draw_text @datispe&&@datispe&&@datispe.dtrit.strftime("%d/%m/%Y"),
+    pdf.draw_text @datispe&&@datispe.dtrit&&@datispe.dtrit.strftime("%d/%m/%Y"),
                   :at => [5, 27], :size => 10 if @datispe&&@datispe.aspetto
     pdf.draw_text @datispe&&@datispe.orarit&&@datispe.orarit.strftime("%H:%M"),
                   :at => [135, 27], :size => 10 if @datispe&&@datispe.aspetto

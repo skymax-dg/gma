@@ -31,7 +31,7 @@ class Rigdoc < ActiveRecord::Base
   end
 
   def imp_list
-    self.qta * self.article.prezzo
+    self.article&&self.article.prezzo ? self.qta * self.article.prezzo : 0
   end
 
   def imposta
