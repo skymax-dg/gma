@@ -20,30 +20,31 @@ class Conto < ActiveRecord::Base
   TIPOCONTO = $ParAzienda['CONTO']['TIPOCONTO']
   TIPOPEO = $ParAzienda['CONTO']['TIPOPEO']
 
-  def self.new_codice(anno, azd)
-    (self.maximum("codice", :conditions => ["annoese = :ae AND azienda = :azd",
-                                             {:ae=>anno, :azd=>azd}]).to_i||0) + 1
+  def self.new_codice(anno, azd, tpc)
+    (self.maximum("codice", :conditions => ["annoese = :ae AND azienda = :azd AND tipoconto = :tpc",
+                                             {:ae=>anno, :azd=>azd, :tpc=>tpc}]).to_i||0) + 1
   end
 
-  def self.filter (tp, des, azienda, annoese, page)
+  def self.filter (tpc, tp, des, azienda, annoese, page)
     # Esegure la ricerca del conto in base ai filtri impostati
 
     nrrecord = nil
     hsh = {"DE" => "descriz", "RS" => "denomin", "CC" => "codice"}
     hshvar = Hash.new
-    whconto = "" 
+    whconto = " tipoconto = :tpc"
+    hshvar[:tpc] = "#{tpc}"
     whanagen = ""
     if (not des.blank?)
-      whconto = " UPPER(contos.#{hsh[tp]}) like UPPER(:d)" if tp=="DE" 
+      whconto += " and UPPER(contos.#{hsh[tp]}) like UPPER(:d)" if tp=="DE" 
       hshvar[:d] = "%#{des}%" if tp=="DE"
-      whanagen = " UPPER(anagens.#{hsh[tp]}) like UPPER(:e)" if tp=="RS"
+      whanagen += " and UPPER(anagens.#{hsh[tp]}) like UPPER(:e)" if tp=="RS"
       hshvar[:e] = "%#{des}%" if tp=="RS"
-      whconto = " UPPER(CAST(contos.#{hsh[tp]} AS text)) like UPPER(:d)" if tp=="CC"
+      whconto += " and UPPER(CAST(contos.#{hsh[tp]} AS text)) like UPPER(:d)" if tp=="CC"
       hshvar[:d] = "%#{des}%" if tp=="CC"
     end
-    nrrecord = includes(:anagen).where([whanagen + whconto, hshvar]).azdanno(azienda, annoese).count if page.nil?
+    nrrecord = includes(:anagen).where([whconto + whanagen, hshvar]).azdanno(azienda, annoese).count if page.nil?
 
-    return includes(:anagen).where([whanagen + whconto, hshvar]).azdanno(azienda, annoese).paginate(
+    return includes(:anagen).where([whconto + whanagen, hshvar]).azdanno(azienda, annoese).paginate(
       :page => page,
       :per_page => 10,
       :order => "contos.codice ASC"), nrrecord unless hsh[tp].nil?

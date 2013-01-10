@@ -19,6 +19,15 @@
                :at => [250,760], :width => 280, :height => 24, :size => 8, :align => :center
 
   #Mittente
+  # stampa logo immagine
+  pdf.bounding_box [0,780], :width => 240, :height => 50 do
+    pdf.image "#{Rails.root}/app/assets/images/logos/Eifis.jpg", :fit => [240,50]
+  end
+  # stampa logo cornice
+  pdf.bounding_box [0,780], :width => 240, :height => 40 do
+    pdf.stroke_bounds
+  end
+
   pdf.bounding_box [0,780], :width => 240, :height => 155 do
     pdf.stroke_bounds
   end
@@ -28,7 +37,7 @@
                           {:text => "Tel: #{@ana.telefono} / Fax: #{@ana.fax}\n"},
                           {:text => "E-Mail: #{@ana.email} / Web: #{@ana.web}"}
                           ],
-                         :at => [2,757], :width => 238, :height => 130,
+                         :at => [2,720], :width => 238, :height => 130,
                          :overflow => :shrink_to_fit, :size => 10, :min_font_size => 6
 
   #Destinatario

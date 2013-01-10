@@ -30,6 +30,16 @@
       <li> <%= link_to "CAUSALI MAGAZZINO", causmags_path %> </li>
       <li> <%= link_to "CITTA'", localitas_path %> </li>
       <li> <%= link_to "CONTI CLIENTI/FORNITORI", contos_path %> </li>
+
+      <li class="has-flyout">
+        <%= link_to "CONTI", "#" %>
+        <a href="#" class="flyout-toggle"></a>
+        <ul class="flyout">
+          <li> <%= link_to "CLIENTI", contos_path(:tipoconto => 'C') %> </li>
+          <li> <%= link_to "FORNITORI", contos_path(:tipoconto => 'F') %> </li>
+          <li> <%= link_to "ALTRO", contos_path(:tipoconto => 'A') %> </li>
+        </ul>
+      </li>
       <li> <%= link_to "IVA/ESENZIONI", ivas_path %> </li>
       <li> <%= link_to "STATI/NAZIONI", paeses_path %> </li>
     </ul>

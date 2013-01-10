@@ -50,9 +50,9 @@ store_location
         @conto = Conto.new
         @conto.azienda = current_user.azienda
         @conto.annoese = current_annoese
-        @conto.codice = Conto.new_codice(@conto.annoese, @conto.azienda)
-        @conto.descriz = @anagen.denomin
         @conto.tipoconto = 'C'
+        @conto.codice = Conto.new_codice(@conto.annoese, @conto.azienda, @conto.tipoconto)
+        @conto.descriz = @anagen.denomin
         @conto.cntrpartita = nil
         @conto.sconto = 0
         @conto.anagen_id = @anagen.id

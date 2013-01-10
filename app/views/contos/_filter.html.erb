@@ -1,6 +1,7 @@
 <fieldset>
   <legend> Ricerca conto </legend>
   <%= form_tag(:filter_contos, :method => :get) do %>
+  <%= hidden_field_tag "tipoconto", @tipoconto %>
     <div class="three columns">
       <%= select_tag("tpfilter",
                      options_for_select([["Descrizione", "DE"],

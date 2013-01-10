@@ -3,14 +3,15 @@ before_filter :authenticate
   def filter
     @tpfilter  = params[:tpfilter]
     @desfilter = params[:desfilter].strip
-    @contos, nrrecord = Conto.filter(@tpfilter, @desfilter, current_user.azienda, current_annoese, params[:page])
+    @contos, nrrecord = Conto.filter(get_tpc, @tpfilter, @desfilter, current_user.azienda, current_annoese, params[:page])
     flash_cnt(nrrecord) if params[:page].nil?
 store_location
     render "index"
   end
 
   def index
-    @title = "Elenco Conti"
+    set_tpc(params[:tipoconto]) if params[:tipoconto]
+    @title = "Elenco Conti (#{Conto::TIPOCONTO[get_tpc].upcase})"
 store_location
     #@contos = Conto.azdanno(current_user.azienda, current_annoese).paginate(:page => params[:page],
     #                                                                        :per_page => 10,
@@ -25,27 +26,28 @@ store_location
   end
 
   def show
-    @title = "Mostra Conto"
     @conto = Conto.find(params[:id])
+    @title = "Mostra Conto (#{Conto::TIPOCONTO[@conto.tipoconto].upcase})"
   end
 
   def new
-    @title = "Nuovo Conto"
     @conto = Conto.new
     @conto.azienda = current_user.azienda
     @conto.annoese = current_annoese
-    @conto.codice = Conto.new_codice(@conto.annoese, @conto.azienda)
+    @conto.tipoconto = get_tpc
+    @title = "Nuovo Conto (#{Conto::TIPOCONTO[@conto.tipoconto].upcase})"
+    @conto.codice = Conto.new_codice(@conto.annoese, @conto.azienda, @conto.tipoconto)
   end
 
   def edit
-    @title = "Modifica Conto"
     @conto = Conto.find(params[:id])
+    @title = "Modifica Conto (#{Conto::TIPOCONTO[@conto.tipoconto].upcase})"
   end
 
   def create
     @conto = Conto.new(params[:conto])
     if (@conto.tipoconto=="C"||@conto.tipoconto=="F")&&@conto.anagen_id.nil?
-      @title = "Nuovo Conto"
+      @title = "Nuovo Conto (#{Conto::TIPOCONTO[@conto.tipoconto].upcase})"
       flash.now[:alert] = "Per un conto #{Conto::TIPOCONTO["C"]}/#{Conto::TIPOCONTO["F"]} 
                            e' obbligatorio specificare una anagrafica soggetto"
       render :action => "new"
@@ -54,7 +56,7 @@ store_location
         flash[:success] = 'Piano dei conti inserito con successo.'
         redirect_to @conto
       else
-        @title = "Nuovo Conto"
+        @title = "Nuovo Conto (#{Conto::TIPOCONTO[@conto.tipoconto].upcase})"
 #        flash.now[:alert] = "Il salvataggio del piano dei conti non e' andato a buon fine"
         render :action => "new"
       end
@@ -63,10 +65,9 @@ store_location
 
   def update
     @conto = Conto.find(params[:id])
-    @conto.tipoconto=params[:conto][:tipoconto]
     @conto.anagen_id=params[:conto][:anagen_id]
     if (@conto.tipoconto=="C"||@conto.tipoconto=="F")&&@conto.anagen_id.nil?
-      @title = "Modifica Conto"
+      @title = "Modifica Conto (#{Conto::TIPOCONTO[@conto.tipoconto].upcase})"
       flash.now[:alert] = "Per un conto #{Conto::TIPOCONTO["C"]}/#{Conto::TIPOCONTO["F"]} 
                            e' obbligatorio specificare una anagrafica soggetto"
       render :action => "edit"

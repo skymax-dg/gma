@@ -2,6 +2,7 @@
 <%= form_for(@conto) do |f| %>
   <%= f.hidden_field :azienda %>
   <%= f.hidden_field :annoese %>
+  <%= f.hidden_field :tipoconto %>
   <div class="row">
     <div class="two columns">
       <%= f.label "Codice" %>
@@ -31,8 +32,8 @@
       <%= f.number_field :sconto %>
     </div>
     <div class="five columns">
-      <%= f.label "Riferimento" %>
-      <%= select(:conto, :tipoconto, Conto::TIPOCONTO.invert.sort, { :prompt => true }) %>
+      <%#= f.label "Riferimento" %>
+      <%#= select(:conto, :tipoconto, Conto::TIPOCONTO.invert.sort, { :prompt => true, :disabled => true }) %>
     </div>
     <div class="two columns"></div>
     <div class="five columns">

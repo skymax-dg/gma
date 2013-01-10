@@ -49,8 +49,15 @@ DOCUMENTI
           <a href="#" class="foundicon-edit">
             PIANO DEI CONTI
           </a>
+
+
           <ul class="dropdown">
-            <li> <%= link_to "CLIENTI/FORNITORI", contos_path %> </li>
+            <li> <%= link_to "CLIENTI", contos_path(:tipoconto => 'C') %> </li>
+            <li> <%= link_to "FORNITORI", contos_path(:tipoconto => 'F') %> </li>
+            <li> <%= link_to "ALTRO", contos_path(:tipoconto => 'A') %> </li>
+<!--
+            <li> <%#= link_to "CLIENTI/FORNITORI", contos_path %> </li>
+-->
           </ul>
         </li>
       </ul>
