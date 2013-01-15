@@ -19,6 +19,14 @@ redirect_back_or tesdoc_url(@rigdoc.tesdoc.id, :page=>params[:page])
     end
   end
 
+#  def art_sconto_exit
+#    @prezzo=params[:prezzo]
+#    @sconto=params[:rigdoc][:sconto]
+#    respond_to do |format|
+#      format.js
+#    end
+#  end
+
   def art_des_exit
     @article = Article.find(params[:rigdoc][:article_id]) unless params[:rigdoc][:article_id].empty?
     respond_to do |format|

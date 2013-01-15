@@ -22,12 +22,19 @@
 	pdf.bounding_box [0,780], :width => 240, :height => 80 do
 		pdf.stroke_bounds
 	end
+  testo=""
+  testo="Part.Iva: #{@ana.pariva}\n" if @ana.pariva && @ana.pariva.length > 0
+  testo+="C.F.:#{@ana.codfis}\n" if testo == "" && @ana.codfis.length > 0
+  testo+="Tel:#{@ana.telefono}" if @ana.telefono && @ana.telefono.length > 0
+  testo+=" / " if @ana.telefono && @ana.fax && @ana.telefono.length > 0 && @ana.fax.length > 0
+  testo+="Fax:#{@ana.fax}" if @ana.fax && @ana.fax.length > 0
+  testo+="\n"
+  testo+="EMail:#{@ana.email}" if @ana.email && @ana.email.length > 0
+  testo+=" / " if @ana.email && @ana.web && @ana.email.length > 0 && @ana.web.length > 0
+  testo+="Web:#{@ana.web}" if @ana.web && @ana.web.length > 0
   pdf.formatted_text_box [{:text => "Mitt: #{@ana.denomin.upcase}\n", :styles => [:bold], :size => 12},
                           {:text => "#{@sl[:indir]}\n#{@sl[:desloc]}\n"},
-                          {:text => "Part.Iva: #{@ana.pariva}\n"},
-                          {:text => "Tel: #{@ana.telefono} / Fax: #{@ana.fax}\n"},
-                          {:text => "E-Mail: #{@ana.email} / Web: #{@ana.web}"}
-                          ],
+                          {:text => testo}],
                          :at => [2,777], :width => 238, :height => 77,
                          :overflow => :shrink_to_fit, :size => 10, :min_font_size => 6
 
@@ -35,9 +42,17 @@
 	pdf.bounding_box [0,700], :width => 240, :height => 95 do
 		pdf.stroke_bounds
 	end
+
+  testo=""
+  testo="Part.Iva: #{@anad.pariva}\n" if @anad.pariva && @anad.pariva.length > 0
+  testo+="C.F.:#{@anad.codfis} " if testo == "" && @anad.codfis.length > 0
+  testo+="Tel:#{@anad.telefono} " if @anad.telefono && @anad.telefono.length > 0
+  testo+="EMail:#{@anad.email} " if @anad.email && @anad.email.length > 0
+  testo+="/ " if @anad.email && @anad.web && @anad.email.length > 0 && @anad.web.length > 0
+  testo+="Web:#{@anad.web}" if @anad.web && @anad.web.length > 0
   pdf.formatted_text_box [{:text => "Dest: #{@anad.denomin.upcase}\n", :styles => [:bold], :size => 12},
                           {:text => "#{@sld[:indir]}\n#{@sld[:desloc]}\n"},
-                          {:text => "Part.Iva: #{@anad.pariva}\n"}],
+                          {:text => testo}],
                          :at => [2,698], :width => 238, :height => 93,
                          :overflow => :shrink_to_fit, :size => 10, :min_font_size => 6
   #Presso e luogo di destinazione
@@ -45,12 +60,15 @@
     pdf.stroke_bounds
   end
 
+  testo=""
+  testo+="Tel:#{@anad.telefono} " if @anad.telefono && @anad.telefono.length > 0
 	unless @datispe.nil? || "#{@datispe.dest1}#{@datispe.dest2}".blank?
     pdf.text_box "Luogo di consegna",
                  :at => [245, 700], :height => 15, :size => 12, :style => :bold
 
     pdf.formatted_text_box [{:text => "Presso: #{@datispe.presso.upcase}\n", :styles => [:bold], :size => 12},
-                            {:text => "#{@datispe.dest1}\n#{@datispe.dest2}"}],
+                            {:text => "#{@datispe.dest1}\n#{@datispe.dest2}\n"},
+                            {:text => testo}],
                            :at => [260,685], :width => 268, :height => 73,
                            :overflow => :shrink_to_fit, :size => 10, :min_font_size => 6
 	end
@@ -68,7 +86,7 @@
 	#end
   pdf.formatted_text_box [{:text => "Causale di trasporto: ", :styles => [:bold]},
                           {:text => @tesdoc.causmag.caus_tra||""}],
-                         :at => [2, 590], :width => 240, :height => 20, :size => 10
+                         :at => [2, 590], :width => 280, :height => 20, :size => 10
 
   #Corriere
 	#pdf.bounding_box [280,600], :width => 250, :height => 50 do

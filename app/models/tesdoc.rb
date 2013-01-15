@@ -24,13 +24,9 @@ class Tesdoc < ActiveRecord::Base
     return true
   end
 
-  def self.new_num_doc(g_p, tpd, anno, azd)
-#    (self.maximum("num_doc", :conditions => ["tipo_doc = :tpd AND annoese = :ae AND azienda = :azd",
-#                                             {:tpd=>tpd, :ae=>anno, :azd=>azd}]).to_i||0) + 1
+  def self.new_num_doc(g_p, anno, azd)
     (self.maximum("num_doc", :include => :causmag, :conditions => ["causmags.grp_prg = :g_p AND tesdocs.annoese = :ae AND tesdocs.azienda = :azd",
                                              {:g_p=>g_p, :ae=>anno, :azd=>azd}]).to_i||0) + 1
-#    (self.maximum("num_doc", :conditions => ["grpprg = :g_p AND annoese = :ae AND azienda = :azd",
-#                                             {:g_p=>g_p, :ae=>anno, :azd=>azd}]).to_i||0) + 1
   end
 
   def add1row4article(azienda)
@@ -68,7 +64,7 @@ class Tesdoc < ActiveRecord::Base
 
   def imponibile
     imp = 0
-    self.rigdocs.each{|r|imp += (r.qta * r.prezzo)}
+    self.rigdocs.each{|r|imp += (r.impon)}
     return imp
   end
 
@@ -77,7 +73,7 @@ class Tesdoc < ActiveRecord::Base
     self.rigdocs.each do |r| 
       r.iva.nil? ? ivaid=0 : ivaid=r.iva.id
       imp[ivaid]=Hash.new unless imp.key?(ivaid)
-      imp[ivaid][:impon]=imp[ivaid][:impon].to_f + (r.qta * r.prezzo)
+      imp[ivaid][:impon]=imp[ivaid][:impon].to_f + (r.impon)
     end
     puts imp
     return imp
@@ -90,7 +86,7 @@ class Tesdoc < ActiveRecord::Base
       r.iva.nil? ? ivaid=0 : ivaid=r.iva.id
       imp[cat]=Hash.new unless imp.key?(cat)
       imp[cat][ivaid]=Hash.new unless imp[cat].key?(ivaid)
-      imp[cat][ivaid][:impon]=imp[cat][ivaid][:impon].to_f + (r.qta * r.prezzo)
+      imp[cat][ivaid][:impon]=imp[cat][ivaid][:impon].to_f + (r.impon)
     end
     puts imp
     return imp

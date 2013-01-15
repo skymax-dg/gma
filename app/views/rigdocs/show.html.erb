@@ -72,6 +72,7 @@
     <%= label @rigdoc, "Totale di riga:", :class => "right" %>
   </div>
   <div class="ten columns">
-    <%= @rigdoc.prezzo * @rigdoc.qta %>
+    <%#= @rigdoc.prezzo * @rigdoc.qta %>
+    <%= @rigdoc.impon %>
   </div>
 </div>

@@ -8,72 +8,11 @@
     #pdf.stroke_bounds
   #end
 
-  #titolo documento
-  pdf.bounding_box [240,780], :width => 290, :height => 40 do
-    pdf.stroke_bounds
-  end
-  pdf.text_box @tit_doc[0],
-               :at => [250,770],  :width => 280, :height => 12, :size => 12, :style => :bold,
-               :align => :center, :overflow => :shrink_to_fit, :min_font_size => 8
-  pdf.text_box @tit_doc[1],
-               :at => [250,760], :width => 280, :height => 24, :size => 8, :align => :center
-
-  #Mittente
-  # stampa logo immagine
-  pdf.bounding_box [0,780], :width => 240, :height => 50 do
-    pdf.image "#{Rails.root}/app/assets/images/logos/Eifis.jpg", :fit => [240,50]
-  end
-  # stampa logo cornice
-  pdf.bounding_box [0,780], :width => 240, :height => 40 do
-    pdf.stroke_bounds
-  end
-
-  pdf.bounding_box [0,780], :width => 240, :height => 155 do
-    pdf.stroke_bounds
-  end
-  pdf.formatted_text_box [{:text => "#{@ana.denomin.upcase}\n", :styles => [:bold], :size => 12},
-                          {:text => "#{@sl[:indir]}\n#{@sl[:cap]} #{@sl[:desloc]}\n"},
-                          {:text => "Part.Iva: #{@ana.pariva}\n"},
-                          {:text => "Tel: #{@ana.telefono} / Fax: #{@ana.fax}\n"},
-                          {:text => "E-Mail: #{@ana.email} / Web: #{@ana.web}"}
-                          ],
-                         :at => [2,720], :width => 238, :height => 130,
-                         :overflow => :shrink_to_fit, :size => 10, :min_font_size => 6
-
-  #Destinatario
-  pdf.bounding_box [240,740], :width => 290, :height => 135 do
-    pdf.stroke_bounds
-  end
-  pdf.formatted_text_box [{:text => "Spett.le: #{@anad.denomin.upcase}\n", :styles => [:bold], :size => 12},
-                          {:text => "#{@sld[:indir]}\n#{@sld[:cap]} #{@sld[:desloc]}\n"},
-                          {:text => "Part.Iva: #{@anad.pariva}\n"},
-                          {:text => "E-Mail: #{@anad.email} / Web: #{@anad.web}"}],
-                         :at => [242,698], :width => 286, :height => 92,
-                         :overflow => :shrink_to_fit, :size => 10, :min_font_size => 6
-  #Riferimenti documento
-  pdf.bounding_box [0,625], :width => 240, :height => 20 do
-    pdf.stroke_bounds
-  end
-  pdf.text_box "DOCUM.Nr. #{@rifdoc[:nr]}/#{@rifdoc[:dt].strftime("%Y")} del #{@rifdoc[:dt].strftime("%d/%m/%Y")}",
-               :at => [2, 619], :width => 240, :height => 15, :size => 12, :style => :bold
   # do per scontato che se è stata specificata una causale di trasporto allora il documeno deve riportare anche
   # i dati DDT.
-  @datispe && @datispe.corriere && (not @datispe.corriere.blank?) ? ddt = 1 : ddt=0
+  @datispe && @datispe.corriere && (not @datispe.corriere.blank?) ? @ddt = 1 : @ddt=0
 
-  if ddt == 1
-    pdf.bounding_box [0,605], :width => 530, :height => 30 do
-      pdf.stroke_bounds
-    end
-    pdf.formatted_text_box [{:text => "Causale di trasporto: ", :styles => [:bold]},
-                            {:text => @tesdoc.causmag.caus_tra||""}],
-                             :at => [2, 590], :width => 240, :height => 20, :size => 10
-#                             :at => [2, 565], :width => 240, :height => 20, :size => 10
-    pdf.formatted_text_box [{:text => "A mezzo: ", :styles => [:bold]},
-                            {:text => Spediz::CORRIERE[(@datispe&&@datispe.corriere)||""]||""}],
-                             :at => [270, 590], :width => 260, :height => 45, :size => 10
-#                             :at => [270, 565], :width => 260, :height => 45, :size => 10
-  end
-  pdf.move_down 10
+  render :partial=>'testafatt.pdf.prawn', :locals=>{:ppdf=>pdf}
   pdf.text "DETTAGLIO ARTICOLI", :size => 14, :style => :bold, :align => :center
   @tb = Array.new(1, ["CODICE", "DESCRIZIONE", "Q.TA", "PRZ.\nLIST.", "TOT.\nLIST.", "PRZ.\nSCN.", "IMPON.", "IVA"])
   @tqta=0
@@ -119,7 +58,10 @@
 
   #Stampa tabella riepilogativa
   # Salto pagina se non c'è abbastanza spazio per il riepilogo impobnibili
-  pdf.start_new_page if pdf.cursor < @tb.count * 10 + 65
+  if pdf.cursor < @tb.count * 10 + 65
+    pdf.start_new_page 
+    render :partial=>'testafatt.pdf.prawn', :locals=>{:ppdf=>pdf}
+  end
 
   pdf.text "RIEPILOGO IMPONIBILI", :size => 14, :style => :bold, :align => :center
   tab = pdf.make_table(@tb, :column_widths=>{0=>160, 1=> 80, 2=>120, 3=>80, 4=>87}, :cell_style => {:size => 10})
@@ -133,7 +75,12 @@
   #dati pagamento
   unless @datispe.nil? || @datispe.pagam.nil? || @datispe.pagam.blank?
     #Esegue salto pagina se non è rimasto abbastanza spazio per le note
-    pdf.cursor < 300 ? pdf.start_new_page : pdf.move_cursor_to(310)
+    if pdf.cursor < 300
+      pdf.start_new_page
+      render :partial=>'testafatt.pdf.prawn', :locals=>{:ppdf=>pdf}
+    else
+      pdf.move_cursor_to(310)
+    end
     
     pdf.text "Pagamento:", :size => 12, :style => :bold
     pdf.text @datispe.pagam, :size => 10
@@ -146,7 +93,10 @@
   #note
   unless @datispe.nil? || @datispe.note.nil? || @datispe.note.blank?
     #Esegue salto pagina se non è rimasto abbastanza spazio per le note
-    pdf.start_new_page if pdf.cursor < 180
+    if pdf.cursor < 180
+      pdf.start_new_page
+      render :partial=>'testafatt.pdf.prawn', :locals=>{:ppdf=>pdf}
+    end
     
     pdf.text_box "Annotazioni: #{@datispe.note}",
                  :at => [2, 178], :width => 80, :height => 12, :size => 10, :style => :bold
@@ -154,7 +104,7 @@
                  :at => [70, 178], :width => 450, :height => 105, :size => 8
   end
 
-  if ddt == 1
+  if @ddt == 1
     pdf.bounding_box [0,80], :width => 530, :height => 30 do
       pdf.stroke_bounds
     end

@@ -90,6 +90,7 @@ Gma::Application.routes.draw do
     collection do
       get :art_cod_exit
       get :art_des_exit
+      get :art_sconto_exit
     end
     member do
       get :up

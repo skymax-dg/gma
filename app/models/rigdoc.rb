@@ -27,14 +27,16 @@ class Rigdoc < ActiveRecord::Base
   end
 
   def impon
-    self.qta * self.prezzo
+#    self.qta * self.prezzo
+    self.qta>0&&self.prezzo>0 ? self.qta*(self.prezzo*(100-self.sconto)/100) : 0
   end
 
   def imp_list
-    self.article&&self.article.prezzo ? self.qta * self.article.prezzo : 0
+    self.article&&self.article.prezzo>0&&self.qta>0 ? self.qta * self.article.prezzo : 0
   end
 
   def imposta
-    self.iva.aliq > 0 && self.impon > 0 ? self.impon * self.iva.aliq / 100 : 0;
+    self.iva.aliq > 0 && self.impon > 0 ? self.impon*self.iva.aliq/100 : 0;
   end
+
 end

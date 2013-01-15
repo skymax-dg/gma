@@ -34,6 +34,11 @@
     <div class="one columns">
       <%= f.label "Sconto" %>
       <%= f.number_field :sconto %>
+      <%#= f.number_field :sconto, {:data => {:remote => true,
+                                       :url => url_for(:controller => :rigdocs,
+                                                       :action => :art_sconto_exit,
+                                                       :prezzo=>@rigdoc.prezzo,
+                                                       :article_id=>@rigdoc.article_id)}} %>
     </div>
     <div class="four columns">
       <%= f.label "aliquota iva:" %>

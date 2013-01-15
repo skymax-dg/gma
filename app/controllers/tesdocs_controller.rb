@@ -262,7 +262,7 @@ store_location
           @tesdoc.conto_id = @conto.id
           @tesdoc.sconto = @conto.sconto
           @tesdoc.tipo_doc = @causmag.tipo_doc
-          @tesdoc.num_doc = Tesdoc.new_num_doc(@causmag.grp_prg, @tesdoc.tipo_doc, @tesdoc.annoese, @tesdoc.azienda)
+          @tesdoc.num_doc = Tesdoc.new_num_doc(@causmag.grp_prg, @tesdoc.annoese, @tesdoc.azienda)
           @spediz = @tesdoc.build_spediz # La Build valorizza automaticamente il campo spediz.tesdoc_id
         end
       end
