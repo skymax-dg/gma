@@ -215,6 +215,15 @@ store_location
     end
   end
 
+  def set_causmags
+    join="left join tesdocs on (tesdocs.causmag_id = causmags.id and tesdocs.conto_id = #{params[:contofilter]})"
+    @causmags=Causmag.find(:all, :joins => join, :select => "causmags.descriz, count(*) as nr",
+                           :group => "causmags.descriz", :order => "nr desc, descriz" )
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def filter
     @title = "Elenco Documenti (#{Causmag::TIPO_DOC[se_tipo_doc.to_i]})"
     @tpfilter  = params[:tpfilter]
@@ -277,7 +286,10 @@ store_location
     @page = params[:page]
     @rigdocs = @tesdoc.rigdocs.sort{|a,b|a.prgrig<=>b.prgrig}
     @rigdocs = @rigdocs.paginate(:page => @page, :per_page => 10)
+    @scadenzas = @tesdoc.scadenzas.sort{|a,b|a.data<=>b.data}
+    @scadenzas = @scadenzas.paginate(:page => @page, :per_page => 10)
     @subtot_iva = @tesdoc.subtot_iva
+    @tab=params[:tab]
   end
 
   def edit

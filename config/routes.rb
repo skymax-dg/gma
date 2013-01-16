@@ -33,6 +33,8 @@ Gma::Application.routes.draw do
     end
   end
 
+resources :scadenzas
+
   resources :spedizs, :only => [:new, :create, :edit, :update, :destroy]  do
     collection do
       get :setind
@@ -72,6 +74,7 @@ Gma::Application.routes.draw do
   resources :tesdocs do
     collection do
       get :filter
+      get :set_causmags
       get :addtesrigdoc_fromxls
     end
     member do
@@ -81,6 +84,7 @@ Gma::Application.routes.draw do
       get :dati_ind
       get :stp_ind
       get :ges_datisped
+      get :ges_datiscad
       post :addrow_fromxls
       get :upload_xls
     end

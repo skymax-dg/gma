@@ -31,7 +31,8 @@ class SpedizsController < ApplicationController
     @spediz = Tesdoc.find(params[:spediz][:tesdoc_id]).build_spediz(params[:spediz])
     if @spediz.save
       flash[:success] = "Dati spedizione inseriti con successo."
-      redirect_to @spediz.tesdoc
+      redirect_to :controller=>:tesdocs, :action=>:show, :id=>@spediz.tesdoc.id, :tab=>:sped
+      #redirect_to @spediz.tesdoc
     else
       @title = "Inserisci Dati spedizione/pagamento"
 #      flash.now[:alert] = "Il salvataggio dei dati spedizione non e' andato a buon fine"
@@ -46,7 +47,8 @@ params[:spediz][:dtrit]=params[:spediz][:dtrit].to_my_date if params[:spediz][:d
     @spediz = Spediz.find(params[:id])
     if @spediz.update_attributes(params[:spediz])
       flash[:success] = "Dati spedizione aggiornati."
-      redirect_to @spediz.tesdoc
+      redirect_to :controller=>:tesdocs, :action=>:show, :id=>@spediz.tesdoc.id, :tab=>:sped
+      #redirect_to @spediz.tesdoc
     else
       @title = "Modifica Dati spedizione/pagamento"
 #      flash.now[:alert] = "Il salvataggio dei dati spedizione non e' andato a buon fine"

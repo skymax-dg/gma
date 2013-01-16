@@ -3,29 +3,28 @@
 <%= render :partial => 'dati_tesdoc' %>
 <hr />
 <dl class="tabs">
-  <dd class="active"><a href="#listrow">Righe documento</a></dd>
-  <dd>
-    <a href="#sped">Spedizione/Pagamento</a>
-  </dd>
-  <dd>
-    <a href="#tot_imp">Totali Imponibili</a>
-  </dd>
+  <dd class=<%='active' if @tab=='listrow'||!@tab%>><a href="#listrow">Righe documento</a></dd>
+  <dd class=<%='active' if @tab=='sped'%>><a href="#sped">Spedizione/Pagamento</a></dd>
+  <dd class=<%='active' if @tab=='tot_imp'%>><a href="#tot_imp">Totali Imponibili</a></dd>
+  <dd class=<%='active' if @tab=='scad'%>><a href="#scad">Elenco scadenze</a></dd>
 </dl>
 
 <ul class="tabs-content">
-  <li id="tot_impTab">
-    <%= render :partial => 'tab_imp' %>
-  </li>
-
-  <li class="active" id="listrowTab">
+  <li <%='class=active' if @tab=='listrow'||!@tab%> id="listrowTab">
     <%= render :partial => '/rigdocs/btn_rigdoc' %>
     <%= render :partial => '/rigdocs/tab_rigdoc' %>
   </li>
-  <li id="spedTab">
+  <li <%='class=active' if @tab=='sped'%> id="spedTab">
     <%= render :partial => '/spedizs/btn_spediz' %>
     <% if @spediz %>
       <%= render '/spedizs/show' %>
     <% end %>
   </li>
+  <li <%='class=active' if @tab=='tot_imp'%> id="tot_impTab">
+    <%= render :partial => 'tab_imp' %>
+  </li>
+  <li <%='class=active' if @tab=='scad'%> id="scadTab">
+    <%= render :partial => '/scadenzas/tab_scadenza' %>
+  </li>
 </ul>
-
+<% @tab=""%>

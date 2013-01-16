@@ -59,6 +59,14 @@ CAUSALE:
   TIPOIVA:
     S: 'Si'
     N: 'No'
+SCADENZA:
+  TIPO:
+    RB: 'Ri.Ba.'
+    RD: 'Rim.Diretta'
+  STATO:
+    A: 'Attiva'
+    S: 'Scaduta/Insoluta'
+    P: 'Pagata'
 SPEDIZ:
   CAUSTRA:
     ICD: 'C/Deposito'

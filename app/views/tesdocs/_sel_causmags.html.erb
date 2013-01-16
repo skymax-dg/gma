@@ -1,0 +1,4 @@
+<%= select_tag("causmagfilter",
+               options_from_collection_for_select(@causmags, :id, 
+                                                  :descriz, {:selected => @causmagfilter.to_i}),
+               {:include_blank => blank}) %>

@@ -4,7 +4,7 @@
   <td class="float"><%= line.qta if line.qta > 0 %></td>
   <td class="currency"><%= number_to_currency(line.prezzo) if line.qta > 0 %></td>
   <td class="float"><%= line.sconto if line.qta > 0 %></td>
-  <td class="currency"><%= number_to_currency(line.impon2) if line.qta > 0 %></td>
+  <td class="currency"><%= number_to_currency(line.impon) if line.qta > 0 %></td>
   <td>
     <%= link_to '', line,
                      :class => "button radius tiny detail foundicon-page", :title => "Dettaglio" %>
