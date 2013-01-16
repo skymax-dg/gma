@@ -1,4 +1,4 @@
-class CreateScadenzas < ActiveRecord::Migration
+class CreateScadenzes < ActiveRecord::Migration
   def change
     create_table :scadenzas do |t|
       t.integer :tesdoc_id, :null=>false
@@ -6,6 +6,7 @@ class CreateScadenzas < ActiveRecord::Migration
       t.string :tipo, :limit=>2, :null=>false
       t.string :stato, :limit=>1, :null=>false
       t.string :descriz, :limit => 100
+      t.decimal :importo, :precision => 12, :scale => 6, :default => 0, :null => false
 
       t.timestamps
     end

@@ -180,13 +180,14 @@ ActiveRecord::Schema.define(:version => 20130115153911) do
   add_index "rigdocs", ["tesdoc_id"], :name => "index_rigdocs_on_tesdoc_id"
 
   create_table "scadenzas", :force => true do |t|
-    t.integer  "tesdoc_id",               :null => false
+    t.integer  "tesdoc_id",                                                                 :null => false
     t.date     "data"
-    t.string   "tipo",       :limit => 2, :null => false
-    t.string   "stato",      :limit => 1, :null => false
+    t.string   "tipo",       :limit => 2,                                                   :null => false
+    t.string   "stato",      :limit => 1,                                                   :null => false
     t.string   "descriz",    :limit => 100
-    t.datetime "created_at",              :null => false
-    t.datetime "updated_at",              :null => false
+    t.decimal  "importo",                   :precision => 12, :scale => 6, :default => 0.0, :null => false
+    t.datetime "created_at",                                                                :null => false
+    t.datetime "updated_at",                                                                :null => false
   end
 
   add_index "scadenzas", ["data"], :name => "index_scadenzas_on_data"
