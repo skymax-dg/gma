@@ -1,2 +1,5 @@
-//$('#dropdown_cases').val();
-$("#sel_causmag").html("<%= escape_javascript(render(:partial=>'sel_causmags', :locals=>{:blank=>false})) %>");
+var v1 = $("#causmagfilter").val();
+if (v1=="")
+{
+  $("#sel_causmag").html("<%= escape_javascript(render(:partial=>'sel_causmags', :locals=>{:blank=>false})) %>");
+}

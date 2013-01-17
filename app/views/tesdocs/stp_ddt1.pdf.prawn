@@ -24,7 +24,7 @@
 	end
   testo=""
   testo="Part.Iva: #{@ana.pariva}\n" if @ana.pariva && @ana.pariva.length > 0
-  testo+="C.F.:#{@ana.codfis}\n" if testo == "" && @ana.codfis.length > 0
+  testo+="C.F.:#{@ana.codfis}\n" if testo == "" && @ana.codfis && @ana.codfis.length > 0
   testo+="Tel:#{@ana.telefono}" if @ana.telefono && @ana.telefono.length > 0
   testo+=" / " if @ana.telefono && @ana.fax && @ana.telefono.length > 0 && @ana.fax.length > 0
   testo+="Fax:#{@ana.fax}" if @ana.fax && @ana.fax.length > 0
@@ -45,7 +45,7 @@
 
   testo=""
   testo="Part.Iva: #{@anad.pariva}\n" if @anad.pariva && @anad.pariva.length > 0
-  testo+="C.F.:#{@anad.codfis} " if testo == "" && @anad.codfis.length > 0
+  testo+="C.F.:#{@anad.codfis} " if testo == "" && @anad.codfis && @anad.codfis.length > 0
   testo+="Tel:#{@anad.telefono} " if @anad.telefono && @anad.telefono.length > 0
   testo+="EMail:#{@anad.email} " if @anad.email && @anad.email.length > 0
   testo+="/ " if @anad.email && @anad.web && @anad.email.length > 0 && @anad.web.length > 0
