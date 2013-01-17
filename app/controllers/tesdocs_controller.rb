@@ -13,7 +13,7 @@ before_filter :authenticate
 
   def index
     store_tipo_doc(params[:tipo_doc])
-store_location
+    store_location
     @title = "Elenco Documenti (#{Causmag::TIPO_DOC[se_tipo_doc.to_i]})"
     init_filter(current_user.azienda)
   end
@@ -217,8 +217,9 @@ store_location
 
   def set_causmags
     join="left join tesdocs on (tesdocs.causmag_id = causmags.id and tesdocs.conto_id = #{params[:contofilter]})"
-    @causmags=Causmag.find(:all, :joins => join, :select => "causmags.descriz, count(*) as nr",
-                           :group => "causmags.descriz", :order => "nr desc, descriz" )
+    @causmags=Causmag.find(:all, :joins => join, :select => "causmags.id, causmags.descriz, count(*) as nr",
+                           :group => "causmags.id, causmags.descriz", :order => "nr desc, descriz" )
+    @causmag_id=@causmags[0].id unless @causmags.nil?
     respond_to do |format|
       format.js
     end

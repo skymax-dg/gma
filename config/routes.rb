@@ -33,7 +33,11 @@ Gma::Application.routes.draw do
     end
   end
 
-resources :scadenzas
+  resources :scadenzas do
+    collection do
+      get :filter
+    end
+  end
 
   resources :spedizs, :only => [:new, :create, :edit, :update, :destroy]  do
     collection do

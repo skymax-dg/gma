@@ -1,5 +1,6 @@
 <tr>
   <td><%= line.data.strftime('%d-%m-%Y') %></td>
+  <td class="currency"><%= number_to_currency(line.importo) %></td>
   <td><%= line.descriz %></td>
   <td><%= Scadenza::TIPO[line.tipo] %></td>
   <td><%= Scadenza::STATO[line.stato] %></td>
@@ -10,7 +11,7 @@
                      :class => "button radius tiny modify foundicon-edit", :title => "Modifica" %>
 
 
-    <%= link_to '', @line, :confirm => 'Confermi eliminazione?',
+    <%= link_to '', line, :confirm => 'Confermi eliminazione?',
                                    :method => :delete, :class => "button radius tiny alert foundicon-trash", :title => "Cancella" %>
   </td>
 </tr>

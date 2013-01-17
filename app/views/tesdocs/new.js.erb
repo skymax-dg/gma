@@ -3,7 +3,17 @@ var v2 = $("#contofilter").val();
 var url = "<%= root_url %>tesdocs/new?causmag=" + v1 + "&conto=" + v2;
 if (v1=="" || v2=="")
 {
-  alert("E' necessario specificare nei filtri la causale ed il conto");
+  if (v2=="")
+  {
+   alert("E' necessario specificare nei filtri il conto");
+  }
+  else
+  {
+    if (v1=="")
+    {
+     alert("E' necessario specificare nei filtri la causale");
+    }
+  }
 }
 else
 {

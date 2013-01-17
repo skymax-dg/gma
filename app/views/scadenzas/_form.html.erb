@@ -1,30 +1,33 @@
 <%= form_for @scadenza do |f| %>
   <%= hidden_field(:scadenza, :tesdoc_id) %>
   <div class="row">
-    <div class="three columns">
+    <div class="five columns">
       <%= jdate_field(:scadenza, :data, "Data", :date=>true, :value => @scadenza.data, :readonly => true) %>
     </div>
-    <div class="one columns">
+    <div class="two columns">
     </div>
-    <div class="three columns">
-      <%= f.label "Tipo" %>
-      <%= select(:scadenza, :tipo, Scadenza::TIPO.invert.sort, {:include_blank => true}) %>
+    <div class="five columns">
+      <%= f.label "Importo:" %>
+      <%= f.number_field :importo %>
     </div>
-    <div class="one columns">
-    </div>
-    <div class="three columns">
-      <%= f.label "Stato:" %>
-      <%= select(:scadenza, :stato, Scadenza::STATO.invert.sort, {:include_blank => true}) %>
-    </div>
-    <div class="one columns">
-    </div>
+
     <div class="twelve columns">
       <%= f.label "Descrizione:" %>
       <%= f.text_field :descriz %>
     </div>
+    <div class="five columns">
+      <%= f.label "Tipo" %>
+      <%= select(:scadenza, :tipo, Scadenza::TIPO.invert.sort, {:include_blank => true}) %>
+    </div>
+    <div class="two columns">
+    </div>
+    <div class="five columns">
+      <%= f.label "Stato:" %>
+      <%= select(:scadenza, :stato, Scadenza::STATO.invert.sort, {:include_blank => true}) %>
+    </div>
     <div class="twelve columns">
       <%= f.submit "SALVA", :class => "button radius small success foundicon-checkmark" %>
-      <%= link_to 'ANNULLA', :back, :class => "button radius small alert foundicon-remove" %>
+      <%= link_to 'ANNULLA', {:controller=>:tesdocs, :action=>:show, :id=>@scadenza.tesdoc_id, :tab=>:scad}, :class => "button radius small alert foundicon-remove" %>
     </div>
   </div>
 <% end %>
