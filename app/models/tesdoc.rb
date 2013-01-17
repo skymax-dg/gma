@@ -302,9 +302,15 @@ class Tesdoc < ActiveRecord::Base
                           :order => "data_doc DESC, num_doc, causmag_id"), nrrecord unless hsh[tp].nil?
   end
 
-  def self.art_mov_vend(idart, idanagen, nrmag, anarif, azienda, tp)
+  def self.art_mov_vend(idart, idanagen, nrmag, anarif, azienda, tp, annoese)
     # Documenti che movimentano uno o piu' articoli per uno o piu' conti per uno o piu' magazzini
-    idart == "all" ? where_art = " WHERE articles.azienda = #{azienda}" : where_art = " WHERE articles.id = #{idart}"
+    if idart == "all"
+      where_art = " AND articles.azienda = #{azienda}"
+    else
+      where_art = " AND articles.id = #{idart}"
+    end
+    #idart == "all" ? where_art = " WHERE articles.azienda = #{azienda}" : where_art = " WHERE articles.id = #{idart}"
+
     if anarif == "S"
       filter_anagen = ""
       if tp == "M"
@@ -331,21 +337,25 @@ class Tesdoc < ActiveRecord::Base
                                        INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
                                        INNER JOIN contos   ON (tesdocs.conto_id = contos.id)
                                        INNER JOIN anagens  ON (contos.anagen_id = anagens.id) 
+                         WHERE tesdocs.annoese = #{annoese}
                          #{where_art} #{filter_causmag} #{filter_anagen} #{filter_tpmov} #{filter_nrmag} ORDER BY articles.codice")
   end
   
-  def self.anagen_mov_artic(idart, idanagen, nrmag, anarif, tp)
+  def self.anagen_mov_artic(idart, idanagen, nrmag, anarif, tp, annoese)
     # Elenco conti utilizzati dai movimenti/vendite di un articolo per uno o piu' magazzini
     return Tesdoc.find_by_sql("SELECT '' AS idanagen") if anarif == "S"
 
     idanagen.to_s == "" ? filter_anagen = "" : filter_anagen = " AND anagens.id = #{idanagen}"
     filter_tpmov = " AND causmags.tipo IN ('U','E','V','R')"
     if tp == "M"
-      where_causmag = " WHERE causmags.movimpmag IN ('M', 'I') "
-      nrmag == "" ? filter_nrmag = "" : filter_nrmag = " AND (tesdocs.nrmagsrc = #{nrmag} 
-                                                         OR   tesdocs.nrmagdst = #{nrmag})"
+      where_causmag = "  AND causmags.movimpmag IN ('M', 'I') "
+      if nrmag == ""
+        filter_nrmag = " AND (tesdocs.nrmagsrc > 0 OR tesdocs.nrmagdst > 0)"
+      else
+        filter_nrmag = " AND (tesdocs.nrmagsrc = #{nrmag} OR   tesdocs.nrmagdst = #{nrmag})"
+      end
     else
-      where_causmag = " WHERE causmags.contabile = 'S' "
+      where_causmag = " AND causmags.contabile = 'S' "
       filter_nrmag = ""
     end
     Tesdoc.find_by_sql("SELECT DISTINCT anagens.id AS idanagen, anagens.denomin AS denomin
@@ -354,11 +364,12 @@ class Tesdoc < ActiveRecord::Base
                                        INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
                                        INNER JOIN contos   ON (tesdocs.conto_id = contos.id)
                                        INNER JOIN anagens  ON (contos.anagen_id = anagens.id) 
+                         WHERE tesdocs.annoese = #{annoese}
                          #{where_causmag} AND articles.id = #{idart} #{filter_anagen} #{filter_tpmov} 
                          #{filter_nrmag} ORDER BY denomin")
   end
 
-  def self.mag_mov_artic_anagen(idart, idanagen, nrmag, anarif, grpmag, tp)
+  def self.mag_mov_artic_anagen(idart, idanagen, nrmag, anarif, grpmag, tp, annoese)
     # Elenco magazzini movimentati da un articolo su un conto
     return Tesdoc.find_by_sql("SELECT '' AS nrmag") if (grpmag == "S") or (tp == "V")
     filter_anagen = ""
@@ -377,15 +388,23 @@ class Tesdoc < ActiveRecord::Base
       filter_magsrc = " AND  (causmags.movimpmag = 'M' and causmags.tipo IN ('V','E'))"
       filter_magdst = " AND  (causmags.movimpmag = 'M' and causmags.tipo IN ('R','U'))"
     end
-    nrmag == "" ? filter_nrmagsrc = "" : filter_nrmagsrc = " AND tesdocs.nrmagsrc = #{nrmag}"
-    nrmag == "" ? filter_nrmagdst = "" : filter_nrmagdst = " AND tesdocs.nrmagdst = #{nrmag}"
+    if nrmag == ""
+      filter_nrmagsrc = " AND tesdocs.nrmagsrc > 0"
+      filter_nrmagdst = " AND tesdocs.nrmagdst > 0"
+    else
+      filter_nrmagsrc = " AND tesdocs.nrmagsrc = #{nrmag}"
+      filter_nrmagdst = " AND tesdocs.nrmagdst = #{nrmag}"
+    end
+    #nrmag == "" ? filter_nrmagsrc = "" : filter_nrmagsrc = " AND tesdocs.nrmagsrc = #{nrmag}"
+    #nrmag == "" ? filter_nrmagdst = "" : filter_nrmagdst = " AND tesdocs.nrmagdst = #{nrmag}"
     Tesdoc.find_by_sql("SELECT DISTINCT tesdocs.nrmagsrc AS nrmag
                           FROM tesdocs INNER JOIN rigdocs  ON (rigdocs.tesdoc_id = tesdocs.id)
                                        INNER JOIN articles ON (articles.id = rigdocs.article_id)
                                        INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
                                        INNER JOIN contos   ON (tesdocs.conto_id = contos.id)
                                        INNER JOIN anagens  ON (contos.anagen_id = anagens.id) 
-                         WHERE causmags.movimpmag IN ('M', 'I') 
+                         WHERE tesdocs.annoese = #{annoese}
+                           AND causmags.movimpmag IN ('M', 'I') 
                            AND articles.id = #{idart} #{filter_anagen} #{filter_magsrc} #{filter_nrmagsrc} 
                         UNION 
                         SELECT DISTINCT tesdocs.nrmagdst AS nrmag
@@ -394,12 +413,13 @@ class Tesdoc < ActiveRecord::Base
                                        INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
                                        INNER JOIN contos   ON (tesdocs.conto_id = contos.id)
                                        INNER JOIN anagens  ON (contos.anagen_id = anagens.id)
-                         WHERE causmags.movimpmag IN ('M', 'I') 
+                         WHERE tesdocs.annoese = #{annoese}
+                           AND causmags.movimpmag IN ('M', 'I') 
                            AND articles.id = #{idart} #{filter_anagen} #{filter_magdst} #{filter_nrmagdst} 
                       ORDER BY nrmag")
   end
 
-  def self.mov_artanagenmag(idart, idanagen, nrmag, anarif, grpmag)
+  def self.mov_artanagenmag(idart, idanagen, nrmag, anarif, grpmag, annoese)
     # Elenco movimenti per un articolo per un anagrafica e per un magazzino
     filter_anagen = ""
     if anarif == "S"
@@ -418,8 +438,10 @@ class Tesdoc < ActiveRecord::Base
       filter_magdst = " AND  (causmags.movimpmag = 'M' and causmags.tipo IN ('R','U'))"
     end
     if grpmag == "S"
-      filter_nrmagsrc = ""
-      filter_nrmagdst = ""
+      #filter_nrmagsrc = ""
+      #filter_nrmagdst = ""
+      filter_nrmagsrc = " AND tesdocs.nrmagsrc > 0"
+      filter_nrmagdst = " AND tesdocs.nrmagdst > 0"
     else
       filter_nrmagsrc = " AND tesdocs.nrmagsrc = #{nrmag}"
       filter_nrmagdst = " AND tesdocs.nrmagdst = #{nrmag}"
@@ -433,7 +455,8 @@ class Tesdoc < ActiveRecord::Base
                                        INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
                                        INNER JOIN contos   ON (tesdocs.conto_id = contos.id)
                                        INNER JOIN anagens  ON (contos.anagen_id = anagens.id)
-                         WHERE causmags.movimpmag IN ('M', 'I') 
+                         WHERE tesdocs.annoese = #{annoese}
+                           AND causmags.movimpmag IN ('M', 'I') 
                                          AND articles.id = #{idart} #{filter_anagen} #{filter_magsrc} #{filter_nrmagsrc} 
                         UNION 
                         SELECT tesdocs.data_doc   AS Data_doc, tesdocs.num_doc  AS Numero,
@@ -445,12 +468,13 @@ class Tesdoc < ActiveRecord::Base
                                        INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
                                        INNER JOIN contos   ON (tesdocs.conto_id = contos.id)
                                        INNER JOIN anagens  ON (contos.anagen_id = anagens.id)
-                         WHERE causmags.movimpmag IN ('M', 'I') 
+                         WHERE tesdocs.annoese = #{annoese}
+                           AND causmags.movimpmag IN ('M', 'I') 
                                          AND articles.id = #{idart} #{filter_anagen} #{filter_magdst} #{filter_nrmagdst} 
                      ORDER BY data_doc, Numero")
   end
 
-  def self.ven_artanagen(idart, idanagen, anarif)
+  def self.ven_artanagen(idart, idanagen, anarif, annoese)
     # Elenco vendite di un articolo per una anagrafica
     (anarif != "S" and idanagen.to_s != "") ? filter_anagen = " AND anagens.id = #{idanagen}" : filter_anagen = ""
 
@@ -462,7 +486,8 @@ class Tesdoc < ActiveRecord::Base
                                        INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
                                        INNER JOIN contos   ON (tesdocs.conto_id = contos.id)
                                        INNER JOIN anagens  ON (contos.anagen_id = anagens.id)
-                         WHERE causmags.contabile = 'S'
+                         WHERE tesdocs.annoese = #{annoese}
+                           AND causmags.contabile = 'S'
                            AND causmags.tipo IN ('U','E','V','R')
                            AND articles.id = #{idart} #{filter_anagen} 
                      ORDER BY data_doc, Numero")

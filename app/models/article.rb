@@ -66,7 +66,7 @@ class Article < ActiveRecord::Base
                           ORDER BY tesdocs.data_doc, tesdocs.num_doc")
   end
 
-  def self.exp_movart_xls(tp, artmov, idanagen, nrmag, anarif, azienda, grpmag)
+  def self.exp_movart_xls(tp, artmov, idanagen, nrmag, anarif, azienda, grpmag, annoese)
     book = Spreadsheet::Workbook.new # istanzio il workbook (file xls)
     formatbold = Spreadsheet::Format.new :weight=>:bold, :border=>:thin
     formatbord = Spreadsheet::Format.new :border=>:thin
@@ -83,16 +83,16 @@ class Article < ActiveRecord::Base
     nrrow = 1
     artmov.each do |dataart|
       art = Article.find(dataart.attributes["artid"])
-      Tesdoc.anagen_mov_artic(art.id, idanagen, nrmag, anarif, tp).each do |tesdoc|
+      Tesdoc.anagen_mov_artic(art.id, idanagen, nrmag, anarif, tp, annoese).each do |tesdoc|
         anarif == "S" ? idanagen = azienda : idanagen = tesdoc.attributes["idanagen"]
         desanagen = Anagen.find(idanagen).denomin
-        Tesdoc.mag_mov_artic_anagen(art.id, idanagen, nrmag, anarif, grpmag, tp).each do |tesdoc|
+        Tesdoc.mag_mov_artic_anagen(art.id, idanagen, nrmag, anarif, grpmag, tp, annoese).each do |tesdoc|
           if tp == "M"
             giac = 0
             tcar = 0
             tsca = 0
             timp = 0
-            Tesdoc.mov_artanagenmag(art.id, idanagen, tesdoc.attributes["nrmag"], anarif, grpmag).each do |r|
+            Tesdoc.mov_artanagenmag(art.id, idanagen, tesdoc.attributes["nrmag"], anarif, grpmag, annoese).each do |r|
               dt_doc  = r.attributes["data_doc"]
               num     = r.attributes["numero"]
               cau     = r.attributes["causale"]

@@ -11,7 +11,7 @@
   @artmov.each do |dataart|
     art = Article.find(dataart.attributes["artid"])
     desart = "ARTICOLO: #{art.codice}    #{art.descriz}"
-    Tesdoc.anagen_mov_artic(art.id, @idanagen, @nrmag, @anarif, @tp).each do |tesdoc|
+    Tesdoc.anagen_mov_artic(art.id, @idanagen, @nrmag, @anarif, @tp, @annoese).each do |tesdoc|
       if @anarif == "S"
         idanagen = ""
       else
@@ -21,7 +21,7 @@
         pdf.text desanagen,
                      :size => 12, :style => :bold, :align => :left
       end
-      Tesdoc.mag_mov_artic_anagen(art.id, idanagen, @nrmag, @anarif, @grpmag, @tp).each do |tesdoc|
+      Tesdoc.mag_mov_artic_anagen(art.id, idanagen, @nrmag, @anarif, @grpmag, @tp, @annoese).each do |tesdoc|
         @grpmag == "S" ? desmag = "MAGAZZINI RAGGRUPPATI" : desmag = "MAGAZZINO: #{Anaind::NRMAG[tesdoc.attributes['nrmag'].to_i]}"
         pdf.move_down 10
         pdf.text desart,
@@ -36,7 +36,7 @@
           tsca = 0
           timp = 0
           @tb = Array.new
-          Tesdoc.mov_artanagenmag(art.id, idanagen, tesdoc.attributes["nrmag"], @anarif, @grpmag).each do |r|
+          Tesdoc.mov_artanagenmag(art.id, idanagen, tesdoc.attributes["nrmag"], @anarif, @grpmag, @annoese).each do |r|
             dt_doc  = r.attributes["data_doc"]
             num     = r.attributes["numero"]
             cau     = r.attributes["causale"]

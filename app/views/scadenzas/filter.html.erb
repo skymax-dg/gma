@@ -1,0 +1,37 @@
+<fieldset>
+  <legend> Ricerca scadenze </legend>
+  <%= form_tag(:filter_scadenzas, :method => :get) do %>
+    <div class="six columns">
+      <%= label :filter_scadenzas, "Mastro contabile" %>
+      <%= select(:filter_scadenzas,"conto",
+                     options_from_collection_for_select(@contos, :id, :desest1, {:selected => @conto_id}),
+                     {:include_blank => true}) %>
+    </div>
+    <div class="six columns">
+      <%= label :filter_scadenzas, "Causale di magazzino" %>
+      <%= select(:filter_scadenzas, "causmag",
+                     options_from_collection_for_select(@causmags, :id, :descriz, {:selected => @causmag_id}),
+                     {:include_blank => true}) %>
+    </div>
+    <div class="six columns">
+      <%= jdate_field(:filter_scadenzas, :dadata, "Da data", :date=>true, :value => @dtini, :readonly => true) %>
+    </div>
+    <div class="six columns">
+      <%= jdate_field(:filter_scadenzas, :adata, "A data", :date=>true, :value => @dtfin, :readonly => true) %>
+    </div>
+    <div class="six columns">
+      <%= label :filter_scadenzas, "Tipo:" %>
+      <%= select(:filter_scadenzas, :tipo, Scadenza::TIPO.invert.sort, {:include_blank => true}) %>
+    </div>
+    <div class="six columns">
+      <%= label :filter_scadenzas, "Stato:" %>
+      <%= select(:filter_scadenzas, :stato, Scadenza::STATO.invert.sort, {:include_blank => true}) %>
+    </div>
+    <div class="four columns">
+      <i class="foundicon-search">
+        <%= submit_tag 'RICERCA', :class => "button radius small search foundicon-search" %>
+      </i>
+    </div>
+    <div class="two columns"></div>
+  <% end %>
+</fieldset>

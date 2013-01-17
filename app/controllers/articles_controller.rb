@@ -63,9 +63,9 @@ class ArticlesController < ApplicationController
     @nrmag = params[:nrmag]||""
     @anarif = params[:anarif]||""
     @grpmag = params[:grpmag]||""
-
+    @annoese = current_annoese
     @artmov = Tesdoc.art_mov_vend(@id, @idanagen, @nrmag,
-                                  @anarif, current_user.azienda, @tp)
+                                  @anarif, current_user.azienda, @tp, @annoese)
     @tp == "M" ? @title = "Stampa Movimenti di magazzino" : @title = "Stampa Vendite per titolo"
     if @artmov.count == 0
       render 'mov_vend_notfound'
@@ -80,8 +80,9 @@ class ArticlesController < ApplicationController
     @nrmag = params[:nrmag]||""
     @anarif = params[:anarif]||""
     @grpmag = params[:grpmag]||""
+    @annoese = current_annoese
     @artmov = Tesdoc.art_mov_vend("all", @idanagen, @nrmag,
-                                  @anarif, current_user.azienda, @tp)
+                                  @anarif, current_user.azienda, @tp, @annoese)
     @tp == "M" ? @title = "Stampa Movimenti di magazzino" : @title = "Stampa Vendite per titolo"
     if @artmov.count == 0
       render 'mov_vend_notfound'
@@ -99,7 +100,7 @@ class ArticlesController < ApplicationController
     @grpmag = params[:grpmag]||""
 
     @artmov = Tesdoc.art_mov_vend(@id, @idanagen, @nrmag,
-                                  @anarif, current_user.azienda, @tp)
+                                  @anarif, current_user.azienda, @tp, current_annoese)
     @tp == "M" ? @title = "Export (XLS) Movimenti di magazzino" : @title = "Export (XLS) Vendite per titolo"
     if @artmov.count == 0
       render 'mov_vend_notfound'
@@ -121,7 +122,7 @@ class ArticlesController < ApplicationController
     @anarif = params[:anarif]||""
     @grpmag = params[:grpmag]||""
     @artmov = Tesdoc.art_mov_vend("all", @idanagen, @nrmag,
-                                  @anarif, current_user.azienda, @tp)
+                                  @anarif, current_user.azienda, @tp, current_annoese)
     @tp == "M" ? @title = "Export (XLS) Movimenti di magazzino" : @title = "Export (XLS) Vendite per titolo"
     if @artmov.count == 0
       render 'mov_vend_notfound'
