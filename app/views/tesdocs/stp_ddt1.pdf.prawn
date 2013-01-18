@@ -77,7 +77,12 @@
 	pdf.bounding_box [0,605], :width => 530, :height => 35 do
 		pdf.stroke_bounds
 	end
-  pdf.text_box "Documento Nr. #{@rifdoc[:nr]} del #{@rifdoc[:dt].strftime("%d/%m/%Y")}",
+  testo = "Documento Nr. #{@rifdoc[:nr]}"
+  testo+= "/#{@tesdoc.causmag.sfx.strip}" if @tesdoc.causmag.sfx && @tesdoc.causmag.sfx.strip.length > 0
+  testo+= "/#{@tesdoc.annoese} del #{@rifdoc[:dt].strftime("%d/%m/%Y")}"
+
+
+  pdf.text_box testo,
                :at => [2, 620], :width => 240, :height => 20, :size => 12, :style => :bold
 
 	#pdf.bounding_box [0,600], :width => 260, :height => 50 do

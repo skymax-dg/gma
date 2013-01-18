@@ -60,7 +60,12 @@
   ppdf.bounding_box [0,625], :width => 240, :height => 20 do
     ppdf.stroke_bounds
   end
-  ppdf.text_box "DOCUM.Nr. #{@rifdoc[:nr]}/#{@rifdoc[:dt].strftime("%Y")} del #{@rifdoc[:dt].strftime("%d/%m/%Y")}",
+
+  testo = "DOC. Nr. #{@rifdoc[:nr]}"
+  testo+= "/#{@tesdoc.causmag.sfx.strip}" if @tesdoc.causmag.sfx && @tesdoc.causmag.sfx.strip.length > 0
+  testo+= "/#{@tesdoc.annoese} del #{@rifdoc[:dt].strftime("%d/%m/%Y")}"
+
+  ppdf.text_box "#{testo}",
                :at => [2, 619], :width => 240, :height => 15, :size => 12, :style => :bold
 
   if @ddt == 1
