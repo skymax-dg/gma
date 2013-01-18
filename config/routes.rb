@@ -26,6 +26,8 @@ Gma::Application.routes.draw do
 
   resources :causales
 
+  resources :agentes
+
   resources :contos do
     collection do
       get :filter

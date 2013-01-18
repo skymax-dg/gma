@@ -1,0 +1,21 @@
+<%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
+<ul class="button-group">
+  <li>
+    <%= link_to 'NUOVO', new_agente_path, :class => "button radius small new foundicon-add-doc" %>
+  </li>
+</ul>
+<% unless @agentes.nil?||@agentes.empty? %>
+  <table>
+    <thead>
+      <tr>
+        <th width="50%">Denominazione.</th>
+        <th width="15%">Esenzione</th>
+        <th width="20%"></th>
+      </tr>
+    </thead>
+    <tbody>
+        <%= render :partial => 'line', :collection => @agentes %>
+    </tbody>
+  </table>
+  <%= will_paginate @agentes %>
+<% end %>

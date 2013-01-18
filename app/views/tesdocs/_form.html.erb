@@ -70,14 +70,18 @@
       <%= f.label "Segue fattura: " %>
       <%= select(:tesdoc, :seguefatt, Tesdoc::SEGUEFATT.invert.sort)%>
     </div>
-    <div class="three columns">
+    <div class="two columns">
       <%= f.label "aliquota iva:" %>
       <%= collection_select :tesdoc, :iva_id, Iva.all, :id, :descriz, {:include_blank => true} %>
     </div>
-    <div class="two columns"></div>
-    <div class="five columns">
+    <div class="one columns">
       <%= f.label "sconto" %>
       <%= f.number_field :sconto %>
+    </div>
+    <div class="two columns"></div>
+    <div class="five columns">
+      <%= f.label "agente" %>
+      <%= collection_select :tesdoc, :agente_id, Agente.all, :id, :denomin_provv, {:include_blank => true} %>
     </div>
     <div class="twelve columns">
       <%= f.submit "SALVA", :class => "button radius small success foundicon-checkmark" %>

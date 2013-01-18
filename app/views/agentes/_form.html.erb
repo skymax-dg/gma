@@ -1,0 +1,18 @@
+<%= form_for(@agente) do |f| %>
+  <div class="row">
+    <div class="eight columns">
+      <%= f.label "Denominazione Anagrafica" %>
+      <%= collection_select :agente, :anagen_id, Anagen.all(:conditions => "id = #{@agente.anagen_id||0} OR NOT EXISTS (SELECT 1 FROM agentes WHERE anagen_id = anagens.id)", :order => :denomin),
+                            :id, :denomin, {:include_blank => true} %>
+    </div>
+    <div class="two columns"></div>
+    <div class="two columns">
+      <%= f.label "Provvigione %" %>
+      <%= f.number_field :provv %>
+    </div>
+    <div class="twelve columns">
+      <%= f.submit "SALVA", :class => "button radius small success foundicon-checkmark" %>
+      <%= link_to 'ANNULLA', resque_location(:back), :class => "button radius small alert foundicon-remove" %>
+    </div>
+  </div>
+<% end %>

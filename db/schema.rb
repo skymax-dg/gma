@@ -11,7 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130118122659) do
+ActiveRecord::Schema.define(:version => 20130118141453) do
+
+  create_table "agentes", :force => true do |t|
+    t.integer  "anagen_id"
+    t.decimal  "provv",      :precision => 5, :scale => 2, :null => false
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
+  end
 
   create_table "anagens", :force => true do |t|
     t.integer  "codice",                     :null => false
@@ -234,6 +241,7 @@ ActiveRecord::Schema.define(:version => 20130118122659) do
     t.string   "seguefatt",  :limit => 1,                                 :default => "N", :null => false
     t.integer  "tipo_doc",                                                :default => 0,   :null => false
     t.integer  "iva_id"
+    t.integer  "agente_id"
   end
 
   add_index "tesdocs", ["causmag_id"], :name => "index_tesdocs_on_causmag_id"

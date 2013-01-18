@@ -61,7 +61,7 @@
     ppdf.stroke_bounds
   end
 
-  testo = "DOC. Nr. #{@rifdoc[:nr]}"
+  testo = "DOC. Nr. #{@rifdoc[:nr].to_s.rjust(5, '0')}"
   testo+= "/#{@tesdoc.causmag.sfx.strip}" if @tesdoc.causmag.sfx && @tesdoc.causmag.sfx.strip.length > 0
   testo+= "/#{@tesdoc.annoese} del #{@rifdoc[:dt].strftime("%d/%m/%Y")}"
 

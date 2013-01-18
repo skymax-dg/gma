@@ -3,12 +3,13 @@ class Tesdoc < ActiveRecord::Base
   belongs_to :causmag
   belongs_to :conto
   belongs_to :iva
+  belongs_to :agente
   has_one :spediz, :dependent => :destroy
   has_many :rigdocs, :dependent => :destroy
   has_many :scadenzas, :dependent => :destroy
 
   attr_accessible :azienda, :annoese, :tipo_doc, :num_doc, :data_doc, :descriz,
-                  :causmag_id, :nrmagsrc, :nrmagdst, :seguefatt, :conto_id, :sconto, :iva_id
+                  :causmag_id, :nrmagsrc, :nrmagdst, :seguefatt, :conto_id, :sconto, :iva_id, :agente_id
 
   validates :azienda, :annoese, :tipo_doc, :num_doc, :data_doc, :descriz,
             :causmag_id, :conto_id, :nrmagsrc, :nrmagdst, :seguefatt, :sconto, :presence => true

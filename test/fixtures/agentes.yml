@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  anagen_id: 1
+  provv: 9.99
+
+two:
+  anagen_id: 1
+  provv: 9.99

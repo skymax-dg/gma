@@ -5,6 +5,7 @@ class Anagen < ActiveRecord::Base
   has_many :contos
   has_many :anainds, :dependent => :destroy
   belongs_to :localita, :foreign_key => "luogonas_id"
+  has_one :agente
   
 #  default_scope :order => 'anagens.denomin ASC' Non funziona perchè c'è una select max
 

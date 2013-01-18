@@ -1,0 +1,9 @@
+<tr>
+  <td><%= line.anagen.denomin %></td>
+  <td class="float"><%= line.provv %></td>
+  <td>
+    <%= link_to '', edit_agente_path(line), :class => "button radius tiny modify foundicon-edit", :title => "Modifica" %>
+    <%= link_to '', line, :confirm => 'Confermi?',        :method => :delete,
+                           :class => "button radius tiny alert foundicon-trash", :title => "Cancella" %>
+  </td>
+</tr>
