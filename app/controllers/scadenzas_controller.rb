@@ -65,6 +65,11 @@ class ScadenzasController < ApplicationController
       @dtfin=params[:filter_scadenzas][:adata].to_date
       @tipo=params[:filter_scadenzas][:tipo]
       @stato=params[:filter_scadenzas][:stato]
+      @scadenzas, nrrecord = Scadenza.filter(@conto_id, @causmag_id,
+                                             @dtini, @dtfin,
+                                             @tipo, @stato,
+                                             current_user.azienda, current_annoese,
+                                             params[:page])
     else
       @dtini = "#{Date.today.year}-#{Date.today.month}-01".to_date
       Date.today.month == 12 ? @dtfin = "#{Date.today.year}-#{Date.today.month}-31".to_date : @dtfin = "#{Date.today.year}-#{Date.today.month+1}-01".to_date - 1
@@ -74,20 +79,8 @@ class ScadenzasController < ApplicationController
                                                 {:azd => current_user.azienda, :ae=>current_annoese}])
 
 
-
-
-    @scadenzas, nrrecord = Scadenza.filter(@conto_id, @causmag_id,
-                                           @dtini, @dtfin,
-                                           @tipo, @stato,
-                                           current_user.azienda, current_annoese,
-                                           params[:page])
     flash_cnt(nrrecord) if params[:page].nil?
     store_location
-
-    render "index"
-
-
-
   end
 
 

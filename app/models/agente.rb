@@ -18,7 +18,8 @@ class Agente < ActiveRecord::Base
   end
 
   def denomin_provv
-    (self.anagen.denomin+"_"*40)[0,39] + "(#{sprintf('%05.2f', self.provv)} %)"
+    #(self.anagen.denomin+"_"*40)[0,39] + "(#{sprintf('%05.2f', self.provv)} %)"
+    "#{self.anagen.denomin} (#{sprintf('%05.2f', self.provv)}%)"
   end
 
   private

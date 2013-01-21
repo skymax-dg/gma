@@ -29,6 +29,13 @@ class AgentesController < ApplicationController
     end
   end
 
+  def show
+    @agente = Agente.find(params[:id])
+    @title = "Documenti agente #{@agente.denomin_provv}"
+    @tesdocs = @agente.tesdocs.paginate(:page => params[:page], :per_page => 10, :conditions => {:annoese=>current_annoese}, :order => [:data_doc, :num_doc])
+    store_location
+  end
+
   def update
     @agente = Agente.find(params[:id])
     @agente.provv = 0 unless @agente.provv

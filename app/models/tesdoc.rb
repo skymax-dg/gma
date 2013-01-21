@@ -26,6 +26,19 @@ class Tesdoc < ActiveRecord::Base
     return true
   end
 
+  def full_num_doc
+    ret = "#{num_doc.to_s.rjust(5, '0')}"
+    ret+= "/#{causmag.sfx.strip}" if causmag.sfx && causmag.sfx.strip.length > 0
+    ret+= "/#{annoese}"
+    ret
+  end
+
+  def num_doc_letter
+    ret = "#{num_doc.to_s.rjust(5, '0')}"
+    ret+= "/#{causmag.sfx.strip}" if causmag.sfx && causmag.sfx.strip.length > 0
+    ret
+  end
+
   def self.new_num_doc(g_p, anno, azd)
     (self.maximum("num_doc", :include => :causmag, :conditions => ["causmags.grp_prg = :g_p AND tesdocs.annoese = :ae AND tesdocs.azienda = :azd",
                                              {:g_p=>g_p, :ae=>anno, :azd=>azd}]).to_i||0) + 1

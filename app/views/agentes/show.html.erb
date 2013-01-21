@@ -1,0 +1,25 @@
+<%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
+<ul class="button-group">
+  <li>
+    <%= link_to 'INDIETRO', agentes_path, :class => "button radius small back foundicon-left-arrow" %>
+  </li>
+</ul>
+<% unless @tesdocs.nil?||@tesdocs.empty? %>
+  <table>
+    <thead>
+      <tr>
+        <th width="12%">Nr doc</th>
+        <th width="13%">Del</th>
+        <th width="25%">Causale</th>
+        <th width="25%">ContoAnagrafica</th>
+        <th width="10%">Impon.</th>
+        <th width="10%">Provv.</th>
+        <th width="5%"></th>
+      </tr>
+    </thead>
+    <tbody>
+        <%= render :partial => 'line_tesdoc', :collection => @tesdocs %>
+    </tbody>
+  </table>
+  <%= will_paginate @tesdocs %>
+<% end %>

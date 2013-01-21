@@ -1,29 +1,29 @@
 <div class="row">
   <div class="two columns">
-    <%= label @tesdoc, "Anno:", :class => "right" %>
-  </div>
-  <div class="four columns">
-    <%= @tesdoc.annoese %>
-  </div>
-  <div class="two columns">
-    <%= label @tesdoc, "Tipo documento:", :class => "right" %>
-  </div>
-  <div class="four columns">
-    <%= Tesdoc::TIPO_DOC[@tesdoc.tipo_doc] %>
-  </div>
-</div>
-<div class="row">
-  <div class="two columns">
     <%= label @tesdoc, "Nr documento:", :class => "right" %>
   </div>
   <div class="four columns">
-    <%= @tesdoc.num_doc %>
+    <%= @tesdoc.full_num_doc %>
   </div>
   <div class="two columns">
     <%= label @tesdoc, "Data documento:", :class => "right" %>
   </div>
   <div class="four columns">
     <%= @tesdoc.data_doc.strftime('%d-%m-%Y') %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @tesdoc, "Tipo documento:", :class => "right" %>
+  </div>
+  <div class="four columns">
+    <%= Tesdoc::TIPO_DOC[@tesdoc.tipo_doc] %>
+  </div>
+  <div class="two columns">
+    <%= label @tesdoc, "Agente:", :class => "right" %>
+  </div>
+  <div class="four columns">
+    <%= @tesdoc.agente.denomin_provv if @tesdoc.agente %>
   </div>
 </div>
 <div class="row">

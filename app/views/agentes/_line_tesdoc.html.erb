@@ -1,0 +1,13 @@
+<tr>
+  <td><%= line_tesdoc.num_doc_letter %></td>
+  <td><%= line_tesdoc.data_doc.strftime('%d-%m-%Y') %></td>
+  <td><%= line_tesdoc.causmag.descriz %></td>
+  <td><%= line_tesdoc.conto.descriz %></td>
+  <td><%= number_to_currency(line_tesdoc.imponibile) %></td>
+  <td><%= number_to_currency(line_tesdoc.imponibile*@agente.provv/100) %></td>
+  <td>
+    <div class="large-icons">
+    <%= link_to '', line_tesdoc, :class => "button tiny detail foundicon-page", :title => "Dettaglio" %>
+    </div>
+  </td>
+</tr>
