@@ -11,34 +11,15 @@ class Scadenza < ActiveRecord::Base
   def self.filter (conto_id, causmag_id, dtini,dtfin, tp, stato, azienda, annoese, page)
     # Esegure la ricerca nei documenti in base ai filtri impostati
 
-    nrrecord = nil
+    mywhere = "tesdocs.azienda = #{azienda} AND tesdocs.annoese = #{annoese}"
+    mywhere += " AND tesdocs.conto_id = #{conto_id}" if conto_id.to_i > 0
+    mywhere += " AND tesdocs.causmag_id = #{causmag_id}" if causmag_id.to_i > 0
+    mywhere += " AND tesdocs.data_doc >= '#{dtini}' AND tesdocs.data_doc <= '#{dtfin}'" if dtini > 0 && dtfin > 0
+    mywhere += " AND scadenzas.tipo = '#{tp}'" if tp != ""
+    mywhere += " AND scadenzas.stato = '#{stato}'" if stato != ""
 
-#    hsh = {"RS" => "denomin", "CF" => "codfis", "PI" => "pariva"}
-#    hshvar = Hash.new
-
-#    whcausmag         = "causmags.tipo_doc = :tipo_doc"
-#    hshvar[:tipo_doc] = tipo_doc.to_i
-#    whcausmag        += " and causmags.id = :cm" unless causmag.blank?
-#    hshvar[:cm]       = causmag unless causmag.blank?
-
-#    whconto      = " and contos.tipoconto IN (:tpc)"
-#    hshvar[:tpc] = tpc
-#    whconto     += " and contos.id = :cn" unless conto.blank?
-#    hshvar[:cn]  = conto unless conto.blank?
-
-#    whana = "" 
-#    whana = " and UPPER(anagens.#{hsh[tp]}) like UPPER(:d)" unless des.blank?
-#    hshvar[:d] = "%#{des}%" unless des.blank?
-    
-#    nrrecord = includes(:causmag, :conto =>[:anagen]).where([whcausmag + whconto + whana, hshvar]).azdanno(
-#      azienda, annoese).count if page.nil?
-
-#    return includes(:causmag, :conto =>[:anagen]).
-#             where([whcausmag + whconto + whana, hshvar]).
-#               azdanno(azienda, annoese).
-#                 paginate(:page => page, 
-#                          :per_page => 10, 
-#                          :order => "data_doc DESC, num_doc, causmag_id"), nrrecord unless hsh[tp].nil?
+    page.nil? ? nrrecord = includes(:tesdoc).where(mywhere).count : nrrecord = nil
+    return includes(:tesdoc).where(mywhere).paginate(:page => page, :per_page => 10, :order => "scadenzas.data"), nrrecord
   end
 
 end

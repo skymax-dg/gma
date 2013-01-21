@@ -1,27 +1,22 @@
-<ul class="button-group">
-  <li>
-    <%= link_to 'NUOVA', new_scadenza_path(:id => @tesdoc.id), :class => "button radius small new foundicon-add-doc" %>
-  </li>
-</ul>
 <% unless @scadenzas.nil?||@scadenzas.empty? %>
   <table class="full-tab">
     <thead>
       <tr>
-        <th class="date" width="10%"> Data </th>
-        <th width="15%"> Importo </th>
-        <th width="30%"> Descrizione </th>
-        <th width="15%"> Tipo </th>
-        <th class="numeric" width="10%"> Stato </th>
-        <th width="15%"></th>
+        <th width="10%"> Documento </th>
+        <th width="25%"> Cliente/fornitore </th>
+        <th class="date" width="10%"> Data scad. </th>
+        <th width="8%"> Importo </th>
+        <th width="20%"> Descrizione </th>
+        <th width="7%"> Tipo </th>
+        <th class="numeric" width="7%"> Stato </th>
+        <th width="12%"></th>
       </tr>
     </thead>
     <tbody>
-      <%= render :partial => '/scadenzas/line', :collection => @scadenzas %>
+      <%= render :partial => '/scadenzas/doc_line', :collection => @scadenzas %>
     </tbody>
   </table>
   <%= will_paginate @scadenzas %>
-<% else %>
-  <h4> Nessuna scadenza presente </h4>
 <% end %>
 
 

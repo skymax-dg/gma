@@ -1,0 +1,16 @@
+<tr>
+  <td><%= doc_line.tesdoc.full_num_doc %></td>
+  <td><%= doc_line.tesdoc.conto.anagen.denomin %></td>
+  <td><%= doc_line.data.strftime('%d-%m-%Y') %></td>
+  <td class="currency"><%= number_to_currency(doc_line.importo) %></td>
+  <td><%= doc_line.descriz %></td>
+  <td><%= Scadenza::TIPO[doc_line.tipo] %></td>
+  <td><%= Scadenza::STATO[doc_line.stato] %></td>
+  <td>
+    <%= link_to '', edit_scadenza_path(:id=>doc_line.id, :page=>@page),
+                     :class => "button radius tiny modify foundicon-edit", :title => "Modifica scadenza" %>
+    <%= link_to '', {:controller=>:tesdocs, :action=>:show, :id=>doc_line.tesdoc_id, :tab=>:scad},
+                     :class => "button radius tiny modify foundicon-right-arrow", :title => "Vai al documento" %>
+       
+  </td>
+</tr>

@@ -70,6 +70,7 @@ class ScadenzasController < ApplicationController
                                              @tipo, @stato,
                                              current_user.azienda, current_annoese,
                                              params[:page])
+      flash_cnt(nrrecord) if params[:page].nil?
     else
       @dtini = "#{Date.today.year}-#{Date.today.month}-01".to_date
       Date.today.month == 12 ? @dtfin = "#{Date.today.year}-#{Date.today.month}-31".to_date : @dtfin = "#{Date.today.year}-#{Date.today.month+1}-01".to_date - 1
@@ -77,9 +78,6 @@ class ScadenzasController < ApplicationController
     @causmags = Causmag.find(:all, :conditions => ["azienda = :azd", {:azd => current_user.azienda}])
     @contos = Conto.find(:all, :conditions => ["azienda = :azd and annoese = :ae",
                                                 {:azd => current_user.azienda, :ae=>current_annoese}])
-
-
-    flash_cnt(nrrecord) if params[:page].nil?
     store_location
   end
 

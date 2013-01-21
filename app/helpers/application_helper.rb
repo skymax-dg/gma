@@ -41,6 +41,12 @@ module ApplicationHelper
       readonly = false
     end
 
+    if params[:yearrange]
+      yearrange = params[:yearrange]
+    else
+      yearrange = "1920:2020"
+    end
+
     if params[:date] || params[:time]
       size = 8
     elsif params[:date_time]
@@ -68,7 +74,7 @@ module ApplicationHelper
                     (jQuery.datepicker.regional[\"it\" ]);
                   jQuery(\"#%s_%s\").datepicker(\"setDate\", \"#{value}\");
                   jQuery(\"#%s_%s\").datepicker(\"option\",  \"changeYear\", true);
-                  jQuery(\"#%s_%s\").datepicker(\"option\",  \"yearRange\", \"1920:2020\");
+                  jQuery(\"#%s_%s\").datepicker(\"option\",  \"yearRange\", \"#{yearrange}\");
                   jQuery(\"#%s_%s\").datepicker(\"option\",  \"readonly\", \"#{readonly}\");
                  }
                );

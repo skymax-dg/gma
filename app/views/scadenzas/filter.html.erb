@@ -14,18 +14,18 @@
                      {:include_blank => true}) %>
     </div>
     <div class="six columns">
-      <%= jdate_field(:filter_scadenzas, :dadata, "Da data", :date=>true, :value => @dtini, :readonly => true) %>
+      <%= jdate_field(:filter_scadenzas, :dadata, "Da data", :date=>true, :value => @dtini, :readonly => true, :yearrange => current_annoese) %>
     </div>
     <div class="six columns">
-      <%= jdate_field(:filter_scadenzas, :adata, "A data", :date=>true, :value => @dtfin, :readonly => true) %>
+      <%= jdate_field(:filter_scadenzas, :adata, "A data", :date=>true, :value => @dtfin, :readonly => true, :yearrange => current_annoese) %>
     </div>
     <div class="six columns">
       <%= label :filter_scadenzas, "Tipo:" %>
-      <%= select(:filter_scadenzas, :tipo, Scadenza::TIPO.invert.sort, {:include_blank => true}) %>
+      <%= select(:filter_scadenzas, :tipo, options_for_select(Scadenza::TIPO.invert.sort, @tipo), {:include_blank => true}) %>
     </div>
     <div class="six columns">
       <%= label :filter_scadenzas, "Stato:" %>
-      <%= select(:filter_scadenzas, :stato, Scadenza::STATO.invert.sort, {:include_blank => true}) %>
+      <%= select(:filter_scadenzas, :stato, options_for_select(Scadenza::STATO.invert.sort, @stato), {:include_blank => true}) %>
     </div>
     <div class="four columns">
       <i class="foundicon-search">
@@ -35,3 +35,4 @@
     <div class="two columns"></div>
   <% end %>
 </fieldset>
+<%= render :partial => 'tab_scadenza' %>
