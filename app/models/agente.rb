@@ -13,10 +13,12 @@ class Agente < ActiveRecord::Base
     self.anagen.denomin
   end
 
-  def denomin_provv
-    (self.anagen.denomin+"_"*40)[0,39] + "(#{sprintf('%05.2f', self.provv)})"
+  def provv_age
+    "#{sprintf('%05.2f', self.provv)}%"
+  end
 
-    #{}"#{self.anagen.denomin} (#{sprintf("%05.2f", self.provv)})"
+  def denomin_provv
+    (self.anagen.denomin+"_"*40)[0,39] + "(#{sprintf('%05.2f', self.provv)} %)"
   end
 
   private

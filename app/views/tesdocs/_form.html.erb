@@ -79,9 +79,19 @@
       <%= f.number_field :sconto %>
     </div>
     <div class="two columns"></div>
-    <div class="five columns">
+    <div class="four columns">
       <%= f.label "agente" %>
-      <%= collection_select :tesdoc, :agente_id, Agente.all, :id, :denomin_provv, {:include_blank => true} %>
+      <%= collection_select :tesdoc, :agente_id, Agente.all(:include => :anagen, :order => "anagens.denomin"),
+                            :id,     :denomin,   {:include_blank => true},
+                            {:data => {:remote => true, :url => url_for(:controller => :tesdocs,
+                                                                          :action => :set_provv)}} 
+                            %>
+    </div>
+    <div class="one columns">
+      <%= f.label "Provv" %>
+      <div id="provv_age">
+        <%= @tesdoc.agente.provv_age if @tesdoc.agente %>
+      </div>
     </div>
     <div class="twelve columns">
       <%= f.submit "SALVA", :class => "button radius small success foundicon-checkmark" %>

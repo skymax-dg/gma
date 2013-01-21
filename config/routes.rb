@@ -81,6 +81,7 @@ Gma::Application.routes.draw do
     collection do
       get :filter
       get :set_causmags
+      get :set_provv
       get :addtesrigdoc_fromxls
     end
     member do

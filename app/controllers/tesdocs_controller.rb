@@ -225,6 +225,13 @@ before_filter :authenticate
     end
   end
 
+  def set_provv
+    params[:tesdoc][:agente_id].to_i > 0 ? @provv=Agente.find(params[:tesdoc][:agente_id].to_i).provv_age : @provv=""
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def filter
     @title = "Elenco Documenti (#{Causmag::TIPO_DOC[se_tipo_doc.to_i]})"
     @tpfilter  = params[:tpfilter]
