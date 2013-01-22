@@ -75,29 +75,28 @@
       </div>
       <div class="seven columns"></div>          
     </div>
-    <% end %>
-    <% if @spediz.tesdoc.causmag.contabile == "S" %>
-      <div class="row">
-        <div class="five columns">
-          <%= f.label "Pagamento:" %>
-          <%= f.text_area(:pagam, :rows => 6) %>
-        </div>
-        <div class="two columns"></div>          
-        <div class="five columns">
-          <%= f.label "Banca d'appoggio:" %>
-          <%= f.text_area(:banca, :rows => 6) %>
-        </div>
-      </div>
-    <% end %>
+  <% end %>
+  <% if @spediz.tesdoc.causmag.contabile == "S" %>
     <div class="row">
-      <div class="twelve columns">
-        <%= f.label "annotaz/contrass:" %>
-        <%= f.text_area(:note, :rows => 8) %>
+      <div class="five columns">
+        <%= f.label "Pagamento:" %>
+        <%= f.text_area(:pagam, :rows => 6) %>
+      </div>
+      <div class="two columns"></div>          
+      <div class="five columns">
+        <%= f.label "Banca d'appoggio:" %>
+        <%= f.text_area(:banca, :rows => 6) %>
       </div>
     </div>
+  <% end %>
+  <div class="row">
     <div class="twelve columns">
-      <%= f.submit 'SALVA', :class => "button radius small success foundicon-checkmark" %>
-      <%= link_to 'ANNULLA', :back, :class => "button radius small alert foundicon-remove" %>
+      <%= f.label "annotaz/contrass:" %>
+      <%= f.text_area(:note, :rows => 8) %>
     </div>
+  </div>
+  <div class="twelve columns">
+    <%= f.submit 'SALVA', :class => "button radius small success foundicon-checkmark" %>
+    <%= link_to 'ANNULLA', :back, :class => "button radius small alert foundicon-remove" %>
   </div>
 <% end %>

@@ -60,5 +60,33 @@ module TesdocsHelper
     end
     return car, sca, imp
   end
- 
+
+  def set_car_sca_imp2(anarif, tipomov, tpmag, movmag, qta)
+    car=""
+    sca=""
+    imp=""
+    ext=""
+    if movmag == 'M'
+      if anarif == "S"
+        tipomov == "E" and tpmag  == 'DST' ? car=qta  : car="" # Movim. in entrata = carico mag. azienda (DST)
+      ext=-qta if (tipomov == "E" || tipomov == "V") and tpmag  == 'SRC' # Movim. in entrata da c/deposito = scarico mag. distributore
+        tipomov == "U" and tpmag  == 'SRC' ? sca=qta  : sca="" # Movim. in uscita = scarico mag. azienda (SRC)
+      ext= qta if (tipomov == "U" || tipomov == "R") and tpmag  == 'DST' # Movim. in uscita a c/deposito = carico mag. distributore
+        tipomov == "T" and tpmag  == 'SRC' ? sca=qta  : sca="" # Trasferimento = scarico mag. azienda (SRC)
+        tipomov == "T" and tpmag  == 'DST' ? car=qta  : car="" # Trasferimento = carico mag. azienda (DST)
+      else
+        tipomov == "E" and tpmag  == 'SRC' ? sca=qta  : sca=""
+        tipomov == "U" and tpmag  == 'DST' ? car=qta  : car=""
+        tipomov == "V" and tpmag  == 'SRC' ? sca=qta  : sca=""
+        tipomov == "R" and tpmag  == 'DST' ? car=qta  : car=""
+      end
+    elsif movmag == 'I'
+      tipomov == "E" and tpmag  == 'DST' ? imp= qta : imp="" # Ordine ricevuto = impegno mag. azienda (DST)
+      tipomov == "U" and tpmag  == 'SRC' ? imp=-qta : imp="" # Ordine cancellato = disimpegno mag. azienda (DST)
+    else
+      errore
+    end
+    return car, sca, imp, ext
+  end
+
 end

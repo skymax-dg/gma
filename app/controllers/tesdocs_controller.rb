@@ -173,6 +173,15 @@ before_filter :authenticate
     end
   end
 
+  def ges_costo
+    @tesdoc = Tesdoc.find(params[:id])
+    if @tesdoc.costo
+      redirect_to edit_costo_path(:id => params[:id])
+    else
+      redirect_to new_costo_path(:id => params[:id])
+    end
+  end
+
   def add1row4article
     tesdoc = Tesdoc.find(params[:id])
     if tesdoc.add1row4article(current_user.azienda)
@@ -253,7 +262,7 @@ before_filter :authenticate
                                        current_user.azienda, current_annoese,
                                        params[:page])
     flash_cnt(nrrecord) if params[:page].nil?
-store_location
+    store_location
 
     render "index"
   end
@@ -281,6 +290,7 @@ store_location
           @tesdoc.tipo_doc = @causmag.tipo_doc
           @tesdoc.num_doc = Tesdoc.new_num_doc(@causmag.grp_prg, @tesdoc.annoese, @tesdoc.azienda)
           @spediz = @tesdoc.build_spediz # La Build valorizza automaticamente il campo spediz.tesdoc_id
+          @costo = @tesdoc.build_costo # La Build valorizza automaticamente il campo costo.tesdoc_id
         end
       end
       format.js
@@ -291,6 +301,7 @@ store_location
     @title = "Mostra Documento (#{Causmag::TIPO_DOC[se_tipo_doc.to_i]})"
     @tesdoc = Tesdoc.find(params[:id])
     @spediz = @tesdoc.spediz
+    @costo = @tesdoc.costo
     @page = params[:page]
     @rigdocs = @tesdoc.rigdocs.sort{|a,b|a.prgrig<=>b.prgrig}
     @rigdocs = @rigdocs.paginate(:page => @page, :per_page => 10)
@@ -305,6 +316,7 @@ store_location
     @act_new = 0
     @tesdoc  = Tesdoc.find(params[:id])
     @spediz = @tesdoc.spediz
+    @costo = @tesdoc.costo
     @causmag = Causmag.find(@tesdoc.causmag_id)
     @conto   = Conto.find(@tesdoc.conto_id)
   end
@@ -349,6 +361,6 @@ store_location
     rescue
       flash[:alert] = $!.message
     end
-redirect_back_or @tesdoc
+    redirect_back_or @tesdoc
   end
 end

@@ -1,9 +1,10 @@
 class Localita < ActiveRecord::Base
   before_destroy :require_no_anainds
-  before_destroy :require_no_anagens
-
   has_many :anainds
+
+  before_destroy :require_no_anagens
   has_many :anagens, :foreign_key => "luogonas_id"
+
   belongs_to :paese
 
   attr_accessible :cap, :codfis, :descriz, :prov, :paese_id

@@ -1,0 +1,13 @@
+<ul class="button-group">
+  <li>
+    <% if @costo %>
+      <%= link_to 'MODIFICA', ges_costo_tesdoc_path, :class => "button radius small modify foundicon-edit" %>
+      <li>
+        <%= link_to 'ELIMINA', @costo, :confirm => 'Confermi eliminazione?',
+                                       :method => :delete, :class => "button radius small alert foundicon-trash" %>
+      </li>
+    <% else %>
+      <%= link_to 'INSERISCI', ges_costo_tesdoc_path, :class => "button radius small new  foundicon-add-doc" %>
+    <% end %>
+  </li>
+</ul>

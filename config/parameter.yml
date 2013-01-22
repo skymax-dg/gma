@@ -67,6 +67,15 @@ SCADENZA:
     A: 'Attiva'
     S: 'Scaduta/Insoluta'
     P: 'Pagata'
+COSTO:
+  STATO:
+    RF: 'A ricevimento fattura'
+    FA: 'Fatturato'
+    CA: 'Pagato per cassa'
+    DD: 'Da definire'
+  TIPO_SPE:
+    G: 'GLS'
+    P: 'Poste'
 SPEDIZ:
   CAUSTRA:
     ICD: 'C/Deposito'

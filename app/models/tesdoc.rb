@@ -5,6 +5,7 @@ class Tesdoc < ActiveRecord::Base
   belongs_to :iva
   belongs_to :agente
   has_one :spediz, :dependent => :destroy
+  has_one :costo, :dependent => :destroy
   has_many :rigdocs, :dependent => :destroy
   has_many :scadenzas, :dependent => :destroy
 

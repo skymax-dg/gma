@@ -1,11 +1,13 @@
 class Iva < ActiveRecord::Base
   before_destroy :require_no_tesdocs
-  before_destroy :require_no_rigdocs
-  before_destroy :require_no_articles
-
-  has_many :articles
-  has_many :rigdocs
   has_many :tesdocs
+
+  before_destroy :require_no_rigdocs
+  has_many :rigdocs
+
+  before_destroy :require_no_articles
+  has_many :articles
+
   attr_accessible :codice, :descriz, :desest, :aliq, :flese
 
   validates :codice, :descriz, :desest, :flese, :presence => true

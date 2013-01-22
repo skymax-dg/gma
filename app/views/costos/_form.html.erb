@@ -1,0 +1,36 @@
+<%= form_for(@costo) do |f| %>
+  <%= f.hidden_field :tesdoc_id %>
+  <div class="row">
+    <div class="five columns">
+      <%= jdate_field(:costo, :data, "Data pagamento", :date=>true, :value => @costo.data, :readonly => true) %>
+    </div>
+    <div class="two columns"></div>          
+    <div class="five columns">
+      <%= f.label "Importo:" %>
+      <%= f.number_field :importo %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="twelve columns">
+      <%= f.label "Descrizione: " %>
+      <%= f.text_field :descriz %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="five columns">
+      <%= f.label "Stato:" %>
+      <%= select(:costo, :stato, Costo::STATO.invert.sort, {:include_blank => true}) %>
+    </div>
+    <div class="two columns"></div>          
+    <div class="five columns">
+      <%= f.label "Tipo pagamento:" %>
+      <%= select(:costo, :tipo_spe, Costo::TIPO_SPE.invert.sort, {:include_blank => true}) %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="twelve columns">
+      <%= f.submit 'SALVA', :class => "button radius small success foundicon-checkmark" %>
+      <%= link_to 'ANNULLA', :back, :class => "button radius small alert foundicon-remove" %>
+    </div>
+  </div>
+<% end %>

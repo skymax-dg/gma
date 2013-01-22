@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  tesdoc_id: 1
+  data: 2013-01-21
+  tipo_spe: MyString
+  stato: MyString
+
+two:
+  tesdoc_id: 1
+  data: 2013-01-21
+  tipo_spe: MyString
+  stato: MyString

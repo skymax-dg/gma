@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130118141453) do
+ActiveRecord::Schema.define(:version => 20130122121222) do
 
   create_table "agentes", :force => true do |t|
     t.integer  "anagen_id"
@@ -121,6 +121,20 @@ ActiveRecord::Schema.define(:version => 20130118141453) do
 
   add_index "contos", ["azienda", "annoese", "codice"], :name => "idx_contos_on_codice", :unique => true
   add_index "contos", ["azienda", "annoese", "descriz"], :name => "idx_contos_on_descriz"
+
+  create_table "costos", :force => true do |t|
+    t.integer  "tesdoc_id",                                                                :null => false
+    t.date     "data"
+    t.string   "tipo_spe",   :limit => 2,                                                  :null => false
+    t.string   "stato",      :limit => 2,                                                  :null => false
+    t.string   "descriz",    :limit => 100
+    t.decimal  "importo",                   :precision => 8, :scale => 2, :default => 0.0, :null => false
+    t.datetime "created_at",                                                               :null => false
+    t.datetime "updated_at",                                                               :null => false
+  end
+
+  add_index "costos", ["data"], :name => "index_costos_on_data"
+  add_index "costos", ["tesdoc_id"], :name => "index_costos_on_tesdoc_id"
 
   create_table "ivas", :force => true do |t|
     t.integer  "codice",                                                  :null => false

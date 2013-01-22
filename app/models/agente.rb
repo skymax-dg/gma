@@ -1,7 +1,7 @@
 class Agente < ActiveRecord::Base
   before_destroy :require_no_tesdocs
-
   has_many :tesdocs
+
   belongs_to :anagen
 
   attr_accessible :anagen_id, :provv

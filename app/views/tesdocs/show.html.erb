@@ -4,8 +4,9 @@
 <hr />
 <dl class="tabs">
   <dd class=<%='active' if @tab=='listrow'||!@tab%>><a href="#listrow">Righe documento</a></dd>
-  <dd class=<%='active' if @tab=='sped'%>><a href="#sped">Spedizione/Pagamento</a></dd>
   <dd class=<%='active' if @tab=='tot_imp'%>><a href="#tot_imp">Totali Imponibili</a></dd>
+  <dd class=<%='active' if @tab=='sped'%>><a href="#sped">Spedizione/Pagamento</a></dd>
+  <dd class=<%='active' if @tab=='costo'%>><a href="#costo">Costo spedizione</a></dd>
   <dd class=<%='active' if @tab=='scad'%>><a href="#scad">Elenco scadenze</a></dd>
 </dl>
 
@@ -14,17 +15,28 @@
     <%= render :partial => '/rigdocs/btn_rigdoc' %>
     <%= render :partial => '/rigdocs/tab_rigdoc' %>
   </li>
+  <li <%='class=active' if @tab=='tot_imp'%> id="tot_impTab">
+    <%= render :partial => 'tab_imp' %>
+  </li>
   <li <%='class=active' if @tab=='sped'%> id="spedTab">
     <%= render :partial => '/spedizs/btn_spediz' %>
     <% if @spediz %>
       <%= render '/spedizs/show' %>
     <% end %>
   </li>
-  <li <%='class=active' if @tab=='tot_imp'%> id="tot_impTab">
-    <%= render :partial => 'tab_imp' %>
+  <li <%='class=active' if @tab=='costo'%> id="costoTab">
+    <%= render :partial => '/costos/btn_costo' %>
+    <% if @costo %>
+      <%= render '/costos/show' %>
+    <% end %>
   </li>
   <li <%='class=active' if @tab=='scad'%> id="scadTab">
-    <%= render :partial => '/scadenzas/tab_scadenza' %>
+    <ul class="button-group">
+      <li>
+        <%= link_to 'INSERISCI', new_scadenza_path(:id=>@tesdoc.id), :class => "button radius small modify foundicon-edit" %>
+      </li>
+    </ul>
+        <%= render :partial => '/scadenzas/tab_scadenza' %>
   </li>
 </ul>
-<% @tab=""%>
+<%# @tab=""%>

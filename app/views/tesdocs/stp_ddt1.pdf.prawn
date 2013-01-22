@@ -9,14 +9,20 @@
 	#end
 
   #titolo documento
-	pdf.bounding_box [240,780], :width => 290, :height => 50 do
+	pdf.bounding_box [240,780], :width => 290, :height => 80 do
 		pdf.stroke_bounds
 	end
+
+
+# stampa logo immagine
+pdf.bounding_box [280,775], :width => 240, :height => 50 do
+  pdf.image "#{Rails.root}/app/assets/images/logos/Eifis.jpg", :fit => [240,50]
+end
   pdf.text_box @tit_doc[0],
-	             :at => [250,770],  :width => 280, :height => 12, :size => 12, :style => :bold,
+	             :at => [250,725],  :width => 280, :height => 12, :size => 12, :style => :bold,
                :align => :center, :overflow => :shrink_to_fit, :min_font_size => 8
   pdf.text_box @tit_doc[1],
-	             :at => [250,760], :width => 280, :height => 24, :size => 8, :align => :center
+	             :at => [250,710], :width => 280, :height => 24, :size => 8, :align => :center
 
   #Mittente
 	pdf.bounding_box [0,780], :width => 240, :height => 80 do
@@ -64,7 +70,7 @@
   testo+="Tel:#{@anad.telefono} " if @anad.telefono && @anad.telefono.length > 0
 	unless @datispe.nil? || "#{@datispe.dest1}#{@datispe.dest2}".blank?
     pdf.text_box "Luogo di consegna",
-                 :at => [245, 700], :height => 15, :size => 12, :style => :bold
+                 :at => [245, 698], :height => 15, :size => 12, :style => :bold
 
     pdf.formatted_text_box [{:text => "Presso: #{@datispe.presso.upcase}\n", :styles => [:bold], :size => 12},
                             {:text => "#{@datispe.dest1}\n#{@datispe.dest2}\n"},
