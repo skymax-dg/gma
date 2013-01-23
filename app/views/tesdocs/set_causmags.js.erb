@@ -1,5 +1,5 @@
 var v1 = $("#causmagfilter").val();
 if (v1=="")
 {
-  $("#sel_causmag").html("<%= escape_javascript(render(:partial=>'sel_causmags', :locals=>{:blank=>false})) %>");
+  $("#sel_causmag").html("<%= escape_javascript(render(:partial=>'sel_causmags', :locals=>{:blank=>true})) %>");
 }

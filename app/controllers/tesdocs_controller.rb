@@ -227,8 +227,9 @@ before_filter :authenticate
 
   def set_causmags
     join="left join tesdocs on (tesdocs.causmag_id = causmags.id and tesdocs.conto_id = #{params[:contofilter]})"
-    @causmags=Causmag.find(:all, :joins => join, :select => "causmags.id, causmags.descriz, count(*) as nr",
-                           :group => "causmags.id, causmags.descriz", :order => "nr desc, descriz" )
+    @causmags=Causmag.find(:all, :joins => join, :select => "causmags.id, causmags.descriz, tesdocs.conto_id, count(*) as nr",
+                           :group => "causmags.id, tesdocs.conto_id, causmags.descriz", :order => "nr desc, tesdocs.conto_id asc, descriz" )
+    @causmagfilter=@causmags[0][:id] if @causmags[0]
     respond_to do |format|
       format.js
     end

@@ -79,14 +79,14 @@
             tres += res.to_i
             tfatt += fatt.to_f
             taccr += accr.to_f
-           fatt = fatt.round(2).to_s
-           fatt << "0" if fatt[fatt.length-2] == '.'
-           accr = accr.round(2).to_s
-           accr << "0" if accr[accr.length-2] == '.'
-           prezzo = prezzo.round(2).to_s
-           prezzo << "0" if prezzo[prezzo.length-2] == '.'
-           fatt = "" if fatt == "0.00"
-           accr = "" if accr == "0.00"
+            fatt = fatt.round(2).to_s
+            fatt << "0" if fatt[fatt.length-2] == '.'
+            accr = accr.round(2).to_s
+            accr << "0" if accr[accr.length-2] == '.'
+            prezzo = prezzo.round(2).to_s
+            prezzo << "0" if prezzo[prezzo.length-2] == '.'
+            fatt = "" if fatt == "0.00"
+            accr = "" if accr == "0.00"
             @tb << [dt_doc.strftime("%d/%m/%Y"), num, cau, ven, res, prezzo, fatt, accr, prg]
           end
           tfatt = tfatt.round(2).to_s
@@ -96,7 +96,7 @@
           @tb << ["TOTALI:", "", "", tven, tres, "", tfatt, taccr, prg]
           @tb.insert(0, col_head) # inserisco riga intestazione
         end
-        pdf.table(@tb, :column_widths =>{0=>70}) do |tab|
+        pdf.table(@tb, :column_widths =>{0=>70, 4=>45, 5=>45, 6=>45, 7=>45, 8=>45}) do |tab|
           tab.row(0).font_style = :bold
           tab.row(tab.row_length-1).font_style = :bold
           tab.header = true
