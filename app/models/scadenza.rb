@@ -16,7 +16,7 @@ class Scadenza < ActiveRecord::Base
     mywhere += " AND tesdocs.causmag_id = #{causmag_id}" if causmag_id.to_i > 0
     mywhere += " AND tesdocs.data_doc >= '#{dtini}' AND tesdocs.data_doc <= '#{dtfin}'" if dtini > 0 && dtfin > 0
     mywhere += " AND scadenzas.tipo = '#{tp}'" if tp != ""
-    mywhere += " AND scadenzas.stato = '#{stato}'" if stato != ""
+    mywhere += " AND scaddenzas.stato = '#{stato}'" if stato != ""
 
     page.nil? ? nrrecord = includes(:tesdoc).where(mywhere).count : nrrecord = nil
     return includes(:tesdoc).where(mywhere).paginate(:page => page, :per_page => 10, :order => "scadenzas.data"), nrrecord

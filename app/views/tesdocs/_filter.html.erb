@@ -1,6 +1,20 @@
 <fieldset>
   <legend> Ricerca documenti </legend>
   <%= form_tag(:filter_tesdocs, :method => :get) do %>
+    <div class="three columns">
+      <%= label :filter_tesdocs, "Da Numero" %>
+      <%= number_field_tag :nrini, @nrini %>
+    </div>
+    <div class="three columns">
+      <%= label :filter_tesdocs, "A Numero" %>
+      <%= number_field_tag :nrfin, @nrfin %>
+    </div>
+    <div class="three columns">
+      <%= jdate_field(:filter_tesdocs, :dtini, "Da data", :date=>true, :value => @dtini, :readonly => true, :yearrange => current_annoese) %>
+    </div>
+    <div class="three columns">
+      <%= jdate_field(:filter_tesdocs, :dtfin, "A data", :date=>true, :value => @dtfin, :readonly => true, :yearrange => current_annoese) %>
+    </div>
     <div class="six columns">
       <%= label :filter_tesdocs, "Mastro contabile" %>
       <%= select_tag("contofilter",

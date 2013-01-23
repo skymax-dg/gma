@@ -243,6 +243,10 @@ before_filter :authenticate
 
   def filter
     @title = "Elenco Documenti (#{Causmag::TIPO_DOC[se_tipo_doc.to_i]})"
+    params[:nrini].to_i > 0 ? @nrini = params[:nrini].to_i : nil
+    params[:nrfin].to_i > 0 ? @nrfin = params[:nrfin].to_i : nil
+    @dtini     = params[:filter_tesdocs][:dtini].to_date if params[:filter_tesdocs][:dtini]
+    @dtfin     = params[:filter_tesdocs][:dtfin].to_date if params[:filter_tesdocs][:dtfin]
     @tpfilter  = params[:tpfilter]
     @desfilter = params[:desfilter].strip
     @clifilter = params[:clifilter]
@@ -254,7 +258,7 @@ before_filter :authenticate
                                   {:tpd => se_tipo_doc, :azd => current_user.azienda}])
     @contos = Conto.find4docfilter([@clifilter,     @forfilter,           @altfilter], @tpfilter||"",
                                     @desfilter||"", current_user.azienda, current_annoese)
-    @tesdocs, nrrecord = Tesdoc.filter(@tpfilter, @desfilter,
+    @tesdocs, nrrecord = Tesdoc.filter(@nrini, @nrfin, @dtini, @dtfin, @tpfilter, @desfilter,
                                       [@clifilter, @forfilter, @altfilter],
                                        se_tipo_doc,
                                        @causmagfilter,

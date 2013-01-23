@@ -3,16 +3,11 @@
                             :top_margin    => 1.2.cm, :bottom_margin => 1.2.cm,
                             :page_size => 'A4')
   
-  #pdf.bounding_box [0,780], :width => 530, :height => 780 do
-    #Cornice intero documento
-    #pdf.stroke_bounds
-  #end
-
-  # do per scontato che se è stata specificata una causale di trasporto allora il documeno deve riportare anche
-  # i dati DDT.
+  # Se è stato specificato un corriere allora il documeno deve riportare anche i dati DDT.
   @datispe && @datispe.corriere && (not @datispe.corriere.blank?) ? @ddt = 1 : @ddt=0
 
   render :partial=>'testafatt.pdf.prawn', :locals=>{:ppdf=>pdf}
+  
   pdf.text "DETTAGLIO ARTICOLI", :size => 14, :style => :bold, :align => :center
   @tb = Array.new(1, ["CODICE", "DESCRIZIONE", "Q.TA", "PRZ.\nLIST.", "TOT.\nLIST.", "PRZ.\nSCN.", "IMPON.", "IVA"])
   @tqta=0
@@ -98,49 +93,14 @@
       render :partial=>'testafatt.pdf.prawn', :locals=>{:ppdf=>pdf}
     end
     
-    pdf.text_box "Annotazioni: #{@datispe.note}",
+    pdf.text_box "Annotazioni_: #{@datispe.note}",
                  :at => [2, 178], :width => 80, :height => 12, :size => 10, :style => :bold
     pdf.text_box "#{@datispe.note}",
                  :at => [70, 178], :width => 450, :height => 105, :size => 8
   end
 
   if @ddt == 1
-    pdf.bounding_box [0,80], :width => 530, :height => 30 do
-      pdf.stroke_bounds
-    end
-    pdf.draw_text "Aspetto esteriore dei beni",
-                  :at => [2, 70], :size => 10, :style => :bold
-    pdf.draw_text "Nr.Colli",
-                  :at => [200, 70], :size => 10, :style => :bold
-    pdf.draw_text "#{@datispe&&@datispe.um}",
-                  :at => [300, 70], :size => 10, :style => :bold
-    pdf.draw_text "Porto",
-                  :at => [400, 70], :size => 10, :style => :bold
-    pdf.draw_text Spediz::ASPETTO[(@datispe&&@datispe.aspetto)||""]||"",
-                  :at => [2, 57], :size => 10
-    pdf.draw_text @datispe&&@datispe.nrcolli.to_s,
-                  :at => [200, 57], :size => 10
-    pdf.draw_text @datispe&&@datispe.valore.to_s,
-                  :at => [300, 57], :size => 10
-    pdf.draw_text Spediz::PORTO[(@datispe&&@datispe.porto)]||"",
-                  :at => [400, 57], :size => 10
-
-    # data e ora ritiro
-    pdf.bounding_box [0,50], :width => 530, :height => 35 do
-      pdf.stroke_bounds
-    end
-    pdf.draw_text "Data del ritiro",
-                  :at => [2, 40], :size => 10, :style => :bold
-    pdf.draw_text "Ora del ritiro",
-                  :at => [130, 40], :size => 10, :style => :bold
-    pdf.draw_text @datispe&&@datispe.dtrit&&@datispe.dtrit.strftime("%d/%m/%Y"),
-                  :at => [5, 27], :size => 10 if @datispe&&@datispe.aspetto
-    pdf.draw_text @datispe&&@datispe.orarit&&@datispe.orarit.strftime("%H:%M"),
-                  :at => [135, 27], :size => 10 if @datispe&&@datispe.aspetto
-
-  # spazio pe la firma
-    pdf.draw_text "Firma",
-                  :at => [400, 40], :size => 10, :style => :bold
+    render :partial=>'piede_doc.pdf.prawn', :locals=>{:ppdf=>pdf}
   end
   #Numerazione delle pagine
   pdf.page_count.times do |page|

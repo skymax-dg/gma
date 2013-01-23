@@ -105,7 +105,7 @@ class ArticlesController < ApplicationController
     if @artmov.count == 0
       render 'mov_vend_notfound'
     else
-      data=Article.exp_movart_xls(@tp, @artmov, @idanagen, @nrmag, @anarif, current_user.azienda, @grpmag)
+      data=Article.exp_movart_xls(@tp, @artmov, @idanagen, @nrmag, @anarif, current_user.azienda, @grpmag, current_annoese)
       send_data(data, {
         :disposition => 'attachment',
         :encoding => 'utf8',
@@ -127,7 +127,7 @@ class ArticlesController < ApplicationController
     if @artmov.count == 0
       render 'mov_vend_notfound'
     else
-      data=Article.exp_movart_xls(@tp, @artmov, @idanagen, @nrmag, @anarif, current_user.azienda, @grpmag)
+      data=Article.exp_movart_xls(@tp, @artmov, @idanagen, @nrmag, @anarif, current_user.azienda, @grpmag, current_annoese)
       send_data(data, {
         :disposition => 'attachment',
         :encoding => 'utf8',

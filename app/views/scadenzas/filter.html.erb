@@ -14,7 +14,7 @@
                      {:include_blank => true}) %>
     </div>
     <div class="six columns">
-      <%= jdate_field(:filter_scadenzas, :dadata, "Da data", :date=>true, :value => @dtini, :readonly => true, :yearrange => current_annoese) %>
+      <%= jdate_field(:filter_scadenzas, :dadata, "Da data", :date=>true, :value => @dtini, :readonly => :true, :yearrange => current_annoese) %>
     </div>
     <div class="six columns">
       <%= jdate_field(:filter_scadenzas, :adata, "A data", :date=>true, :value => @dtfin, :readonly => true, :yearrange => current_annoese) %>

@@ -75,7 +75,7 @@ module ApplicationHelper
                   jQuery(\"#%s_%s\").datepicker(\"setDate\", \"#{value}\");
                   jQuery(\"#%s_%s\").datepicker(\"option\",  \"changeYear\", true);
                   jQuery(\"#%s_%s\").datepicker(\"option\",  \"yearRange\", \"#{yearrange}\");
-                  jQuery(\"#%s_%s\").datepicker(\"option\",  \"readonly\", \"#{readonly}\");
+                  jQuery(\"#%s_%s\").attr(\"readonly\", \"#{readonly}\");
                  }
                );
               </script>"%[key, name, key, name, key, name, key, name, key, name]
