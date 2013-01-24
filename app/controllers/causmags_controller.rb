@@ -8,7 +8,7 @@ class CausmagsController < ApplicationController
     flash_cnt(Causmag.count) if params[:page].nil?
     @causmags = Causmag.azienda(current_user.azienda).paginate(:page     => params[:page], 
                                                                :per_page => 10, 
-                                                               :order => [:tipo_doc, :descriz])
+                                                               :order => [:tipo_doc, :grp_prg, :movimpmag, :tipo, :descriz])
 store_location
   end
 

@@ -4,6 +4,9 @@
   <td><%= Causmag::TIPO[line.tipo] %></td>
   <td><%= Causmag::MOVIMPMAG[line.movimpmag] %></td>
   <td><%= Causmag::CONTABILE[line.contabile] %></td>
+  <td><%= line.grp_prg %></td>
+  <td><%= line.nrmagsrc > 0 ? "X" : "" %></td>
+  <td><%= line.nrmagdst > 0 ? "X" : "" %></td>
   <td>
     <%= render :partial => 'shared/btn_vmc', :locals => {:v_edit => edit_causmag_path(line), :line => line} %>
   </td>
