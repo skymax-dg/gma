@@ -1,5 +1,5 @@
-<% magsrc = findmags("S", tesdoc.causmag_id, tesdoc.conto_id) %>
-<% magdst = findmags("D", tesdoc.causmag_id, tesdoc.conto_id) %>
+<% magsrc = tesdoc.findmags("S") %>
+<% magdst = tesdoc.findmags("D") %>
 <% nrmagsrc = act_new == 1 ? causmag.nrmagsrc : tesdoc.nrmagsrc %>
 <% nrmagdst = act_new == 1 ? causmag.nrmagdst : tesdoc.nrmagdst %>
 <% if magsrc[nrmagsrc].nil? then magsrcsel = 0 else magsrcsel = nrmagsrc end %>

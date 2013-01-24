@@ -20,23 +20,29 @@ module TesdocsHelper
     session[:se_tipo_doc] = nil
   end
 
-  def findmags(tp, idcausmag, idconto)
+  def findmags(tp)
     # tp = "S x magsrc(origine) - "D" x magdst(destinazione)
     # Inizializzo mags con il magazzino 0 (nessun magazzino)
     # mags = Hash[*Anaind::NRMAG.select{|k,v| [0].index(k)}.flatten]
-    causmag = Causmag.find(idcausmag)
-    conto = Conto.find(idconto)
     # Se il movimento è di entrata/rend.vendite il mag sorgente è uno tra quelli del conto
     # Se il movimento è di uscita/rend.resi il mag destinazione è uno tra quelli del conto
     if (["E","V"].include?(causmag.tipo) and tp == "S") or (["U","R"].include?(causmag.tipo) and tp == "D")
       mags = conto.magsavailable([0])
     elsif (["E","T"].include?(causmag.tipo) and tp == "D") or (["U","T"].include?(causmag.tipo) and tp == "S")
-      mags = Anagen.find(current_user.azienda).magsavailable([0])
+      mags = Anagen.find(azienda).magsavailable([0])
     else
       # Inizializzo mags con il magazzino 0 (nessun magazzino)
       mags = Hash[*Anaind::NRMAG.select{|k,v| [0].index(k)}.flatten]
       # Errore
     end
+  end
+
+  def desmagsrc # "S" magazzino sorgente - "D" magazzino destinazione
+    findmags("S")[nrmagsrc.to_i]
+  end
+
+  def desmagdst # "S" magazzino sorgente - "D" magazzino destinazione
+    findmags("D")[nrmagdst.to_i]
   end
 
   def set_car_sca_imp(anarif, tipomov, tpmag, movmag, qta)

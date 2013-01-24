@@ -59,13 +59,13 @@
     <%= label @tesdoc, "Mag origine:", :class => "right" %>
   </div>
   <div class="four columns">
-    <%= Tesdoc::NRMAG[@tesdoc.nrmagsrc] %>
+    <%= @tesdoc.desmagsrc %>
   </div>
   <div class="two columns">
     <%= label @tesdoc, "Mag destinazione:", :class => "right" %>
   </div>
   <div class="four columns">
-    <%= Tesdoc::NRMAG[@tesdoc.nrmagdst] %>
+    <%= @tesdoc.desmagdst %>
   </div>
 </div>
 <div class="row">
