@@ -314,6 +314,7 @@ before_filter :authenticate
     @scadenzas = @scadenzas.paginate(:page => @page, :per_page => 10)
     @subtot_iva = @tesdoc.subtot_iva
     @tab=params[:tab]
+    puts @qtatot
   end
 
   def edit

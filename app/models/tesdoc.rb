@@ -40,6 +40,10 @@ class Tesdoc < ActiveRecord::Base
     ret
   end
 
+  def qta_tot
+    Rigdoc.where(:tesdoc_id => id).sum(:qta)
+  end
+
   def self.new_num_doc(g_p, anno, azd)
     (self.maximum("num_doc", :include => :causmag, :conditions => ["causmags.grp_prg = :g_p AND tesdocs.annoese = :ae AND tesdocs.azienda = :azd",
                                              {:g_p=>g_p, :ae=>anno, :azd=>azd}]).to_i||0) + 1

@@ -14,6 +14,20 @@
 </div>
 <div class="row">
   <div class="two columns">
+    <%= label @tesdoc, "Conto anagrafica:", :class => "right" %>
+  </div>
+  <div class="four  columns">
+    <%= @tesdoc.conto.descriz %>
+  </div>
+  <div class="two columns">
+    <%= label @tesdoc, "Codice conto:", :class => "right" %>
+  </div>
+  <div class="four columns">
+    <%= @tesdoc.conto.codice %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
     <%= label @tesdoc, "Tipo documento:", :class => "right" %>
   </div>
   <div class="four columns">
@@ -38,20 +52,6 @@
   </div>
   <div class="four columns">
     <%= @tesdoc.causmag.descriz %>
-  </div>
-</div>
-<div class="row">
-  <div class="two columns">
-    <%= label @tesdoc, "Conto anagrafica:", :class => "right" %>
-  </div>
-  <div class="four  columns">
-    <%= @tesdoc.conto.descriz %>
-  </div>
-  <div class="two columns">
-    <%= label @tesdoc, "Codice conto:", :class => "right" %>
-  </div>
-  <div class="four columns">
-    <%= @tesdoc.conto.codice %>
   </div>
 </div>
 <div class="row">
@@ -93,6 +93,6 @@
     <%= label @tesdoc, "Totale imponibile:", :class => "right" %>
   </div>
   <div class="four columns">
-    <%= number_to_currency(@tesdoc.imponibile) %>
+    <%= number_to_currency(@tesdoc.imponibile) %> <%= "(Qta.Totale:#{@tesdoc.qta_tot})" %>
   </div>
 </div>

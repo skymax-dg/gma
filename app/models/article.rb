@@ -4,9 +4,9 @@ class Article < ActiveRecord::Base
   has_many :rigdocs
   belongs_to :iva
 
-  attr_accessible :codice, :descriz, :prezzo, :azienda, :categ, :iva_id
+  attr_accessible :codice, :descriz, :prezzo, :azienda, :categ, :iva_id, :costo
 
-  validates :codice, :descriz, :azienda, :categ, :iva_id, :presence => true
+  validates :codice, :descriz, :azienda, :categ, :iva_id, :costo, :presence => true
   validates :codice, :descriz, :uniqueness => {:case_sensitive => false}
   validates :codice,  :length => {:maximum => 20}
   validates :descriz, :length => {:maximum => 50}

@@ -161,6 +161,7 @@ store_location
     @title = "Nuovo Articolo"
     @article = Article.new
     @article.azienda = current_user.azienda
+    @article.costo = 0.0
   end
 
   def edit

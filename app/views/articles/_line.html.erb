@@ -3,6 +3,7 @@
   <td><%= Article::CATEG[line.categ] %> </td>
   <td><%= line.descriz %></td>
   <td class="currency"><%= number_to_currency(line.prezzo) %></td>
+  <td class="currency"><%= number_to_currency(line.costo) %></td>
   <td>
     <%= render :partial => 'shared/btn_vmc', :locals => {:v_edit => edit_article_path(line), :line => line} %>
   </td>
