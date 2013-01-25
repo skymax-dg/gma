@@ -13,7 +13,7 @@
   end
   pdf.formatted_text_box [{:text => "OGGETTO: ", :styles => [:bold]},
                           {:text => "Ritiro libri in c/to deposito #{Anagen.find(@tesdoc.azienda).denomin}", :size => 14, :styles => [:bold]}],
-                           :at => [2, 590], :width => 280, :height => 20, :size => 10
+                           :at => [2, 590], :width => 500, :height => 20, :size => 10
   pdf.move_down 10
 
   pdf.text "DETTAGLIO ARTICOLI", :size => 14, :style => :bold, :align => :center
