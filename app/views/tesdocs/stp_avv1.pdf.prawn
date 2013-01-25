@@ -52,7 +52,7 @@
     end
   end
 
-  testo="Vi ringraziamo della cortese collaborazione.\nCordialmente.\n#{Anagen.find(@tesdoc.azienda).denomin}\n#{@tesdoc.conto.anagen.referente}\n"
+  testo="Vi ringraziamo della cortese collaborazione.\nCordialmente.\n#{Anagen.find(@tesdoc.azienda).denomin}\n#{@ana.referente}\n"
   pdf.text testo, :size => 10
 
   testo="E' stato predisposto il ritiro "
