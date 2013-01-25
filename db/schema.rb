@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130124094157) do
+ActiveRecord::Schema.define(:version => 20130124152838) do
 
   create_table "agentes", :force => true do |t|
     t.integer  "anagen_id"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20130124094157) do
     t.date     "dtnas"
     t.string   "sesso",       :limit => 1
     t.integer  "luogonas_id"
+    t.string   "referente",   :limit => 150
   end
 
   add_index "anagens", ["codfis"], :name => "idx_anagens_on_codfis"
@@ -257,6 +258,7 @@ ActiveRecord::Schema.define(:version => 20130124094157) do
     t.integer  "tipo_doc",                                                :default => 0,   :null => false
     t.integer  "iva_id"
     t.integer  "agente_id"
+    t.string   "oggetto",    :limit => 150
   end
 
   add_index "tesdocs", ["causmag_id"], :name => "index_tesdocs_on_causmag_id"

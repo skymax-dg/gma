@@ -4,6 +4,15 @@ module ApplicationHelper
     clear_return_to
   end
 
+  def to_mydate(d)
+    d ? "#{d.day} #{to_mymonth(d.month)} #{d.year}" : nil
+  end
+
+  def to_mymonth(m)
+    ["","Gennaio", "Febbraio", "Marzo",     "Aprile",  "Maggio",   "Giungno",
+        "Luglio",  "Agosto",   "Settembre", "Ottobre", "Novembre", "Dicembre"][m.to_i]
+  end
+
   def store_location
     session[:return_to] = request.fullpath
   end

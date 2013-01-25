@@ -33,7 +33,7 @@
   testo+=" / " if @ana.email && @ana.web && @ana.email.length > 0 && @ana.web.length > 0
   testo+="Web:#{@ana.web}" if @ana.web && @ana.web.length > 0
   ppdf.formatted_text_box [{:text => "#{@ana.denomin.upcase}\n", :styles => [:bold], :size => 12},
-                          {:text => "#{@sl[:indir]}\n#{@sl[:cap]} #{@sl[:desloc]}\n"},
+                          {:text => "#{@sl[:indir]}\n#{@sl[:desloc]}\n"},
                           {:text => testo}],
                          :at => [2,720], :width => 238, :height => 130,
                          :overflow => :shrink_to_fit, :size => 10, :min_font_size => 6
@@ -50,10 +50,11 @@
   testo+="EMail:#{@anad.email} " if @anad.email && @anad.email.length > 0
   testo+="/ " if @anad.email && @anad.web && @anad.email.length > 0 && @anad.web.length > 0
   testo+="Web:#{@anad.web}" if @anad.web && @anad.web.length > 0
+  @referente ? testoref="\n\n#{@referente}" : testoref=""
   ppdf.formatted_text_box [{:text => "Spett.le: #{@anad.denomin.upcase}\n", :styles => [:bold], :size => 12},
-                          {:text => "#{@sld[:indir]}\n#{@sld[:cap]} #{@sld[:desloc]}\n"},
-{:text => testo}
-],
+                          {:text => "#{@sld[:indir]}\n#{@sld[:desloc]}\n"},
+                          {:text => testo},
+                          {:text => testoref, :styles => [:bold]}],
                          :at => [242,698], :width => 286, :height => 92,
                          :overflow => :shrink_to_fit, :size => 10, :min_font_size => 6
   #Riferimenti documento

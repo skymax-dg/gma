@@ -96,6 +96,10 @@ before_filter :authenticate
     if @tesdoc.movmagint && @tesdoc.spediz.nil?
       flash[:alert] = "DATI DI SPEDIZIONE MANCANTI"
       redirect_to @tesdoc
+    elsif params[:doc] == "avvmag"
+      render 'stp_avv1.pdf'
+    elsif params[:doc] == "avvcor"
+      render 'stp_avv2.pdf'
     elsif @tesdoc.causmag.modulo == "DDT" || params[:doc] == 'ddt'
       @tit_doc[1] = "(D.d.t.) D.P.R. 472 del 14-08-1996 - D.P.R. 696 del 21.12.1996"
       @datispe  = @tesdoc.spediz
@@ -314,7 +318,6 @@ before_filter :authenticate
     @scadenzas = @scadenzas.paginate(:page => @page, :per_page => 10)
     @subtot_iva = @tesdoc.subtot_iva
     @tab=params[:tab]
-    puts @qtatot
   end
 
   def edit

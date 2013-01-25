@@ -27,8 +27,8 @@
     </div>
     <div class="two columns"></div>
     <div class="one columns">
-      <%= f.label "Cap" %>
-      <%= f.text_field :cap %>
+      <%#= f.label "Cap" %>
+      <%#= f.text_field :cap %>
     </div>
     <div class="four columns">
       <%= f.label "Valido per il magazzino:" %>
@@ -36,7 +36,8 @@
     </div>
     <div class="twelve columns">
       <%= f.label "Localita'-stato:" %>
-      <%= f.text_field(:desloc, {:data => {:remote => true,
+      <%= f.text_field :desloc %>
+      <%#= f.text_field(:desloc, {:data => {:remote => true,
                                            :url => url_for(:controller => :anainds,
                                                            :action => :reset_locid)}}) %>
     </div>

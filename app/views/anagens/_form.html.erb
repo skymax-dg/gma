@@ -47,6 +47,10 @@
       <%= f.label "Sito Web" %>
       <%= f.text_field :web %>
     </div>
+    <div class="twelve columns">
+      <%= f.label "Referente" %>
+      <%= f.text_field :referente %>
+    </div>
     <% if @anagen.denomin.nil? %>
       <div class="five columns">
         <%= f.label "Inserisci Conto Cliente" %>

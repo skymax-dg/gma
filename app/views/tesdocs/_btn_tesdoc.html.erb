@@ -20,14 +20,22 @@
     </li>
   </ul>
   <ul class="button-group">
-<li>
-  <%= link_to 'STAMPA D.D.T.', stp_tesdoc_path(:doc=>:ddt), :class => "button radius small print foundicon-graph" if @tesdoc.causmag.modulo == "FATTACC" %>
-</li>
+    <li>
+      <%= link_to 'STAMPA D.D.T.', stp_tesdoc_path(:doc=>:ddt), :class => "button radius small print foundicon-graph" if @tesdoc.causmag.modulo == "FATTACC" %>
+    </li>
     <li>
       <%= link_to 'STAMPA DOC.', stp_tesdoc_path, :class => "button radius small print foundicon-graph" %>
     </li>
     <li>
       <%= link_to 'STAMPA ETICHETTE', dati_ind_tesdoc_path, :class => "button radius small print foundicon-graph" %>
+    </li>
+  </ul>
+  <ul class="button-group">
+    <li>
+      <%= link_to 'Avviso Mag.', stp_tesdoc_path(:doc=>:avvmag), :class => "button radius small print foundicon-graph" %>
+    </li>
+    <li>
+      <%= link_to 'Avviso Corr.', stp_tesdoc_path(:doc=>:avvcor), :class => "button radius small print foundicon-graph" %>
     </li>
   </ul>
 </div>

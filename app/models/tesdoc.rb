@@ -10,11 +10,12 @@ class Tesdoc < ActiveRecord::Base
   has_many :scadenzas, :dependent => :destroy
 
   attr_accessible :azienda, :annoese, :tipo_doc, :num_doc, :data_doc, :descriz,
-                  :causmag_id, :nrmagsrc, :nrmagdst, :seguefatt, :conto_id, :sconto, :iva_id, :agente_id
+                  :causmag_id, :nrmagsrc, :nrmagdst, :seguefatt, :conto_id,
+                  :sconto, :iva_id, :agente_id, :oggetto
 
   validates :azienda, :annoese, :tipo_doc, :num_doc, :data_doc, :descriz,
             :causmag_id, :conto_id, :nrmagsrc, :nrmagdst, :seguefatt, :sconto, :presence => true
-  validates :descriz,  :length => { :maximum => 150}
+  validates :descriz, :oggetto, :length => { :maximum => 150}
 
   scope :azdanno, lambda { |azd, anno| {:conditions => ['tesdocs.azienda = ? and tesdocs.annoese = ?', azd, anno]}}
 
@@ -329,7 +330,7 @@ class Tesdoc < ActiveRecord::Base
                azdanno(azienda, annoese).
                  paginate(:page => page, 
                           :per_page => 10, 
-                          :order => "data_doc DESC, num_doc, causmag_id"), nrrecord unless hsh[tp].nil?
+                          :order => "data_doc DESC, num_doc desc, causmag_id"), nrrecord unless hsh[tp].nil?
   end
 
   def self.art_mov_vend(idart, idanagen, nrmag, anarif, azienda, tp, annoese)

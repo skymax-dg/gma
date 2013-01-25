@@ -28,10 +28,10 @@ class AnaindsController < ApplicationController
     else
       loc = Localita.find(loc_id)
       @descrizloc = ""
-      @descrizloc = "#{loc.cap}, " unless loc.cap.empty?
-      @descrizloc = "#{@descrizloc}#{loc.descriz}"
-      @descrizloc = "#{@descrizloc} (#{loc.prov})" unless loc.prov.empty?
-      @descrizloc = "#{@descrizloc} - #{loc.paese.descriz}" unless loc.paese.nil?
+      @descrizloc += "#{loc.cap}, " unless loc.cap.empty?
+      @descrizloc += "#{loc.descriz}"
+      @descrizloc += " (#{loc.prov})" unless loc.prov.empty?
+      @descrizloc += " - #{loc.paese.descriz}" unless loc.paese.nil?
       @caploc = loc.cap unless loc.cap.empty?
     end 
     respond_to do |format|
