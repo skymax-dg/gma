@@ -44,6 +44,40 @@ store_location
   end
 
   def create
+    @err=0
+    respond_to do |format|
+      @anagen = Anagen.new(params[:anagen])
+      if @anagen.save
+        if params[:ins_conto] == 'S'
+          @conto = Conto.new
+          @conto.azienda = current_user.azienda
+          @conto.annoese = current_annoese
+          @conto.tipoconto = 'C'
+          @conto.codice = Conto.new_codice(@conto.annoese, @conto.azienda, @conto.tipoconto)
+          @conto.descriz = @anagen.denomin
+          @conto.cntrpartita = nil
+          @conto.sconto = 0
+          @conto.anagen_id = @anagen.id
+          @conto.tipopeo = 'P'
+          if @conto.save
+            flash[:success] = 'Anagrafica soggetti e conto clienti creati con successo.'
+          else
+            flash[:error] = 'Anagrafica soggetti creata con successo. (PROBLEMI DURANTE LA CREAZIONE DEL CONTO CLIENTI)'
+          end
+        else
+          flash[:success] = 'Anagrafica soggetti creata con successo.'
+        end
+      else
+        @title = "Nuovo Soggetto/Societa'"
+  #      flash.now[:alert] = "Il salvataggio dell'anagrafica non e' andato a buon fine"
+        @err=1
+      end
+      @ins_conto = params[:ins_conto]
+      format.js
+    end
+  end
+
+  def createOLD
     @anagen = Anagen.new(params[:anagen])
     if @anagen.save
       if params[:ins_conto] == 'S'
@@ -60,7 +94,7 @@ store_location
         if @conto.save
           flash[:success] = 'Anagrafica soggetti e conto clienti creati con successo.'
         else
-          flash[:success] = 'Anagrafica soggetti creata con successo. (PROBLEMI DURANTE LA CREAZIONE DEL CONTO CLIENTI)'
+          flash[:error] = 'Anagrafica soggetti creata con successo. (PROBLEMI DURANTE LA CREAZIONE DEL CONTO CLIENTI)'
         end
       else
         flash[:success] = 'Anagrafica soggetti creata con successo.'

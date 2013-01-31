@@ -1,0 +1,15 @@
+if ("<%=@err%>" == "0")
+{
+  if ("<%=@ins_conto%>" != "S")
+  {
+    alert("TOLTO IL CHECK DALL'INSERIMENTO AUTOMATICO DEL CONTO CLIENTE");
+  }
+  var url = "<%= root_url %>anagens/" + "<%=@anagen.id%>";
+}
+else
+{
+  alert("SALVATAGGIO FALLITO");
+  var url = "<%= root_url %>anagens/new";  
+}
+
+window.location = url;
