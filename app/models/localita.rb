@@ -15,8 +15,13 @@ class Localita < ActiveRecord::Base
   validates :codfis, :length => { :maximum => 4}
   validates :prov, :length => { :maximum => 2}
 
+  def self.find_by_cf(cf)
+    find_by_codfis(Cfpi.locnas_by_cf(cf)) if Cfpi.locnas_by_cf(cf)
+  end
+
   private
-    def self.filter (tp, des, page)
+
+    def self.filter(tp, des, page)
       # Esegure la ricerca delle citta' in base ai filtri impostati
 
       nrrecord = nil

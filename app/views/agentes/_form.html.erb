@@ -3,7 +3,7 @@
     <div class="eight columns">
       <%= f.label "Denominazione Anagrafica" %>
       <% if action_name == 'new' %>
-        <%= collection_select :agente, :anagen_id, Anagen.all(:conditions => "id = #{@agente.anagen_id||0} OR NOT EXISTS (SELECT 1 FROM agentes WHERE anagen_id = anagens.id)", :order => :denomin),
+        <%= collection_select :agente, :anagen_id, Anagen.without_agente_or_self(@agente.anagen_id||0),
                               :id, :denomin, {:include_blank => true} %>
       <% else %>
         <%= @agente.anagen.denomin %>

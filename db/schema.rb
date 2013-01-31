@@ -45,8 +45,8 @@ ActiveRecord::Schema.define(:version => 20130124152838) do
 
   create_table "anainds", :force => true do |t|
     t.integer  "anagen_id"
-    t.string   "indir",       :limit => 100
-    t.string   "desloc",      :limit => 100
+    t.string   "indir",       :limit => 255
+    t.string   "desloc",      :limit => 255
     t.string   "cap",         :limit => 5
     t.integer  "nrmag",                                       :null => false
     t.datetime "created_at",                                  :null => false

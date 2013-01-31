@@ -17,6 +17,10 @@ class String
     false
   end
   
+  def is_numeric?
+    Float(self) != nil rescue false
+  end
+
   def to_my_date
     temp = self.gsub(/[-,\/]/, '')
     ['%d%m%Y','%d%m%y'].each do |formato|

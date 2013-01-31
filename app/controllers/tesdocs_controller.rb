@@ -18,6 +18,35 @@ before_filter :authenticate
     init_filter(current_user.azienda)
   end
 
+  def genera_xls_articoli
+    require 'spreadsheet'
+    outf=Spreadsheet::Workbook.new
+    shname="Articoli"
+    fname="#{Rails.root}/tmp/ddt.xls"
+    outf.create_worksheet :name=> shname
+    outf.worksheet(shname).row(0)[0]="Cod.Articolo"
+    outf.worksheet(shname).row(0)[1]="Qta"
+    outf.worksheet(shname).row(0)[2]="Prezzo"
+    outf.worksheet(shname).row(0)[3]="Sconto"
+    outf.worksheet(shname).row(0)[4]="Descrizione"
+    outf.worksheet(shname).row(0)[5]="Prz.Copertina"
+
+    idx=1
+    imp2dec=0.00
+    imp6dec=0.000000
+    Article.azienda(current_user.azienda).all(:order => :descriz).each do |art|
+      outf.worksheet(shname).row(idx)[0]=art.codice
+      outf.worksheet(shname).row(idx)[1]=0
+      outf.worksheet(shname).row(idx)[2]=imp6dec
+      outf.worksheet(shname).row(idx)[3]=imp2dec
+      outf.worksheet(shname).row(idx)[4]=art.descriz
+      outf.worksheet(shname).row(idx)[5]=art.prezzo
+      idx +=1
+    end
+    outf.write(fname)
+    send_file(fname)
+  end
+
   def addrow_fromxls
     tfile = params[:file]
 

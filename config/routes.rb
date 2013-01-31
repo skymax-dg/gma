@@ -84,6 +84,7 @@ Gma::Application.routes.draw do
       get :set_causmags
       get :set_provv
       get :addtesrigdoc_fromxls
+      get :genera_xls_articoli
     end
     member do
       get :add1row4article

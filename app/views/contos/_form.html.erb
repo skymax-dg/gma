@@ -12,10 +12,12 @@
   <div class="row">
     <div class="five columns">
       <%= f.label "Anagrafica" %>
-      <%= collection_select(:conto, :anagen_id, Anagen.all(:order => :denomin), :id,
-                            :denomin, {:include_blank => true},
-                              {:data => {:remote => true, :url => url_for(:controller => :contos,
-                                                                          :action => :anagen_exit)}}) %>
+      <%= collection_select(:conto, :anagen_id,
+                            Anagen.without_conto_or_self(@conto.anagen_id||0, @conto.azienda,
+                                                         @conto.annoese, @conto.tipoconto),
+                            :id, :denomin, {:include_blank => true},
+                               {:data => {:remote => true, :url => url_for(:controller => :contos,
+                                                                           :action => :anagen_exit)}}) %>
     </div>
     <div class="two columns"></div>
     <div class="five columns">

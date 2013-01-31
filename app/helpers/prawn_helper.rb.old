@@ -1,7 +1,0 @@
-#Class PdfClassic < Prawn::Document
-  
-#  initialize
-#    pdf = Prawn::Document.new(:page_layout   => :portrait, 
-#                              :left_margin   => 1.2.cm, :right_margin  => 1.2.cm,
-#                              :top_margin    => 1.2.cm, :bottom_margin => 1.2.cm,
-#                              :page_size => 'A4')

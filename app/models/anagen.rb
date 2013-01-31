@@ -71,9 +71,23 @@ class Anagen < ActiveRecord::Base
     magsplus
   end
 
+  def self.without_conto_or_self(id, az, ae, tc)
+    Anagen.all(:conditions => "id = #{id||0} OR NOT EXISTS (SELECT 1 FROM contos WHERE anagen_id = anagens.id AND azienda = #{az} AND annoese = #{ae} AND tipoconto = '#{tc}')", :order => :denomin)
+  end
+
+  def self.without_agente_or_self(id)
+    Anagen.all(:conditions => "id = #{id||0} OR NOT EXISTS (SELECT 1 FROM agentes WHERE anagen_id = anagens.id)", :order => :denomin)
+  end
+
+  def self.find_by_cf_pi(cf, pi)
+    a=nil
+    a=Anagen.find_by_codfis(cf) if (not cf.blank?)
+    a=Anagen.find_by_pariva(pi) if (not pi.blank?) && a.nil
+    a=Anagen.find_by_codfis(pi) if (not pi.blank?) && a.nil
+  end
+
   def self.newcod()
     (self.maximum("codice").to_i||0) + 1
-    #(select("max(codice) as maxcod")[0].maxcod.to_i||0) + 1
   end
 
   def pi_or_cf

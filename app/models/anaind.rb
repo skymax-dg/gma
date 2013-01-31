@@ -7,7 +7,7 @@ class Anaind < ActiveRecord::Base
   attr_accessible :indir, :cap, :desloc, :anagen_id, :localita_id, :flsl, :flsp, :flmg, :nrmag
   
   validates :flsl, :flsp, :flmg, :nrmag, :indir, :presence => true
-  validates :indir, :length => { :maximum => 100}
+  validates :indir, :desloc, :length => { :maximum => 255}
 
   NRMAG = $ParAzienda['ANAIND']['NRMAG']
 
