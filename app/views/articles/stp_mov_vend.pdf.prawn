@@ -11,7 +11,7 @@
   @artmov.each do |dataart|
     art = Article.find(dataart.attributes["artid"])
     desart = "ARTICOLO: #{art.codice}    #{art.descriz}"
-    Tesdoc.anagen_mov_artic(art.id, @idanagen, @nrmag, @anarif, @tp, @annoese).each do |tesdoc|
+    Tesdoc.anagen_mov_artic(art.id, @idanagen, @nrmag, @anarif, @tp, @annoese, @dtini, @dtfin, @idcausmag).each do |tesdoc|
       if @anarif == "S"
         idanagen = ""
       else
@@ -21,7 +21,7 @@
         pdf.text desanagen,
                      :size => 12, :style => :bold, :align => :left
       end
-      Tesdoc.mag_mov_artic_anagen(art.id, idanagen, @nrmag, @anarif, @grpmag, @tp, @annoese).each do |tesdoc|
+      Tesdoc.mag_mov_artic_anagen(art.id, idanagen, @nrmag, @anarif, @grpmag, @tp, @annoese, @dtini, @dtfin, @idcausmag).each do |tesdoc|
         @grpmag == "S" ? desmag = "MAGAZZINI RAGGRUPPATI" : desmag = "MAGAZZINO: #{Anaind::NRMAG[tesdoc.attributes['nrmag'].to_i]}"
         pdf.move_down 10
         pdf.text desart,
@@ -36,7 +36,7 @@
           tsca = 0
           timp = 0
           @tb = Array.new
-          Tesdoc.mov_artanagenmag(art.id, idanagen, tesdoc.attributes["nrmag"], @anarif, @grpmag, @annoese).each do |r|
+          Tesdoc.mov_artanagenmag(art.id, idanagen, tesdoc.attributes["nrmag"], @anarif, @grpmag, @annoese, @dtini, @dtfin, @idcausmag).each do |r|
             dt_doc  = r.attributes["data_doc"]
             num     = r.attributes["numero"]
             cau     = r.attributes["causale"]
@@ -55,14 +55,14 @@
           @tb << ["TOTALI:", "", "", "", tcar, tsca, giac, timp, giac-timp]
           @tb.insert(0, col_head) # inserisco riga intestazione
         else
-          col_head = ["Data_doc", "Numero", "Causale", "Vendite", "Resi", "Prezzo", "Fatturato", "Accreditato", "Progr."]
+          col_head = ["Data_doc", "Numero", "Causale", "Vendite", "Resi", "Prezzo", "Fatturato", "Accredit.", "Progr."]
           prg  = 0
           tven = 0
           tres = 0
           tfatt = 0
           taccr = 0
           @tb = Array.new
-          Tesdoc.ven_artanagen(art.id, @idanagen, @anarif).each do |r|
+          Tesdoc.ven_artanagen(art.id, @idanagen, @anarif, @annoese, @dtini, @dtfin, @idcausmag).each do |r|
             dt_doc  = r.attributes["data_doc"]
             num     = r.attributes["Nr."]
             cau     = r.attributes["causale"]
@@ -96,7 +96,7 @@
           @tb << ["TOTALI:", "", "", tven, tres, "", tfatt, taccr, prg]
           @tb.insert(0, col_head) # inserisco riga intestazione
         end
-        pdf.table(@tb, :column_widths =>{0=>70, 4=>45, 5=>45, 6=>45, 7=>45, 8=>45}) do |tab|
+        pdf.table(@tb, :column_widths =>{0=>70, 4=>45, 5=>65, 6=>65, 7=>65, 8=>45}) do |tab|
           tab.row(0).font_style = :bold
           tab.row(tab.row_length-1).font_style = :bold
           tab.header = true

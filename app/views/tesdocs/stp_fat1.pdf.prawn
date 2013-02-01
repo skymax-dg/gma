@@ -77,10 +77,10 @@
       pdf.move_cursor_to(310)
     end
     
-    pdf.text "Pagamento:", :size => 12, :style => :bold
+    pdf.text "Pagamento:", :size => 12, :style => :bold unless @datispe.pagam.blank?
     pdf.text @datispe.pagam, :size => 10
 #    pdf.text "Pagamento: #{@datispe.pagam}", :size => 10
-    pdf.text "Banca:", :size => 12, :style => :bold
+    pdf.text "Banca:", :size => 12, :style => :bold unless @datispe.banca.blank?
     pdf.text @datispe.banca, :size => 10
 #    pdf.text "Banca: #{@datispe.banca}", :size => 10
   end

@@ -17,6 +17,16 @@
     <% end %>
   </div>
   <div class="row">
+    <div class="two columns">
+      <%= jdate_field("", :dtini, "Da data", :date=>true, :value => @dtini, :readonly => true, :yearrange => current_annoese) %>
+    </div>
+    <div class="two columns"></div>
+    <div class="two columns">
+      <%= jdate_field("", :dtfin, "A data", :date=>true, :value => @dtfin, :readonly => true, :yearrange => current_annoese) %>
+    </div>
+    <div class="six columns"></div>
+  </div>
+  <div class="row">
     <div class="one columns">
       <%= label_tag url, "Cliente:", :class=>"right" %>
     </div>
@@ -24,6 +34,18 @@
       <%= select_tag(:idanagen,
                      options_from_collection_for_select(@anagens, :id, :denomin),
                      {:include_blank => true}) unless @anagens.nil?%>
+    </div>
+    <div class="six columns"></div>
+  </div>
+  <div class="row">
+    <div class="one columns">
+      <%= label_tag url, "Causale:", :class=>"right" %>
+    </div>
+    <div class="five columns">
+      <%= select_tag(:causmagfilter,
+                     options_from_collection_for_select(@causmags, :id, 
+                                                        :descriz, {:selected => @causmagfilter.to_i}),
+                                                        {:include_blank => true}) %>
     </div>
     <div class="six columns"></div>
   </div>

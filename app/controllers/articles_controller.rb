@@ -15,7 +15,13 @@ class ArticlesController < ApplicationController
       flash.now[:alert] = "Nessun conto cliente presente"
       render :action => "show"
     end
-    @tp == "M" ? @title = "Stampa Movimenti di magazzino" : @title = "Stampa Vendite per titolo"
+    if @tp == "M"
+      @title = "Stampa Movimenti di magazzino"
+      @causmags = Causmag.find(:all, :order=>:descriz)
+    else
+      @title = "Stampa Vendite per titolo"
+      @causmags = Causmag.find(:all, :conditions=>{:contabile=>'S'}, :order=>:descriz)
+    end
     @all = false
   end
 
@@ -28,7 +34,13 @@ class ArticlesController < ApplicationController
       flash.now[:alert] = "Nessun conto cliente presente"
       render :action => "show"
     end
-    @tp == "M" ? @title = "Export (XLS) Movimenti di magazzino" : @title = "Export (XLS) Vendite per titolo"
+    if @tp == "M"
+      @title = "Export (XLS) Movimenti di magazzino"
+      @causmags = Causmag.find(:all, :order=>:descriz)
+    else
+      @title = "Export (XLS) Vendite per titolo"
+      @causmags = Causmag.find(:all, :conditions=>{:contabile=>'S'}, :order=>:descriz)
+    end
     @all = false
   end
 
@@ -40,7 +52,13 @@ class ArticlesController < ApplicationController
       flash.now[:alert] = "Nessun conto cliente presente"
       render :action => "index"
     end
-    @tp == "M" ? @title = "Stampa Movimenti di magazzino" : @title = "Stampa Vendite per titolo"
+    if @tp == "M"
+      @title = "Stampa Movimenti di magazzino"
+      @causmags = Causmag.find(:all, :order=>:descriz)
+    else
+      @title = "Stampa Vendite per titolo"
+      @causmags = Causmag.find(:all, :conditions=>{:contabile=>'S'}, :order=>:descriz)
+    end
     @all = true
   end
 
@@ -52,7 +70,13 @@ class ArticlesController < ApplicationController
       flash.now[:alert] = "Nessun conto cliente presente"
       render :action => "index"
     end
-    @tp == "M" ? @title = "Export (XLS) Movimenti di magazzino" : @title = "Export (XLS) Vendite per titolo"
+    if @tp == "M"
+      @title = "Export (XLS) Movimenti di magazzino"
+      @causmags = Causmag.find(:all, :order=>:descriz)
+    else
+      @title = "Export (XLS) Vendite per titolo"
+      @causmags = Causmag.find(:all, :conditions=>{:contabile=>'S'}, :order=>:descriz)
+    end
     @all = true
   end
 
@@ -63,9 +87,12 @@ class ArticlesController < ApplicationController
     @nrmag = params[:nrmag]||""
     @anarif = params[:anarif]||""
     @grpmag = params[:grpmag]||""
+    @dtini = params[:dtini].to_date if params[:dtini]
+    @dtfin = params[:dtfin].to_date if params[:dtfin]
+    @idcausmag = params[:causmagfilter]
     @annoese = current_annoese
-    @artmov = Tesdoc.art_mov_vend(@id, @idanagen, @nrmag,
-                                  @anarif, current_user.azienda, @tp, @annoese)
+    @artmov = Tesdoc.art_mov_vend(@id, @idanagen, @nrmag, @anarif, current_user.azienda,
+                                  @tp, @annoese, @dtini, @dtfin, @idcausmag)
     @tp == "M" ? @title = "Stampa Movimenti di magazzino" : @title = "Stampa Vendite per titolo"
     if @artmov.count == 0
       render 'mov_vend_notfound'
@@ -80,9 +107,12 @@ class ArticlesController < ApplicationController
     @nrmag = params[:nrmag]||""
     @anarif = params[:anarif]||""
     @grpmag = params[:grpmag]||""
+    @dtini = params[:dtini].to_date if params[:dtini]
+    @dtfin = params[:dtfin].to_date if params[:dtfin]
+    @idcausmag = params[:causmagfilter]
     @annoese = current_annoese
-    @artmov = Tesdoc.art_mov_vend("all", @idanagen, @nrmag,
-                                  @anarif, current_user.azienda, @tp, @annoese)
+    @artmov = Tesdoc.art_mov_vend("all", @idanagen, @nrmag, @anarif, current_user.azienda,
+                                         @tp, @annoese, @dtini, @dtfin, @idcausmag)
     @tp == "M" ? @title = "Stampa Movimenti di magazzino" : @title = "Stampa Vendite per titolo"
     if @artmov.count == 0
       render 'mov_vend_notfound'
@@ -98,14 +128,17 @@ class ArticlesController < ApplicationController
     @nrmag = params[:nrmag]||""
     @anarif = params[:anarif]||""
     @grpmag = params[:grpmag]||""
-
-    @artmov = Tesdoc.art_mov_vend(@id, @idanagen, @nrmag,
-                                  @anarif, current_user.azienda, @tp, current_annoese)
+    @dtini = params[:dtini].to_date if params[:dtini]
+    @dtfin = params[:dtfin].to_date if params[:dtfin]
+    @idcausmag = params[:causmagfilter]
+    @artmov = Tesdoc.art_mov_vend(@id, @idanagen, @nrmag, @anarif, current_user.azienda,
+                                  @tp, current_annoese, @dtini, @dtfin, @idcausmag)
     @tp == "M" ? @title = "Export (XLS) Movimenti di magazzino" : @title = "Export (XLS) Vendite per titolo"
     if @artmov.count == 0
       render 'mov_vend_notfound'
     else
-      data=Article.exp_movart_xls(@tp, @artmov, @idanagen, @nrmag, @anarif, current_user.azienda, @grpmag, current_annoese)
+      data=Article.exp_movart_xls(@tp, @artmov, @idanagen, @nrmag, @anarif, current_user.azienda,
+                                  @grpmag, current_annoese, @dtini, @dtfin, @idcausmag)
       send_data(data, {
         :disposition => 'attachment',
         :encoding => 'utf8',
@@ -121,13 +154,17 @@ class ArticlesController < ApplicationController
     @nrmag = params[:nrmag]||""
     @anarif = params[:anarif]||""
     @grpmag = params[:grpmag]||""
-    @artmov = Tesdoc.art_mov_vend("all", @idanagen, @nrmag,
-                                  @anarif, current_user.azienda, @tp, current_annoese)
+    @dtini = params[:dtini].to_date if params[:dtini]
+    @dtfin = params[:dtfin].to_date if params[:dtfin]
+    @idcausmag = params[:causmagfilter]||""
+    @artmov = Tesdoc.art_mov_vend("all", @idanagen, @nrmag, @anarif, current_user.azienda,
+                                         @tp, current_annoese, @dtini, @dtfin, @idcausmag)
     @tp == "M" ? @title = "Export (XLS) Movimenti di magazzino" : @title = "Export (XLS) Vendite per titolo"
     if @artmov.count == 0
       render 'mov_vend_notfound'
     else
-      data=Article.exp_movart_xls(@tp, @artmov, @idanagen, @nrmag, @anarif, current_user.azienda, @grpmag, current_annoese)
+      data=Article.exp_movart_xls(@tp, @artmov, @idanagen, @nrmag, @anarif, current_user.azienda,
+                                  @grpmag, current_annoese, @dtini, @dtfin, @idcausmag)
       send_data(data, {
         :disposition => 'attachment',
         :encoding => 'utf8',
