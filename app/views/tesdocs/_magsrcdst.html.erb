@@ -4,6 +4,11 @@
 <% nrmagdst = act_new == 1 ? causmag.nrmagdst : tesdoc.nrmagdst %>
 <% if magsrc[nrmagsrc].nil? then magsrcsel = 0 else magsrcsel = nrmagsrc end %>
 <% if magdst[nrmagdst].nil? then magdstsel = 0 else magdstsel = nrmagdst end %>
+
+<!-- tolgo la scelta del magazzino 0 -->
+<% magsrc.delete(0) if causmag&&causmag.nrmagsrc>0 %>
+<% magdst.delete(0) if causmag&&causmag.nrmagdst>0 %>
+
 <div class="five columns">
   <%= select(:tesdoc, :nrmagsrc, magsrc.invert.sort, :selected => magsrcsel) %>
 </div>

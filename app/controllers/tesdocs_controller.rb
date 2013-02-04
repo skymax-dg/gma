@@ -296,9 +296,9 @@ before_filter :authenticate
     respond_to do |format|
       format.html do
         if params[:causmag].empty? or params[:causmag].nil? or params[:conto].empty? or params[:conto].nil?
-          flash.now[:success] = "Per creare un nuovo DOC e' necessario prima impostare Causale e 
+          flash.now[:alert] = "Per creare un nuovo DOC e' necessario prima impostare Causale e 
                                  MastroContabile nei filtri e cliccare il bottone FILTRA"
-          init_filter
+          init_filter(current_user.azienda)
           render "index"
         else
           @act_new = 1
@@ -315,6 +315,16 @@ before_filter :authenticate
           @tesdoc.num_doc = Tesdoc.new_num_doc(@causmag.grp_prg, @tesdoc.annoese, @tesdoc.azienda)
           @spediz = @tesdoc.build_spediz # La Build valorizza automaticamente il campo spediz.tesdoc_id
           @costo = @tesdoc.build_costo # La Build valorizza automaticamente il campo costo.tesdoc_id
+          magsrc = @tesdoc.findmags("S")
+          magdst = @tesdoc.findmags("D")
+          #<!-- tolgo la scelta del magazzino 0 -->
+          magsrc.delete(0) if @causmag&&@causmag.nrmagsrc>0
+          magdst.delete(0) if @causmag&&@causmag.nrmagdst>0
+          if magsrc.length==0||magdst.length==0
+            flash.now[:alert] = "Impossibile proseguire !!! L'anagrafica selezionata non dispone di indirizzi di magazzino validi"
+            init_filter(current_user.azienda)
+            render "index"
+          end
         end
       end
       format.js
