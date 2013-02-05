@@ -47,17 +47,22 @@
         </li>
         <li class="has-dropdown">
           <a href="#" class="foundicon-edit">
-            PIANO DEI CONTI
+            CONTI
           </a>
-
-
           <ul class="dropdown">
             <li> <%= link_to "CLIENTI", contos_path(:tipoconto => 'C') %> </li>
             <li> <%= link_to "FORNITORI", contos_path(:tipoconto => 'F') %> </li>
             <li> <%= link_to "ALTRO", contos_path(:tipoconto => 'A') %> </li>
-<!--
-            <li> <%#= link_to "CLIENTI/FORNITORI", contos_path %> </li>
--->
+          </ul>
+        </li>
+        <li class="has-dropdown">
+          <a href="#" class="foundicon-edit">
+            SERVIZI
+          </a>
+          <ul class="dropdown">
+            <li> <%= link_to "CARICA ORDINE", "#" %> </li>
+            <li> <%= link_to "SPED. MASSIVA ABBONAMENTI", "#" %> </li>
+            <li> <%= link_to "SPED. SINGOLO ABBONAMENTO", "#" %> </li>
           </ul>
         </li>
       </ul>
@@ -65,7 +70,7 @@
         <li class="divider"></li>
         <li><%= link_to "ESCI", signout_path, :method => :delete, :class=> "foundicon-left-arrow" %></li>
         <li class="divider"></li>
-        <li><%= link_to "CAMBIA ANNO (#{current_annoese.to_s})", new_session_path(:login => current_user.login), :class=> "foundicon-refresh" %></li>
+        <li><%= link_to "CAMBIA (#{current_annoese.to_s})", new_session_path(:login => current_user.login), :class=> "foundicon-refresh" %></li>
       </ul>
     </section>
   </nav>
