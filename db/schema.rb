@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130124152838) do
+ActiveRecord::Schema.define(:version => 20130205134835) do
 
   create_table "agentes", :force => true do |t|
     t.integer  "anagen_id"
@@ -45,16 +45,16 @@ ActiveRecord::Schema.define(:version => 20130124152838) do
 
   create_table "anainds", :force => true do |t|
     t.integer  "anagen_id"
-    t.string   "indir",       :limit => 255
-    t.string   "desloc",      :limit => 255
+    t.string   "indir"
+    t.string   "desloc"
     t.string   "cap",         :limit => 5
-    t.integer  "nrmag",                                       :null => false
-    t.datetime "created_at",                                  :null => false
-    t.datetime "updated_at",                                  :null => false
+    t.integer  "nrmag",                                     :null => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
     t.integer  "localita_id"
-    t.string   "flsl",        :limit => 1,   :default => "S", :null => false
-    t.string   "flsp",        :limit => 1,   :default => "S", :null => false
-    t.string   "flmg",        :limit => 1,   :default => "N", :null => false
+    t.string   "flsl",        :limit => 1, :default => "S", :null => false
+    t.string   "flsp",        :limit => 1, :default => "S", :null => false
+    t.string   "flmg",        :limit => 1, :default => "N", :null => false
   end
 
   add_index "anainds", ["anagen_id"], :name => "index_anainds_on_anagen_id"
@@ -106,6 +106,29 @@ ActiveRecord::Schema.define(:version => 20130124152838) do
 
   add_index "causmags", ["azienda", "descriz"], :name => "idx_causmags_on_descriz", :unique => true
   add_index "causmags", ["grp_prg"], :name => "index_causmags_on_grp_prg"
+
+  create_table "confs", :force => true do |t|
+    t.string   "codice",      :limit => 20,                                 :null => false
+    t.string   "descriz",     :limit=>100,
+    t.string   "insana",      :limit => 1,                                  :null => false
+    t.string   "insind",      :limit => 1,                                  :null => false
+    t.string   "insart",      :limit => 1,                                  :null => false
+    t.string   "coderigdoc",  :limit => 1,                                  :null => false
+    t.string   "defcaustra",  :limit => 3
+    t.string   "defcorriere", :limit => 3
+    t.string   "defaspetto",  :limit => 3
+    t.integer  "defnrcolli"
+    t.string   "defum",       :limit => 2
+    t.decimal  "defvalore",                   :precision => 8, :scale => 2
+    t.string   "defporto",    :limit => 3
+    t.date     "defdtrit"
+    t.time     "deforarit"
+    t.string   "defnote",     :limit => 1000
+    t.string   "defpagam",    :limit => 500
+    t.string   "defbanca",    :limit => 200
+    t.datetime "created_at",                                                :null => false
+    t.datetime "updated_at",                                                :null => false
+  end
 
   create_table "contos", :force => true do |t|
     t.integer  "azienda",                                                                   :null => false
@@ -171,19 +194,6 @@ ActiveRecord::Schema.define(:version => 20130124152838) do
   end
 
   add_index "paeses", ["descriz"], :name => "idx_paeses_on_descriz", :unique => true
-
-  create_table "prezzoarticclis", :force => true do |t|
-    t.integer  "azienda",                                  :null => false
-    t.integer  "anag_id"
-    t.integer  "artic_id"
-    t.decimal  "prezzo",     :precision => 8, :scale => 2, :null => false
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
-  end
-
-  add_index "prezzoarticclis", ["azienda", "anag_id", "artic_id"], :name => "index_prezzoarticclis_on_azienda_and_anag_id_and_artic_id", :unique => true
-  add_index "prezzoarticclis", ["azienda", "anag_id"], :name => "index_prezzoarticclis_on_azienda_and_anag_id"
-  add_index "prezzoarticclis", ["azienda", "artic_id"], :name => "index_prezzoarticclis_on_azienda_and_artic_id"
 
   create_table "rigdocs", :force => true do |t|
     t.integer  "tesdoc_id",                                                                 :null => false

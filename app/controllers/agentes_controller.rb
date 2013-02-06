@@ -1,4 +1,6 @@
 class AgentesController < ApplicationController
+  before_filter :authenticate
+
   def index
     @title = "Elenco Agenti"
     flash_cnt(Agente.count) if params[:page].nil?

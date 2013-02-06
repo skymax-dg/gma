@@ -12,6 +12,8 @@ Gma::Application.routes.draw do
   
   resources :users
 
+  resources :confs
+
   resources :localitas do
     collection do
       get :filter
@@ -61,6 +63,7 @@ Gma::Application.routes.draw do
       get :stp_mov_vend_all
       get :filter_mov_vend_all_xls
       get :mov_vend_all_xls
+      get :set_distrib
     end
   end
 

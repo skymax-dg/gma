@@ -1,0 +1,151 @@
+<%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
+<ul class="button-group">
+  <li>
+    <%= link_to 'INDIETRO', resque_location(confs_path), :class => "button radius small back foundicon-left-arrow" %>
+  </li>
+  <li>
+    <%= link_to 'MODIFICA', edit_conf_path(@conf), :class => "button radius small modify foundicon-edit" %>
+  </li>
+  <li>
+    <%= link_to 'ELIMINA', @conf, :confirm => 'Confermi eliminazione?',
+                                  :method => :delete, :class => "button radius small alert foundicon-trash" %>
+  </li>
+</ul>
+
+<div class="row">
+  <div class="three columns">
+    <%= label @conf, "Codice:", :class => "right" %>
+  </div>
+  <div class="nine columns left">
+    <%= @conf.codice %>
+  </div>
+</div>
+<div class="row">
+  <div class="three columns">
+    <%= label @conf, "Descrizione:", :class => "right" %>
+  </div>
+  <div class="nine columns left">
+    <%= @conf.descriz %>
+  </div>
+</div>
+<div class="row">
+  <div class="three columns">
+    <%= label @conf, "Inserisci anagrafica:", :class => "right" %>
+  </div>
+  <div class="nine columns left">
+    <%= Conf::INSANA[@conf.insana] %>
+  </div>
+</div>
+<div class="row">
+  <div class="three columns">
+    <%= label @conf, "Inserisci indirizzo:", :class => "right" %>
+  </div>
+  <div class="nine columns left">
+    <%= Conf::INSIND[@conf.insind] %>
+  </div>
+</div>
+<div class="row">
+  <div class="three columns">
+    <%= label @conf, "Inserisci articoli:", :class => "right" %>
+  </div>
+  <div class="nine columns left">
+    <%= Conf::INSART[@conf.insart] %>
+  </div>
+</div>
+<div class="row">
+  <div class="three columns">
+    <%= label @conf, "Righe non codificate:", :class => "right" %>
+  </div>
+  <div class="nine columns left">
+    <%= Conf::CODERIGDOC[@conf.coderigdoc] %>
+  </div>
+</div>
+<div class="row">
+  <div class="three columns">
+    <%= label @conf, "Causale:", :class => "right" %>
+  </div>
+  <div class="nine columns left">
+    <%= Conf::CAUSTRA[@conf.defcaustra] %>
+  </div>
+</div>
+<div class="row">
+  <div class="three columns">
+    <%= label @conf, "Corriere:", :class => "right" %>
+  </div>
+  <div class="nine columns left">
+    <%= Conf::CORRIERE[@conf.defcorriere] %>
+  </div>
+</div>
+<div class="row">
+  <div class="three columns">
+    <%= label @conf, "Aspetto:", :class => "right" %>
+  </div>
+  <div class="nine columns left">
+    <%= Conf::ASPETTO[@conf.defaspetto] %>
+  </div>
+</div>
+<div class="row">
+  <div class="three columns">
+    <%= label @conf, "Porto:", :class => "right" %>
+  </div>
+  <div class="nine columns left">
+    <%= Conf::PORTO[@conf.defporto] %>
+  </div>
+</div>
+<div class="row">
+  <div class="three columns">
+    <%= label @conf, "Unità misura:", :class => "right" %>
+  </div>
+  <div class="nine columns left">
+    <%= Conf::UM[@conf.defum] %>
+  </div>
+</div>
+<div class="row">
+  <div class="three columns">
+    <%= label @conf, "Valore:", :class => "right" %>
+  </div>
+  <div class="nine columns left">
+    <%= @conf.defvalore %>
+  </div>
+</div>
+<div class="row">
+  <div class="three columns">
+    <%= label @conf, "Nr colli:", :class => "right" %>
+  </div>
+  <div class="nine columns left">
+    <%= @conf.defnrcolli %>
+  </div>
+</div>
+<div class="row">
+  <div class="three columns">
+    <%= label @spediz, "Data/ora ritiro:", :class => "right" %>
+  </div>
+  <div class="nine columns">
+    <%= "#{@conf.defdtrit.strftime('%d-%m-%Y')} #{@conf.deforarit.strftime("%H:%M")}" if @conf.defdtrit %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="three columns">
+    <%= label @conf, "Note:", :class => "right" %>
+  </div>
+  <div class="nine columns left">
+    <%= @conf.defnote %>
+  </div>
+</div>
+<div class="row">
+  <div class="three columns">
+    <%= label @conf, "Pagamento:", :class => "right" %>
+  </div>
+  <div class="nine columns left">
+    <%= @conf.defpagam %>
+  </div>
+</div>
+<div class="row">
+  <div class="three columns">
+    <%= label @conf, "Banca d'appoggio:", :class => "right" %>
+  </div>
+  <div class="nine columns left">
+    <%= @conf.defbanca %>
+  </div>
+</div>

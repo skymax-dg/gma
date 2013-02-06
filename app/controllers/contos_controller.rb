@@ -1,18 +1,19 @@
 class ContosController < ApplicationController
-before_filter :authenticate
+  before_filter :authenticate
+
   def filter
     @tpfilter  = params[:tpfilter]
     @desfilter = params[:desfilter].strip
     @contos, nrrecord = Conto.filter(get_tpc, @tpfilter, @desfilter, current_user.azienda, current_annoese, params[:page])
     flash_cnt(nrrecord) if params[:page].nil?
-store_location
+    store_location
     render "index"
   end
 
   def index
     set_tpc(params[:tipoconto]) if params[:tipoconto]
     @title = "Elenco Conti (#{Conto::TIPOCONTO[get_tpc].upcase})"
-store_location
+    store_location
     #@contos = Conto.azdanno(current_user.azienda, current_annoese).paginate(:page => params[:page],
     #                                                                        :per_page => 10,
     #                                                                        :order => [:codice])
@@ -91,6 +92,6 @@ store_location
     rescue
       flash[:alert] = $!.message
     end
-redirect_back_or @conto
+    redirect_back_or @conto
   end
 end

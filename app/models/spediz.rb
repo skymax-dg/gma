@@ -5,6 +5,8 @@ class Spediz < ActiveRecord::Base
                   :nrcolli, :dtrit,    :orarit,  :um,       :valore,    :note,   :tesdoc_id, :pagam, :banca
 
   validates :note,  :length => { :maximum => 1000}
+  validates :pagam, :length => { :maximum => 500}
+  validates :banca, :length => { :maximum => 200}
   validates :presso, :dest1, :dest2,  :length => { :maximum => 150}
 
   CAUSTRA  = $ParAzienda['SPEDIZ']['CAUSTRA']

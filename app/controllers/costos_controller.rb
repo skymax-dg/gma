@@ -1,5 +1,4 @@
 class CostosController < ApplicationController
-
   before_filter :authenticate
 
   def show
@@ -33,7 +32,7 @@ class CostosController < ApplicationController
 
   def update
 # la riga seguente è da rivedere ed implementare un custom validate
-params[:costo][:data]=params[:costo][:data].to_my_date if params[:costo][:data]&&params[:costo][:data].is_date?
+    params[:costo][:data]=params[:costo][:data].to_my_date if params[:costo][:data]&&params[:costo][:data].is_date?
     @costo = Costo.find(params[:id])
     if @costo.update_attributes(params[:costo])
       flash[:success] = "Dati costo spedizione aggiornati."

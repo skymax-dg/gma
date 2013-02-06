@@ -1,5 +1,4 @@
 class CausmagsController < ApplicationController
-
   before_filter :authenticate
   before_filter :force_fieldcase, :only => [:create, :update]
 
@@ -9,7 +8,7 @@ class CausmagsController < ApplicationController
     @causmags = Causmag.azienda(current_user.azienda).paginate(:page     => params[:page], 
                                                                :per_page => 10, 
                                                                :order => [:tipo_doc, :grp_prg, :movimpmag, :tipo, :descriz])
-store_location
+    store_location
   end
 
   def show

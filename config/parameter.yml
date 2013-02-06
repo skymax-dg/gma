@@ -111,3 +111,16 @@ ARTICLE:
     CD: 'CD'
     PE: 'Periodici'
     SV: 'Servizi'
+CONF:
+  INSANA:
+    S: 'Si'
+    N: 'No'
+  INSIND:
+    S: 'Si'
+    N: 'No'
+  INSART:
+    S: 'Si'
+    N: 'No'
+  CODERIGDOC:
+    S: 'Si'
+    N: 'No'

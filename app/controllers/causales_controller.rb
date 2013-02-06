@@ -1,12 +1,13 @@
 class CausalesController < ApplicationController
-before_filter :authenticate
+  before_filter :authenticate
+
   def index
     @title = "Elenco Causali contabili"
     flash_cnt(Causale.count) if params[:page].nil?
     @causales = Causale.azienda(current_user.azienda).paginate(:page => params[:page], 
                                                                :per_page => 10,
                                                                :order => [:descriz])
-store_location
+    store_location
   end
 
   def show

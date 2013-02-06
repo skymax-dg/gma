@@ -6,12 +6,19 @@ class ArticlesController < ApplicationController
   before_filter :authenticate
   before_filter :force_fieldcase, :only => [:create, :update]
 
+  def set_distrib
+    @fl_dis = params[:anarif]=='S'
+    @contos = Conto.find_distributori(current_user.azienda, current_annoese)
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def filter_mov_vend
     @tp = params[:tp]
     @article = Article.find(params[:id]) unless params[:id].nil?
-    @anagens = Anagen.findbytpconto(current_user.azienda, 'C')
-    @contos = Conto.findbytipoconto(current_user.azienda, current_annoese, "C")
-    if @anagens.empty?
+    @contos = Conto.find_distributori(current_user.azienda, current_annoese)
+    if @contos.empty?
       flash.now[:alert] = "Nessun conto cliente presente"
       render :action => "show"
     end
@@ -23,14 +30,14 @@ class ArticlesController < ApplicationController
       @causmags = Causmag.find(:all, :conditions=>{:contabile=>'S'}, :order=>:descriz)
     end
     @all = false
+    @fl_dis = true
   end
 
   def filter_mov_vend_xls
     @tp = params[:tp]
     @article = Article.find(params[:id]) unless params[:id].nil?
-    @anagens = Anagen.findbytpconto(current_user.azienda, 'C')
-    @contos = Conto.findbytipoconto(current_user.azienda, current_annoese, "C")
-    if @anagens.empty?
+    @contos = Conto.find_distributori(current_user.azienda, current_annoese)
+    if @contos.empty?
       flash.now[:alert] = "Nessun conto cliente presente"
       render :action => "show"
     end
@@ -42,13 +49,13 @@ class ArticlesController < ApplicationController
       @causmags = Causmag.find(:all, :conditions=>{:contabile=>'S'}, :order=>:descriz)
     end
     @all = false
+    @fl_dis = true
   end
 
   def filter_mov_vend_all
     @tp = params[:tp]
-    @anagens = Anagen.findbytpconto(current_user.azienda, 'C')
-    @contos = Conto.findbytipoconto(current_user.azienda, current_annoese, "C")
-    if @anagens.empty?
+    @contos = Conto.find_distributori(current_user.azienda, current_annoese)
+    if @contos.empty?
       flash.now[:alert] = "Nessun conto cliente presente"
       render :action => "index"
     end
@@ -60,13 +67,13 @@ class ArticlesController < ApplicationController
       @causmags = Causmag.find(:all, :conditions=>{:contabile=>'S'}, :order=>:descriz)
     end
     @all = true
+    @fl_dis = true
   end
 
   def filter_mov_vend_all_xls
     @tp = params[:tp]
-    @anagens = Anagen.findbytpconto(current_user.azienda, 'C')
-    @contos = Conto.findbytipoconto(current_user.azienda, current_annoese, "C")
-    if @anagens.empty?
+    @contos = Conto.find_distributori(current_user.azienda, current_annoese)
+    if @contos.empty?
       flash.now[:alert] = "Nessun conto cliente presente"
       render :action => "index"
     end
@@ -78,12 +85,13 @@ class ArticlesController < ApplicationController
       @causmags = Causmag.find(:all, :conditions=>{:contabile=>'S'}, :order=>:descriz)
     end
     @all = true
+    @fl_dis = true
   end
 
   def stp_mov_vend
     @tp = params[:tp]
     @id = params[:id]||""
-    @idanagen = params[:idanagen]||""
+    @idanagen = params[:idconto].to_i>0 ? Conto.find(params[:idconto]).anagen.id : ""
     @nrmag = params[:nrmag]||""
     @anarif = params[:anarif]||""
     @grpmag = params[:grpmag]||""
@@ -103,7 +111,7 @@ class ArticlesController < ApplicationController
 
   def stp_mov_vend_all
     @tp = params[:tp]
-    @idanagen = params[:idanagen]||""
+    @idanagen = params[:idconto].to_i>0 ? Conto.find(params[:idconto]).anagen.id : ""
     @nrmag = params[:nrmag]||""
     @anarif = params[:anarif]||""
     @grpmag = params[:grpmag]||""
@@ -124,7 +132,7 @@ class ArticlesController < ApplicationController
   def mov_vend_xls
     @tp = params[:tp]
     @id = params[:id]||""
-    @idanagen = params[:idanagen]||""
+    @idanagen = params[:idconto].to_i>0 ? Conto.find(params[:idconto]).anagen.id : ""
     @nrmag = params[:nrmag]||""
     @anarif = params[:anarif]||""
     @grpmag = params[:grpmag]||""
@@ -150,7 +158,7 @@ class ArticlesController < ApplicationController
 
   def mov_vend_all_xls
     @tp = params[:tp]
-    @idanagen = params[:idanagen]||""
+    @idanagen = params[:idconto].to_i>0 ? Conto.find(params[:idconto]).anagen.id : ""
     @nrmag = params[:nrmag]||""
     @anarif = params[:anarif]||""
     @grpmag = params[:grpmag]||""
@@ -180,13 +188,13 @@ class ArticlesController < ApplicationController
     @desfilter = params[:desfilter].strip
     @articles, nrrecord = Article.filter(@tpfilter, @desfilter, params[:page])
     flash_cnt(nrrecord) if params[:page].nil?
-store_location
+    store_location
     render "index"
   end
 
   def index
     @title = "Elenco Articoli"
-store_location
+    store_location
   end
 
   def show
@@ -213,7 +221,6 @@ store_location
       redirect_to @article
     else
       @title = "Nuovo Articolo"
-#      flash.now[:alert] = "Il salvataggio dell'articolo non e' andato a buon fine"
       render :action => "new"
     end
   end
@@ -225,7 +232,6 @@ store_location
       redirect_to @article
     else
       @title = "Modifica Articolo"
-#      flash.now[:alert] = "Il salvataggio dell'articolo non e' andato a buon fine"
       render :action => "edit"
     end
   end
@@ -238,7 +244,7 @@ store_location
     rescue
       flash[:alert] = $!.message
     end
-redirect_back_or @article
+    redirect_back_or @article
   end
 
   private

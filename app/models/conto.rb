@@ -86,6 +86,13 @@ class Conto < ActiveRecord::Base
     where(["azienda = :az and annoese = :ae and tipoconto = :tpc", {:az => azienda, :ae => annoese, :tpc => tipoconto}])
   end
 
+  def self.find_distributori(azienda, annoese)
+    includes(:anagen=>[:anainds]).where(["contos.azienda   = :az and
+                                           contos.annoese   = :ae and
+                                           contos.tipoconto = 'C' and
+                                           anainds.flmg ='S'", {:az => azienda, :ae => annoese}])
+  end
+
   def self.find4docfilter(cfa, tpf, des, azienda, annoese)
     # Filtra i conti referenziati dalle anagrafiche (anagen) in like sul dato CodFis/ParIva/Denomin
     hsh = {"RS" => "denomin", "CF" => "codfis", "PI" => "pariva"}

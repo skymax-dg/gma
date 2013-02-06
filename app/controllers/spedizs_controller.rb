@@ -1,5 +1,4 @@
 class SpedizsController < ApplicationController
-
   before_filter :authenticate
   before_filter :force_fieldcase, :only => [:create, :update]
 
@@ -26,32 +25,23 @@ class SpedizsController < ApplicationController
   end
 
   def create
-    params[:spediz][:dtrit]=params[:spediz][:dtrit].to_my_date if params[:spediz][:dtrit]&&params[:spediz][:dtrit].is_date?
-    params[:spediz][:orarit]="00:00:00" if params[:spediz][:orarit].nil? || params[:spediz][:orarit]=""
     @spediz = Tesdoc.find(params[:spediz][:tesdoc_id]).build_spediz(params[:spediz])
     if @spediz.save
       flash[:success] = "Dati spedizione inseriti con successo."
       redirect_to :controller=>:tesdocs, :action=>:show, :id=>@spediz.tesdoc.id, :tab=>:sped
-      #redirect_to @spediz.tesdoc
     else
       @title = "Inserisci Dati spedizione/pagamento"
-#      flash.now[:alert] = "Il salvataggio dei dati spedizione non e' andato a buon fine"
       render 'new'
     end
   end
 
   def update
-# la riga seguente è da rivedere ed implementare un custom validate
-params[:spediz][:dtrit]=params[:spediz][:dtrit].to_my_date if params[:spediz][:dtrit]&&params[:spediz][:dtrit].is_date?
-    params[:spediz][:orarit]="00:00:00" if params[:spediz][:orarit].nil? || params[:spediz][:orarit]==""
     @spediz = Spediz.find(params[:id])
     if @spediz.update_attributes(params[:spediz])
       flash[:success] = "Dati spedizione aggiornati."
       redirect_to :controller=>:tesdocs, :action=>:show, :id=>@spediz.tesdoc.id, :tab=>:sped
-      #redirect_to @spediz.tesdoc
     else
       @title = "Modifica Dati spedizione/pagamento"
-#      flash.now[:alert] = "Il salvataggio dei dati spedizione non e' andato a buon fine"
       render :action => "edit"
     end
   end

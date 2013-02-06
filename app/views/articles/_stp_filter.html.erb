@@ -9,13 +9,14 @@
       </div>
     <% else %>
       <div class="one columns">
-        <%= label_tag url, "Articolo:", :class=>"right" %>
+        <%= label_tag url, "Articolo:" %>
       </div>
       <div class="eleven columns">
         <%= "#{@article.desest1}" %>
       </div>
     <% end %>
   </div>
+  <hr>
   <div class="row">
     <div class="two columns">
       <%= jdate_field("", :dtini, "Da data", :date=>true, :value => @dtini, :readonly => true, :yearrange => current_annoese) %>
@@ -28,20 +29,11 @@
   </div>
   <div class="row">
     <div class="one columns">
-      <%= label_tag url, "Cliente:", :class=>"right" %>
+      <%= label_tag url, "Causale" %>
     </div>
-    <div class="five columns">
-      <%= select_tag(:idanagen,
-                     options_from_collection_for_select(@anagens, :id, :denomin),
-                     {:include_blank => true}) unless @anagens.nil?%>
-    </div>
-    <div class="six columns"></div>
   </div>
   <div class="row">
-    <div class="one columns">
-      <%= label_tag url, "Causale:", :class=>"right" %>
-    </div>
-    <div class="five columns">
+    <div class="six columns">
       <%= select_tag(:causmagfilter,
                      options_from_collection_for_select(@causmags, :id, 
                                                         :descriz, {:selected => @causmagfilter.to_i}),
@@ -50,30 +42,49 @@
     <div class="six columns"></div>
   </div>
   <div class="row">
-    <div class="one columns">
-      <%= check_box_tag :anarif, 'S', false, :class=>"right" %>
+    <div class="two columns">
+      <%= label_tag url, "Elabora le" %>
     </div>
-    <div class="eleven columns">
-        <%= @tp == "M" ? "Solo le movimentazioni di:" : "Solo le vendite di:" %>
-        <%= Anagen.find(current_user.azienda).denomin %>
-    </div>
+    <div class="ten columns"></div>
   </div>
   <div class="row">
-    <div class="one columns">
-      <%= check_box_tag :grpmag, 'S', checked = @tp=="V", {:disabled => @tp=="V", :class=>"right"} %>
-    </div>
-    <div class="eleven columns">
-      <%= label_tag url, "Magazzini unificati:" %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="one columns">
-      <%= label_tag url, "Magazz:", :class=>"right" %>
-    </div>
-    <div class="five columns">
-      <%= select_tag(:nrmag, options_for_select(mag.invert.sort), {:include_blank => true, :selected => "", :disabled => @tp=="V"}) %>
+    <div class="six columns">
+      <% @tp == "M" ? tp = 'MOVIMENTAZIONI' : 'VENDITE' %>
+      <%= select_tag(:anarif,
+                     options_for_select([["#{tp} INTERNE","S"], ["#{tp} DISTRIBUTORE","N"]]),
+                     {:data => {:remote => true, :url => url_for(:controller => :articles,
+                                                                 :action => :set_distrib)}}) %>
     </div>
     <div class="six columns"></div>
+  </div>
+  <div class="row">
+    <div class="two columns">
+      <%= label_tag url, "Distributore" %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="six columns">
+      <div id="sel_distrib">
+        <%= render :partial => 'sel_distrib' %>
+      </div>
+    </div>
+    <div class="seven columns"></div>
+  </div>
+  <div class="row">
+    <div class="two columns">
+      <%= label_tag url, "Magazzini" %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="two columns">
+      <%= select_tag(:grpmag, options_for_select([["DISTINTI", "N"], ["RAGGRUPPATI", "S"]]), {:disabled => @tp=="V", :class=>"right"}) %>
+    </div>
+    <div class="two columns">
+      <%= select_tag(:nrmag, options_for_select(mag.invert.sort), {:include_blank => true, :selected => "", :disabled => @tp=="V"}) %>
+    </div>
+    <div class="eight columns"></div>
+  </div>
+  <div class="row">
     <div class="twelve columns">
       <%= submit_tag 'STAMPA', :class => "button radius small print foundicon-graph" %>
 

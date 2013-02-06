@@ -79,11 +79,15 @@ class Anagen < ActiveRecord::Base
     Anagen.all(:conditions => "id = #{id||0} OR NOT EXISTS (SELECT 1 FROM agentes WHERE anagen_id = anagens.id)", :order => :denomin)
   end
 
+  def self.with_mag
+    Anagen.all(:joins=>:anainds, :conditions => "anainds.flmg = 'S'", :order => :denomin)
+  end
+
   def self.find_by_cf_pi(cf, pi)
-    a=nil
-    a=Anagen.find_by_codfis(cf) if (not cf.blank?)
-    a=Anagen.find_by_pariva(pi) if (not pi.blank?) && a.nil
-    a=Anagen.find_by_codfis(pi) if (not pi.blank?) && a.nil
+    r=nil
+    r=Anagen.find_by_codfis(cf) if (not cf.blank?)
+    r=Anagen.find_by_pariva(pi) if (not pi.blank?) && r.nil
+    r=Anagen.find_by_codfis(pi) if (not pi.blank?) && r.nil
   end
 
   def self.newcod()
@@ -92,6 +96,10 @@ class Anagen < ActiveRecord::Base
 
   def pi_or_cf
     self.pariva && (not self.pariva.blank?) ? self.pariva : self.codfis||""
+  end
+
+  def contocli(az, ae)
+    contos.where(["tipoconto = 'C' and azienda = :az and annoese = :ae", {:az=>az, :ae=>ae}])
   end
 
   def self.findbytpconto(azienda, tipoconto)

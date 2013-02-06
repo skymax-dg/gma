@@ -108,9 +108,10 @@ module ApplicationHelper
                (function()
                  {jQuery(\"#%s_%s\").timepicker
                     (jQuery.timepicker.regional[\"it\" ]);
+                  jQuery(\"#%s_%s\").attr(\"readonly\", \"#{readonly}\");
                  }
                );
-              </script>"%[key, name]
+              </script>"%[key, name, key, name]
     end
     raw res
   end

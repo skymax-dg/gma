@@ -1,0 +1,39 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  codice: MyString
+  insana: MyString
+  insind: MyString
+  insart: MyString
+  coderigdoc: MyString
+  defcaustra: MyString
+  defcorriere: MyString
+  defaspetto: MyString
+  defnrcolli: 1
+  defum: MyString
+  defvalore: 9.99
+  defporto: MyString
+  defdtrit: 2013-02-05
+  deforarit: 2013-02-05 14:48:35
+  defnote: MyString
+  defpagam: MyString
+  defbanca: MyString
+
+two:
+  codice: MyString
+  insana: MyString
+  insind: MyString
+  insart: MyString
+  coderigdoc: MyString
+  defcaustra: MyString
+  defcorriere: MyString
+  defaspetto: MyString
+  defnrcolli: 1
+  defum: MyString
+  defvalore: 9.99
+  defporto: MyString
+  defdtrit: 2013-02-05
+  deforarit: 2013-02-05 14:48:35
+  defnote: MyString
+  defpagam: MyString
+  defbanca: MyString

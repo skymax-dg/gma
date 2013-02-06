@@ -1,15 +1,16 @@
 class RigdocsController < ApplicationController
-before_filter :authenticate
+  before_filter :authenticate
+
   def down
     @rigdoc = Rigdoc.find(params[:id])
     @rigdoc.move :down
-redirect_back_or tesdoc_url(@rigdoc.tesdoc.id, :page=>params[:page])
+    redirect_back_or tesdoc_url(@rigdoc.tesdoc.id, :page=>params[:page])
   end
 
   def up
     @rigdoc = Rigdoc.find(params[:id])
     @rigdoc.move :up
-redirect_back_or tesdoc_url(@rigdoc.tesdoc.id, :page=>params[:page])
+    redirect_back_or tesdoc_url(@rigdoc.tesdoc.id, :page=>params[:page])
   end
 
   def art_cod_exit
@@ -18,14 +19,6 @@ redirect_back_or tesdoc_url(@rigdoc.tesdoc.id, :page=>params[:page])
       format.js
     end
   end
-
-#  def art_sconto_exit
-#    @prezzo=params[:prezzo]
-#    @sconto=params[:rigdoc][:sconto]
-#    respond_to do |format|
-#      format.js
-#    end
-#  end
 
   def art_des_exit
     @article = Article.find(params[:rigdoc][:article_id]) unless params[:rigdoc][:article_id].empty?

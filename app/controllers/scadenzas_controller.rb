@@ -1,5 +1,4 @@
 class ScadenzasController < ApplicationController
-
   before_filter :authenticate
 
   def new
@@ -20,11 +19,6 @@ class ScadenzasController < ApplicationController
       render 'new'
     end
   end
-
-#  def show
-#    @title = "Mostra scadenza"
-#    @scadenza = Scadenza.find(params[:id])
-#  end
 
   def edit
     @title = "Modifica Scadenza"
@@ -80,6 +74,4 @@ class ScadenzasController < ApplicationController
                                                 {:azd => current_user.azienda, :ae=>current_annoese}])
     store_location
   end
-
-
 end

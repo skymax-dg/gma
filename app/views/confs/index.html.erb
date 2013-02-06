@@ -1,0 +1,21 @@
+<%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
+<ul class="button-group">
+  <li>
+    <%= link_to 'NUOVA', new_conf_path, :class => "button radius small new foundicon-add-doc" %>
+  </li>
+</ul>
+<% unless @confs.nil?||@confs.empty? %>
+  <table>
+    <thead>
+      <tr>
+        <th width="25%">Codice</th>
+        <th width="50%">Descrizione</th>
+        <th width="25%"></th>
+      </tr>
+    </thead>
+    <tbody>
+        <%= render :partial => 'line', :collection => @confs %>
+    </tbody>
+  </table>
+  <%= will_paginate @confs %>
+<% end %>

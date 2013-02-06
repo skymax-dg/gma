@@ -4,7 +4,7 @@ require "prawn/measurement_extensions"
 require 'will_paginate/array'
 
 class TesdocsController < ApplicationController
-before_filter :authenticate
+  before_filter :authenticate
 
   def upload_xls
     @title = "SCELTA FILE XLS PER CARICAMENTO RIGHE DOCUMENTO"

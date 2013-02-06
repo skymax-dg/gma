@@ -1,5 +1,4 @@
 class PaesesController < ApplicationController
-
   before_filter :authenticate
   before_filter :force_fieldcase, :only => [:create, :update]
 
@@ -7,7 +6,7 @@ class PaesesController < ApplicationController
     @title = "Elenco Stati/Nazioni"
     flash_cnt(Paese.count) if params[:page].nil?
     @paeses = Paese.paginate(:page => params[:page], :per_page => 10, :order => [:descriz])
-store_location
+    store_location
   end
 
   def show
@@ -59,7 +58,7 @@ store_location
     rescue
       flash[:alert] = $!.message
     end
-redirect_back_or @paese
+    redirect_back_or @paese
   end
 
   private

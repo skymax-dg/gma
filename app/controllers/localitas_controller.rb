@@ -1,5 +1,4 @@
 class LocalitasController < ApplicationController
-
   before_filter :authenticate
   before_filter :force_fieldcase, :only => [:create, :update]
 
@@ -8,12 +7,12 @@ class LocalitasController < ApplicationController
     @desfilter = params[:desfilter].strip
     @localitas, nrrecord = Localita.filter(@tpfilter, @desfilter, params[:page])
     flash_cnt(nrrecord) if params[:page].nil?
-store_location
+    store_location
     render "index"
   end
 
   def index
-store_location
+    store_location
     @title = "Elenco Citta'"
   end
 
@@ -64,7 +63,7 @@ store_location
     rescue
       flash[:alert] = $!.message
     end
-redirect_back_or @localita
+    redirect_back_or @localita
   end
 
   private

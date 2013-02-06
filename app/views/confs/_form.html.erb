@@ -1,0 +1,113 @@
+<%= form_for(@conf) do |f| %>
+  <div class="row">
+    <div class="twelve columns">
+      <%= f.label "Codice" %>
+      <%= f.text_field :codice %>
+    </div>
+    <div class="twelve columns">
+      <%= f.label "Descrizione" %>
+      <%= f.text_field :descriz %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="two columns">
+      <%= f.label "Inserisci anagrafica" %>
+      <%= select(:conf, :insana, Conf::INSANA.invert.sort) %>
+    </div>
+    <div class="one columns"></div>
+    <div class="two columns">
+      <%= f.label "Inserisci indirizzo" %>
+      <%= select(:conf, :insind, Conf::INSIND.invert.sort) %>
+    </div>
+    <div class="one columns"></div>
+    <div class="two columns">
+      <%= f.label "Inserisci articoli" %>
+      <%= select(:conf, :insart, Conf::INSART.invert.sort) %>
+    </div>
+    <div class="one columns"></div>
+    <div class="two columns">
+      <%= f.label "Righe non codificate" %>
+      <%= select(:conf, :coderigdoc, Conf::CODERIGDOC.invert.sort) %>
+    </div>
+    <div class="one columns"></div>
+  </div>
+
+  <div class="row">
+    <div class="twelve columns">
+      <hr>
+      <H4>VALORI DI DEFAULT</H4>
+      <hr>
+    </div>
+    <br>
+    <br>
+  </div>
+
+  <div class="row">
+    <div class="two columns">
+      <%= f.label "Causale di trasporto" %>
+      <%= select(:conf, :defcaustra, Conf::CAUSTRA.invert.sort, {:include_blank => true}) %>
+    </div>
+    <div class="one columns"></div>
+    <div class="two columns">
+      <%= f.label "Corriere" %>
+      <%= select(:conf, :defcorriere, Conf::CORRIERE.invert.sort, {:include_blank => true}) %>
+    </div>
+    <div class="one columns"></div>
+    <div class="two columns">
+      <%= f.label "Aspetto dei beni" %>
+      <%= select(:conf, :defaspetto, Conf::ASPETTO.invert.sort, {:include_blank => true}) %>
+    </div>
+    <div class="one columns"></div>
+    <div class="three columns">
+      <%= f.label "Porto" %>
+      <%= select(:conf, :defporto, Conf::PORTO.invert.sort, {:include_blank => true}) %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="two columns">
+      <%= f.label "Unita' di misura" %>
+      <%= select(:conf, :defum, Conf::UM.invert.sort, {:include_blank => true}) %>
+    </div>
+    <div class="one columns"></div>
+    <div class="two columns">
+      <%= f.label "Valore" %>
+      <%= f.number_field :defvalore %>
+    </div>
+    <div class="one columns"></div>
+    <div class="one columns">
+      <%= f.label "Nr colli" %>
+      <%= f.number_field :defnrcolli %>
+    </div>
+    <div class="two columns"></div>
+    <div class="two columns">
+      <%= jdate_field(:conf, :defdtrit, "Data ritiro", :date=>true, :value => @conf.defdtrit, :readonly => true) %>
+    </div>
+    <div class="one columns">
+      <%= jdate_field(:conf, :deforarit, "Ora ritiro", :time=>true, :value => "00:00"&&@conf.deforarit&&@conf.deforarit.strftime("%H:%M"))%>
+    </div>
+  </div>
+  <div class="row">
+    <div class="five columns">
+      <%= f.label "Pagamento:" %>
+      <%= f.text_area(:defpagam, :rows => 3) %>
+    </div>
+    <div class="one columns"></div>          
+    <div class="six columns">
+      <%= f.label "Banca d'appoggio:" %>
+      <%= f.text_area(:defbanca, :rows => 3) %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="twelve columns">
+      <%= f.label "annotaz/contrass:" %>
+      <%= f.text_area(:defnote, :rows => 4) %>
+    </div>
+  </div>
+  <div class="twelve columns">
+    <%= f.submit "SALVA", :class => "button radius small success foundicon-checkmark" %>
+    <%= link_to 'ANNULLA', resque_location(:back), :class => "button radius small alert foundicon-remove" %>
+  </div>
+  <div class="row">
+  </div>
+<% end %>

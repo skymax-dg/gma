@@ -1,0 +1,3 @@
+<%= select_tag(:idconto,
+               options_from_collection_for_select(@contos, :id, :descriz),
+               {:include_blank => true, :disabled => @fl_dis}) unless @contos.nil?%>

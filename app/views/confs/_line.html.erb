@@ -1,0 +1,7 @@
+<tr>
+  <td><%= line.codice %></td>
+  <td><%= line.descriz %></td>
+  <td>
+    <%= render :partial => 'shared/btn_vmc', :locals => {:v_edit => edit_conf_path(line), :line => line} %>
+  </td>
+</tr>
