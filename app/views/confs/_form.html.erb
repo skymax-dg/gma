@@ -43,6 +43,26 @@
   </div>
 
   <div class="row">
+    <div class="five columns">
+      <%= f.label "Causale di magazzino" %>
+      <%= collection_select :conf, :defcausmag, @causmags,
+                            :id, :descriz, {:include_blank => true} %>
+    </div>
+    <div class="one columns"></div>
+    <div class="two columns">
+      <%= jdate_field(:conf, :defdatadoc, "Data documento", :date=>true, :value => @conf.defdatadoc, :readonly => true) %>
+    </div>
+    <div class="four columns"></div>
+  </div>
+
+  <div class="row">
+    <div class="twelve columns">
+      <%= f.label "Descrizione documento" %>
+      <%= f.text_field :defdesdoc %>
+    </div>
+  </div>
+
+  <div class="row">
     <div class="two columns">
       <%= f.label "Causale di trasporto" %>
       <%= select(:conf, :defcaustra, Conf::CAUSTRA.invert.sort, {:include_blank => true}) %>

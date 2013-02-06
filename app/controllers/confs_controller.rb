@@ -16,6 +16,7 @@ class ConfsController < ApplicationController
   def new
     @title = "Nuova configurazione"
     @conf = Conf.new
+    @causmags = Causmag.find(:all, :order => :descriz)
   end
 
   def edit

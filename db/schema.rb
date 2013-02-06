@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130205134835) do
+ActiveRecord::Schema.define(:version => 20130206135914) do
 
   create_table "agentes", :force => true do |t|
     t.integer  "anagen_id"
@@ -109,7 +109,6 @@ ActiveRecord::Schema.define(:version => 20130205134835) do
 
   create_table "confs", :force => true do |t|
     t.string   "codice",      :limit => 20,                                 :null => false
-    t.string   "descriz",     :limit=>100,
     t.string   "insana",      :limit => 1,                                  :null => false
     t.string   "insind",      :limit => 1,                                  :null => false
     t.string   "insart",      :limit => 1,                                  :null => false
@@ -128,6 +127,10 @@ ActiveRecord::Schema.define(:version => 20130205134835) do
     t.string   "defbanca",    :limit => 200
     t.datetime "created_at",                                                :null => false
     t.datetime "updated_at",                                                :null => false
+    t.string   "descriz",     :limit => 100
+    t.integer  "defcausmag"
+    t.date     "defdatadoc"
+    t.string   "defdesdoc",   :limit => 150
   end
 
   create_table "contos", :force => true do |t|

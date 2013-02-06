@@ -2,6 +2,10 @@ include CausmagsHelper
 class Causmag < ActiveRecord::Base
   before_destroy :require_no_tesdocs
   has_many :tesdocs
+
+  before_destroy :require_no_confs
+  has_many :confs
+
   belongs_to :causale
 
   attr_accessible :azienda,  :tipo_doc, :descriz, :des_caus,  :tipo,       :movimpmag,
@@ -24,5 +28,9 @@ class Causmag < ActiveRecord::Base
     def require_no_tesdocs
       self.errors.add :base, "Almeno un documento fa riferimento alla causale che si desidera eliminare."
       raise ActiveRecord::RecordInvalid.new self unless tesdocs.count == 0
+    end
+    def require_no_confs
+      self.errors.add :base, "Almeno una configurazione fa riferimento alla causale che si desidera eliminare."
+      raise ActiveRecord::RecordInvalid.new self unless confs.count == 0
     end
 end
