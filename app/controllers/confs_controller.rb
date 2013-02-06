@@ -22,6 +22,7 @@ class ConfsController < ApplicationController
   def edit
     @title = "Modifica Dati configurazione"
     @conf = Conf.find(params[:id])
+    @causmags = Causmag.find(:all, :order => :descriz)
   end
 
   def create
