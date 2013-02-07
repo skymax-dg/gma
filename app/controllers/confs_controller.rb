@@ -30,7 +30,7 @@ class ConfsController < ApplicationController
     @title = "Nuova configurazione"
     if @conf.save
       flash[:success] = "Dati configurazione inseriti con successo."
-      redirect_to @conf, notice: 'Nuova configurazione creata.'
+      redirect_to @conf
     else
       @title = "Inserisci Dati configurazione"
       render action: "new"
@@ -41,7 +41,8 @@ class ConfsController < ApplicationController
     @conf = Conf.find(params[:id])
 
     if @conf.update_attributes(params[:conf])
-      redirect_to @conf, notice: 'Configurazione aggiornata.'
+      flash[:success] = "Dati configurazione aggiornati."
+      redirect_to @conf
     else
       @title = "Modifica Dati configurazione"
       render action: "edit"

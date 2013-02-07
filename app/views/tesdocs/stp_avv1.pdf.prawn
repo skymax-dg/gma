@@ -58,7 +58,7 @@
   testo="E' stato predisposto il ritiro "
   testo+="da parte del corriere #{Spediz::CORRIERE[(@datispe.corriere)]} " if @datispe&&@datispe.corriere
   testo+="per il giorno #{@datispe.dtrit.strftime('%d/%m/%Y')} " if @datispe&&@datispe.dtrit
-  testo+="alle ore #{@datispe.orarit.strftime('%H:%M')}" if @datispe&&@datispe.orarit.strftime('%H:%M')!="00:00"
+  testo+="alle ore #{@datispe.orarit.strftime('%H:%M')}" if @datispe&&@datispe.orarit&&@datispe.orarit.strftime('%H:%M')!="00:00"
 
   pdf.move_down 20
   pdf.text testo, :size => 14, :style => :bold

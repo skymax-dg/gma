@@ -33,10 +33,119 @@ class TesdocsController < ApplicationController
       render 'import_by_xml'
     else
       flash[:success] = "Elaborazione file XML"
-      #t=Tesdoc.find.where(:all).where(:annoese=>2013)
-      #t.to_xml
       @conf=Conf.find(@idconf)
       a=Hash.from_xml(@filexml.read)
+
+      @causmag = Causmag.find(@conf.defcausmag) if @conf.defcausmag
+      @tesdoc = Tesdoc.new
+      @tesdoc.azienda = current_user.azienda
+      @tesdoc.annoese = current_annoese
+      @tesdoc.causmag_id = @causmag.id
+      @tesdoc.num_doc = Tesdoc.new_num_doc(@causmag.grp_prg, @tesdoc.annoese, @tesdoc.azienda)
+
+
+      if a[:desdoc]
+        @tesdoc.descriz=a[:desdoc]
+      elsif @conf.defdesdoc
+        @tesdoc.descriz=@conf.defdesdoc
+      elsif @causmag
+        @tesdoc.descriz = @causmag.descriz
+      end
+
+      if a[:datadoc]
+        @tesdoc.data_doc=a[:datadoc]
+      elsif @conf.defdatadoc
+        @tesdoc.data_doc=@conf.defdatadoc
+      end
+      if a[:caustra]
+        @spediz.caustra=a[:caustra]
+      elsif @conf.defcaustra
+        @spediz.caustra=@conf.defcaustra
+      end
+      if a[:corriere]
+        @spediz.corriere=a[:corriere]
+      elsif @conf.defcorriere
+        @spediz.corriere=@conf.defcorriere
+      end
+      if a[:aspetto]
+        @spediz.aspetto=a[:aspetto]
+      elsif @conf.defaspetto
+        @spediz.aspetto=@conf.defaspetto
+      end
+      if a[:nrcolli]
+        @spediz.nrcolli=a[:nrcolli]
+      elsif @conf.defnrcolli
+        @spediz.nrcolli=@conf.defnrcolli
+      end
+      if a[:um]
+        @spediz.um=a[:um]
+      elsif @conf.defum
+        @spediz.um=@conf.defum
+      end
+      if a[:valore]
+        @spediz.valore=a[:valore]
+      elsif @conf.defvalore
+        @spediz.valore=@conf.defvalore
+      end
+      if a[:porto]
+        @spediz.porto=a[:porto]
+      elsif @conf.defporto
+        @spediz.porto=@conf.defporto
+      end
+      if a[:dtrit]
+        @spediz.dtrit=a[:dtrit]
+      elsif @conf.defdtrit
+        @spediz.dtrit=@conf.defdtrit
+      end
+      if a[:orarit]
+        @spediz.orarit=a[:orarit]
+      elsif @conf.deforarit
+        @spediz.orarit=@conf.deforarit
+      end
+      if a[:note]
+        @spediz.note=a[:note]
+      elsif @conf.defnote
+        @spediz.note=@conf.defnote
+      end
+      if a[:param]
+        @spediz.param=a[:param]
+      elsif @conf.defparam
+        @spediz.param=@conf.defparam
+      end
+      if a[:banca]
+        @spediz.banca=a[:banca]
+      elsif @conf.defbanca
+        @spediz.banca=@conf.defbanca
+      end
+
+
+
+#      Anagen.find_by_cf_pi(cf, pi)
+
+
+
+#      @conto = Conto.find(params[:conto])
+#      @tesdoc.azienda = current_user.azienda
+#      @tesdoc.annoese = current_annoese
+#      @tesdoc.causmag_id = @causmag.id
+#      @tesdoc.descriz = @causmag.descriz
+#      @tesdoc.conto_id = @conto.id
+#      @tesdoc.sconto = @conto.sconto
+#      @tesdoc.tipo_doc = @causmag.tipo_doc
+#      @tesdoc.num_doc = Tesdoc.new_num_doc(@causmag.grp_prg, @tesdoc.annoese, @tesdoc.azienda)
+#      @spediz = @tesdoc.build_spediz # La Build valorizza automaticamente il campo spediz.tesdoc_id
+#      @costo = @tesdoc.build_costo # La Build valorizza automaticamente il campo costo.tesdoc_id
+#      magsrc = @tesdoc.findmags("S")
+#      magdst = @tesdoc.findmags("D")
+#      #<!-- tolgo la scelta del magazzino 0 -->
+#      magsrc.delete(0) if @causmag&&@causmag.nrmagsrc>0
+#      magdst.delete(0) if @causmag&&@causmag.nrmagdst>0
+#      if magsrc.length==0||magdst.length==0
+#        flash.now[:alert] = "Impossibile proseguire !!! L'anagrafica selezionata non dispone di indirizzi di magazzino validi"
+#        init_filter(current_user.azienda)
+#        render "index"
+#      end
+
       render 'import_by_xml'
     end
   end
