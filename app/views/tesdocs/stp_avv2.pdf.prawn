@@ -92,7 +92,7 @@
   if @datispe
     testo=""
     testo+="Data del ritiro: #{@datispe.dtrit.strftime('%d/%m/%Y')} " if @datispe.dtrit
-    testo+="dalle ore #{@datispe.orarit.strftime('%H:%M')}" if @datispe.orarit.strftime('%H:%M')!="00:00"
+    testo+="dalle ore #{@datispe.orarit.strftime('%H:%M')}" if @datispe.orarit&&@datispe.orarit.strftime('%H:%M')!="00:00"
     testo+="\nColli: nr. #{@datispe.nrcolli} " if @datispe.nrcolli
     testo+="(#{Spediz::UM[@datispe.um]}: #{@datispe.valore})" if @datispe.valore&&@datispe.um
     testo+="\n Trasporto a ns/carico\n\n\n"
