@@ -109,6 +109,7 @@ ActiveRecord::Schema.define(:version => 20130206135914) do
 
   create_table "confs", :force => true do |t|
     t.string   "codice",      :limit => 20,                                 :null => false
+    t.string   "descriz",     :limit => 100
     t.string   "insana",      :limit => 1,                                  :null => false
     t.string   "insind",      :limit => 1,                                  :null => false
     t.string   "insart",      :limit => 1,                                  :null => false
@@ -127,7 +128,6 @@ ActiveRecord::Schema.define(:version => 20130206135914) do
     t.string   "defbanca",    :limit => 200
     t.datetime "created_at",                                                :null => false
     t.datetime "updated_at",                                                :null => false
-    t.string   "descriz",     :limit => 100
     t.integer  "defcausmag"
     t.date     "defdatadoc"
     t.string   "defdesdoc",   :limit => 150
@@ -197,6 +197,19 @@ ActiveRecord::Schema.define(:version => 20130206135914) do
   end
 
   add_index "paeses", ["descriz"], :name => "idx_paeses_on_descriz", :unique => true
+
+  create_table "prezzoarticclis", :force => true do |t|
+    t.integer  "azienda",                                  :null => false
+    t.integer  "anag_id"
+    t.integer  "artic_id"
+    t.decimal  "prezzo",     :precision => 8, :scale => 2, :null => false
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
+  end
+
+  add_index "prezzoarticclis", ["azienda", "anag_id", "artic_id"], :name => "index_prezzoarticclis_on_azienda_and_anag_id_and_artic_id", :unique => true
+  add_index "prezzoarticclis", ["azienda", "anag_id"], :name => "index_prezzoarticclis_on_azienda_and_anag_id"
+  add_index "prezzoarticclis", ["azienda", "artic_id"], :name => "index_prezzoarticclis_on_azienda_and_artic_id"
 
   create_table "rigdocs", :force => true do |t|
     t.integer  "tesdoc_id",                                                                 :null => false

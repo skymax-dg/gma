@@ -16,7 +16,6 @@ CAUSMAG:
   TIPO_DOC:
     0: 'Doc.Contabili'
     1: 'Doc.Trasporto'
-    2: 'Doc.Generici'
   TIPO:
     E: 'Entrata'
     U: 'Uscita'
