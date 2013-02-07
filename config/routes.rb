@@ -88,6 +88,8 @@ Gma::Application.routes.draw do
       get :set_provv
       get :addtesrigdoc_fromxls
       get :genera_xls_articoli
+      get :import_by_xml
+      post :create_by_xml
     end
     member do
       get :add1row4article

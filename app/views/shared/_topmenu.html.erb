@@ -60,10 +60,10 @@
             SERVIZI
           </a>
           <ul class="dropdown">
-            <li> <%= link_to "CARICA ORDINE", "#" %> </li>
-            <li> <%= link_to "SPED. MASSIVA ABBONAMENTI", "#" %> </li>
-            <li> <%= link_to "SPED. SINGOLO ABBONAMENTO", "#" %> </li>
-            <li> <%= link_to "DEFAULTS", confs_path %> </li>
+            <li> <%= link_to "CARICA ORDINE(xml)", import_by_xml_tesdocs_path(:tp=>:f1) %> </li>
+            <li> <%= link_to "SPED. MASSIVA ABBONAMENTI", import_by_xml_tesdocs_path(:tp=>:f3) %> </li>
+            <li> <%= link_to "SPED. SINGOLO ABBONAMENTO", import_by_xml_tesdocs_path(:tp=>:f4) %> </li>
+            <li> <%= link_to "CONFIGURAZIONI", confs_path %> </li>
           </ul>
         </li>
       </ul>

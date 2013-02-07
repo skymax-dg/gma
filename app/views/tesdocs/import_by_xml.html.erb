@@ -1,0 +1,28 @@
+<%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
+<%= form_tag 'create_by_xml', :multipart => true do %>
+  <fieldset>
+    <legend> Genera documento/i da XML </legend>
+    <div class="row">
+      <%= hidden_field_tag 'tp', @tp %>
+      <div class="four columns">
+        <label for="file">File XML da caricare </label>
+        <%= file_field_tag "file", :accept => 'text/xml' %>
+      </div>
+      <div class="four columns">
+        <label>Configurazione</label>
+        <%= collection_select :conf, :id, Conf.all, :id, :descriz, {:include_blank => true} %>
+      </div>
+      <div class="four columns"></div>
+    </div>
+    <div class="row">
+      <div class="one columns">
+        <%= submit_tag "ELABORA" %>
+      </div>
+    </div>
+  </fieldset>
+<% end %>
+<ul class="button-group">
+  <li>
+    <%#= link_to 'INDIETRO', @tesdoc, :class => "button radius small back foundicon-left-arrow" %>
+  </li>
+</ul>

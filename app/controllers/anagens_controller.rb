@@ -14,7 +14,7 @@ class AnagensController < ApplicationController
 
   def index
     @title = "Elenco Soggetti/Societa'"
-store_location
+    store_location
     #@anagens = Anagen.paginate(:page => params[:page], :per_page => 10, :order => [:denomin])
   end
 

@@ -6,6 +6,41 @@ require 'will_paginate/array'
 class TesdocsController < ApplicationController
   before_filter :authenticate
 
+  def import_by_xml
+    @tp=params[:tp]
+    @conf=Conf.find_by_codice(@tp)
+    puts @conf
+    if   @tp=='f1'
+      @title="Carica Ordine da E-Commerce:#{@conf.id if @conf}:"
+    elsif @tp=='f3'
+      @title="Spedizione massima abbonamenti"
+    elsif @tp=='f4'
+      @title="Spedizione singolo abbonamento"
+    else
+      @title="FLUSSO NON IMPLEMENTATO"
+    end
+  end
+
+  def create_by_xml
+    @tp=params[:tp]
+    @idconf=params[:conf][:id]
+    @filexml=params[:file]
+    if @filexml.blank?
+      flash[:alert] = "File non specificato"
+      render 'import_by_xml'
+    elsif @idconf.blank?
+      flash[:alert] = "Parametri di configurazione mancanti"
+      render 'import_by_xml'
+    else
+      flash[:success] = "Elaborazione file XML"
+      #t=Tesdoc.find.where(:all).where(:annoese=>2013)
+      #t.to_xml
+      @conf=Conf.find(@idconf)
+      a=Hash.from_xml(@filexml.read)
+      render 'import_by_xml'
+    end
+  end
+
   def upload_xls
     @title = "SCELTA FILE XLS PER CARICAMENTO RIGHE DOCUMENTO"
     @tesdoc = Tesdoc.find(params[:id])
