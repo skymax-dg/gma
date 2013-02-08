@@ -32,97 +32,87 @@ class TesdocsController < ApplicationController
       flash[:alert] = "Parametri di configurazione mancanti"
       render 'import_by_xml'
     else
-      flash[:success] = "Elaborazione file XML"
+      tname = @filexml.original_filename.gsub(".xml", Time.now.strftime("_%Y_%m_%d_%H_%M_%S.xml"))
+      # create the file path
+      path = File.join("#{Rails.root}/public/upload", "#{tname}")
+      # write the file
+      File.open(path, "wb") { |f| f.write(@filexml.read) } #creo una copia del file nella cartella public
+#File.open(path, "w+") do |f|
+#  t=Tesdoc.find(:all, :conditions => "id = 153 or id = 158")
+#  a=t.to_xml(:skip_instruct=>true, :skip_types=>true, :dasherize=>false,
+#             :include=>{:causmag=>{},
+#                        :spediz=>{},
+#                        :rigdocs=>{:include=>:article}, 
+#                        :conto=>{:include=>{:anagen=>{:include=>:anainds}}}
+#                       })
+#end
+      # Carico xml in una struttura hash
+      File.open(path) { |f| @h=Hash.from_xml(f.read) }
       @conf=Conf.find(@idconf)
-      a=Hash.from_xml(@filexml.read)
 
-      @causmag = Causmag.find(@conf.defcausmag) if @conf.defcausmag
-      @tesdoc = Tesdoc.new
-      @tesdoc.azienda = current_user.azienda
-      @tesdoc.annoese = current_annoese
-      @tesdoc.causmag_id = @causmag.id
-      @tesdoc.num_doc = Tesdoc.new_num_doc(@causmag.grp_prg, @tesdoc.annoese, @tesdoc.azienda)
+#      tesdocs=@h['tesdocs']['tesdoc']
+#      tesdocs=[tesdocs] if tesdocs.class==Hash
+#      tesdocs.each do |tesdoc| # array di record
+#        puts "Tesdoc:#{tesdoc}:"
+#        causmag=tesdoc['causmag']
+#        puts "Causmag:#{causmag}:"
+#        conto=tesdoc['conto']
+#        puts "Conto:#{conto}:"
+#        anagen=conto['anagen']
+#        puts "Anagen:#{anagen}:"
+#        anainds=anagen['anainds']
+#        puts "Anainds:#{anainds}:"
+#        spediz=tesdoc['spediz']
+#        puts "Spediz:#{spediz}:"
+#        rigdocs=tesdoc['rigdocs']['rigdoc']
+#        rigdocs=[rigdocs] if rigdocs.class==Hash
+#        rigdocs.each do |rigdoc|
+#          puts "Rigdoc:#{rigdoc}:"
+#          article=rigdoc['article']
+#          puts "Article:#{article}:"
+#        end
+#      end
+#      flash[:success] = "Elaborazione file XML"
+
+#      @causmag = Causmag.find(@conf.defcausmag) if @conf.defcausmag
+#      @tesdoc = Tesdoc.new
+#      @spediz = @tesdoc.build_spediz
+#      @tesdoc.azienda = current_user.azienda
+#      @tesdoc.annoese = current_annoese
+#      @tesdoc.causmag_id = @causmag.id
+#      @tesdoc.num_doc = Tesdoc.new_num_doc(@causmag.grp_prg, @tesdoc.annoese, @tesdoc.azienda)
 
 
-      if a[:desdoc]
-        @tesdoc.descriz=a[:desdoc]
-      elsif @conf.defdesdoc
-        @tesdoc.descriz=@conf.defdesdoc
-      elsif @causmag
-        @tesdoc.descriz = @causmag.descriz
-      end
+#      if a[:desdoc]
+#        @tesdoc.descriz=a[:desdoc]
+#      elsif @conf.defdesdoc
+#        @tesdoc.descriz=@conf.defdesdoc
+#      elsif @causmag
+#        @tesdoc.descriz = @causmag.descriz
+#      end
 
-      if a[:datadoc]
-        @tesdoc.data_doc=a[:datadoc]
-      elsif @conf.defdatadoc
-        @tesdoc.data_doc=@conf.defdatadoc
-      end
-      if a[:caustra]
-        @spediz.caustra=a[:caustra]
-      elsif @conf.defcaustra
-        @spediz.caustra=@conf.defcaustra
-      end
-      if a[:corriere]
-        @spediz.corriere=a[:corriere]
-      elsif @conf.defcorriere
-        @spediz.corriere=@conf.defcorriere
-      end
-      if a[:aspetto]
-        @spediz.aspetto=a[:aspetto]
-      elsif @conf.defaspetto
-        @spediz.aspetto=@conf.defaspetto
-      end
-      if a[:nrcolli]
-        @spediz.nrcolli=a[:nrcolli]
-      elsif @conf.defnrcolli
-        @spediz.nrcolli=@conf.defnrcolli
-      end
-      if a[:um]
-        @spediz.um=a[:um]
-      elsif @conf.defum
-        @spediz.um=@conf.defum
-      end
-      if a[:valore]
-        @spediz.valore=a[:valore]
-      elsif @conf.defvalore
-        @spediz.valore=@conf.defvalore
-      end
-      if a[:porto]
-        @spediz.porto=a[:porto]
-      elsif @conf.defporto
-        @spediz.porto=@conf.defporto
-      end
-      if a[:dtrit]
-        @spediz.dtrit=a[:dtrit]
-      elsif @conf.defdtrit
-        @spediz.dtrit=@conf.defdtrit
-      end
-      if a[:orarit]
-        @spediz.orarit=a[:orarit]
-      elsif @conf.deforarit
-        @spediz.orarit=@conf.deforarit
-      end
-      if a[:note]
-        @spediz.note=a[:note]
-      elsif @conf.defnote
-        @spediz.note=@conf.defnote
-      end
-      if a[:param]
-        @spediz.param=a[:param]
-      elsif @conf.defparam
-        @spediz.param=@conf.defparam
-      end
-      if a[:banca]
-        @spediz.banca=a[:banca]
-      elsif @conf.defbanca
-        @spediz.banca=@conf.defbanca
-      end
+#      if a[:datadoc]
+#        @tesdoc.data_doc=a[:datadoc]
+#      elsif @conf.defdatadoc
+#        @tesdoc.data_doc=@conf.defdatadoc
+#      end
+#a[:spediz]=Hash.new
+#a[:spediz][:nrcolli]=""
+#@conf.defnrcolli = 20
+#      a[:spediz].each do |k,v|
+#        if !v.blank?
+#          eval("@spediz.#{k}=#{v}")
+#        elsif eval("@conf.def#{k}")
+#          eval("@spediz.#{k}=@conf.def#{k}")
+#        end
+#flash[:success]= "Elaborazione file XML :#{@spediz.nrcolli}:"
+#        #a[:caustra] - a[:corriere] - a[:aspetto] - a[:nrcolli] - a[:um]    - a[:valore]
+#        #a[:porto]   - a[:dtrit]    - a[:orarit]  - a[:note]    - a[:pagam] - a[:banca]
+#      end
 
 
 
 #      Anagen.find_by_cf_pi(cf, pi)
-
-
 
 #      @conto = Conto.find(params[:conto])
 #      @tesdoc.azienda = current_user.azienda
@@ -184,9 +174,7 @@ class TesdocsController < ApplicationController
       redirect_to upload_xls_tesdoc_path(:id => params[:id]) and return
     end
     @title = "REPORT caricamento automatico:"
-    time=Time.now()
-    str="_#{time.year.to_s}_#{time.month.to_s}_#{time.day.to_s}_#{time.hour.to_s}_#{time.min.to_s}_#{time.sec.to_s}.xls"
-    tname = tfile.original_filename.gsub(".xls", str)
+    tname = tfile.original_filename.gsub(".xls", Time.now.strftime("_%Y_%m_%d_%H_%M_%S.xls"))
     # create the file path
     path = File.join("#{Rails.root}/public/upload", "#{tname}")
     # write the file
