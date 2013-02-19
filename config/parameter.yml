@@ -1,5 +1,6 @@
 ELNCAZND:
   9: EIFIS EDITORE
+  105: FIERE ED EVENTI
 ANAGEN:
   TIPO_SOGGETTO:
     F: 'Pers.fisica'
@@ -12,6 +13,23 @@ ANAIND:
     2: 'Sec1'
     3: 'Sec2'
     4: 'Sec3'
+    5: 'Sec4'
+    6: 'Sec5'
+    7: 'Sec6'
+    8: 'Sec7'
+    9: 'Sec8'
+    10: 'Sec9'
+    11: 'Sec10'
+    12: 'Sec11'
+    13: 'Sec12'
+    14: 'Sec13'
+    15: 'Sec14'
+    16: 'Sec15'
+    17: 'Sec16'
+    18: 'Sec17'
+    19: 'Sec18'
+    20: 'Sec19'
+    21: 'Sec20'
 CAUSMAG:
   TIPO_DOC:
     0: 'Doc.Contabili'
