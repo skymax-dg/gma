@@ -24,10 +24,10 @@ class ArticlesController < ApplicationController
     end
     if @tp == "M"
       @title = "Stampa Movimenti di magazzino"
-      @causmags = Causmag.find(:all, :order=>:descriz)
+      @causmags = Causmag.azienda(current_user.azienda).all(:order=>:descriz)
     else
       @title = "Stampa Vendite per titolo"
-      @causmags = Causmag.find(:all, :conditions=>{:contabile=>'S'}, :order=>:descriz)
+      @causmags = Causmag.azienda(current_user.azienda).all(:conditions=>{:contabile=>'S'}, :order=>:descriz)
     end
     @all = false
     @fl_dis = true
@@ -43,10 +43,10 @@ class ArticlesController < ApplicationController
     end
     if @tp == "M"
       @title = "Export (XLS) Movimenti di magazzino"
-      @causmags = Causmag.find(:all, :order=>:descriz)
+      causmags = Causmag.azienda(current_user.azienda).all(:order=>:descriz)
     else
       @title = "Export (XLS) Vendite per titolo"
-      @causmags = Causmag.find(:all, :conditions=>{:contabile=>'S'}, :order=>:descriz)
+      @causmags = Causmag.azienda(current_user.azienda).all(:conditions=>{:contabile=>'S'}, :order=>:descriz)
     end
     @all = false
     @fl_dis = true
@@ -61,10 +61,10 @@ class ArticlesController < ApplicationController
     end
     if @tp == "M"
       @title = "Stampa Movimenti di magazzino"
-      @causmags = Causmag.find(:all, :order=>:descriz)
+      @causmags = Causmag.azienda(current_user.azienda).all(:order=>:descriz)
     else
       @title = "Stampa Vendite per titolo"
-      @causmags = Causmag.find(:all, :conditions=>{:contabile=>'S'}, :order=>:descriz)
+      @causmags = Causmag.azienda(current_user.azienda).all(:conditions=>{:contabile=>'S'}, :order=>:descriz)
     end
     @all = true
     @fl_dis = true
@@ -79,10 +79,10 @@ class ArticlesController < ApplicationController
     end
     if @tp == "M"
       @title = "Export (XLS) Movimenti di magazzino"
-      @causmags = Causmag.find(:all, :order=>:descriz)
+      @causmags = Causmag.azienda(current_user.azienda).all(:order=>:descriz)
     else
       @title = "Export (XLS) Vendite per titolo"
-      @causmags = Causmag.find(:all, :conditions=>{:contabile=>'S'}, :order=>:descriz)
+      @causmags = Causmag.azienda(current_user.azienda).all(:conditions=>{:contabile=>'S'}, :order=>:descriz)
     end
     @all = true
     @fl_dis = true
