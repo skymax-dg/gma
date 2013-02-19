@@ -186,7 +186,7 @@ class ArticlesController < ApplicationController
     @title = "Elenco Articoli"
     @tpfilter  = params[:tpfilter]
     @desfilter = params[:desfilter].strip
-    @articles, nrrecord = Article.filter(@tpfilter, @desfilter, params[:page])
+    @articles, nrrecord = Article.filter(current_user.azienda, @tpfilter, @desfilter, params[:page])
     flash_cnt(nrrecord) if params[:page].nil?
     store_location
     render "index"
