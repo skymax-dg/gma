@@ -15,7 +15,7 @@ class Article < ActiveRecord::Base
 
   CATEG = $ParAzienda['ARTICLE']['CATEG']
 
-  def self.filter (tp, des, page)
+  def self.filter(azienda, tp, des, page)
     # Esegure la ricerca articoli in base ai filtri impostati
 
     nrrecord = nil
@@ -27,7 +27,7 @@ class Article < ActiveRecord::Base
 
     nrrecord = where([whart, hshvar]).count if page.nil?
 
-    return where([whart, hshvar]).paginate(:page => page, :per_page => 10,
+    return azienda(azienda).where([whart, hshvar]).paginate(:page => page, :per_page => 10,
                                            :order => "codice ASC"), nrrecord unless hsh[tp].nil?
   end
 
