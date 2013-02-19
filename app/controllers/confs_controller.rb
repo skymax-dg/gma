@@ -16,13 +16,13 @@ class ConfsController < ApplicationController
   def new
     @title = "Nuova configurazione"
     @conf = Conf.new
-    @causmags = Causmag.find(:all, :order => :descriz)
+    @causmags = Causmag.azienda(current_user.azienda).all(:order=>:descriz)
   end
 
   def edit
     @title = "Modifica Dati configurazione"
     @conf = Conf.find(params[:id])
-    @causmags = Causmag.find(:all, :order => :descriz)
+    @causmags = Causmag.azienda(current_user.azienda).all(:order=>:descriz)
   end
 
   def create

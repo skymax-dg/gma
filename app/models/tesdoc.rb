@@ -174,7 +174,7 @@ class Tesdoc < ActiveRecord::Base
     return imp
   end
 
-  def rigdocbyxls(xls, wks, rownr, hshcol)
+  def rigdocbyxls(azd, xls, wks, rownr, hshcol)
     # Carica una riga documento per ogni riga presente nel file excel xls nello sheet wks(0base),
     # partendo dalla riga rownr 
 
@@ -184,9 +184,9 @@ class Tesdoc < ActiveRecord::Base
     xls.worksheet(wks).each rownr do |row|
       unless row[hshcol[:article_id_bycod]].blank? || row[hshcol[:qta]].blank? 
         @rigdoc = self.rigdocs.build # La Build valorizza automaticamente il campo rigdoc.tesdoc_id
-        @rigdoc.article_id = Article.find_by_codice(row[hshcol[:article_id_bycod]].to_s.strip).id
-        @rigdoc.descriz    = Article.find_by_codice(row[hshcol[:article_id_bycod]].to_s.strip).descriz
-        @rigdoc.iva_id     = Article.find_by_codice(row[hshcol[:article_id_bycod]].to_s.strip).iva_id
+        @rigdoc.article_id = Article.find_by_azienda_and_codice(azd, row[hshcol[:article_id_bycod]].to_s.strip).id
+        @rigdoc.descriz    = Article.find_by_azienda_and_codice(azd, row[hshcol[:article_id_bycod]].to_s.strip).descriz
+        @rigdoc.iva_id     = Article.find_by_azienda_and_codice(azd, row[hshcol[:article_id_bycod]].to_s.strip).iva_id
         @rigdoc.qta        = row[hshcol[:qta]]||0
         if row[hshcol[:prezzo]].respond_to?(:value)
           @rigdoc.prezzo = row[hshcol[:prezzo]].value.to_s.sub(",",".")||0
