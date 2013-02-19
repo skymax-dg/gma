@@ -506,8 +506,12 @@ class Tesdoc < ActiveRecord::Base
     end
     where_tesdoc+=" AND tesdocs.causmag_id = #{idcausmag}" if idcausmag.to_s != ""
 
+#    Tesdoc.find_by_sql("SELECT tesdocs.data_doc   AS Data_doc, tesdocs.num_doc  AS Numero,
+#                               causmags.descriz   AS Causale,  tesdocs.nrmagsrc AS Nrmag,
+#                               causmags.movimpmag AS Movmag,   causmags.tipo    AS Tipomov,
+#                               rigdocs.qta        AS Qta,      'SRC'            AS Tipomag
     Tesdoc.find_by_sql("SELECT tesdocs.data_doc   AS Data_doc, tesdocs.num_doc  AS Numero,
-                               causmags.descriz   AS Causale,  tesdocs.nrmagsrc AS Nrmag,
+                               causmags.descriz||'('||anagens.denomin||')' AS Causale,  tesdocs.nrmagsrc AS Nrmag,
                                causmags.movimpmag AS Movmag,   causmags.tipo    AS Tipomov,
                                rigdocs.qta        AS Qta,      'SRC'            AS Tipomag
                           FROM tesdocs INNER JOIN rigdocs  ON (rigdocs.tesdoc_id = tesdocs.id)
@@ -520,7 +524,7 @@ class Tesdoc < ActiveRecord::Base
                                          AND articles.id = #{idart} #{filter_anagen} #{filter_magsrc} #{filter_nrmagsrc} 
                         UNION 
                         SELECT tesdocs.data_doc   AS Data_doc, tesdocs.num_doc  AS Numero,
-                               causmags.descriz   AS Causale,  tesdocs.nrmagdst AS Nrmag,
+                               causmags.descriz||'('||anagens.denomin||')' AS Causale,  tesdocs.nrmagdst AS Nrmag,
                                causmags.movimpmag AS Movmag,   causmags.tipo    AS Tipomov,
                                rigdocs.qta        AS Qta,      'DST'            AS Tipomag
                           FROM tesdocs INNER JOIN rigdocs  ON (rigdocs.tesdoc_id = tesdocs.id)
