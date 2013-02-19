@@ -79,8 +79,9 @@
     <div class="two columns">
       <%= select_tag(:grpmag, options_for_select([["DISTINTI", "N"], ["RAGGRUPPATI", "S"]]), {:disabled => @tp=="V", :class=>"right"}) %>
     </div>
+    <% @mags = mag.invert.sort %>
     <div class="two columns">
-      <%= select_tag(:nrmag, options_for_select(mag.invert.sort), {:include_blank => true, :selected => "", :disabled => @tp=="V"}) %>
+      <%= select_tag(:nrmag, options_for_select(@mags), {:include_blank => true, :selected => "", :disabled => @tp=="V"}) %>
     </div>
     <div class="eight columns"></div>
   </div>
