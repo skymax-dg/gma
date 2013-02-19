@@ -17,6 +17,14 @@ class SpedizsController < ApplicationController
     @title = "Inserisci Dati spedizione/pagamento"
     @spediz = Tesdoc.find(params[:id]).build_spediz # La Build valorizza automaticamente il campo spediz.tesdoc_id
     @spediz.presso = Tesdoc.find(params[:id]).conto.anagen.denomin # Inizializzo il presso con la denominazione anagrafica
+    if @spediz.tesdoc.causmag.contabile == "S"
+      @conf = Conf.find_by_codice("P")
+      if @conf
+        @spediz.pagam = @conf.defpagam
+        @spediz.banca = @conf.defbanca
+      end
+    end
+
   end
 
   def edit
