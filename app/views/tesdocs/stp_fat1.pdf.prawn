@@ -9,7 +9,8 @@
   render :partial=>'testafatt.pdf.prawn', :locals=>{:ppdf=>pdf}
   
   pdf.text "DETTAGLIO ARTICOLI", :size => 14, :style => :bold, :align => :center
-  @tb = Array.new(1, ["CODICE", "DESCRIZIONE", "Q.TA", "PRZ.\nLIST.", "TOT.\nLIST.", "PRZ.\nSCN.", "IMPON.", "IVA"])
+  #@tb = Array.new(1, ["CODICE", "DESCRIZIONE", "Q.TA", "PRZ.\nLIST.", "TOT.\nLIST.", "PRZ.\nSCN.", "IMPON.", "IVA"])
+  @tb = Array.new(1, ["CODICE", "DESCRIZIONE", "Q.TA", "PRZ.\nLIST.", "%\nSconto", "PRZ.\nSCN.", "IMPON.", "IVA"])
   @tqta=0
   @tlist=0
   @timpon=0
@@ -17,7 +18,7 @@
   @tesdoc.rigdocs.each do |r|
     if r.qta > 0
       @tb<<[""&&r.article&&r.article.codice, r.descriz, r.qta, 
-            number_with_precision(0&&r.article&&r.article.prezzo), number_with_precision(r.imp_list),
+            number_with_precision(0&&r.article&&r.article.prezzo), number_with_precision(r.sconto),
             number_with_precision(r.prezzo-(r.prezzo*r.sconto/100)), number_with_precision(r.impon), ""&&r.iva&&r.iva.descriz]
     else
       @tb<<[""&&r.article&&r.article.codice, r.descriz, "", 
