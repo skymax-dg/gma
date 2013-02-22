@@ -106,6 +106,7 @@ class Tesdoc < ActiveRecord::Base
                                   INNER JOIN contos ON (tesdocs.conto_id = contos.id)
                                   WHERE causmags.movimpmag = 'M'
                                     AND (causmags.tipo = 'U' OR causmags.tipo = 'R')
+                                    AND tesdocs.nrmagdst > 0
                                     AND tesdocs.azienda = #{azienda}
                                     AND tesdocs.annoese = #{annoese-1}
                                     AND contos.id = #{idcontoprec}
@@ -118,6 +119,7 @@ class Tesdoc < ActiveRecord::Base
                                   INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
                                   INNER JOIN contos ON (tesdocs.conto_id = contos.id)
                                   WHERE causmags.movimpmag = 'M'
+                                    AND tesdocs.nrmagsrc > 0
                                     AND (causmags.tipo = 'E' OR causmags.tipo = 'V')
                                     AND tesdocs.azienda = #{azienda}
                                     AND tesdocs.annoese = #{annoese-1}

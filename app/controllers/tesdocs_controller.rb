@@ -503,7 +503,7 @@ class TesdocsController < ApplicationController
 
   def create
     @tesdoc = Tesdoc.new(params[:tesdoc])
-    if @tesdoc.save
+    if @tesdoc.data_doc.year == @tesdoc.annoese && @tesdoc.save
       flash[:success] = "Testata documento inserita con successo."
       redirect_to @tesdoc
     else
@@ -515,7 +515,7 @@ class TesdocsController < ApplicationController
       @tesdoc.causmag_id = @causmag.id
       @tesdoc.conto_id = @conto.id
       @tesdoc.sconto = @conto.sconto
-#      flash.now[:alert] = "Il salvataggio del documento non e' andato a buon fine"
+      flash.now[:alert] = "Salvataggio Fallito possibile incompatibilita' ANNO con DataDocuemnto"
       render 'new'
     end
   end
