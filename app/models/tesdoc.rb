@@ -123,7 +123,7 @@ class Tesdoc < ActiveRecord::Base
                                     AND tesdocs.annoese = #{annoese-1}
                                     AND contos.id = #{idcontoprec}
                                   GROUP BY rigdocs.article_id, articles.descriz) AS tmp1
-                         WHERE tot != 0
+                         WHERE tot <> 0
                          GROUP BY tmp1.article_id, tmp1.descriz
                          ORDER BY tmp1.article_id").each do |giac|
       rigdoc = self.rigdocs.build
