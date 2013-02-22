@@ -9,7 +9,7 @@
   render :partial=>'testafatt.pdf.prawn', :locals=>{:ppdf=>pdf}
   
   pdf.text "DETTAGLIO ARTICOLI", :size => 14, :style => :bold, :align => :center
-  @tb = Array.new(1, ["CODICE", "DESCRIZIONE", "Q.TA", "PRZ.\nLIST.", "%\nSconto", "PRZ.\nSCN.", "IMPON.", "IVA"])
+  @tb = Array.new(1, ["CODICE", "DESCRIZIONE", "Q.TA", "PRZ.\nLIST.", "%\nSc.to", "PRZ.\nSCN.", "IMPON.", "IVA"])
   @tqta=0
   @tlist=0
   @timpon=0
@@ -28,10 +28,10 @@
     @timpon+=r.impon
     @tlist+=r.imp_list
   end
-  @tb << ["TOTALE", "", @tqta, "", number_with_precision(@tlist), "", number_with_precision(@timpon), ""]#number_with_precision(@timposta)]
+  @tb << ["TOTALE", "", @tqta, "", "", "", number_with_precision(@timpon), ""]#number_with_precision(@timposta)]
 
   #Creazione e stampa tabella articoli
-  tab = pdf.make_table(@tb, :column_widths=>{0=>80, 1=>215, 2=>30, 3=>35, 4=>30, 5=>35, 6=>50, 7=>50},
+  tab = pdf.make_table(@tb, :column_widths=>{0=>80, 1=>210, 2=>30, 3=>35, 4=>35, 5=>35, 6=>50, 7=>50},
                             :cell_style => {:size => 8})
   tab.row(0).font_style = :bold
   tab.row(tab.row_length-1).font_style = :bold
