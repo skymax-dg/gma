@@ -1,7 +1,7 @@
 <tr>
   <td><%= line.article.codice unless line.article.nil? %></td>
   <td><%= line.descriz %></td>
-  <td class="float"><%= line.qta if line.qta > 0 %></td>
+  <td class="float"><%= line.qta if line.qta != 0 %></td>
   <td class="currency"><%= number_to_currency(line.prezzo) if line.qta > 0 %></td>
   <td class="float"><%= line.sconto if line.qta > 0 %></td>
   <td class="currency"><%= number_to_currency(line.impon) if line.qta > 0 %></td>
