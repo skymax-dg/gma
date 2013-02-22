@@ -18,7 +18,7 @@
     if r.qta > 0
       @tb<<[""&&r.article&&r.article.codice, r.descriz, r.qta, 
             number_with_precision(0&&r.article&&r.article.prezzo), number_with_precision(r.imp_list),
-            number_with_precision(r.prezzo), number_with_precision(r.impon), ""&&r.iva&&r.iva.descriz]
+            number_with_precision(r.prezzo-(r.prezzo*r.sconto/100)), number_with_precision(r.impon), ""&&r.iva&&r.iva.descriz]
     else
       @tb<<[""&&r.article&&r.article.codice, r.descriz, "", 
             "", "",
