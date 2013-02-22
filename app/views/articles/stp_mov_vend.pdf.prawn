@@ -30,7 +30,7 @@
           pdf.text desmag,
                        :size => 12, :style => :bold, :align => :left
           pdf.move_down 10
-          col_head = ["Data_doc", "Nr.", "Causale", "Mag", "Car", "Scar", "Giac", "Imp", "Disp"]
+          col_head = ["Data_doc", "Nr.", "Causale", "Mg", "Car", "Scar", "Giac", "Imp", "Disp"]
           giac = 0
           tcar = 0
           tsca = 0
@@ -96,7 +96,7 @@
           @tb << ["TOTALI:", "", "", tven, tres, "", tfatt, taccr, prg]
           @tb.insert(0, col_head) # inserisco riga intestazione
         end
-        @tp == "M" ? cw = {0=>70, 4=>40, 5=>40, 6=>40, 7=>40, 8=>40} : cw = {0=>70, 4=>45, 5=>65, 6=>65, 7=>65, 8=>45}
+        @tp == "M" ? cw = {0=>70, 1=>40, 4=>40, 5=>40, 6=>40, 7=>40, 8=>40} : cw = {0=>70, 4=>45, 5=>65, 6=>65, 7=>65, 8=>45}
         pdf.table(@tb, :column_widths =>cw) do |tab|
           tab.row(0).font_style = :bold
           tab.row(tab.row_length-1).font_style = :bold
