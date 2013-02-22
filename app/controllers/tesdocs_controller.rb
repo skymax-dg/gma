@@ -343,6 +343,20 @@ class TesdocsController < ApplicationController
     end
   end
 
+  def giacyearprec
+    tesdoc = Tesdoc.find(params[:id])
+    idcontoprec=Conto.find_by_anagen_id_and_tipoconto_and_annoese(tesdoc.conto.anagen_id,
+                                                                  tesdoc.conto.tipoconto,
+                                                                  tesdoc.annoese-1).id
+    if tesdoc.giacyearprec(idcontoprec)
+      flash[:success] = "Righe documento aggiunte con successo."
+      redirect_to tesdoc
+    else
+      flash[:alert] = "Errori in inserimento Righe."
+      redirect_to tesdoc
+    end
+  end
+
   def addtesrigdoc_fromxls
     begin
       @errors = []

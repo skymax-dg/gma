@@ -93,6 +93,7 @@ Gma::Application.routes.draw do
     end
     member do
       get :add1row4article
+      get :giacyearprec
       get :delrowqta0
       get :stp
       get :dati_ind

@@ -72,6 +72,76 @@ class Tesdoc < ActiveRecord::Base
     return true
   end
 
+  def add1row4article(azienda)
+    newprg = self.lastprgrig + 1
+    error = 0
+    Article.azienda(azienda).all(:order => :descriz).each do |art|
+      rigdoc = self.rigdocs.build
+      rigdoc.prgrig     = newprg
+      rigdoc.article_id = art.id
+      rigdoc.descriz    = art.descriz
+      rigdoc.qta        = 0
+      rigdoc.sconto     = self.sconto
+#      rigdoc.prezzo     = art.prezzo * (1 - rigdoc.sconto / 100)
+      rigdoc.prezzo     = art.prezzo
+      newprg += 1
+      if rigdoc.save
+      else
+        error = 1
+      end
+    end
+    return false if error == 1
+    return true
+  end
+
+  def giacyearprec(idcontoprec)
+    newprg = self.lastprgrig + 1
+    error = 0
+    Rigdoc.find_by_sql("SELECT tmp1.article_id, tmp1.descriz, sum(qtatot) as tot
+                          FROM ( SELECT rigdocs.article_id, articles.descriz, sum(rigdocs.qta) as qtatot
+                                   FROM rigdocs
+                                  INNER JOIN tesdocs ON (tesdocs.id = rigdocs.tesdoc_id)
+                                  INNER JOIN articles ON (rigdocs.article_id = articles.id)
+                                  INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
+                                  INNER JOIN contos ON (tesdocs.conto_id = contos.id)
+                                  WHERE causmags.movimpmag = 'M'
+                                    AND (causmags.tipo = 'U' OR causmags.tipo = 'R')
+                                    AND tesdocs.azienda = #{azienda}
+                                    AND tesdocs.annoese = #{annoese-1}
+                                    AND contos.id = #{idcontoprec}
+                                  GROUP BY rigdocs.article_id, articles.descriz
+                                UNION
+                                 SELECT rigdocs.article_id, articles.descriz, -sum(rigdocs.qta) as qtatot
+                                   FROM rigdocs
+                                  INNER JOIN tesdocs ON (tesdocs.id = rigdocs.tesdoc_id)
+                                  INNER JOIN articles ON (rigdocs.article_id = articles.id)
+                                  INNER JOIN causmags ON (tesdocs.causmag_id = causmags.id)
+                                  INNER JOIN contos ON (tesdocs.conto_id = contos.id)
+                                  WHERE causmags.movimpmag = 'M'
+                                    AND (causmags.tipo = 'E' OR causmags.tipo = 'V')
+                                    AND tesdocs.azienda = #{azienda}
+                                    AND tesdocs.annoese = #{annoese-1}
+                                    AND contos.id = #{idcontoprec}
+                                  GROUP BY rigdocs.article_id, articles.descriz) AS tmp1
+                         GROUP BY tmp1.article_id, tmp1.descriz
+                         ORDER BY tmp1.article_id").each do |giac|
+      rigdoc = self.rigdocs.build
+      rigdoc.prgrig     = newprg
+      rigdoc.article_id = giac.article_id
+      rigdoc.descriz    = giac.descriz
+      rigdoc.qta        = giac.tot
+      rigdoc.sconto     = 0
+      rigdoc.prezzo     = 0
+      newprg += 1
+      if rigdoc.save
+      else
+        error = 1
+      end
+    end
+    return false if error == 1
+    return true
+  end
+
   def delrowqta0
     Rigdoc.find_by_sql("SELECT * FROM rigdocs 
                          WHERE rigdocs.tesdoc_id = #{self.id} 
