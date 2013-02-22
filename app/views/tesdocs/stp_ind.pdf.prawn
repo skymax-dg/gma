@@ -10,7 +10,7 @@ while nr <= @copie do
                           {:text => "#{@ind1}\n#{@ind2}\n", :size => 20},
                           {:text => "Telefono: #{@riftel}", :styles => [:bold], :size => 20}
                           ],
-                         :at => [60,715], :width => 568, :height => 200,
+                         :at => [60,715], :width => 500, :height => 200,
                          :overflow => :shrink_to_fit, :size => 20, :min_font_size => 12
   #Numerazione colli
   pdf.draw_text "COLLO #{nr} di #{@copie}",
@@ -24,7 +24,7 @@ while nr <= @copie do
                             {:text => "#{@ind1}\n#{@ind2}\n", :size => 20},
                             {:text => "Telefono: #{@riftel}", :styles => [:bold], :size => 20}
                             ],
-                           :at => [60,285], :width => 568, :height => 200,
+                           :at => [60,285], :width => 500, :height => 200,
                            :overflow => :shrink_to_fit, :size => 20, :min_font_size => 12
     #Numerazione colli
     pdf.draw_text "COLLO #{nr} di #{@copie}",
