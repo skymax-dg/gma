@@ -7,7 +7,7 @@ class Article < ActiveRecord::Base
   attr_accessible :codice, :descriz, :prezzo, :azienda, :categ, :iva_id, :costo
 
   validates :codice, :descriz, :azienda, :categ, :iva_id, :costo, :presence => true
-  validates :codice, :descriz, :uniqueness => {:case_sensitive => false}
+  #validates :codice, :descriz, :uniqueness => {:case_sensitive => false}
   validates :codice,  :length => {:maximum => 20}
   validates :descriz, :length => {:maximum => 50}
   
