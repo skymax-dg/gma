@@ -28,7 +28,7 @@ class Rigdoc < ActiveRecord::Base
 
   def impon
 #    self.qta * self.prezzo
-    self.qta>0&&self.prezzo>0 ? self.qta*(self.prezzo*(100-self.sconto)/100) : 0
+    self.qta != 0 && self.prezzo>0 ? self.qta*(self.prezzo*(100-self.sconto)/100) : 0
   end
 
   def imp_list
