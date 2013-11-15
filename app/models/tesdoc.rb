@@ -267,7 +267,7 @@ class Tesdoc < ActiveRecord::Base
         end
         @rigdoc.sconto = row[hshcol[:sconto]]||0
         @rigdoc.prgrig = prgrig
-        if @rigdoc.qta > 0
+        if @rigdoc.qta != 0
           if @rigdoc.save
             prgrig += 1
             success << "Caricato articolo: #{row[hshcol[:article_id_bycod]]} #{@rigdoc.descriz} 
@@ -345,7 +345,7 @@ class Tesdoc < ActiveRecord::Base
       @rigdoc.prezzo  = row[colrig[:col_prezzo]]
       @rigdoc.prgrig  = row[colrig[:col_prgrig]].to_i
       @rigdoc.sconto  = 0
-      if @rigdoc.qta > 0
+      if @rigdoc.qta != 0
         if @rigdoc.save
           success << "Caricata riga. Azienda: #{@tesdoc.azienda} num_doc: #{@tesdoc.num_doc} 
                       data_doc: #{@tesdoc.data_doc} idarticolo: #{@rigdoc.article_id} 
