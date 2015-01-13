@@ -10,6 +10,8 @@ gem 'pg'
 
 gem 'json'
 
+gem 'rb-readline', '~> 0.4.2'
+
 gem 'prawn'
 gem 'prawn-rails'
 

@@ -18,6 +18,15 @@ test:
     host: localhost
     encoding: UTF8
 
+
+production0:
+    adapter: postgresql
+    database: gma_dev
+    username: postgres
+    password: postgres
+    host: localhost
+    encoding: UTF8
+
 production:
     adapter: postgresql
     database: gma_dev
