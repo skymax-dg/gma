@@ -1,9 +1,9 @@
 #   gem pg
 development:
     adapter: postgresql
-    database: gma_dev
-    username: postgres
-    password: Postgre_sql
+    database: gma_prod
+    username: leo-admin
+    password: leo137skx]]
     host: localhost
     encoding: UTF8
 
@@ -14,7 +14,7 @@ test:
     adapter: postgresql
     database: gma_tst
     username: postgres
-    password: Postgre_sql
+    password: postgres
     host: localhost
     encoding: UTF8
 
@@ -29,8 +29,8 @@ production0:
 
 production:
     adapter: postgresql
-    database: gma_dev
-    username: postgres
-    password: Postgre_sql
+    database: gma_prod
+    username: leo-admin
+    password: leo137skx]]
     host: localhost
     encoding: UTF8
