@@ -37,7 +37,7 @@ namespace :new_year do
 
     fn = get_fn( "Nome file excel con conti?", ENV['file'])
 
-    anno = get_int( "anno da iniziare", 2012, 2099, 2015)
+    anno = get_int( "anno da iniziare", 2012, 2099, nil)
 
     conferma = Readline.readline("Confermare importazione conti da file %s per iniziare anno %d? [S/s-N/n]"%[fn, anno])
     if conferma.downcase != 's'
