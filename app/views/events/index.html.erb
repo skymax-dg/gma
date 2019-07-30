@@ -1,0 +1,26 @@
+<%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
+
+<div class="button-bar">
+  <ul class="button-group">
+    <li>
+      <%= link_to "NUOVO", new_event_path(type: @type), class: "button radius small new foundicon-add-doc" %>
+    </li>
+  </ul>
+</div>
+<% unless @events.nil?||@events.empty? %>
+  <table>
+    <thead>
+      <tr>
+        <th width="6%">Codice</th>
+        <th width="10%">Tipo</th>
+        <th width="65%">Nominat./Ragione sociale</th>
+        <th width="15%">P.I.-C.F.</th>
+        <th width="4%"></th>
+      </tr>
+    </thead>
+    <tbody>
+        <%= render :partial => 'line', :collection => @events %>
+    </tbody>
+  </table>
+  <%= will_paginate @events %>
+<% end %>

@@ -1,5 +1,7 @@
 Gma::Application.routes.draw do
 
+  resources :events
+
   root :to => "menu#home"
 
   get "menu/contact"
