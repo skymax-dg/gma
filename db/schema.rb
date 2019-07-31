@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130206135914) do
+ActiveRecord::Schema.define(:version => 20190730151505) do
 
   create_table "agentes", :force => true do |t|
     t.integer  "anagen_id"
@@ -163,6 +163,12 @@ ActiveRecord::Schema.define(:version => 20130206135914) do
 
   add_index "costos", ["data"], :name => "index_costos_on_data"
   add_index "costos", ["tesdoc_id"], :name => "index_costos_on_tesdoc_id"
+
+  create_table "events", :force => true do |t|
+    t.string   "type",       :limit => 24
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+  end
 
   create_table "ivas", :force => true do |t|
     t.integer  "codice",                                                  :null => false
