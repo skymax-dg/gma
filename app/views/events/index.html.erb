@@ -11,16 +11,12 @@
   <table>
     <thead>
       <tr>
-        <th width="6%">Codice</th>
-        <th width="10%">Tipo</th>
-        <th width="65%">Nominat./Ragione sociale</th>
-        <th width="15%">P.I.-C.F.</th>
+        <th width="15%">Descrizione</th>
         <th width="4%"></th>
       </tr>
     </thead>
     <tbody>
-        <%= render :partial => 'line', :collection => @events %>
+        <%= render :partial => 'line', :collection => @events, as: :item %>
     </tbody>
   </table>
-  <%= will_paginate @events %>
 <% end %>

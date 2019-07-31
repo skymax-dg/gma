@@ -34,6 +34,18 @@
             <li> <%= link_to "STATI/NAZIONI", paeses_path %> </li>
             <li> <%= link_to "IVA/ESENZIONI", ivas_path %> </li>
             <li> <%= link_to "AGENTI", agentes_path %> </li>
+            <li> <%= link_to "CLIENTI",        anagens_path(type: :Customer) %> </li>
+            <li> <%= link_to "FORNITORI",      anagens_path(type: :Supplier) %> </li>
+            <li> <%= link_to "INSEGNANTI",     anagens_path(type: :Teacher) %> </li>
+            <li> <%= link_to "ORGANIZZATORI",  anagens_path(type: :Organizer) %> </li>
+            <li> <%= link_to "AUTORI",         anagens_path(type: :Author) %> </li>
+            <li> <%= link_to "ABBONATI",       anagens_path(type: :Subscriber) %> </li>
+            <li> <%= link_to "STUDENTI",       anagens_path(type: :Student) %> </li>
+            <li> <%= link_to "CORSI",          events_path(type: :Course) %> </li>
+            <li> <%= link_to "CONFERENZE",     events_path(type: :Conference) %> </li>
+            <li> <%= link_to "PRESENTAZIONI",  events_path(type: :Presentation) %> </li>
+            <li> <%= link_to "STAMPE LIBRI",   events_path(type: :BookPrint) %> </li>
+            <li> <%= link_to "USCITA RIVISTA", events_path(type: :MagRelease) %> </li>
           </ul>
         </li>
         <li class="has-dropdown">

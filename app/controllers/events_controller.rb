@@ -30,7 +30,7 @@ class EventsController < ApplicationController
     @event = Event.new
     h = Event.decode_table(params[:type] && params[:type].to_sym || :Course)
     @events = h[:cls].all
-    @title = "Nuovo %s"%[h[:singular]]
+    @title = "Inserimento %s"%[h[:singular]]
     @type = h[:type]
 
     respond_to do |format|

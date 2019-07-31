@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20190730151505) do
+ActiveRecord::Schema.define(:version => 20190731130923) do
 
   create_table "agentes", :force => true do |t|
     t.integer  "anagen_id"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(:version => 20190730151505) do
     t.string   "sesso",       :limit => 1
     t.integer  "luogonas_id"
     t.string   "referente",   :limit => 150
+    t.string   "type"
   end
 
   add_index "anagens", ["codfis"], :name => "idx_anagens_on_codfis"
@@ -166,6 +167,7 @@ ActiveRecord::Schema.define(:version => 20190730151505) do
 
   create_table "events", :force => true do |t|
     t.string   "type",       :limit => 24
+    t.string   "desc",       :limit => 40
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
   end

@@ -4,34 +4,37 @@ class AnagensController < ApplicationController
   before_filter :force_fieldcase, :only => [:create, :update]
 
   def filter
-    @title = "Elenco Soggetti/Societa'"
     @tpfilter  = params[:tpfilter]
     @desfilter = params[:desfilter].strip
-    @anagens, nrrecord = Anagen.filter(@tpfilter, @desfilter, params[:page])
+    @anagens, nrrecord, @title = Anagen.filter(@tpfilter, @desfilter, params[:page], params[:type] && params[:type].to_sym)
     flash_cnt(nrrecord) if params[:page].nil?
     render "index"
   end
 
   def index
-    @title = "Elenco Soggetti/Societa'"
+    h = Anagen.decode_table(params[:type] && params[:type].to_sym)
+    @title = "Elenco #{h[:plural] || "Soggetti/Societa'"}"
     store_location
     #@anagens = Anagen.paginate(:page => params[:page], :per_page => 10, :order => [:denomin])
   end
 
   def show
-    @title = "Mostra Soggetto/Societa'"
     @anagen = Anagen.find(params[:id])
+    h = Anagen.decode_table(@anagen.type && @anagen.type.to_sym)
+    @title = h[:singular] || "Soggetto/Societa'"
   end
 
   def new
-    @title = "Nuovo Soggetto/Societa'"
+    h = Anagen.decode_table(params[:type] && params[:type].to_sym)
+    @title = "Inserimento #{h[:singular] || "Soggetti/Societa'"}"
     @anagen = Anagen.new
     @anagen.codice = Anagen.newcod
   end
 
   def edit
-    @title = "Modifica Soggetto/Societa'"
     @anagen = Anagen.find(params[:id])
+    h = Anagen.decode_table(@anagen.type && @anagen.type.to_sym)
+    @title = "Modifica #{h[:singular] || "Soggetti/Societa'"}"
   end
 
   def chg_tipo

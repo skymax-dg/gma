@@ -1,6 +1,7 @@
 <fieldset>
   <legend> Ricerca anagrafiche </legend>
   <%= form_tag(:filter_anagens, :method => :get) do %>
+  <%= hidden_field_tag :type, params[:type] %>
     <div class="three columns">
       <%= select_tag("tpfilter",
                      options_for_select([["Ragione sociale", "RS"], ["Codice fiscale", "CF"],

@@ -1,6 +1,9 @@
 <%#= render :partial => 'shared/error_messages', :locals => {:f => @anagen} %>
 <%= form_for(@anagen, :remote => (action_name=='new')) do |f| %>
   <%= f.hidden_field :codice %>
+  <% if @event.new_record?  %>
+    <%= f.hidden_field :type, value: params[:type] || @anagen.type %>
+  <% end  %>
   <div class="row">
     <div class="five columns">
       <%= f.label "Codice" %>
@@ -62,7 +65,7 @@
     <hr />
     <div class="twelve columns">
       <%= f.submit 'SALVA', :class => "button radius small success foundicon-checkmark" %>
-      <%= link_to 'ANNULLA', anagens_path, :class => "button radius small alert foundicon-remove" %>
+      <%= link_to 'ANNULLA', anagens_path(type: params[:type] || @anagen.type), :class => "button radius small alert foundicon-remove" %>
     </div>
   </div>
 <% end %>

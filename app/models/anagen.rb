@@ -10,7 +10,7 @@ class Anagen < ActiveRecord::Base
 #  default_scope :order => 'anagens.denomin ASC' Non funziona perchè c'è una select max
 
   attr_accessible :codice, :tipo, :denomin, :codfis, :pariva, :dtnas, :luogonas_id, :sesso,
-                  :telefono, :email, :fax, :web, :sconto, :referente
+                  :telefono, :email, :fax, :web, :sconto, :referente, :type
 
   validates :codice, :tipo, :denomin, :presence => true
   validates :codice, :denomin, :uniqueness => true
@@ -31,7 +31,7 @@ class Anagen < ActiveRecord::Base
 
   TIPO = $ParAzienda['ANAGEN']['TIPO_SOGGETTO']
 
-  def self.filter (tp, des, page)
+  def self.filter (tp, des, page, type=nil)
     # Esegure la ricerca delle anagrafiche soggetto in base ai filtri impostati
     hsh = {"RS" => "denomin", "CF" => "codfis", "PI" => "pariva"}
     nrrecord = nil
@@ -42,10 +42,16 @@ class Anagen < ActiveRecord::Base
 
     # Se il param. page non è valorizzato allora stiamo facendo una nuova ricerca altrimenti
     # abbiamo richiesto una pagina successiva o precedente e non serve la count
-    nrrecord = where([whana, hshvar]).count if page.nil?
+    Rails.logger.info "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX type: #{type} (#{type.class})"
+    h = Anagen.decode_table(type)
+    Rails.logger.info "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX h: #{h}"
+    cls = h[:cls] || Anagen
+    Rails.logger.info "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX cls: #{cls}"
+    nrrecord = cls.where([whana, hshvar]).count if page.nil?
+    title = "Elenco #{h[:plural] || "Soggetti/Societa'"}"
 
-    return where([whana, hshvar]).paginate(:page => page, :per_page => 10,
-                                           :order => "denomin ASC"), nrrecord unless hsh[tp].nil?
+    return cls.where([whana, hshvar]).paginate(:page => page, :per_page => 10,
+                                           :order => "denomin ASC"), nrrecord, title unless hsh[tp].nil?
   end
 
   def sedelegale
@@ -108,6 +114,25 @@ class Anagen < ActiveRecord::Base
                   WHERE contos.tipoconto = '#{tipoconto.to_s}' AND contos.azienda = #{azienda.to_s} 
                   ORDER BY anagens.denomin")
   end
+
+  def self.tables_list
+    list  = []
+    list << {plural: 'Clienti',       singular: "Cliente",       type: :Customer,   cls: Customer}
+    list << {plural: 'Fornitori',     singular: "Fornitore",     type: :Supplier,   cls: Supplier}
+    list << {plural: 'Insegnanti',    singular: "Insegnante",    type: :Teacher,    cls: Teacher}
+    list << {plural: 'Organizzatori', singular: "Organizzatore", type: :Organizer,  cls: Organizer}
+    list << {plural: 'Autori',        singular: "Autore",        type: :Author,     cls: Author}
+    list << {plural: 'Abbonati',      singular: "Abbonato",      type: :Subscriber, cls: Subscriber}
+    list << {plural: 'Studenti',      singular: "Studente",      type: :Student,    cls: Student}
+    #list << {plural: '', singular: "" ,type: , cls: }
+
+    list.sort { |e1,e2| e1[:plural] <=> e2[:plural] }
+  end
+
+  def self.decode_table(cls)
+    self.tables_list.find { |r| r[:type] == cls } || {}
+  end
+
   private
     def require_no_contos
       self.errors.add :base, "Almeno un conto fa riferimento all' anagrafica che si desidera eliminare."

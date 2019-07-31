@@ -1,9 +1,17 @@
-<%= form_for(@event, :remote => (action_name=='new')) do |f| %>
-  <%= f.hidden_field :type %>
+<%= form_for(@event) do |f| %>
+  <% if @event.new_record?  %>
+    <%= f.hidden_field :type, value: params[:type]  %>
+  <% end  %>
     <hr />
+
+    <div class="twelve columns">
+      <%= f.label "Descrizione" %>
+      <%= f.text_field :desc %>
+    </div>
+
     <div class="twelve columns">
       <%= f.submit 'SALVA', :class => "button radius small success foundicon-checkmark" %>
-      <%= link_to 'ANNULLA', anagens_path, :class => "button radius small alert foundicon-remove" %>
+      <%= link_to 'ANNULLA', events_path(type: params[:type] || @event.type), :class => "button radius small alert foundicon-remove" %>
     </div>
   </div>
 <% end %>
