@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   attr_accessible :azienda, :login, :pwd, :pwd_confirmation
 
   validates :login, :presence => true,
-                    :uniqueness => {:case_sensitive => false},
+                    :uniqueness => {:case_sensitive => false, scope: :azienda},
                     :length => { :maximum => 20, :too_long  => "Lunghezza massima permessa: 20 caratteri" }
   validates :pwd, :presence => true,
   				  :confirmation => true,
