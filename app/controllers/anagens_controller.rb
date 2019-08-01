@@ -6,35 +6,32 @@ class AnagensController < ApplicationController
   def filter
     @tpfilter  = params[:tpfilter]
     @desfilter = params[:desfilter].strip
-    @anagens, nrrecord, @title = Anagen.filter(@tpfilter, @desfilter, params[:page], params[:type] && params[:type].to_sym)
+    @anagens, nrrecord = Anagen.filter(@tpfilter, @desfilter, params[:page])
     flash_cnt(nrrecord) if params[:page].nil?
+    @title = "Elenco Soggetti/Societa'"
     render "index"
   end
 
   def index
-    h = Anagen.decode_table(params[:type] && params[:type].to_sym)
-    @title = "Elenco #{h[:plural] || "Soggetti/Societa'"}"
+    @title = "Elenco Soggetti/Societa'"
     store_location
     #@anagens = Anagen.paginate(:page => params[:page], :per_page => 10, :order => [:denomin])
   end
 
   def show
     @anagen = Anagen.find(params[:id])
-    h = Anagen.decode_table(@anagen.type && @anagen.type.to_sym)
-    @title = h[:singular] || "Soggetto/Societa'"
+    @title = "Soggetto/Societa'"
   end
 
   def new
-    h = Anagen.decode_table(params[:type] && params[:type].to_sym)
-    @title = "Inserimento #{h[:singular] || "Soggetti/Societa'"}"
+    @title = "Inserimento Soggetto/Societa'"
     @anagen = Anagen.new
     @anagen.codice = Anagen.newcod
   end
 
   def edit
     @anagen = Anagen.find(params[:id])
-    h = Anagen.decode_table(@anagen.type && @anagen.type.to_sym)
-    @title = "Modifica #{h[:singular] || "Soggetti/Societa'"}"
+    @title = "Modifica Soggetto/Societa'"
   end
 
   def chg_tipo

@@ -1,9 +1,6 @@
 <%#= render :partial => 'shared/error_messages', :locals => {:f => @anagen} %>
 <%= form_for(@anagen, :remote => (action_name=='new')) do |f| %>
   <%= f.hidden_field :codice %>
-  <% if @event.new_record?  %>
-    <%= f.hidden_field :type, value: params[:type] || @anagen.type %>
-  <% end  %>
   <div class="row">
     <div class="five columns">
       <%= f.label "Codice" %>
