@@ -2,6 +2,8 @@ class Event < ActiveRecord::Base
   # attr_accessible :title, :body
   attr_accessible :type, :desc
 
+  has_many :key_word_rels, as: :key_wordable
+
 
   def self.tables_list
     list  = []

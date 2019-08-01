@@ -3,6 +3,7 @@ class Article < ActiveRecord::Base
   before_destroy :require_no_rigdocs
   has_many :rigdocs
   belongs_to :iva
+  has_many :key_word_rels, as: :key_wordable
 
   attr_accessible :codice, :descriz, :prezzo, :azienda, :categ, :iva_id, :costo
 

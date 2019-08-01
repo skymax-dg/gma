@@ -1,0 +1,21 @@
+<div class="twelve columns">
+  <table>
+    <thead>
+      <tr>
+        <th>Key Word Associate</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% items.each do |item| %>
+        <tr>
+          <td><%= item.key_word.desc %></td>
+          <td>
+            <%= link_to '', manage_key_word_rels_key_word_path(id: item.key_word.id, mode: 1, kwr_id: item.id), 
+              confirm: 'Confermi?', class: "button radius tiny alert foundicon-trash", title: "Cancella" %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+  </table>
+</div>

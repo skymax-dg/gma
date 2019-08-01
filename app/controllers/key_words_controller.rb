@@ -84,4 +84,25 @@ class KeyWordsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def manage_key_word_rels
+    @key_word = KeyWord.find(params[:id])
+    notice = "OK"
+
+    case params[:mode]
+    when "0" #inserimento
+
+    when "1" #eliminazione
+      kwr_id = params[:kwr_id] && params[:kwr_id].to_i
+      if kwr_id
+        @key_word.remove_item(kwr_id)
+        notice = "KeyWord eliminata."
+      else
+        notice = "Errore. KeyWord non valida."
+      end
+
+    end
+
+    redirect_to :back, notice: notice
+  end
 end

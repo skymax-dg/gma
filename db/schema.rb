@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20190801082618) do
+ActiveRecord::Schema.define(:version => 20190801143934) do
 
   create_table "agentes", :force => true do |t|
     t.integer  "anagen_id"
@@ -180,6 +180,15 @@ ActiveRecord::Schema.define(:version => 20190801082618) do
     t.string   "flese",      :limit => 1,                                 :null => false
     t.datetime "created_at",                                              :null => false
     t.datetime "updated_at",                                              :null => false
+  end
+
+  create_table "key_word_rels", :force => true do |t|
+    t.integer  "key_word_id"
+    t.string   "desc",              :limit => 32
+    t.integer  "key_wordable_id"
+    t.string   "key_wordable_type"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
   end
 
   create_table "key_words", :force => true do |t|
