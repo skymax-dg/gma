@@ -1,5 +1,7 @@
 Gma::Application.routes.draw do
 
+  resources :key_words
+
   resources :events
 
   root :to => "menu#home"

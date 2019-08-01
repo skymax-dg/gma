@@ -1,0 +1,37 @@
+<%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
+<div class="row">
+  <div class="twelve columns button-bar">
+    <ul class="button-group">
+      <li>
+        <%= link_to 'INDIETRO', @key_word.parent || key_words_path, :class => "button radius small cancel foundicon-left-arrow" %>
+      </li>
+      <li>
+        <%= link_to 'MODIFICA', edit_key_word_path(@key_word), :class => "button radius small modify foundicon-edit" %>
+      </li>
+      <li>
+        <%= link_to 'NUOVO SOTTOELEMENTO', new_key_word_path(parent_id: @key_word.id), :class => "button radius small modify foundicon-edit" %>
+      </li>
+      <li>
+        <%= link_to 'ELIMINA', key_word_path(@key_word), :confirm => 'Confermi eliminazione?',
+                                        :method => :delete, :class => "button radius small alert foundicon-trash" %>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <%= label @key_word, "Descrizione:", :class => "right" %>
+  </div>
+  <div class="two columns left">
+    <%= @key_word.desc %>
+  </div>
+  <div class="two columns">
+    <%= label @key_word, "Percorso:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @key_word.get_dinasty %>
+  </div>
+</div>
+
+<%= render "childs" %>
