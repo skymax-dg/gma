@@ -200,6 +200,7 @@ class ArticlesController < ApplicationController
   def show
     @title = "Mostra Articolo"
     @article = Article.find(params[:id])
+    @key_words_addable = KeyWord.all
   end
 
   def new

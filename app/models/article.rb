@@ -5,6 +5,8 @@ class Article < ActiveRecord::Base
   belongs_to :iva
   has_many :key_word_rels, as: :key_wordable
 
+  has_many :key_word_rels, as: :key_wordable
+
   attr_accessible :codice, :descriz, :prezzo, :azienda, :categ, :iva_id, :costo
 
   validates :codice, :descriz, :azienda, :categ, :iva_id, :costo, :presence => true

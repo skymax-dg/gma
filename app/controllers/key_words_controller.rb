@@ -91,6 +91,14 @@ class KeyWordsController < ApplicationController
 
     case params[:mode]
     when "0" #inserimento
+      ot_id = params[:ot_id] && params[:ot_id].to_i
+      ot_cls = params[:ot_cls] 
+      if ot_id
+        @key_word.connect_item(ot_cls.constantize, ot_id)
+        notice = "KeyWord aggiunta."
+      else
+        notice = "Errore. KeyWord non valida."
+      end
 
     when "1" #eliminazione
       kwr_id = params[:kwr_id] && params[:kwr_id].to_i

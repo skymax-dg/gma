@@ -17,6 +17,7 @@ class EventsController < ApplicationController
   # GET /events/1.json
   def show
     @event = Event.find(params[:id])
+    @key_words_addable = KeyWord.all
 
     respond_to do |format|
       format.html # show.html.erb

@@ -30,3 +30,5 @@
     <%= @event.desc %>
   </div>
 </div>
+
+<%= render partial: "shared/key_word_rels", locals: {items: @event.key_word_rels, items_addable: @key_words_addable, cls: Event, id: @event.id } %>

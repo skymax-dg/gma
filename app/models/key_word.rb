@@ -17,14 +17,17 @@ class KeyWord < ActiveRecord::Base
   end
 
   def connect_item(ot_cls, ot_id)
-    key_word = KeyWord.find(kw_id)
     other    = ot_cls.find(ot_id)
 
-    other.key_word_rels.create(key_word: key_word)
+    self.key_word_rels << KeyWordRel.create(key_wordable: other)
   end
 
   def remove_item(kwr_id)
     tmp = self.key_word_rels.find(kwr_id)
     tmp.destroy
+  end
+
+  def leaf?
+    self.childs.count == 0
   end
 end
