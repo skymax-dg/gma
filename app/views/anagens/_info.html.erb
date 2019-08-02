@@ -1,0 +1,92 @@
+<div class="row">
+  <div class="two columns">
+    <%= label @anagen, "Codice:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @anagen.codice %>
+  </div>
+  <div class="two columns">
+    <%= label @anagen, "Luogo di nascita:", :class => "right" unless @anagen.tipo == "G" %>
+  </div>
+  <div class="four columns left">
+    <%= @anagen.localita.descriz unless @anagen.tipo == "G" || @anagen.localita.nil? %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @anagen, "Tipo:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= Anagen::TIPO[@anagen.tipo] %>
+  </div>
+  <div class="two columns">
+    <%= label @anagen, "Data di nascita:", :class => "right" unless @anagen.tipo == "G" %>
+  </div>
+  <div class="four columns left">
+    <%= @anagen.dtnas.strftime('%d-%m-%Y') unless @anagen.tipo == "G" || @anagen.dtnas.nil?%>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @anagen, "Denominazione:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @anagen.denomin %>
+  </div>
+  <div class="two columns">
+    <%= label @anagen, "Sesso:", :class => "right" unless @anagen.tipo == "G" %>
+  </div>
+  <div class="four columns left">
+    <%= {"F"=>"Femminile", "M"=>"Maschile"}[@anagen.sesso] unless @anagen.tipo == "G" %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @anagen, "Codice fiscale:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @anagen.codfis %>
+  </div>
+  <div class="two columns">
+    <%= label @anagen, "Partita iva:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @anagen.pariva %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @anagen, "Telefono:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @anagen.telefono %>
+  </div>
+  <div class="two columns">
+    <%= label @anagen, "Fax:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @anagen.fax %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @anagen, "E-mail:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @anagen.email %>
+  </div>
+  <div class="two columns">
+    <%= label @anagen, "Sito Web:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @anagen.web %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @anagen, "Referente:", :class => "right" %>
+  </div>
+  <div class="ten columns">
+    <%= @anagen.referente %>
+  </div>
+</div>

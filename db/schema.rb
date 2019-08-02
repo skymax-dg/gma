@@ -11,13 +11,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20190801143934) do
+ActiveRecord::Schema.define(:version => 20190802102420) do
 
   create_table "agentes", :force => true do |t|
     t.integer  "anagen_id"
     t.decimal  "provv",      :precision => 5, :scale => 2, :null => false
     t.datetime "created_at",                               :null => false
     t.datetime "updated_at",                               :null => false
+  end
+
+  create_table "anagen_articles", :force => true do |t|
+    t.integer  "anagen_id"
+    t.integer  "article_id"
+    t.integer  "mode",       :default => 0
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   create_table "anagens", :force => true do |t|
@@ -165,11 +173,20 @@ ActiveRecord::Schema.define(:version => 20190801143934) do
   add_index "costos", ["data"], :name => "index_costos_on_data"
   add_index "costos", ["tesdoc_id"], :name => "index_costos_on_tesdoc_id"
 
+  create_table "event_states", :force => true do |t|
+    t.integer  "event_id"
+    t.integer  "anagen_id"
+    t.integer  "mode"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "events", :force => true do |t|
     t.string   "type",       :limit => 24
     t.string   "desc",       :limit => 40
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
+    t.integer  "article_id"
   end
 
   create_table "ivas", :force => true do |t|

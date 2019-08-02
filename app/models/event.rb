@@ -4,6 +4,8 @@ class Event < ActiveRecord::Base
 
   has_many :key_word_rels, as: :key_wordable
 
+  belongs_to :article
+
 
   def self.tables_list
     list  = []

@@ -1,11 +1,13 @@
 class Article < ActiveRecord::Base
   #acts_as_reportable
   before_destroy :require_no_rigdocs
-  has_many :rigdocs
   belongs_to :iva
-  has_many :key_word_rels, as: :key_wordable
 
+  has_many :rigdocs
   has_many :key_word_rels, as: :key_wordable
+  has_many :anagen_articles
+  has_many :articles, through: :anagen_articles
+  has_many :events
 
   attr_accessible :codice, :descriz, :prezzo, :azienda, :categ, :iva_id, :costo
 

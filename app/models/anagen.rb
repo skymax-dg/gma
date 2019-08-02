@@ -6,6 +6,8 @@ class Anagen < ActiveRecord::Base
   has_many :contos
   has_many :anainds, :dependent => :destroy
   has_many :key_word_rels, as: :key_wordable
+  has_many :anagen_articles
+  has_many :articles, through: :anagen_articles
 
   belongs_to :localita, :foreign_key => "luogonas_id"
 
