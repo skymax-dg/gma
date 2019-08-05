@@ -3,6 +3,8 @@ class Event < ActiveRecord::Base
   attr_accessible :type, :desc
 
   has_many :key_word_rels, as: :key_wordable
+  has_many :event_states
+  has_many :anagens, through: :event_states
 
   belongs_to :article
 

@@ -6,7 +6,7 @@ class Article < ActiveRecord::Base
   has_many :rigdocs
   has_many :key_word_rels, as: :key_wordable
   has_many :anagen_articles
-  has_many :articles, through: :anagen_articles
+  has_many :anagens, through: :anagen_articles
   has_many :events
 
   attr_accessible :codice, :descriz, :prezzo, :azienda, :categ, :iva_id, :costo
