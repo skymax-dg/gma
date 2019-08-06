@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20190802102420) do
+ActiveRecord::Schema.define(:version => 20190806072343) do
 
   create_table "agentes", :force => true do |t|
     t.integer  "anagen_id"
@@ -45,6 +45,9 @@ ActiveRecord::Schema.define(:version => 20190802102420) do
     t.integer  "luogonas_id"
     t.string   "referente",   :limit => 150
     t.string   "type"
+    t.string   "codnaz",      :limit => 2
+    t.string   "codident",    :limit => 20
+    t.string   "pec",         :limit => 50
   end
 
   add_index "anagens", ["codfis"], :name => "idx_anagens_on_codfis"

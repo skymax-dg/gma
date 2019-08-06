@@ -84,9 +84,29 @@
 </div>
 <div class="row">
   <div class="two columns">
+    <%= label @anagen, "Codice nazione:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @anagen.codnaz %>
+  </div>
+  <div class="two columns">
+    <%= label @anagen, "Codice fatt. SDI:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @anagen.codident %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @anagen, "PEC:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @anagen.pec %>
+  </div>
+  <div class="two columns">
     <%= label @anagen, "Referente:", :class => "right" %>
   </div>
-  <div class="ten columns">
+  <div class="four columns">
     <%= @anagen.referente %>
   </div>
 </div>

@@ -18,7 +18,7 @@ class Anagen < ActiveRecord::Base
 #  default_scope :order => 'anagens.denomin ASC' Non funziona perchè c'è una select max
 
   attr_accessible :codice, :tipo, :denomin, :codfis, :pariva, :dtnas, :luogonas_id, :sesso,
-                  :telefono, :email, :fax, :web, :sconto, :referente
+                  :telefono, :email, :fax, :web, :sconto, :referente, :codnaz, :codident, :pec
 
   validates :codice, :tipo, :denomin, :presence => true
   validates :codice, :denomin, :uniqueness => true
