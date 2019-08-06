@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20190806074602) do
+ActiveRecord::Schema.define(:version => 20190806092541) do
 
   create_table "agentes", :force => true do |t|
     t.integer  "anagen_id"
@@ -196,11 +196,24 @@ ActiveRecord::Schema.define(:version => 20190806074602) do
   end
 
   create_table "events", :force => true do |t|
-    t.string   "type",       :limit => 24
-    t.string   "desc",       :limit => 40
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+    t.string   "type",           :limit => 24
+    t.string   "description",    :limit => 40
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
     t.integer  "article_id"
+    t.string   "timetable",      :limit => 20
+    t.text     "dressing"
+    t.integer  "duration"
+    t.integer  "quantity"
+    t.integer  "nr_item"
+    t.integer  "yr_item"
+    t.integer  "site_anagen_id"
+    t.integer  "state"
+    t.integer  "mode"
+    t.integer  "cut_off"
+    t.date     "dt_event"
+    t.date     "dt_end_isc"
+    t.date     "dt_discount"
   end
 
   create_table "ivas", :force => true do |t|

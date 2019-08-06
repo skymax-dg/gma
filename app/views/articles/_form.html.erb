@@ -55,6 +55,11 @@
       <%= f.number_field :width %>
     </div>
 
+    <div class="two columns"></div>
+    <div class="five columns">
+      <%= f.label "Stato" %>
+      <%= select(:article, :state, Article::STATES, prompt: true) %>
+    </div>
 
 
 

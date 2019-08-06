@@ -74,6 +74,15 @@
 </div>
 
 <div class="row">
+  <div class="eight columns">
+    <%= label @article, "Stato:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @article.dstate %>
+  </div>
+</div>
+
+<div class="row">
   <div class="two columns">
     <%= label @article, "Descrizione:", :class => "right" %>
   </div>

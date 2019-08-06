@@ -19,6 +19,13 @@ class Article < ActiveRecord::Base
   scope :azienda, lambda { |azd| {:conditions => ['articles.azienda = ?', azd]}}
 
   CATEG = $ParAzienda['ARTICLE']['CATEG']
+  STATES = [
+    ["In preparazione",1], 
+    ["Disponibile",2], 
+    ["In ristampa",3], 
+    ["Fuori catalogo",4], 
+    ["Nascosto",5]
+  ]
 
   def self.filter(azienda, tp, des, page)
     # Esegure la ricerca articoli in base ai filtri impostati
@@ -168,6 +175,12 @@ class Article < ActiveRecord::Base
     return data.string
   end
 
+  def dstate
+    if self.state
+      tmp = STATES.select { |x| x[1] == self.state }
+      tmp.size > 0 && tmp[0][0]
+    end
+  end
   private
     def require_no_rigdocs
       self.errors.add :base, "Almeno una riga documento fa riferimento all'articolo che si desidera eliminare."

@@ -1,17 +1,71 @@
 <%= form_for(@event) do |f| %>
-  <% if @event.new_record?  %>
-    <%= f.hidden_field :type, value: params[:type]  %>
-  <% end  %>
-    <hr />
-
+  <div class="row">
     <div class="twelve columns">
       <%= f.label "Descrizione" %>
-      <%= f.text_field :desc %>
+      <%= f.text_field :description %>
     </div>
 
-    <div class="twelve columns">
-      <%= f.submit 'SALVA', :class => "button radius small success foundicon-checkmark" %>
-      <%= link_to 'ANNULLA', events_path(type: params[:type] || @event.type), :class => "button radius small alert foundicon-remove" %>
+    <div class="two columns">
+      <%= jdate_field(:event, :dt_event, "Data evento", date: true, value: @event.dt_event, readonly: true) %>
     </div>
+    <div class="two columns">
+      <%= f.label :Orario %>
+      <%= f.text_field :timetable %>
+    </div>
+    <div class="two columns">
+      <%= f.label "Durata (gg)" %>
+      <%= f.number_field :duration %>
+    </div>
+    <div class="two columns">
+      <%= jdate_field(:event, :dt_end_isc, "Data chiusura isc", date: true, value: @event.dt_end_isc, readonly: true) %>
+    </div>
+    <div class="two columns">
+      <%= jdate_field(:event, :dt_discount, "Data limite sconto", date: true, value: @event.dt_discount, readonly: true) %>
+    </div>
+    <div class="two columns">
+      <%= f.label "GG x chiusura iscr" %>
+      <%= f.number_field :cut_off %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="two columns">
+      <%= f.label :Tiratura %>
+      <%= f.text_field :quantity %>
+    </div>
+    <div class="two columns">
+      <%= f.label "Numero x rivista" %>
+      <%= f.text_field :nr_item %>
+    </div>
+    <div class="two columns">
+      <%= f.label "Anno x rivista" %>
+      <%= f.text_field :yr_item %>
+    </div>
+    <div class="two columns">
+      <%= f.label "Stato" %>
+      <%= select(:event, :state, Event::STATES, prompt: true) %>
+    </div>
+    <div class="two columns">
+      <%= f.label "Mode" %>
+      <%= f.number_field :mode %>
+    </div>
+    <div class="two columns">
+    </div>
+  </div>
+  <div class="row">
+    <div class="four columns">
+      <%= f.label "Codice anagrafica sede" %>
+      <%= number_field :site_anagen_code, nil, value: @event.site_anagen && @event.site_anagen.codice %>
+    </div>
+    <div class="twelve columns">
+      <%= f.label "Abbigliamento consigliato" %>
+      <%= f.text_area :dressing, rows: 4 %>
+    </div>
+  </div>
+
+
+  <div class="twelve columns">
+    <%= f.submit 'SALVA', :class => "button radius small success foundicon-checkmark" %>
+    <%= link_to 'ANNULLA', events_path(type: params[:type] || @event.type), :class => "button radius small alert foundicon-remove" %>
   </div>
 <% end %>
