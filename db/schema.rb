@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20190806072343) do
+ActiveRecord::Schema.define(:version => 20190806074602) do
 
   create_table "agentes", :force => true do |t|
     t.integer  "anagen_id"
@@ -81,6 +81,17 @@ ActiveRecord::Schema.define(:version => 20190806072343) do
     t.string   "categ",      :limit => 2,                                  :default => "GE", :null => false
     t.integer  "iva_id",                                                   :default => 1,    :null => false
     t.decimal  "costo",                     :precision => 8,  :scale => 2, :default => 0.0,  :null => false
+    t.text     "subtitle"
+    t.text     "sinossi"
+    t.text     "abstract"
+    t.text     "quote"
+    t.integer  "weigth"
+    t.integer  "ppc",                                                      :default => 1
+    t.integer  "ppb"
+    t.integer  "state"
+    t.integer  "width"
+    t.integer  "height"
+    t.date     "dtpub"
   end
 
   add_index "articles", ["azienda", "codice"], :name => "idx_articles_on_codice", :unique => true

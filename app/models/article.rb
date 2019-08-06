@@ -9,7 +9,7 @@ class Article < ActiveRecord::Base
   has_many :anagens, through: :anagen_articles
   has_many :events
 
-  attr_accessible :codice, :descriz, :prezzo, :azienda, :categ, :iva_id, :costo
+  attr_accessible :codice, :descriz, :prezzo, :azienda, :categ, :iva_id, :costo, :subtitle, :sinossi, :abstract, :quote, :weigth, :ppc, :ppb, :state, :width, :height, :dtpub
 
   validates :codice, :descriz, :azienda, :categ, :iva_id, :costo, :presence => true
   #validates :codice, :descriz, :uniqueness => {:case_sensitive => false}

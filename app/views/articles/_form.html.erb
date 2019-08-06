@@ -11,10 +11,6 @@
       <%= f.label :Categoria %>
       <%= select(:article, :categ, Article::CATEG.invert.sort) %>
     </div>
-    <div class="twelve columns">
-      <%= f.label :descrizione %>
-      <%= f.text_field :descriz %>
-    </div>
     <div class="two columns">
       <%= f.label "Prezzo di vendita" %>
       <%= f.text_field :prezzo %>
@@ -29,6 +25,62 @@
       <%= f.label :Iva %>
       <%= collection_select :article, :iva_id, Iva.all, :id, :descriz, {:include_blank => true} %>
     </div>
+
+    <div class="two columns">
+      <%= f.label "Peso (gr)" %>
+      <%= f.number_field :weigth %>
+    </div>
+    <div class="one columns"></div>
+    <div class="two columns">
+      <%= jdate_field(:article, :dtpub, "Data pubblicazione", date: true, value: @article.dtpub, readonly: true) %>
+    </div>
+    <div class="two columns"></div>
+    <div class="two columns">
+      <%= f.label "Pezzi x conf" %>
+      <%= f.number_field :ppc %>
+    </div>
+    <div class="one columns"></div>
+    <div class="two columns">
+      <%= f.label "Pezzi x scatola" %>
+      <%= f.number_field :ppb %>
+    </div>
+
+    <div class="two columns">
+      <%= f.label "Altezza (mm)" %>
+      <%= f.number_field :height %>
+    </div>
+    <div class="one columns"></div>
+    <div class="two columns">
+      <%= f.label "Larghezza (mm)" %>
+      <%= f.number_field :width %>
+    </div>
+
+
+
+
+
+
+    <div class="twelve columns">
+      <%= f.label :descrizione %>
+      <%= f.text_field :descriz %>
+    </div>
+    <div class="twelve columns">
+      <%= f.label :sottotitolo %>
+      <%= f.text_field :subtitle %>
+    </div>
+    <div class="twelve columns">
+      <%= f.label :sinossi %>
+      <%= f.text_area :sinossi, rows: 4 %>
+    </div>
+    <div class="twelve columns">
+      <%= f.label :estratto %>
+      <%= f.text_area :abstract, rows: 4 %>
+    </div>
+    <div class="twelve columns">
+      <%= f.label :commento %>
+      <%= f.text_area :quote, rows: 4 %>
+    </div>
+
     <div class="twelve columns">
       <%= f.submit 'SALVA', :class => "button radius small success foundicon-checkmark" %>
       <%= link_to 'ANNULLA', resque_location(:back), :class => "button radius small alert foundicon-remove" %>
