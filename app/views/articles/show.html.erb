@@ -14,43 +14,6 @@
   </ul>
   <%= render :partial => 'btn_stp' %>
 </div>
-<div class="row">
-  <div class="two columns">
-    <%= label @article, "Codice:", :class => "right" %>
-  </div>
-  <div class="ten columns left">
-    <%= @article.codice %>
-  </div>
-</div>
-<div class="row">
-  <div class="two columns">
-    <%= label @article, "Categoria:", :class => "right" %>
-  </div>
-  <div class="ten columns left">
-    <%= Article::CATEG[@article.categ] %>
-  </div>
-</div>
-<div class="row">
-  <div class="two columns">
-    <%= label @article, "Descrizione:", :class => "right" %>
-  </div>
-  <div class="ten columns left">
-    <%= @article.descriz %>
-  </div>
-</div>
-<div class="row">
-  <div class="two columns">
-    <%= label @article, "Prezzo di vendita:", :class => "right" %>
-  </div>
-  <div class="ten columns left">
-    <%= @article.prezzo %>
-  </div>
-</div>
-<div class="row">
-  <div class="two columns">
-    <%= label @article, "Prezzo di acquisto:", :class => "right" %>
-  </div>
-  <div class="ten columns left">
-    <%= @article.costo %>
-  </div>
-</div>
+
+<%= render "info" %>
+<%= render partial: "shared/key_word_rels", locals: {items: @article.key_word_rels, items_addable: @key_words_addable, cls: Article, id: @article.id } %>

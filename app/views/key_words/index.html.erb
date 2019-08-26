@@ -3,11 +3,11 @@
 <div class="button-bar">
   <ul class="button-group">
     <li>
-      <%= link_to "NUOVO", new_event_path(), class: "button radius small new foundicon-add-doc" %>
+      <%= link_to "NUOVO", new_key_word_path, class: "button radius small new foundicon-add-doc" %>
     </li>
   </ul>
 </div>
-<% unless @events.nil?||@events.empty? %>
+<% unless @key_words.nil?||@key_words.empty? %>
   <table>
     <thead>
       <tr>
@@ -16,7 +16,7 @@
       </tr>
     </thead>
     <tbody>
-        <%= render :partial => 'line', :collection => @events, as: :item %>
+        <%= render :partial => 'line', :collection => @key_words, as: :item %>
     </tbody>
   </table>
 <% end %>

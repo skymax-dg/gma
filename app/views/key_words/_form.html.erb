@@ -1,0 +1,14 @@
+<%= form_for(@key_word) do |f| %>
+    <%= f.hidden_field :parent_id, value: params[:parent_id]  %>
+    <div class="twelve columns">
+      <%= f.label "Descrizione" %>
+      <%= f.text_field :desc %>
+    </div>
+
+
+    <div class="twelve columns">
+      <%= f.submit 'SALVA', :class => "button radius small success foundicon-checkmark" %>
+      <%= link_to 'ANNULLA', key_words_path, :class => "button radius small alert foundicon-remove" %>
+    </div>
+  </div>
+<% end %>

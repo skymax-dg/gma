@@ -11,13 +11,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20190730151505) do
+ActiveRecord::Schema.define(:version => 20190806092541) do
 
   create_table "agentes", :force => true do |t|
     t.integer  "anagen_id"
     t.decimal  "provv",      :precision => 5, :scale => 2, :null => false
     t.datetime "created_at",                               :null => false
     t.datetime "updated_at",                               :null => false
+  end
+
+  create_table "anagen_articles", :force => true do |t|
+    t.integer  "anagen_id"
+    t.integer  "article_id"
+    t.integer  "mode",       :default => 0
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   create_table "anagens", :force => true do |t|
@@ -36,6 +44,10 @@ ActiveRecord::Schema.define(:version => 20190730151505) do
     t.string   "sesso",       :limit => 1
     t.integer  "luogonas_id"
     t.string   "referente",   :limit => 150
+    t.string   "type"
+    t.string   "codnaz",      :limit => 2
+    t.string   "codident",    :limit => 20
+    t.string   "pec",         :limit => 50
   end
 
   add_index "anagens", ["codfis"], :name => "idx_anagens_on_codfis"
@@ -69,6 +81,17 @@ ActiveRecord::Schema.define(:version => 20190730151505) do
     t.string   "categ",      :limit => 2,                                  :default => "GE", :null => false
     t.integer  "iva_id",                                                   :default => 1,    :null => false
     t.decimal  "costo",                     :precision => 8,  :scale => 2, :default => 0.0,  :null => false
+    t.text     "subtitle"
+    t.text     "sinossi"
+    t.text     "abstract"
+    t.text     "quote"
+    t.integer  "weigth"
+    t.integer  "ppc",                                                      :default => 1
+    t.integer  "ppb"
+    t.integer  "state"
+    t.integer  "width"
+    t.integer  "height"
+    t.date     "dtpub"
   end
 
   add_index "articles", ["azienda", "codice"], :name => "idx_articles_on_codice", :unique => true
@@ -164,10 +187,33 @@ ActiveRecord::Schema.define(:version => 20190730151505) do
   add_index "costos", ["data"], :name => "index_costos_on_data"
   add_index "costos", ["tesdoc_id"], :name => "index_costos_on_tesdoc_id"
 
+  create_table "event_states", :force => true do |t|
+    t.integer  "event_id"
+    t.integer  "anagen_id"
+    t.integer  "mode"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "events", :force => true do |t|
-    t.string   "type",       :limit => 24
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+    t.string   "type",           :limit => 24
+    t.string   "description",    :limit => 40
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.integer  "article_id"
+    t.string   "timetable",      :limit => 20
+    t.text     "dressing"
+    t.integer  "duration"
+    t.integer  "quantity"
+    t.integer  "nr_item"
+    t.integer  "yr_item"
+    t.integer  "site_anagen_id"
+    t.integer  "state"
+    t.integer  "mode"
+    t.integer  "cut_off"
+    t.date     "dt_event"
+    t.date     "dt_end_isc"
+    t.date     "dt_discount"
   end
 
   create_table "ivas", :force => true do |t|
@@ -178,6 +224,23 @@ ActiveRecord::Schema.define(:version => 20190730151505) do
     t.string   "flese",      :limit => 1,                                 :null => false
     t.datetime "created_at",                                              :null => false
     t.datetime "updated_at",                                              :null => false
+  end
+
+  create_table "key_word_rels", :force => true do |t|
+    t.integer  "key_word_id"
+    t.string   "desc",              :limit => 32
+    t.integer  "key_wordable_id"
+    t.string   "key_wordable_type"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+  end
+
+  create_table "key_words", :force => true do |t|
+    t.string   "desc",         :limit => 32
+    t.integer  "parent_id"
+    t.integer  "keyword_type",               :default => 0
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
   end
 
   create_table "localitas", :force => true do |t|

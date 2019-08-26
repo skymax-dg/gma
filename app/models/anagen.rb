@@ -2,15 +2,23 @@ class Anagen < ActiveRecord::Base
   #has_many :prezzoarticclis, :foreign_key => "anag_id",
   #                           :dependent => :destroy
   before_destroy :require_no_contos
+
   has_many :contos
   has_many :anainds, :dependent => :destroy
+  has_many :key_word_rels, as: :key_wordable
+  has_many :anagen_articles
+  has_many :articles, through: :anagen_articles
+  has_many :event_states
+  has_many :events, through: :event_states
+
   belongs_to :localita, :foreign_key => "luogonas_id"
+
   has_one :agente, :dependent => :destroy
   
 #  default_scope :order => 'anagens.denomin ASC' Non funziona perchè c'è una select max
 
   attr_accessible :codice, :tipo, :denomin, :codfis, :pariva, :dtnas, :luogonas_id, :sesso,
-                  :telefono, :email, :fax, :web, :sconto, :referente
+                  :telefono, :email, :fax, :web, :sconto, :referente, :codnaz, :codident, :pec
 
   validates :codice, :tipo, :denomin, :presence => true
   validates :codice, :denomin, :uniqueness => true
@@ -108,6 +116,25 @@ class Anagen < ActiveRecord::Base
                   WHERE contos.tipoconto = '#{tipoconto.to_s}' AND contos.azienda = #{azienda.to_s} 
                   ORDER BY anagens.denomin")
   end
+
+  #def self.tables_list
+  #  list  = []
+  #  list << {plural: 'Clienti',       singular: "Cliente",       type: :Customer,   cls: Customer}
+  #  list << {plural: 'Fornitori',     singular: "Fornitore",     type: :Supplier,   cls: Supplier}
+  #  list << {plural: 'Insegnanti',    singular: "Insegnante",    type: :Teacher,    cls: Teacher}
+  #  list << {plural: 'Organizzatori', singular: "Organizzatore", type: :Organizer,  cls: Organizer}
+  #  list << {plural: 'Autori',        singular: "Autore",        type: :Author,     cls: Author}
+  #  list << {plural: 'Abbonati',      singular: "Abbonato",      type: :Subscriber, cls: Subscriber}
+  #  list << {plural: 'Studenti',      singular: "Studente",      type: :Student,    cls: Student}
+  #  #list << {plural: '', singular: "" ,type: , cls: }
+
+  #  list.sort { |e1,e2| e1[:plural] <=> e2[:plural] }
+  #end
+
+  #def self.decode_table(cls)
+  #  self.tables_list.find { |r| r[:type] == cls } || {}
+  #end
+
   private
     def require_no_contos
       self.errors.add :base, "Almeno un conto fa riferimento all' anagrafica che si desidera eliminare."

@@ -4,11 +4,11 @@ class AnagensController < ApplicationController
   before_filter :force_fieldcase, :only => [:create, :update]
 
   def filter
-    @title = "Elenco Soggetti/Societa'"
     @tpfilter  = params[:tpfilter]
     @desfilter = params[:desfilter].strip
     @anagens, nrrecord = Anagen.filter(@tpfilter, @desfilter, params[:page])
     flash_cnt(nrrecord) if params[:page].nil?
+    @title = "Elenco Soggetti/Societa'"
     render "index"
   end
 
@@ -19,19 +19,20 @@ class AnagensController < ApplicationController
   end
 
   def show
-    @title = "Mostra Soggetto/Societa'"
     @anagen = Anagen.find(params[:id])
+    @title = "Soggetto/Societa'"
+    @key_words_addable = KeyWord.all
   end
 
   def new
-    @title = "Nuovo Soggetto/Societa'"
+    @title = "Inserimento Soggetto/Societa'"
     @anagen = Anagen.new
     @anagen.codice = Anagen.newcod
   end
 
   def edit
-    @title = "Modifica Soggetto/Societa'"
     @anagen = Anagen.find(params[:id])
+    @title = "Modifica Soggetto/Societa'"
   end
 
   def chg_tipo
