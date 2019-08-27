@@ -7,12 +7,18 @@ namespace :gma do
     KeyWordArticle.create(desc: root,   parent_id: nil)
 
     p = KeyWordArticle.where(desc: root)[0].id
-    KeyWordArticle.create(desc: 'Prodotti',   parent_id: p)
-    KeyWordArticle.create(desc: 'Digitale',   parent_id: p)
-    KeyWordArticle.create(desc: 'Libri',      parent_id: p)
-    KeyWordArticle.create(desc: 'Rivista',    parent_id: p)
-    KeyWordArticle.create(desc: 'Novita\'',   parent_id: p)
-    KeyWordArticle.create(desc: 'Promozioni', parent_id: p)
+    KeyWordArticle.create(desc: 'Prodotti',      parent_id: p)
+    KeyWordArticle.create(desc: 'Digitale',      parent_id: p)
+    KeyWordArticle.create(desc: 'Libri',         parent_id: p)
+    KeyWordArticle.create(desc: 'Rivista',       parent_id: p)
+    KeyWordArticle.create(desc: 'Tipo articolo', parent_id: p)
+    KeyWordArticle.create(desc: 'Novita\'',      parent_id: p)
+    KeyWordArticle.create(desc: 'Promozioni',    parent_id: p)
+
+    p = KeyWordArticle.where(desc: "Tipo articolo")[0].id
+    KeyWordArticle.create(desc: 'Evento',  parent_id: p)
+    KeyWordArticle.create(desc: 'Libro',   parent_id: p)
+    KeyWordArticle.create(desc: 'Rivista', parent_id: p)
 
     p = KeyWordArticle.where(desc: "Prodotti")[0].id
     KeyWordArticle.create(desc: 'Sprai PHYL',          parent_id: p)
