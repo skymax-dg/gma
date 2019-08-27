@@ -21,7 +21,7 @@ class AnagensController < ApplicationController
   def show
     @anagen = Anagen.find(params[:id])
     @title = "Soggetto/Societa'"
-    @key_words_addable = KeyWord.all
+    @key_words_addable = KeyWord.sort_by_din(KeyWordAnagen.all)
   end
 
   def new

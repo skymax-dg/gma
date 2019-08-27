@@ -1,10 +1,12 @@
 class KeyWord < ActiveRecord::Base
   # attr_accessible :title, :body
-  attr_accessible :desc, :parent_id, :keyword_type
+  attr_accessible :desc, :parent_id, :keyword_type, :type
 
   belongs_to :parent, class_name: "KeyWord" , foreign_key: "parent_id"
   has_many :childs, class_name: "KeyWord" , foreign_key: "parent_id"
-  has_many :key_word_rels
+  has_many :key_word_rels, dependent: :destroy
+
+  before_create :assign_type
 
   def get_dinasty
     if self.parent
@@ -30,4 +32,15 @@ class KeyWord < ActiveRecord::Base
   def leaf?
     self.childs.count == 0
   end
+
+  def self.sort_by_din(ds)
+    ds.sort_by { |x| x.get_dinasty }
+  end
+
+  private
+    def assign_type
+      if !self.type && self.parent
+        self.type = self.parent.type
+      end
+    end
 end
