@@ -149,6 +149,27 @@ class Anagen < ActiveRecord::Base
     kw = KeyWordAnagen.where(desc: "Stampatore").first
     self.has_key_word? kw 
   end
+
+  def connect_article(art_id)
+    if Article.exists?
+      art = Article.find(art_id)
+      unless self.has_article?(art)
+        self.articles << art
+      end
+    end
+  end
+
+  def has_article?(art)
+    self.articles.include? art
+  end
+
+  def remove_article(art_id)
+    if Article.exists?
+      art = Article.find(art_id)
+      self.articles.delete(art)
+    end
+  end
+
   private
     def require_no_contos
       self.errors.add :base, "Almeno un conto fa riferimento all' anagrafica che si desidera eliminare."

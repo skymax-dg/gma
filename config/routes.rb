@@ -76,6 +76,9 @@ Gma::Application.routes.draw do
   end
 
   resources :anagens do
+    member do
+      get :change_article
+    end
     collection do
       get :filter
       get :chg_tipo

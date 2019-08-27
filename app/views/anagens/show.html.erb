@@ -8,10 +8,10 @@
   <dd><a href="#addresses">Indirizzi</a></dd>
   <dd><a href="#keywords">Key Word</a></dd>
   <% if @anagen.author? %>
-    <dd><a href="#authors">Libri pubblicati</a></dd>
+    <dd><a href="#articles">Libri pubblicati</a></dd>
   <% end %>
   <% if @anagen.stampatore? %>
-    <dd><a href="#suppliers">Libri stampati</a></dd>
+    <dd><a href="#articles">Libri stampati</a></dd>
   <% end %>
 </dl>
 
@@ -28,10 +28,8 @@
     <%= render partial: "shared/key_word_rels", locals: {orig: @anagen, items_addable: @key_words_addable} %>
   </li>
 
-  <li id="authorsTab">
-  </li>
-
-  <li id="suppliersTab">
+  <li id="articlesTab">
+    <%= render partial: "articles" %>
   </li>
 </ul>
 

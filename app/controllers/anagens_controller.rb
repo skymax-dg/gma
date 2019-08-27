@@ -21,7 +21,10 @@ class AnagensController < ApplicationController
   def show
     @anagen = Anagen.find(params[:id])
     @title = "Soggetto/Societa'"
+    @articles = @anagen.articles.order(:descriz)
+
     @key_words_addable = KeyWord.sort_by_din(KeyWordAnagen.all)
+    @articles_addable = Article.all
   end
 
   def new
@@ -129,6 +132,19 @@ class AnagensController < ApplicationController
       flash[:alert] = $!.message
     end
 redirect_back_or @anagen
+  end
+
+  def change_article
+    anagen = Anagen.find(params[:id])
+    art_id = params[:art_id] && params[:art_id].to_i
+    mode   = params[:mode] && params[:mode].to_i
+
+    if mode == 1 
+      anagen.connect_article(art_id)
+    else 
+      anagen.remove_article(art_id)
+    end
+    redirect_to anagen
   end
 
   private

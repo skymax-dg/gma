@@ -1,0 +1,26 @@
+<div class="six columns">
+  <table>
+    <thead>
+      <tr>
+        <th width="90%">Titolo</th>
+        <th width="5%"></th>
+        <th width="5%"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @articles.each do |art| %>
+        <tr>
+          <td><%= art.descriz %></td>
+          <td><%= link_to '', art, :class => "button radius tiny view foundicon-page", :title => "Visualizza" %></td>
+          <td><%= link_to '', change_article_anagen_path(id: @anagen.id, art_id: art.id, mode: 2), :confirm => 'Confermi?', :class => "button radius tiny alert foundicon-trash", :title => "Cancella" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="six columns">
+  <%= form_tag( change_article_anagen_path(id: @anagen.id, mode: 1) ) do %>
+    <%= collection_select :art_id, @articles_addable, :id, :descriz, label: "XX" %>
+  <% end %> 
+</div>
