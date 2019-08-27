@@ -5,6 +5,7 @@ class Article < ActiveRecord::Base
 
   has_many :rigdocs
   has_many :key_word_rels, as: :key_wordable
+  has_many :key_words, through: :key_word_rels
   has_many :anagen_articles
   has_many :anagens, through: :anagen_articles
   has_many :events
@@ -181,6 +182,11 @@ class Article < ActiveRecord::Base
       tmp.size > 0 && tmp[0][0]
     end
   end
+
+  def has_key_word?(kw)
+    self.key_words.include?(kw)
+  end
+
   private
     def require_no_rigdocs
       self.errors.add :base, "Almeno una riga documento fa riferimento all'articolo che si desidera eliminare."

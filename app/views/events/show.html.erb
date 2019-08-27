@@ -18,4 +18,4 @@
 
 <%= render "info" %>
 
-<%= render partial: "shared/key_word_rels", locals: {items: @event.key_word_rels, items_addable: @key_words_addable, cls: Event, id: @event.id } %>
+<%= render partial: "shared/key_word_rels", locals: {orig: @event, items_addable: @key_words_addable} %>

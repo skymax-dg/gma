@@ -8,7 +8,7 @@
         </tr>
       </thead>
       <tbody>
-        <% items.each do |item| %>
+        <% orig.key_word_rels.each do |item| %>
           <tr>
             <td><%= item.key_word.get_dinasty %></td>
             <td>
@@ -30,11 +30,11 @@
       </thead>
       <tbody>
         <% items_addable.each do |item| %>
-          <% if item.leaf? %>
+          <% if !orig.has_key_word?(item) && item.leaf? %>
             <tr>
               <td><%= item.get_dinasty %></td>
               <td>
-                <%= link_to '', manage_key_word_rels_key_word_path(id: item.id, mode: 0, ot_id: id, ot_cls: cls),
+                <%= link_to '', manage_key_word_rels_key_word_path(id: item.id, mode: 0, ot_id: orig.id, ot_cls: orig.class),
                   class: "button radius tiny success foundicon-plus", title: "Aggiungi" %>
               </td>
             </tr>

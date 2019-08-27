@@ -16,4 +16,4 @@
 </div>
 
 <%= render "info" %>
-<%= render partial: "shared/key_word_rels", locals: {items: @article.key_word_rels, items_addable: @key_words_addable, cls: Article, id: @article.id } %>
+<%= render partial: "shared/key_word_rels", locals: {orig: @article, items_addable: @key_words_addable} %>

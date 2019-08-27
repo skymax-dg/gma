@@ -6,6 +6,7 @@ class Anagen < ActiveRecord::Base
   has_many :contos
   has_many :anainds, :dependent => :destroy
   has_many :key_word_rels, as: :key_wordable
+  has_many :key_words, through: :key_word_rels
   has_many :anagen_articles
   has_many :articles, through: :anagen_articles
   has_many :event_states
@@ -134,6 +135,20 @@ class Anagen < ActiveRecord::Base
   #def self.decode_table(cls)
   #  self.tables_list.find { |r| r[:type] == cls } || {}
   #end
+
+  def has_key_word?(kw)
+    self.key_words.include?(kw)
+  end
+
+  def author?
+    kw = KeyWordAnagen.where(desc: "Autore").first
+    self.has_key_word? kw 
+  end
+
+  def stampatore?
+    kw = KeyWordAnagen.where(desc: "Stampatore").first
+    self.has_key_word? kw 
+  end
 
   private
     def require_no_contos
