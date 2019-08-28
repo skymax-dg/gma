@@ -201,6 +201,11 @@ class ArticlesController < ApplicationController
     @title = "Mostra Articolo"
     @article = Article.find(params[:id])
     @key_words_addable = KeyWord.sort_by_din(KeyWordArticle.all)
+
+    @art_author = @article.anagen_articles.by_author
+    @art_print  = @article.anagen_articles.by_printer
+    @authors_addable  = Anagen.authors
+    @printers_addable = Anagen.printers
   end
 
   def new

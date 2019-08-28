@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20190827094538) do
+ActiveRecord::Schema.define(:version => 20190828100315) do
 
   create_table "agentes", :force => true do |t|
     t.integer  "anagen_id"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(:version => 20190827094538) do
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
   end
+
+  add_index "anagen_articles", ["mode"], :name => "index_anagen_articles_on_mode"
 
   create_table "anagens", :force => true do |t|
     t.integer  "codice",                     :null => false

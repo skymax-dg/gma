@@ -43,4 +43,9 @@ class Event < ActiveRecord::Base
   def has_key_word?(kw)
     self.key_words.include?(kw)
   end
+
+  def rivista?
+    kw = KeyWordEvent.where(desc: "Uscita rivista").first
+    Anagen.joins(:key_words).where("key_words.id = ?", kw.id)
+  end
 end

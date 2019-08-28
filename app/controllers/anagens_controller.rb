@@ -21,10 +21,11 @@ class AnagensController < ApplicationController
   def show
     @anagen = Anagen.find(params[:id])
     @title = "Soggetto/Societa'"
-    @articles = @anagen.articles.order(:descriz)
+    @art_author = @anagen.anagen_articles.by_author
+    @art_print = @anagen.anagen_articles.by_printer
 
     @key_words_addable = KeyWord.sort_by_din(KeyWordAnagen.all)
-    @articles_addable = Article.all
+    @articles_addable = Article.libri
   end
 
   def new
@@ -136,7 +137,7 @@ redirect_back_or @anagen
 
   def change_article
     anagen = Anagen.find(params[:id])
-    art_id = params[:art_id] && params[:art_id].to_i
+    art_id = params[:article_id] && params[:article_id].to_i
     mode   = params[:mode] && params[:mode].to_i
 
     if mode == 1 
@@ -144,7 +145,7 @@ redirect_back_or @anagen
     else 
       anagen.remove_article(art_id)
     end
-    redirect_to anagen
+    redirect_to :back
   end
 
   private

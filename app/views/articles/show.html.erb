@@ -18,9 +18,11 @@
   </li>
 
   <li id="authorsTab">
+    <%= render partial: "anagens", locals: {anagen_articles: @art_author, addables: @authors_addable} %>
   </li>
 
   <li id="printersTab">
+    <%= render partial: "anagens", locals: {anagen_articles: @art_print, addables: @printers_addable} %>
   </li>
 </ul>
 

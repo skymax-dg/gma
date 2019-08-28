@@ -11,7 +11,7 @@
     <dd><a href="#articles">Libri pubblicati</a></dd>
   <% end %>
   <% if @anagen.stampatore? %>
-    <dd><a href="#articles">Libri stampati</a></dd>
+    <dd><a href="#printers">Libri stampati</a></dd>
   <% end %>
 </dl>
 
@@ -29,7 +29,11 @@
   </li>
 
   <li id="articlesTab">
-    <%= render partial: "articles" %>
+    <%= render partial: "articles", locals: {anagen_articles: @art_author} %>
+  </li>
+
+  <li id="printersTab">
+    <%= render partial: "articles", locals: {anagen_articles: @art_print} %>
   </li>
 </ul>
 

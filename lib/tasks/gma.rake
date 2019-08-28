@@ -90,15 +90,19 @@ namespace :gma do
     KeyWordEvent.create(desc: root,   parent_id: nil)
 
     p = KeyWordEvent.where(desc: root)[0].id
-    KeyWordEvent.create(desc: 'Corsi',      parent_id: p)
-    KeyWordEvent.create(desc: 'Novita\'',   parent_id: p)
-    KeyWordEvent.create(desc: 'Promozioni', parent_id: p)
+    KeyWordEvent.create(desc: 'Corsi',       parent_id: p)
+    KeyWordEvent.create(desc: 'Tipo evento', parent_id: p)
+    KeyWordEvent.create(desc: 'Novita\'',    parent_id: p)
+    KeyWordEvent.create(desc: 'Promozioni',  parent_id: p)
 
     p = KeyWordEvent.where(desc: "Corsi")[0].id
     KeyWordEvent.create(desc: 'PHYL',                parent_id: p)
     KeyWordEvent.create(desc: 'Scuola triennale',    parent_id: p) 
     KeyWordEvent.create(desc: 'Trainer meditazione', parent_id: p) 
     KeyWordEvent.create(desc: 'altri corsi',         parent_id: p) 
+
+    p = KeyWordEvent.where(desc: "Tipo evento")[0].id
+    KeyWordEvent.create(desc: 'Uscita rivista',  parent_id: p)
 
     puts "OK KeyWord Event"
 
