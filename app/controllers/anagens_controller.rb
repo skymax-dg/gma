@@ -148,6 +148,20 @@ redirect_back_or @anagen
     redirect_to :back
   end
 
+  def change_event
+    anagen   = Anagen.find(params[:id])
+    event_id = params[:event_id] && params[:event_id].to_i
+    mode     = params[:mode] && params[:mode].to_i
+    mode2    = params[:mode2] && params[:mode2].to_i
+
+    if mode == 1 
+      anagen.connect_event(event_id, mode2)
+    else 
+      anagen.remove_event(event_id, mode2)
+    end
+    redirect_to :back
+  end
+
   private
     def force_fieldcase
       set_fieldcase(:anagen, [:codfis, :pariva, :fax, :telefono], [:email, :web])

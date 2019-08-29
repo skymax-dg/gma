@@ -3,15 +3,18 @@ class AnagenArticle < ActiveRecord::Base
   belongs_to :anagen
   belongs_to :article
 
+  #validates :anagen, :uniqueness => {:scope => [:article, :mode]}
+
+  AUTHOR  = 1
+  PRINTER = 2
+
   before_create :set_mode
 
- scope :by_author, where(:mode => 1)
- scope :by_printer, where(:mode => 2)
-
-  MODE = [["Autore",1], ["Stampatore",2]]
+  scope :by_author, where(:mode => AUTHOR)
+  scope :by_printer, where(:mode => PRINTER)
 
   private
     def set_mode
-      self.mode = self.anagen.author? ? 1 : 2
+      self.mode = self.anagen.author? ? AUTHOR : PRINTER
     end
 end

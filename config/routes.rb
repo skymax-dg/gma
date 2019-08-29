@@ -80,6 +80,7 @@ Gma::Application.routes.draw do
       get :filter
       get :chg_tipo
       get :change_article
+      get :change_event
     end
   end
 

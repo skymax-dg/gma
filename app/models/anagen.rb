@@ -151,7 +151,7 @@ class Anagen < ActiveRecord::Base
   end
 
   def connect_article(art_id)
-    if Article.exists?
+    if Article.exists? art_id
       art = Article.find(art_id)
       unless self.has_article?(art)
         self.articles << art
@@ -164,7 +164,7 @@ class Anagen < ActiveRecord::Base
   end
 
   def remove_article(art_id)
-    if Article.exists?
+    if Article.exists? art_id
       art = Article.find(art_id)
       self.articles.delete(art)
     end
@@ -178,6 +178,25 @@ class Anagen < ActiveRecord::Base
   def self.printers
     kw = KeyWordAnagen.where(desc: "Stampatore").first
     Anagen.joins(:key_words).where("key_words.id = ?", kw.id)
+  end
+
+  def connect_event(event_id, mode)
+    if Event.exists? event_id
+      unless self.has_event?(event_id, mode)
+        EventState.create(anagen: self, event_id: event_id, mode: mode)
+      end
+    end
+  end
+
+  def has_event?(event_id, mode)
+    self.event_states.where(mode: mode, event_id: event_id).count > 0
+  end
+
+  def remove_event(event_id, mode)
+    if Event.exists? event_id
+      event = Event.find(event_id)
+      self.events.delete(event)
+    end
   end
 
   private

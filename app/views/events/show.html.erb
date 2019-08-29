@@ -1,16 +1,10 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
 <%= render "buttons" %>
 
-
-
-
-
-
-
 <dl class="tabs">
   <dd class="active"><a href="#gen">Dati generali</a></dd>
   <% if @event.rivista? %>
-    <dd><a href="#ship">Spedizioni</a></dd>
+    <dd><a href="#ships">Spedizioni</a></dd>
   <% else %>
     <dd><a href="#teachers">Istruttori</a></dd>
     <dd><a href="#organizers">Organizzatori</a></dd>
@@ -19,8 +13,6 @@
 
   <dd><a href="#keywords">Key Word</a></dd>
 </dl>
-
-
 
 
 <ul class="tabs-content">
@@ -33,13 +25,19 @@
   </li>
 
   <li id="teachersTab">
+    <%= render partial: "event_states", locals: { event_states: @teachers, mode: EventState::TEACHER, addables: @anagens_addable } %>
   </li>
 
   <li id="organizersTab">
+    <%= render partial: "event_states", locals: { event_states: @organizers, mode: EventState::ORGANIZER, addables: @anagens_addable  } %>
   </li>
 
   <li id="subscribersTab">
+    <%= render partial: "event_states", locals: { event_states: @subscribers, mode: EventState::SUBSCRIBER, addables: @anagens_addable  } %>
+  </li>
+
+  <li id="shipsTab">
+    <%= render partial: "event_states", locals: { event_states: @shipments, mode: EventState::SHIPMENT, addables: @anagens_addable  } %>
   </li>
 </ul>
-
 
