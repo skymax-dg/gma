@@ -6,8 +6,10 @@
   <% if @event.rivista? %>
     <dd><a href="#ships">Spedizioni</a></dd>
   <% else %>
-    <dd><a href="#teachers">Istruttori</a></dd>
-    <dd><a href="#organizers">Organizzatori</a></dd>
+    <% unless @event.libro? %>
+      <dd><a href="#teachers">Istruttori</a></dd>
+      <dd><a href="#organizers">Organizzatori</a></dd>
+    <% end %>
     <dd><a href="#subscribers">Iscritti</a></dd>
   <% end %>
 

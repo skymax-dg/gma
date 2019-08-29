@@ -199,6 +199,21 @@ class Anagen < ActiveRecord::Base
     end
   end
 
+  def prenotazioni
+    kw = KeyWordEvent.where(desc: "Libri").first
+    self.events.joins(:key_words).where("key_words.id = ?", kw.id).order("events.dt_event DESC")
+  end
+
+  def corsi
+    kw = KeyWordEvent.where(desc: "Corsi").first
+    self.events.joins(:key_words).where("key_words.id = ?", kw.id).order("events.dt_event DESC")
+  end
+
+  def abbonamenti
+    kw = KeyWordEvent.where(desc: "Rivista").first
+    self.events.joins(:key_words).where("key_words.id = ?", kw.id).order("events.dt_event DESC")
+  end
+
   private
     def require_no_contos
       self.errors.add :base, "Almeno un conto fa riferimento all' anagrafica che si desidera eliminare."

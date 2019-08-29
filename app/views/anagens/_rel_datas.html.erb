@@ -7,15 +7,18 @@
 
 <ul class="tabs-content">
   <li id="tesdocsTab">
-    <%= render partial: "tesdocs" %>
+    <%= render partial: "tesdocs", locals: { tesdocs: @tesdocs} %>
   </li>
 
-  <li id="prenotTab">
+  <li id="prenotsTab">
+    <%= render partial: "events", locals: { events: @bookings} %>
   </li>
 
   <li id="eventsTab">
+    <%= render partial: "events", locals: { events: @courses} %>
   </li>
 
   <li id="subscribTab">
+    <%= render partial: "events", locals: { events: @subscriptions} %>
   </li>
 </ul>

@@ -102,7 +102,9 @@ namespace :gma do
     KeyWordEvent.create(desc: 'altri corsi',         parent_id: p) 
 
     p = KeyWordEvent.where(desc: "Tipo evento")[0].id
-    KeyWordEvent.create(desc: 'Uscita rivista',  parent_id: p)
+    KeyWordEvent.create(desc: 'Rivista',  parent_id: p)
+    KeyWordEvent.create(desc: 'Libri',  parent_id: p)
+    KeyWordEvent.create(desc: 'Corsi',  parent_id: p)
 
     puts "OK KeyWord Event"
 

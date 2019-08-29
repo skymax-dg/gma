@@ -23,6 +23,10 @@ class AnagensController < ApplicationController
     @title = "Soggetto/Societa'"
     @art_author = @anagen.anagen_articles.by_author
     @art_print = @anagen.anagen_articles.by_printer
+    #@tesdocs = @anagen.tesdocs.order(data_doc: :desc)
+    @bookings = @anagen.prenotazioni
+    @subscriptions = @anagen.abbonamenti
+    @courses = @anagen.corsi
 
     @key_words_addable = KeyWord.sort_by_din(KeyWordAnagen.all)
     @articles_addable = Article.libri

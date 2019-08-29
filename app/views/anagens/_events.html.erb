@@ -1,0 +1,20 @@
+<div class="six columns">
+  <table>
+    <thead>
+      <tr>
+        <th width="90%">Titolo</th>
+        <th width="5%"></th>
+        <th width="5%"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% events.each do |event| %>
+        <tr>
+          <td><%= event.description %></td>
+          <td><%= link_to '', event, :class => "button radius tiny view foundicon-page", :title => "Visualizza" %></td>
+          <td><%= link_to '', change_event_anagens_path(id: @anagen.id, event_id: event.id, mode: 2), :confirm => 'Confermi?', :class => "button radius tiny alert foundicon-trash", :title => "Cancella" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

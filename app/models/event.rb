@@ -45,7 +45,17 @@ class Event < ActiveRecord::Base
   end
 
   def rivista?
-    kw = KeyWordEvent.where(desc: "Uscita rivista").first
+    kw = KeyWordEvent.where(desc: "Rivista").first
+    self.has_key_word?(kw)
+  end
+
+  def libro?
+    kw = KeyWordEvent.where(desc: "Libri").first
+    self.has_key_word?(kw)
+  end
+
+  def corso?
+    kw = KeyWordEvent.where(desc: "Corsi").first
     self.has_key_word?(kw)
   end
 end
