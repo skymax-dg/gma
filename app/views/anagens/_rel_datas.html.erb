@@ -1,12 +1,12 @@
 <dl class="tabs">
-  <dd><a href="#tesdocs">Documenti</a></dd>
+  <dd class="active"><a href="#tesdocs">Documenti</a></dd>
   <dd><a href="#prenots">Prenotazioni</a></dd>
   <dd><a href="#events">Corsi / Eventi</a></dd>
   <dd><a href="#subscrib">Abbonamenti</a></dd>
 </dl>
 
 <ul class="tabs-content">
-  <li id="tesdocsTab">
+  <li id="tesdocsTab" class="active">
     <%= render partial: "tesdocs", locals: { tesdocs: @tesdocs} %>
   </li>
 
