@@ -5,7 +5,7 @@ class EventState < ActiveRecord::Base
   belongs_to :anagen
   belongs_to :event
 
-  validates :anagen_id, :uniqueness => {:scope => [:event_id, :mode]}
+  validates :anagen_id, :uniqueness => {:scope => :event_id}
 
   SHIPMENT   = 1
   TEACHER    = 2

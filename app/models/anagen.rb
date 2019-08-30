@@ -155,6 +155,7 @@ class Anagen < ActiveRecord::Base
       art = Article.find(art_id)
       unless self.has_article?(art)
         self.articles << art
+        true
       end
     end
   end
@@ -167,6 +168,7 @@ class Anagen < ActiveRecord::Base
     if Article.exists? art_id
       art = Article.find(art_id)
       self.articles.delete(art)
+      true
     end
   end
 
@@ -184,6 +186,7 @@ class Anagen < ActiveRecord::Base
     if Event.exists? event_id
       unless self.has_event?(event_id, mode)
         EventState.create(anagen: self, event_id: event_id, mode: mode)
+        true
       end
     end
   end
@@ -196,21 +199,22 @@ class Anagen < ActiveRecord::Base
     if Event.exists? event_id
       event = Event.find(event_id)
       self.events.delete(event)
+      true
     end
   end
 
   def prenotazioni
-    kw = KeyWordEvent.where(desc: "Libri").first
+    kw = KeyWordEvent.type_event_book
     self.events.joins(:key_words).where("key_words.id = ?", kw.id).order("events.dt_event DESC")
   end
 
   def corsi
-    kw = KeyWordEvent.where(desc: "Corsi").first
+    kw = KeyWordEvent.type_event_course
     self.events.joins(:key_words).where("key_words.id = ?", kw.id).order("events.dt_event DESC")
   end
 
   def abbonamenti
-    kw = KeyWordEvent.where(desc: "Rivista").first
+    kw = KeyWordEvent.type_event_magazine
     self.events.joins(:key_words).where("key_words.id = ?", kw.id).order("events.dt_event DESC")
   end
 

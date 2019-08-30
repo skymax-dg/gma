@@ -145,11 +145,11 @@ redirect_back_or @anagen
     mode   = params[:mode] && params[:mode].to_i
 
     if mode == 1 
-      anagen.connect_article(art_id)
+      st = anagen.connect_article(art_id)
     else 
-      anagen.remove_article(art_id)
+      st = anagen.remove_article(art_id)
     end
-    redirect_to :back
+    redirect_to :back, notice: st ? "Operazione completata" : "Operazione fallita"
   end
 
   def change_event
@@ -159,11 +159,11 @@ redirect_back_or @anagen
     mode2    = params[:mode2] && params[:mode2].to_i
 
     if mode == 1 
-      anagen.connect_event(event_id, mode2)
+      st = anagen.connect_event(event_id, mode2)
     else 
-      anagen.remove_event(event_id, mode2)
+      st = anagen.remove_event(event_id, mode2)
     end
-    redirect_to :back
+    redirect_to :back, notice: st ? "Operazione completata" : "Operazione fallita"
   end
 
   private
