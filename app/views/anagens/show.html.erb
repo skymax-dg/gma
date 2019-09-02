@@ -1,65 +1,40 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
-<div class="row">
-  <div class="twelve columns button-bar">
-    <ul class="button-group">
-      <li>
-        <%= link_to 'INDIETRO', resque_location(anagens_path), :class => "button radius small cancel foundicon-left-arrow" %>
-      </li>
-      <li>
-        <%= link_to 'MODIFICA', edit_anagen_path(@anagen), :class => "button radius small modify foundicon-edit" %>
-      </li>
-      <li>
-        <%= link_to 'ELIMINA', @anagen, :confirm => 'Confermi eliminazione?',
-                                        :method => :delete, :class => "button radius small alert foundicon-trash" %>
-      </li>
-    </ul>
-    <ul class="button-group">
-      <li>
-        <%= link_to 'AGGIUNGI INDIRIZZO', new_anaind_path(:id => @anagen.id), :class => "button radius small new foundicon-add-doc" %>
-      </li>
-    </ul>
-  </div>
-</div>
+<%= render partial: "buttons" %>
 
-<%= render partial: "info" %>
 <hr>
 
 <dl class="tabs">
-  <dd class="active"><a href="#addr">Indirizzi</a></dd>
-  <dd><a href="#tesdocs">Documenti</a></dd>
-  <dd><a href="#subscrib">Abbonamenti</a></dd>
-  <dd><a href="#prenot">Libri in prenotazione</a></dd>
-  <dd><a href="#events">Corsi / Eventi</a></dd>
-  <dd><a href="#books">Libri</a></dd>
+  <dd class="active"><a href="#gen">Dati anagrafici</a></dd>
+  <dd><a href="#addresses">Indirizzi</a></dd>
   <dd><a href="#keywords">Key Word</a></dd>
+  <% if @anagen.author? %>
+    <dd><a href="#articles">Libri pubblicati</a></dd>
+  <% end %>
+  <% if @anagen.stampatore? %>
+    <dd><a href="#printers">Libri stampati</a></dd>
+  <% end %>
 </dl>
 
 <ul class="tabs-content">
-  <li class=active" id="addrTab">
+  <li class="active" id="genTab">
+    <%= render partial: "info" %>
+  </li>
+
+  <li id="addressesTab">
     <%= render partial: "anainds" %>
   </li>
 
-  <li id="tesdocsTab">
-    <%= render partial: "tesdocs" %>
-  </li>
-
-  <li id="subscribTab">
-    2
-  </li>
-
-  <li id="prenotTab">
-    3
-  </li>
-
-  <li id="eventsTab">
-    4
-  </li>
-
-  <li id="booksTab">
-    5
-  </li>
-
   <li id="keywordsTab">
-    <%= render partial: "shared/key_word_rels", locals: {items: @anagen.key_word_rels, items_addable: @key_words_addable, cls: Anagen, id: @anagen.id } %>
+    <%= render partial: "shared/key_word_rels", locals: {orig: @anagen, items_addable: @key_words_addable} %>
+  </li>
+
+  <li id="articlesTab">
+    <%= render partial: "articles", locals: {anagen_articles: @art_author} %>
+  </li>
+
+  <li id="printersTab">
+    <%= render partial: "articles", locals: {anagen_articles: @art_print} %>
   </li>
 </ul>
+
+

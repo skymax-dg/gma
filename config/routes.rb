@@ -79,6 +79,8 @@ Gma::Application.routes.draw do
     collection do
       get :filter
       get :chg_tipo
+      get :change_article
+      get :change_event
     end
   end
 

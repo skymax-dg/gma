@@ -1,19 +1,29 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
-<div class="button-bar">
-  <ul class="button-group">
-    <li>
-      <%= link_to 'INDIETRO',  resque_location(articles_path), :class => "button radius small back foundicon-left-arrow" %>
-    </li>
-    <li>
-      <%= link_to 'MODIFICA', edit_article_path(@article), :class => "button radius small modify foundicon-edit" %>
-    </li>
-    <li>
-      <%= link_to 'ELIMINA', @article, :confirm => 'Confermi eliminazione?',
-                                       :method => :delete, :class => "button radius small alert foundicon-trash" %>
-    </li>
-  </ul>
-  <%= render :partial => 'btn_stp' %>
-</div>
+<%= render :partial => 'buttons', :locals => {:record => nil} %>
 
-<%= render "info" %>
-<%= render partial: "shared/key_word_rels", locals: {items: @article.key_word_rels, items_addable: @key_words_addable, cls: Article, id: @article.id } %>
+<dl class="tabs">
+  <dd class="active"><a href="#gen">Dati generali</a></dd>
+  <dd><a href="#keywords">Key Word</a></dd>
+  <dd><a href="#authors">Autori</a></dd>
+  <dd><a href="#printers">Stampatori</a></dd>
+</dl>
+
+<ul class="tabs-content">
+  <li class="active" id="genTab">
+    <%= render partial: "info" %>
+  </li>
+
+  <li id="keywordsTab">
+    <%= render partial: "shared/key_word_rels", locals: {orig: @article, items_addable: @key_words_addable} %>
+  </li>
+
+  <li id="authorsTab">
+    <%= render partial: "anagens", locals: {anagen_articles: @art_author, addables: @authors_addable} %>
+  </li>
+
+  <li id="printersTab">
+    <%= render partial: "anagens", locals: {anagen_articles: @art_print, addables: @printers_addable} %>
+  </li>
+</ul>
+
+

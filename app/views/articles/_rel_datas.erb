@@ -1,0 +1,26 @@
+<dl class="tabs">
+  <dd><a href="#docs">Documenti</a></dd>
+  <% if @article.libro? %>
+    <dd><a href="#exit">Uscita libro</a></dd>
+  <% end %>
+  <% if @article.rivista? %>
+    <dd><a href="#nums">Numero rivista</a></dd>
+  <% end %>
+  <% if @article.evento? %>
+    <dd><a href="#date">Data evento / corso</a></dd>
+  <% end %>
+</dl>
+
+<ul class="tabs-content">
+  <li id="docsTab">
+  </li>
+
+  <li id="exitTab">
+  </li>
+
+  <li id="numsTab">
+  </li>
+
+  <li id="dateTab">
+  </li>
+</ul>

@@ -1,0 +1,34 @@
+<div class="six columns">
+  <table>
+    <thead>
+      <tr>
+        <th width="90%">Titolo</th>
+        <th width="5%"></th>
+        <th width="5%"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% anagen_articles.each do |an_art| %>
+        <% art = an_art.article %>
+        <% if art %>
+          <tr>
+            <td><%= art.descriz %></td>
+            <td><%= link_to '', art, :class => "button radius tiny view foundicon-page", :title => "Visualizza" %></td>
+            <td><%= link_to '', change_article_anagens_path(id: @anagen.id, article_id: art.id, mode: 2), :confirm => 'Confermi?', :class => "button radius tiny alert foundicon-trash", :title => "Cancella" %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="six columns">
+  <%= form_tag( change_article_anagens_path(), method: :get ) do %>
+    <%= hidden_field_tag :id, @anagen.id %>
+    <%= hidden_field_tag :mode, 1 %>
+    <%= select_tag "article_id", options_from_collection_for_select(@articles_addable, "id", "descriz")%>
+    <div class="action">
+      <%= submit_tag "Collega" %>
+    </div>
+  <% end %> 
+</div>

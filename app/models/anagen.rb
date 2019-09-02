@@ -6,6 +6,7 @@ class Anagen < ActiveRecord::Base
   has_many :contos
   has_many :anainds, :dependent => :destroy
   has_many :key_word_rels, as: :key_wordable
+  has_many :key_words, through: :key_word_rels
   has_many :anagen_articles
   has_many :articles, through: :anagen_articles
   has_many :event_states
@@ -134,6 +135,88 @@ class Anagen < ActiveRecord::Base
   #def self.decode_table(cls)
   #  self.tables_list.find { |r| r[:type] == cls } || {}
   #end
+
+  def has_key_word?(kw)
+    self.key_words.include?(kw)
+  end
+
+  def author?
+    kw = KeyWordAnagen.where(desc: "Autore").first
+    self.has_key_word? kw 
+  end
+
+  def stampatore?
+    kw = KeyWordAnagen.where(desc: "Stampatore").first
+    self.has_key_word? kw 
+  end
+
+  def connect_article(art_id)
+    if Article.exists? art_id
+      art = Article.find(art_id)
+      unless self.has_article?(art)
+        self.articles << art
+        true
+      end
+    end
+  end
+
+  def has_article?(art)
+    self.articles.include? art
+  end
+
+  def remove_article(art_id)
+    if Article.exists? art_id
+      art = Article.find(art_id)
+      self.articles.delete(art)
+      true
+    end
+  end
+
+  def self.authors
+    kw = KeyWordAnagen.where(desc: "Autore").first
+    Anagen.joins(:key_words).where("key_words.id = ?", kw.id)
+  end
+
+  def self.printers
+    kw = KeyWordAnagen.where(desc: "Stampatore").first
+    Anagen.joins(:key_words).where("key_words.id = ?", kw.id)
+  end
+
+  def connect_event(event_id, mode)
+    if Event.exists? event_id
+      unless self.has_event?(event_id, mode)
+        EventState.create(anagen: self, event_id: event_id, mode: mode)
+        true
+      end
+    end
+  end
+
+  def has_event?(event_id, mode)
+    self.event_states.where(mode: mode, event_id: event_id).count > 0
+  end
+
+  def remove_event(event_id, mode)
+    if Event.exists? event_id
+      event = Event.find(event_id)
+      self.events.delete(event)
+      true
+    end
+  end
+
+  def prenotazioni
+    kw = KeyWordEvent.type_event_book
+    self.events.joins(:key_words).where("key_words.id = ?", kw.id).order("events.dt_event DESC")
+  end
+
+  def corsi
+    kw = KeyWordEvent.type_event_course
+    self.events.joins(:key_words).where("key_words.id = ?", kw.id).order("events.dt_event DESC")
+  end
+
+  def abbonamenti
+    kw = KeyWordEvent.type_event_magazine
+    self.events.joins(:key_words).where("key_words.id = ?", kw.id).order("events.dt_event DESC")
+  end
 
   private
     def require_no_contos

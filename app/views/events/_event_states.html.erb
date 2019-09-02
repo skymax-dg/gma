@@ -1,0 +1,35 @@
+<div class="six columns">
+  <table>
+    <thead>
+      <tr>
+        <th width="90%">Nominativo</th>
+        <th width="5%"></th>
+        <th width="5%"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% event_states.each do |es| %>
+        <% ana = es.anagen %>
+        <% if ana %>
+          <tr>
+            <td><%= ana.denomin %></td>
+            <td><%= link_to '', ana, :class => "button radius tiny view foundicon-page", :title => "Visualizza" %></td>
+            <td><%= link_to '', change_event_anagens_path(id: ana.id, event_id: @event.id, mode: 2), :confirm => 'Confermi?', :class => "button radius tiny alert foundicon-trash", :title => "Cancella" %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="six columns">
+  <%= form_tag( change_event_anagens_path(), method: :get ) do %>
+    <%= hidden_field_tag :event_id, @event.id %>
+    <%= hidden_field_tag :mode, 1 %>
+    <%= hidden_field_tag :mode2, mode %>
+    <%= select_tag "id", options_from_collection_for_select(addables, "id", "denomin")%>
+    <div class="action">
+      <%= submit_tag "Collega" %>
+    </div>
+  <% end %> 
+</div>

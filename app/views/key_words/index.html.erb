@@ -1,12 +1,5 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
 
-<div class="button-bar">
-  <ul class="button-group">
-    <li>
-      <%= link_to "NUOVO", new_key_word_path, class: "button radius small new foundicon-add-doc" %>
-    </li>
-  </ul>
-</div>
 <% unless @key_words.nil?||@key_words.empty? %>
   <table>
     <thead>

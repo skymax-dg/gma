@@ -21,7 +21,15 @@ class AnagensController < ApplicationController
   def show
     @anagen = Anagen.find(params[:id])
     @title = "Soggetto/Societa'"
-    @key_words_addable = KeyWord.all
+    @art_author = @anagen.anagen_articles.by_author
+    @art_print = @anagen.anagen_articles.by_printer
+    #@tesdocs = @anagen.tesdocs.order(data_doc: :desc)
+    @bookings = @anagen.prenotazioni
+    @subscriptions = @anagen.abbonamenti
+    @courses = @anagen.corsi
+
+    @key_words_addable = KeyWord.sort_by_din(KeyWordAnagen.all)
+    @articles_addable = Article.libri
   end
 
   def new
@@ -129,6 +137,33 @@ class AnagensController < ApplicationController
       flash[:alert] = $!.message
     end
 redirect_back_or @anagen
+  end
+
+  def change_article
+    anagen = Anagen.find(params[:id])
+    art_id = params[:article_id] && params[:article_id].to_i
+    mode   = params[:mode] && params[:mode].to_i
+
+    if mode == 1 
+      st = anagen.connect_article(art_id)
+    else 
+      st = anagen.remove_article(art_id)
+    end
+    redirect_to :back, notice: st ? "Operazione completata" : "Operazione fallita"
+  end
+
+  def change_event
+    anagen   = Anagen.find(params[:id])
+    event_id = params[:event_id] && params[:event_id].to_i
+    mode     = params[:mode] && params[:mode].to_i
+    mode2    = params[:mode2] && params[:mode2].to_i
+
+    if mode == 1 
+      st = anagen.connect_event(event_id, mode2)
+    else 
+      st = anagen.remove_event(event_id, mode2)
+    end
+    redirect_to :back, notice: st ? "Operazione completata" : "Operazione fallita"
   end
 
   private
