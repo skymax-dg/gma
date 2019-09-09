@@ -127,6 +127,8 @@ Gma::Application.routes.draw do
       get :down
     end
   end
+	post 'authenticate', to: 'authentication#authenticate'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

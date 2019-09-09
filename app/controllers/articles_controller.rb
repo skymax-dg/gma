@@ -5,6 +5,7 @@ class ArticlesController < ApplicationController
 
   before_filter :authenticate
   before_filter :force_fieldcase, :only => [:create, :update]
+  before_filter :authenticate_request, if: :json_request?
 
   def set_distrib
     @fl_dis = params[:anarif]=='S'

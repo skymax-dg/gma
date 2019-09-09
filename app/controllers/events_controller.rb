@@ -1,4 +1,6 @@
 class EventsController < ApplicationController
+  before_filter :authenticate_request, if: :json_request?
+
   # GET /events
   # GET /events.json
   def index
