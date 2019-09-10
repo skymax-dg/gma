@@ -113,4 +113,8 @@ class KeyWordsController < ApplicationController
 
     redirect_to :back, notice: notice
   end
+
+  def categories
+    redirect_to :back
+  end
 end

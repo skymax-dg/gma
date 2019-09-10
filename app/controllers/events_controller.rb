@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   before_filter :authenticate_request, if: :json_request?
+  before_filter :authenticate
 
   # GET /events
   # GET /events.json
@@ -94,6 +95,11 @@ class EventsController < ApplicationController
       format.html { redirect_to events_url }
       format.json { head :no_content }
     end
+  end
+
+  def courses
+    ds = Event.corsi
+    render json: ds 
   end
 
   private
