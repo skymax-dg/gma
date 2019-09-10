@@ -127,7 +127,13 @@ Gma::Application.routes.draw do
       get :down
     end
   end
+
 	post 'authenticate', to: 'authentication#authenticate'
+  get 'authors', to: 'anagens#authors'
+  get 'teachers', to: 'anagens#teachers'
+  get 'courses', to: 'events#courses'
+  get 'categories', to: 'key_words#categories'
+  get 'products', to: 'articles#products'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

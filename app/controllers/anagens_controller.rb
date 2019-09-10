@@ -173,6 +173,16 @@ redirect_back_or @anagen
     redirect_to :back, notice: st ? "Operazione completata" : "Operazione fallita"
   end
 
+  def authors
+    ds = Anagen.authors
+    render json: ds 
+  end
+
+  def teachers
+    ds = Anagen.teachers
+    render json: ds 
+  end
+
   private
     def force_fieldcase
       set_fieldcase(:anagen, [:codfis, :pariva, :fax, :telefono], [:email, :web])
