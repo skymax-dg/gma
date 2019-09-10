@@ -2,8 +2,8 @@ module JsonWebToken
 
   attr_reader :headers
 
-  def self.encode(payload, exp = 24.hours.from_now)
-    payload[:exp] = exp.to_i
+  def self.encode(payload, exp = nil)
+    payload[:exp] = exp ? exp.to_i : 24.hours.from_now.to_i
     puts "---------- EXP: #{Time.now  + payload[:exp]}"
     jwt_encode(1, payload, secret_key)
   end
@@ -14,8 +14,8 @@ module JsonWebToken
 		 t = jwt_decode(token, secret_key)
 		 puts "jwt_decode %s" % [ t.to_s ]
 	 	 if t[0] == 'ok'
-				puts t[2]
-				return t[2]
+				puts t[1]
+				return t[1]
 		 else
 				nil
 		 end
@@ -24,6 +24,7 @@ module JsonWebToken
   end
 
 	def self.jwt_encode(mode, payload, key)
+    puts "jwt_encode "+payload.to_s
 		case mode
 		when 1
 			header = { alg: 1, typ: 'mjwt' }
@@ -49,7 +50,12 @@ module JsonWebToken
 				p3 = Base64.urlsafe_encode64(make_digest(p[0], key))
 
 				if p3 == p[1]
-					["ok", json2hash(d1), nil]
+					d1h = json2hash(d1)
+					if check_expiration?(d1h)
+						["token expired", d1, nil, p3]
+					else
+						["ok", d1h, nil]
+					end
 				else
 					["hash error", d1, nil, p3]
 				end
@@ -59,7 +65,13 @@ module JsonWebToken
 				p3 = Base64.urlsafe_encode64(make_digest(p[0] + '.' + p[1], key))
 		
 				if p3 == p[2]
-					["ok", json2hash(d1), json2hash(d2)]
+					d1h = json2hash(d1)
+					d2h = json2hash(d2)
+					if check_expiration?(d2h)
+						["token expired", d1, nil, p3]
+					else
+						["ok", d2h, nil]
+					end
 				else
 					["hash error", d1, d2, p3]
 				end
@@ -84,6 +96,13 @@ module JsonWebToken
 
 	def self.json2hash(j)
 		JSON.parse(j)
+	end
+
+	def self.check_expiration?(tk)
+		t0 = Time.now.to_i
+		t1 = tk["exp"]
+		puts "t0 #{t0} t1 #{t1}"
+		t0 > t1
 	end
 
 	private_class_method :secret_key, :jwt_encode, :jwt_decode, :make_digest
