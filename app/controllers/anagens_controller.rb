@@ -35,7 +35,7 @@ class AnagensController < ApplicationController
     respond_to do |format|
       format.html # renders .html.erb
       #format.json { render :json => { st: true, v: @anagen.to_json } }
-      format.json { render json: @anagen }
+      format.json { render json: map_json_result(@anagen) }
     end
   end 
 
@@ -186,5 +186,12 @@ redirect_back_or @anagen
   private
     def force_fieldcase
       set_fieldcase(:anagen, [:codfis, :pariva, :fax, :telefono], [:email, :web])
+    end
+
+    def map_json_result(x)
+      a = [:bio, :denomin, :codnaz, :id]
+      h = {}
+      a.each { |y| h[y] = x[y] }
+      h
     end
 end
