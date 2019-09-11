@@ -74,6 +74,10 @@
       <div class="two columns"></div>
       <div class="five columns"></div>
     <% end %> 
+    <div class="twelve columns">
+      <%= f.label "Biografia" %>
+      <%= f.text_area :bio %>
+    </div>
     <hr />
     <div class="twelve columns">
       <%= f.submit 'SALVA', :class => "button radius small success foundicon-checkmark" %>

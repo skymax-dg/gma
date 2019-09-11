@@ -131,7 +131,7 @@ Gma::Application.routes.draw do
 	post 'authenticate', to: 'authentication#authenticate'
   get 'authors', to: 'anagens#authors'
   get 'teachers', to: 'anagens#teachers'
-  get 'courses', to: 'events#courses'
+  get 'events', to: 'articles#events'
   get 'categories', to: 'key_words#categories'
   get 'products', to: 'articles#products'
 

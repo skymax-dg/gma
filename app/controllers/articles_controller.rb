@@ -265,6 +265,11 @@ class ArticlesController < ApplicationController
     render json: ds 
   end
 
+  def events
+    ds = Article.corsi
+    render json: ds 
+  end
+
   private
     def force_fieldcase
       set_fieldcase(:article, [:codice], [])

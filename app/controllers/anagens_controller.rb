@@ -174,12 +174,12 @@ redirect_back_or @anagen
   end
 
   def authors
-    ds = Anagen.authors
+    ds = Anagen.authors.select("anagens.id, anagens.denomin, anagens.codnaz")
     render json: ds 
   end
 
   def teachers
-    ds = Anagen.teachers
+    ds = Anagen.teachers.select("anagens.id, anagens.denomin, anagens.codnaz")
     render json: ds 
   end
 

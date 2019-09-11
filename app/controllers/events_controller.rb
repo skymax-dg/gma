@@ -97,11 +97,6 @@ class EventsController < ApplicationController
     end
   end
 
-  def courses
-    ds = Event.corsi
-    render json: ds 
-  end
-
   private
     def decode_site_anagen
       if [nil,""].include? params[:site_anagen_code]
