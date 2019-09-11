@@ -174,17 +174,17 @@ class Anagen < ActiveRecord::Base
 
   def self.teachers
     kw = KeyWordAnagen.where(desc: "Insegnante").first
-    kw ? Anagen.joins(:key_words).where("key_words.id = ?", kw.id) : []
+    kw ? Anagen.joins(:key_words).where("key_words.id = ?", kw.id).order("anagens.denomin") : []
   end
 
   def self.authors
     kw = KeyWordAnagen.where(desc: "Autore").first
-    kw ? Anagen.joins(:key_words).where("key_words.id = ?", kw.id) : []
+    kw ? Anagen.joins(:key_words).where("key_words.id = ?", kw.id).order("anagens.denomin") : []
   end
 
   def self.printers
     kw = KeyWordAnagen.where(desc: "Stampatore").first
-    kw ? Anagen.joins(:key_words).where("key_words.id = ?", kw.id) : []
+    kw ? Anagen.joins(:key_words).where("key_words.id = ?", kw.id).order("anagens.denomin") : []
   end
 
   def connect_event(event_id, mode)
