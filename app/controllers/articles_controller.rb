@@ -270,6 +270,27 @@ class ArticlesController < ApplicationController
     render json: ds 
   end
 
+  def announcements
+    ds = Article.announcements
+    render json: ds 
+  end
+  
+  def promotions
+    ds = Article.promotions
+    render json: ds 
+  end
+  
+  def bestsellers
+    ds = Article.bestsellers
+    render json: ds 
+  end
+  
+  def products
+    ds = Article.products
+    render json: ds 
+  end
+  
+
   private
     def force_fieldcase
       set_fieldcase(:article, [:codice], [])
