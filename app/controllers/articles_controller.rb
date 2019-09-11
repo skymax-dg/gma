@@ -3,6 +3,7 @@ require "prawn/measurement_extensions"
 
 class ArticlesController < ApplicationController
 
+  before_filter :authenticate_request, if: :json_request?
   before_filter :authenticate
   before_filter :force_fieldcase, :only => [:create, :update]
 
@@ -206,6 +207,12 @@ class ArticlesController < ApplicationController
     @art_print  = @article.anagen_articles.by_printer
     @authors_addable  = Anagen.authors
     @printers_addable = Anagen.printers
+
+    respond_to do |format|
+      format.html # renders .html.erb
+      #format.json { render :json => { st: true, v: @anagen.to_json } }
+      format.json { render json: @article }
+    end
   end
 
   def new
@@ -251,6 +258,16 @@ class ArticlesController < ApplicationController
       flash[:alert] = $!.message
     end
     redirect_back_or @article
+  end
+
+  def products
+    ds = Article.libri
+    render json: ds 
+  end
+
+  def events
+    ds = Article.corsi
+    render json: ds 
   end
 
   private

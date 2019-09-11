@@ -20,6 +20,10 @@ class User < ActiveRecord::Base
   	pwdcript == encrypt(submitted_password)
   	#Compare encrypted_password with the encrypted version of submitted_password
   end
+
+  def self.find_by_email(str)
+    User.where(login: str)[0]
+  end
   
   # Return user if the submitted password and email match with db information.
   def self.authenticate(login, submitted_password, azienda)

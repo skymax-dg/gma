@@ -19,7 +19,7 @@ class Anagen < ActiveRecord::Base
 #  default_scope :order => 'anagens.denomin ASC' Non funziona perchè c'è una select max
 
   attr_accessible :codice, :tipo, :denomin, :codfis, :pariva, :dtnas, :luogonas_id, :sesso,
-                  :telefono, :email, :fax, :web, :sconto, :referente, :codnaz, :codident, :pec
+                  :telefono, :email, :fax, :web, :sconto, :referente, :codnaz, :codident, :pec, :bio
 
   validates :codice, :tipo, :denomin, :presence => true
   validates :codice, :denomin, :uniqueness => true
@@ -172,14 +172,19 @@ class Anagen < ActiveRecord::Base
     end
   end
 
+  def self.teachers
+    kw = KeyWordAnagen.where(desc: "Insegnante").first
+    kw ? Anagen.joins(:key_words).where("key_words.id = ?", kw.id) : []
+  end
+
   def self.authors
     kw = KeyWordAnagen.where(desc: "Autore").first
-    Anagen.joins(:key_words).where("key_words.id = ?", kw.id)
+    kw ? Anagen.joins(:key_words).where("key_words.id = ?", kw.id) : []
   end
 
   def self.printers
     kw = KeyWordAnagen.where(desc: "Stampatore").first
-    Anagen.joins(:key_words).where("key_words.id = ?", kw.id)
+    kw ? Anagen.joins(:key_words).where("key_words.id = ?", kw.id) : []
   end
 
   def connect_event(event_id, mode)

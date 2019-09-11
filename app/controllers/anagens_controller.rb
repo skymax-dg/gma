@@ -1,5 +1,6 @@
 class AnagensController < ApplicationController
 
+  before_filter :authenticate_request, if: :json_request?
   before_filter :authenticate
   before_filter :force_fieldcase, :only => [:create, :update]
 
@@ -30,7 +31,13 @@ class AnagensController < ApplicationController
 
     @key_words_addable = KeyWord.sort_by_din(KeyWordAnagen.all)
     @articles_addable = Article.libri
-  end
+
+    respond_to do |format|
+      format.html # renders .html.erb
+      #format.json { render :json => { st: true, v: @anagen.to_json } }
+      format.json { render json: @anagen }
+    end
+  end 
 
   def new
     @title = "Inserimento Soggetto/Societa'"
@@ -164,6 +171,16 @@ redirect_back_or @anagen
       st = anagen.remove_event(event_id, mode2)
     end
     redirect_to :back, notice: st ? "Operazione completata" : "Operazione fallita"
+  end
+
+  def authors
+    ds = Anagen.authors.select("anagens.id, anagens.denomin, anagens.codnaz")
+    render json: ds 
+  end
+
+  def teachers
+    ds = Anagen.teachers.select("anagens.id, anagens.denomin, anagens.codnaz")
+    render json: ds 
   end
 
   private

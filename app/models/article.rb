@@ -207,6 +207,11 @@ class Article < ActiveRecord::Base
     Article.joins(:key_words).where("key_words.id = ?", kw.id)
   end
 
+  def self.eventi
+    kw = KeyWordArticle.where(desc: "Evento").first
+    Article.joins(:key_words).where("key_words.id = ?", kw.id)
+  end
+
   private
     def require_no_rigdocs
       self.errors.add :base, "Almeno una riga documento fa riferimento all'articolo che si desidera eliminare."
