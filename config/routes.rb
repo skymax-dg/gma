@@ -128,16 +128,17 @@ Gma::Application.routes.draw do
     end
   end
 
-	post 'authenticate', to: 'authentication#authenticate'
-  get 'authors',       to: 'anagens#authors'
-  get 'teachers',      to: 'anagens#teachers'
-  get 'events',        to: 'articles#events'
-  get 'categories',    to: 'key_words#categories'
-  get 'products',      to: 'articles#products'
-  get 'announcements', to: 'articles#announcements'
-  get 'promotions',    to: 'articles#promotions'
-  get 'bestsellers',   to: 'articles#bestsellers'
-  get 'products',      to: 'articles#products'
+	post 'authenticate',  to: 'authentication#authenticate'
+  get 'authors',        to: 'anagens#authors'
+  get 'teachers',       to: 'anagens#teachers'
+  get 'events',         to: 'articles#events'
+  get 'categories',     to: 'key_words#categories'
+  get 'products',       to: 'articles#products'
+  get 'announcements',  to: 'articles#announcements'
+  get 'promotions',     to: 'articles#promotions'
+  get 'bestsellers',    to: 'articles#bestsellers'
+  get 'products',       to: 'articles#products'
+  get 'products_query', to: 'articles#products_query'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

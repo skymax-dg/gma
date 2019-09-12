@@ -19,7 +19,7 @@ class KeyWordsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @key_word }
+      format.json { render json: KeyWordArticle.map_json_data(@key_word) }
     end
   end
 
@@ -115,6 +115,7 @@ class KeyWordsController < ApplicationController
   end
 
   def categories
-    redirect_to :back
+    kw = KeyWordArticle.ecomm_root
+    render json: kw
   end
 end

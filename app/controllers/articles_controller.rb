@@ -285,6 +285,24 @@ class ArticlesController < ApplicationController
     render json: map_json_array(ds) 
   end
   
+  def products_query
+    Rails.logger.info "------- params: #{params}"
+    case params[:tp]
+    when "1"
+      ds = if params[:author_id] then Article.libri.by_author(params[:author_id])
+           else []
+           end
+    when "2"
+      ds = if params[:author_id] then Article.eventi.by_author(params[:author_id])
+           else []
+           end
+    when "3"
+      ds = if params[:category_id] then Article.by_key_word(params[:category_id])
+           else []
+           end
+    end
+    render json: map_json_array(ds) 
+  end
 
   private
     def force_fieldcase
@@ -300,8 +318,8 @@ class ArticlesController < ApplicationController
     end
 
     def map_json_data(x)
-      st = Struct.new(:id, :isbn, :title, :subtitle, :description, :price, :discount, :authors, :state, :d_state, :can_buy, :categories)
+      st = Struct.new(:id, :isbn, :title, :subtitle, :description, :price, :discount, :authors, :state, :d_state, :can_buy, :categories, :is_event)
       auths = x.anagen_articles.by_author.map { |y| [y.anagen.id, y.anagen.denomin] }
-      st.new(x.id, x.codice, x.descriz, x.subtitle, x.sinossi, x.prezzo, x.discount, auths, x.state, x.dstate, x.can_buy?, [])
+      st.new(x.id, x.codice, x.descriz, x.subtitle, x.sinossi, x.prezzo, x.discount, auths, x.state, x.dstate, x.can_buy?, [], x.evento? ? 1 : 0)
     end
 end
