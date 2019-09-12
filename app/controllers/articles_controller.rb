@@ -287,17 +287,20 @@ class ArticlesController < ApplicationController
   
   def products_query
     Rails.logger.info "------- params: #{params}"
-    ds = if params[:author_id] then Article.libri.by_author(params[:author_id])
-         else []
-         end
-    render json: map_json_array(ds) 
-  end
-
-  def events_query
-    Rails.logger.info "------- params: #{params}"
-    ds = if params[:author_id] then Article.eventi.by_author(params[:author_id])
-         else []
-         end
+    case params[:tp]
+    when "1"
+      ds = if params[:author_id] then Article.libri.by_author(params[:author_id])
+           else []
+           end
+    when "2"
+      ds = if params[:author_id] then Article.eventi.by_author(params[:author_id])
+           else []
+           end
+    when "3"
+      ds = if params[:category_id] then Article.by_key_word(params[:category_id])
+           else []
+           end
+    end
     render json: map_json_array(ds) 
   end
 
