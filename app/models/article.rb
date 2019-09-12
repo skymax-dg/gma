@@ -18,6 +18,7 @@ class Article < ActiveRecord::Base
   validates :descriz, :length => {:maximum => 50}
   
   scope :azienda, lambda { |azd| {:conditions => ['articles.azienda = ?', azd]}}
+  scope :by_author, ->(aid) { includes(:anagen_articles).where("anagen_articles.mode = 1 AND anagen_articles.anagen_id=?", aid) }
 
   CATEG = $ParAzienda['ARTICLE']['CATEG']
   STATES = [
