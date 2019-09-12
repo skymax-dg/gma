@@ -21,7 +21,12 @@
       <%= f.text_field :costo %>
     </div>
     <div class="two columns"></div>
-    <div class="five columns">
+    <div class="two columns">
+      <%= f.label "Sconto (%)" %>
+      <%= f.number_field :discount %>
+    </div>
+    <div class="one columns"></div>
+    <div class="two columns">
       <%= f.label :Iva %>
       <%= collection_select :article, :iva_id, Iva.all, :id, :descriz, {:include_blank => true} %>
     </div>
@@ -61,8 +66,7 @@
       <%= select(:article, :state, Article::STATES, prompt: true) %>
     </div>
 
-
-
+    
 
 
     <div class="twelve columns">

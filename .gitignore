@@ -15,3 +15,6 @@
 /log/*.log
 /tmp/
 /public/
+backup/*
+*.tar.gz
+*.tar

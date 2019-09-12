@@ -211,7 +211,7 @@ class ArticlesController < ApplicationController
     respond_to do |format|
       format.html # renders .html.erb
       #format.json { render :json => { st: true, v: @anagen.to_json } }
-      format.json { render json: @article }
+      format.json { render json: map_json_data(@article) }
     end
   end
 
@@ -260,39 +260,48 @@ class ArticlesController < ApplicationController
     redirect_back_or @article
   end
 
-  def products
-    ds = Article.libri
-    render json: ds 
-  end
-
   def events
     ds = Article.corsi
-    render json: ds 
+    render json: map_json_array(ds)
   end
 
   def announcements
     ds = Article.announcements
-    render json: ds 
+    render json: map_json_array(ds) 
   end
   
   def promotions
     ds = Article.promotions
-    render json: ds 
+    render json: map_json_array(ds) 
   end
   
   def bestsellers
     ds = Article.bestsellers
-    render json: ds 
+    render json: map_json_array(ds) 
   end
   
   def products
     ds = Article.products
-    render json: ds 
+    render json: map_json_array(ds) 
   end
   
 
   private
     def force_fieldcase
       set_fieldcase(:article, [:codice], [])
+    end
+
+    def map_json_array(ds)
+      ris = []
+      ds.each do |x|
+        ris << map_json_data(x)
+      end
+      ris
+    end
+
+    def map_json_data(x)
+      st = Struct.new(:id, :isbn, :title, :subtitle, :description, :price, :discount, :authors, :state, :d_state, :can_buy, :categories)
+      auths = x.anagen_articles.by_author.map { |y| [y.anagen.id, y.anagen.denomin] }
+      st.new(x.id, x.codice, x.descriz, x.subtitle, x.sinossi, x.prezzo, x.discount, auths, x.state, x.dstate, x.can_buy?, [])
     end
 end
