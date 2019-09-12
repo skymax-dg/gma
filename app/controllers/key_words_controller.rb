@@ -115,6 +115,7 @@ class KeyWordsController < ApplicationController
   end
 
   def categories
-    redirect_to :back
+    kw = KeyWordArticle.ecomm_root
+    render json: kw
   end
 end
