@@ -123,6 +123,7 @@ SPEDIZ:
     PZ: 'Pezzi'
     MT: 'Metri lineari'
     MQ: 'Metri quadrati'
+    ML: 'Millilitri'
 ARTICLE:
   CATEG:
     GE: 'Generica'
