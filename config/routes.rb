@@ -3,6 +3,7 @@ Gma::Application.routes.draw do
   resources :key_words do 
     member do
       get 'manage_key_word_rels'
+      get 'change_n_order'
     end
   end
 

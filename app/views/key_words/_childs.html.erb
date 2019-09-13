@@ -2,13 +2,13 @@
   <table>
     <thead>
       <tr>
-        <th width="30%">Indirizzo</th>
-        <th width="30%">Localita</th>
+        <th width="30%">Descrizione</th>
+        <th width="25%"></th>
         <th width="3%"></th>
       </tr>
     </thead>
     <tbody>
-      <%= render :partial => '/key_words/line', :collection => @key_word.childs, as: :item %>
+      <%= render partial: 'line', collection: @key_word.childs, as: :item %>
     </tbody>
   </table>
 </div>

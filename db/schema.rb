@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20190911140616) do
+ActiveRecord::Schema.define(:version => 20190913143007) do
 
   create_table "agentes", :force => true do |t|
     t.integer  "anagen_id"
@@ -246,6 +246,7 @@ ActiveRecord::Schema.define(:version => 20190911140616) do
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false
     t.string   "type",         :limit => 24
+    t.integer  "n_order",                    :default => 0
   end
 
   create_table "localitas", :force => true do |t|

@@ -1,5 +1,9 @@
 <tr>
   <td><%= item.desc %></td>
-  <td><%= link_to '', key_word_path(item), :class => "button radius tiny detail foundicon-page", :title => "Dettaglio" %></td>
+  <td>
+    <%= link_to '', key_word_path(item), :class => "button radius tiny detail foundicon-page", :title => "Dettaglio" %>
+    <%= link_to 'UP', change_n_order_key_word_path(id: item.id, mode: 1), :class => "button radius tiny detail ", :title => "UP" %>
+    <%= link_to 'DW', change_n_order_key_word_path(id: item.id, mode: 2), :class => "button radius tiny detail ", :title => "DW" %>
+  </td>
   </td>
 </tr>
