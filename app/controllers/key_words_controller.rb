@@ -118,4 +118,11 @@ class KeyWordsController < ApplicationController
     kw = KeyWordArticle.ecomm_root
     render json: kw
   end
+
+  def change_n_order
+    @key_word = KeyWord.find(params[:id])
+    mode = params[:mode] && params[:mode].to_i
+    @key_word.change_n_order(mode)
+    redirect_to :back
+  end
 end
