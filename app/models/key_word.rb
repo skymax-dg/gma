@@ -3,7 +3,7 @@ class KeyWord < ActiveRecord::Base
   attr_accessible :desc, :parent_id, :keyword_type, :type, :n_order
 
   belongs_to :parent, class_name: "KeyWord" , foreign_key: "parent_id"
-  has_many :childs, class_name: "KeyWord" , foreign_key: "parent_id"
+  has_many :childs, class_name: "KeyWord" , foreign_key: "parent_id", dependent: :destroy
   has_many :key_word_rels, dependent: :destroy
 
   before_create :assign_type
