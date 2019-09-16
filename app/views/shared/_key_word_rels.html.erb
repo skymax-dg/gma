@@ -9,13 +9,15 @@
       </thead>
       <tbody>
         <% orig.key_word_rels.each do |item| %>
-          <tr>
-            <td><%= item.key_word.get_dinasty %></td>
-            <td>
-              <%= link_to '', manage_key_word_rels_key_word_path(id: item.key_word.id, mode: 1, kwr_id: item.id), 
-                confirm: 'Confermi?', class: "button radius tiny alert foundicon-trash", title: "Cancella" %>
-            </td>
-          </tr>
+          <% if item.key_word %>
+            <tr>
+              <td><%= item.key_word.get_dinasty %></td>
+              <td>
+                <%= link_to '', manage_key_word_rels_key_word_path(id: item.key_word.id, mode: 1, kwr_id: item.id), 
+                  confirm: 'Confermi?', class: "button radius tiny alert foundicon-trash", title: "Cancella" %>
+              </td>
+            </tr>
+          <% end %>
         <% end %>
         </tbody>
     </table>
