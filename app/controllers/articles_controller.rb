@@ -300,6 +300,12 @@ class ArticlesController < ApplicationController
       ds = if params[:category_id] then Article.by_key_word(params[:category_id])
            else []
            end
+    when "4"
+      ds = if params[:codice] then Article.where(codice: params[:codice])
+           else []
+           end
+    else
+      []
     end
     render json: map_json_array(ds) 
   end
