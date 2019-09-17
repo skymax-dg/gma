@@ -33,6 +33,7 @@ class Article < ActiveRecord::Base
   RILEGATURE = [
     ["Cartonato",1], 
     ["Brossura",2], 
+    ["Libretto + CD",2], 
   ]
 
   def self.filter(azienda, tp, des, page)
@@ -254,6 +255,16 @@ class Article < ActiveRecord::Base
   def final_price
     (self.prezzo - ((self.prezzo*self.discount)/100)).round(2)
   end
+
+  def price_with_vat
+    if self.iva && self.iva.aliq
+      al = self.iva.aliq / 100
+      (self.prezzo * (1.0 + al)).round(2)   
+    else
+      self.prezzo
+    end
+  end
+
   private
     def require_no_rigdocs
       self.errors.add :base, "Almeno una riga documento fa riferimento all'articolo che si desidera eliminare."
