@@ -66,6 +66,16 @@
       <%= select(:article, :state, Article::STATES, prompt: true) %>
     </div>
 
+    <div class="two columns">
+      <%= f.label "Numero pagine" %>
+      <%= f.number_field :pagine %>
+    </div>
+    <div class="one columns"></div>
+    <div class="two columns">
+      <%= f.label "Rilegatura" %>
+      <%= select(:article, :rilegatura, Article::RILEGATURE, prompt: true) %>
+    </div>
+    <div class="seven columns"></div>
     
 
 

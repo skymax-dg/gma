@@ -90,13 +90,28 @@
 </div>
 
 <div class="row">
-  <div class="six columns">
+  <div class="two columns">
+    <%= label @article, "Numero pagine:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @article.pagine %>
   </div>
   <div class="two columns">
     <%= label @article, "Prezzo scontato:", :class => "right" %>
   </div>
   <div class="four columns left">
     <%= @article.final_price %> 
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <%= label @article, "Rilegatura:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @article.drilegatura %>
+  </div>
+  <div class="six columns">
   </div>
 </div>
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20190913143007) do
+ActiveRecord::Schema.define(:version => 20190917131028) do
 
   create_table "agentes", :force => true do |t|
     t.integer  "anagen_id"
@@ -96,6 +96,8 @@ ActiveRecord::Schema.define(:version => 20190913143007) do
     t.integer  "height"
     t.date     "dtpub"
     t.decimal  "discount",                  :precision => 5,  :scale => 2, :default => 0.0,  :null => false
+    t.integer  "pagine"
+    t.integer  "rilegatura"
   end
 
   add_index "articles", ["azienda", "codice"], :name => "idx_articles_on_codice", :unique => true
