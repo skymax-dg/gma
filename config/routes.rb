@@ -140,6 +140,8 @@ Gma::Application.routes.draw do
   get 'bestsellers',    to: 'articles#bestsellers'
   get 'products',       to: 'articles#products'
   get 'products_query', to: 'articles#products_query'
+  get 'anagens_query',  to: 'anagens#anagens_query'
+      
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
