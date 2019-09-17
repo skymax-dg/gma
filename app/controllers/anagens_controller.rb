@@ -183,13 +183,26 @@ redirect_back_or @anagen
     render json: ds 
   end
 
+  def anagens_query
+     ds = Anagen.where(codfis: params[:codice])
+    render json: map_json_array(ds, true)
+  end
+
   private
     def force_fieldcase
       set_fieldcase(:anagen, [:codfis, :pariva, :fax, :telefono], [:email, :web])
     end
 
-    def map_json_result(x)
-      a = [:bio, :denomin, :codnaz, :id]
+    def map_json_array(ds, min=false)
+      ris = []
+      ds.each do |x|
+        ris << map_json_result(x,min)
+      end
+      ris
+    end
+
+    def map_json_result(x, min=false)
+      a = min ? [:denomin] : [:bio, :denomin, :codnaz, :id, :codfis]
       h = {}
       a.each { |y| h[y] = x[y] }
       h
