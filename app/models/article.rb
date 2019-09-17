@@ -10,7 +10,7 @@ class Article < ActiveRecord::Base
   has_many :anagens, through: :anagen_articles
   has_many :events
 
-  attr_accessible :codice, :descriz, :prezzo, :azienda, :categ, :iva_id, :costo, :subtitle, :sinossi, :abstract, :quote, :weigth, :ppc, :ppb, :state, :width, :height, :dtpub, :discount
+  attr_accessible :codice, :descriz, :prezzo, :azienda, :categ, :iva_id, :costo, :subtitle, :sinossi, :abstract, :quote, :weigth, :ppc, :ppb, :state, :width, :height, :dtpub, :discount, :pagine, :rilegatura
 
   validates :codice, :descriz, :azienda, :categ, :iva_id, :costo, :presence => true
   #validates :codice, :descriz, :uniqueness => {:case_sensitive => false}
@@ -28,6 +28,11 @@ class Article < ActiveRecord::Base
     ["In ristampa",3], 
     ["Fuori catalogo",4], 
     ["Nascosto",5]
+  ]
+
+  RILEGATURE = [
+    ["Cartonato",1], 
+    ["Brossura",2], 
   ]
 
   def self.filter(azienda, tp, des, page)
@@ -181,6 +186,13 @@ class Article < ActiveRecord::Base
   def dstate
     if self.state
       tmp = STATES.select { |x| x[1] == self.state }
+      tmp.size > 0 && tmp[0][0]
+    end
+  end
+
+  def drilegatura
+    if self.rilegatura
+      tmp = RILEGATURE.select { |x| x[1] == self.rilegatura }
       tmp.size > 0 && tmp[0][0]
     end
   end
