@@ -312,8 +312,9 @@ class ArticlesController < ApplicationController
     end
 
     def map_json_data(x)
-      st = Struct.new(:id, :isbn, :title, :subtitle, :description, :price, :discount, :authors, :state, :d_state, :can_buy, :categories, :is_event, :pagine, :rilegatura)
+      st = Struct.new(:id, :isbn, :title, :subtitle, :description, :price, :discount, :authors, :state, :d_state, :can_buy, :categories, :is_event, :pagine, :rilegatura, :width, :height, :n_pag, :dt_pub)
       auths = x.anagen_articles.by_author.map { |y| [y.anagen.id, y.anagen.denomin] }
-      st.new(x.id, x.codice, x.descriz, x.subtitle, x.sinossi, x.price_with_vat, x.discount, auths, x.state, x.dstate, x.can_buy?, [], x.evento? ? 1 : 0, x.pagine, x.drilegatura)
+      dtpub = x.dtpub ? x.dtpub.strftime("%d/%m/%Y") : ""
+      st.new(x.id, x.codice, x.descriz, x.subtitle, x.sinossi, x.price_with_vat, x.discount, auths, x.state, x.dstate, x.can_buy?, [], x.evento? ? 1 : 0, x.pagine, x.drilegatura, x.width, x.height, x.pagine, dtpub)
     end
 end
