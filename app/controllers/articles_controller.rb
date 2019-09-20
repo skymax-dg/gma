@@ -288,10 +288,10 @@ class ArticlesController < ApplicationController
   def products_query
     Rails.logger.info "------- params: #{params}"
     ds = case params[:tp]
-         when "1" then params[:author_id]   ? Article.libri.by_author(params[:author_id])  : []
-         when "2" then params[:author_id]   ? Article.eventi.by_author(params[:author_id]) : []
-         when "3" then params[:category_id] ? Article.by_key_word(params[:category_id])    : []
-         when "4" then params[:codice]      ? Article.where(codice: params[:codice])       : []
+         when "1" then params[:author_id]   ? Article.libri.by_author(params[:author_id]).order("articles.dtpub DESC")  : []
+         when "2" then params[:author_id]   ? Article.eventi.by_author(params[:author_id]).order("articles.dtpub DESC") : []
+         when "3" then params[:category_id] ? Article.by_key_word(params[:category_id]).order("articles.dtpub DESC")    : []
+         when "4" then params[:codice]      ? Article.where(codice: params[:codice]).order("articles.dtpub DESC")       : []
          else []
          end
 
