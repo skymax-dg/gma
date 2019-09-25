@@ -19,3 +19,31 @@
     <%= @user.login %>
   </div>
 </div>
+
+<div class="row">
+  <div class="two columns">
+    <%= label @user, "Tipologia utente:", :class => "right" %>
+  </div>
+  <div class="ten columns">
+    <%= @user.d_user_tp %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @user, "Privilegi:", :class => "right" %>
+  </div>
+  <div class="ten columns">
+    <%= @user.privilege %>
+  </div>
+  <div class="three columns"> </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @user, "Anagrafica:", :class => "right" %>
+  </div>
+  <div class="ten columns">
+    <% if @user.anagen %>
+      <%= link_to "Anagen", @user.anagen %>
+    <% end %>
+  </div>
+</div>

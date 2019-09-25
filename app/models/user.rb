@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   attr_accessor :pwd
-  attr_accessible :azienda, :login, :pwd, :pwd_confirmation
+  attr_accessible :azienda, :login, :pwd, :pwd_confirmation, :anagen_id, :user_tp, :privilege
 
   validates :login, :presence => true,
                     :uniqueness => {:case_sensitive => false, scope: :azienda},
@@ -9,7 +9,17 @@ class User < ActiveRecord::Base
   				  :confirmation => true,
 				    :length => {:within => 6..20}
 
+  belongs_to :anagen
+
   before_save :encrypt_password
+
+  before_create :create_anagen
+
+  USER_TPS = [
+    ["GMA",1], 
+    ["GAC",2],
+    ["JSON",3]
+  ]
   
 #  def signed_in?
 #    true
@@ -47,6 +57,11 @@ class User < ActiveRecord::Base
     (user && user.salt == coockie_salt) ? user : nil
   end
 
+  def d_user_tp
+    tmp = USER_TPS.select { |a,b| b == self.user_tp }
+    tmp.size > 0 ? tmp[0][0] : ''
+  end
+
   private
     def encrypt_password
       self.salt = make_salt if new_record?
@@ -63,5 +78,9 @@ class User < ActiveRecord::Base
 
     def secure_hash(string)
       Digest::SHA2.hexdigest(string)
+    end
+
+    def create_anagen(par)
+      self.anagen.create(par[:anagen]) if !self.anagen && par[:anagen]
     end
 end
