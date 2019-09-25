@@ -18,6 +18,16 @@
       <%= f.label :azienda %>
       <%= select(:user, :azienda, (StaticData::ELNCAZND).invert.sort) %>
     </div>
+    <div class="twelve columns"></div>
+    <div class="two columns">
+      <%= f.label :user_tp %>
+      <%= select(:user, :user_tp, (User::USER_TPS)) %>
+    </div>
+    <div class="one columns"></div>
+    <div class="two columns">
+      <%= f.label :privilege %>
+      <%= f.number_field :privilege %>
+    </div>
     <div class="twelve columns">
       <%= f.submit 'SALVA', :class => "button radius small success foundicon-checkmark" %>
       <%= link_to 'ANNULLA', users_path, :class => "button radius small cancel foundicon-remove" %>
