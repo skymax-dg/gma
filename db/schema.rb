@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20190925093401) do
+ActiveRecord::Schema.define(:version => 20190926095902) do
 
   create_table "agentes", :force => true do |t|
     t.integer  "anagen_id"
@@ -369,15 +369,17 @@ ActiveRecord::Schema.define(:version => 20190925093401) do
   add_index "tesdocs", ["data_doc", "num_doc"], :name => "idx_tesdocs_on_data_doc_num_doc"
 
   create_table "users", :force => true do |t|
-    t.integer  "azienda",                                  :null => false
-    t.string   "login",      :limit => 20,                 :null => false
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
-    t.string   "salt",       :limit => 100,                :null => false
-    t.string   "pwdcript",   :limit => 100,                :null => false
+    t.integer  "azienda",                                    :null => false
+    t.string   "login",        :limit => 20,                 :null => false
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
+    t.string   "salt",         :limit => 100,                :null => false
+    t.string   "pwdcript",     :limit => 100,                :null => false
     t.integer  "anagen_id"
-    t.integer  "user_tp",                   :default => 1
-    t.integer  "privilege",                 :default => 1
+    t.integer  "user_tp",                     :default => 1
+    t.integer  "privilege",                   :default => 1
+    t.string   "token"
+    t.datetime "dt_exp_token"
   end
 
   add_index "users", ["azienda", "login"], :name => "idx_users_on_login", :unique => true
