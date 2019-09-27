@@ -48,8 +48,23 @@ class User < ActiveRecord::Base
     user && user.has_password?(submitted_password) && user.can_login_gma? ? user : nil
   end
 
+  def self.gac_authenticate(login, submitted_password, azienda)
+    user = find_by_login_and_azienda(login.upcase, azienda)
+    user.has_password?(submitted_password) && user.can_login_gac? ? user.get_gac_user : nil if user
+  end
+
+  def get_gac_user
+    st = Struct.new(:id, :denomin, :privilege)
+    an = self.anagen
+    st.new(self.id, an ? an.denomin : '', self.privilege)
+  end
+
   def can_login_gma?
     self.d_user_tp == "GMA"
+  end
+
+  def can_login_gac?
+    self.d_user_tp == "GAC"
   end
 
   # Check the link between id and cockie_salt
@@ -73,7 +88,7 @@ class User < ActiveRecord::Base
     if [nil, ""].include?(mail) || !(mail =~ VALID_EMAIL_REGEX) || User.exists?(login: mail, azienda: azienda)
       return [-2, nil]
     else
-      user = User.new(login: mail, azienda: azienda, user_tp: 2)
+      user = User.new(login: mail.upcase, azienda: azienda, user_tp: 2)
       user.pwd = user.random_pwd
       if user.save 
         user.gen_token

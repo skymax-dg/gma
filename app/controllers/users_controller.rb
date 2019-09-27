@@ -79,6 +79,14 @@ class UsersController < ApplicationController
       render json: { status: st, user: map_user(user) }
       return
 
+    when "3"
+      ris = User.gac_authenticate(params[:login], params[:password], @current_user.azienda)
+      render json: {result: ris || false}
+
+    when "4"
+      u = User.find(params[:id]) if User.exists? params[:id]
+      render json: u ? u.get_gac_user : nil
+
     when "5"
       st = User.appo_update(params)
       Rails.logger.info "------------------ status: #{st}"
