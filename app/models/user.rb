@@ -138,30 +138,32 @@ class User < ActiveRecord::Base
       an.pec = par[:pec]
       an.tipo = ["",nil].include?(an.pariva) ? "F" : "G"
 
-      if an.save && par[:indirizzo] != ""
-        unless user.anagen
-          user.anagen = an
-          user.save
-        end
-        ind = an.anainds.new(nrmag: 0)
-        ind.indir = "%s, %s"%[par[:indirizzo].gsub(",",""), par[:civico]]
-        ind.desloc = par[:citta]
-        ind.cap = par[:cap]
-        ind.flsl = 1
-        unless ind.save
-          Rails.logger.info "--------------- Errore indirizzo 1: #{ind.errors.full_messages}"
-          st = false 
-        end
-
-        if st && par[:indirizzo2] != ""
-          ind2 = an.anainds.new(nrmag: 0)
-          ind2.indir = "%s, %s"%[par[:indirizzo2].gsub(",",""), par[:civico2]]
-          ind2.desloc = par[:citta2]
-          ind2.cap = par[:cap2]
-          ind2.flsp = 1
-          unless ind2.save
-            Rails.logger.info "--------------- Errore indirizzo 2: #{ind2.errors.full_messages}"
+      if an.save 
+        if par[:indirizzo] != ""
+          unless user.anagen
+            user.anagen = an
+            user.save
+          end
+          ind = an.anainds.new(nrmag: 0)
+          ind.indir = "%s, %s"%[par[:indirizzo].gsub(",",""), par[:civico]]
+          ind.desloc = par[:citta]
+          ind.cap = par[:cap]
+          ind.flsl = 1
+          unless ind.save
+            Rails.logger.info "--------------- Errore indirizzo 1: #{ind.errors.full_messages}"
             st = false 
+          end
+
+          if st && par[:indirizzo2] != ""
+            ind2 = an.anainds.new(nrmag: 0)
+            ind2.indir = "%s, %s"%[par[:indirizzo2].gsub(",",""), par[:civico2]]
+            ind2.desloc = par[:citta2]
+            ind2.cap = par[:cap2]
+            ind2.flsp = 1
+            unless ind2.save
+              Rails.logger.info "--------------- Errore indirizzo 2: #{ind2.errors.full_messages}"
+              st = false 
+            end
           end
         end
       else
@@ -170,6 +172,7 @@ class User < ActiveRecord::Base
       end
       st
     end
+    st
   end
 
   private

@@ -81,7 +81,8 @@ class UsersController < ApplicationController
 
     when "5"
       st = User.appo_update(params)
-      render json: { status: st }
+      Rails.logger.info "------------------ status: #{st}"
+      render json: { status: st, errors: "WIP" }
 
     end
   end
