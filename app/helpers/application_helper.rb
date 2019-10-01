@@ -13,6 +13,10 @@ module ApplicationHelper
         "Luglio",  "Agosto",   "Settembre", "Ottobre", "Novembre", "Dicembre"][m.to_i]
   end
 
+  def to_datetime(date)
+    date ? date.strftime("%d/%m/%y - %H.%M") : ''
+  end
+
   def store_location
     session[:return_to] = request.fullpath
   end

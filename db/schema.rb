@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20190925093401) do
+ActiveRecord::Schema.define(:version => 20191001120554) do
 
   create_table "agentes", :force => true do |t|
     t.integer  "anagen_id"
@@ -31,26 +31,32 @@ ActiveRecord::Schema.define(:version => 20190925093401) do
   add_index "anagen_articles", ["mode"], :name => "index_anagen_articles_on_mode"
 
   create_table "anagens", :force => true do |t|
-    t.integer  "codice",                     :null => false
-    t.string   "tipo",        :limit => 1,   :null => false
-    t.string   "codfis",      :limit => 16
-    t.string   "pariva",      :limit => 11
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
-    t.string   "denomin",     :limit => 150, :null => false
-    t.string   "telefono",    :limit => 20
-    t.string   "email",       :limit => 50
-    t.string   "fax",         :limit => 20
-    t.string   "web",         :limit => 50
+    t.integer  "codice",                                           :null => false
+    t.string   "tipo",               :limit => 1,                  :null => false
+    t.string   "codfis",             :limit => 16
+    t.string   "pariva",             :limit => 11
+    t.datetime "created_at",                                       :null => false
+    t.datetime "updated_at",                                       :null => false
+    t.string   "denomin",            :limit => 150,                :null => false
+    t.string   "telefono",           :limit => 20
+    t.string   "email",              :limit => 50
+    t.string   "fax",                :limit => 20
+    t.string   "web",                :limit => 50
     t.date     "dtnas"
-    t.string   "sesso",       :limit => 1
+    t.string   "sesso",              :limit => 1
     t.integer  "luogonas_id"
-    t.string   "referente",   :limit => 150
+    t.string   "referente",          :limit => 150
     t.string   "type"
-    t.string   "codnaz",      :limit => 2
-    t.string   "codident",    :limit => 20
-    t.string   "pec",         :limit => 50
+    t.string   "codnaz",             :limit => 2
+    t.string   "codident",           :limit => 20
+    t.string   "pec",                :limit => 50
     t.text     "bio"
+    t.string   "cod_cig",            :limit => 20
+    t.string   "cod_cup",            :limit => 20
+    t.integer  "split_payement",                    :default => 0
+    t.string   "cod_carta_studente", :limit => 7
+    t.string   "cod_carta_docente",  :limit => 8
+    t.integer  "attivo",                            :default => 1
   end
 
   add_index "anagens", ["codfis"], :name => "idx_anagens_on_codfis"
@@ -369,15 +375,18 @@ ActiveRecord::Schema.define(:version => 20190925093401) do
   add_index "tesdocs", ["data_doc", "num_doc"], :name => "idx_tesdocs_on_data_doc_num_doc"
 
   create_table "users", :force => true do |t|
-    t.integer  "azienda",                                  :null => false
-    t.string   "login",      :limit => 20,                 :null => false
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
-    t.string   "salt",       :limit => 100,                :null => false
-    t.string   "pwdcript",   :limit => 100,                :null => false
+    t.integer  "azienda",                                    :null => false
+    t.string   "login",        :limit => 20,                 :null => false
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
+    t.string   "salt",         :limit => 100,                :null => false
+    t.string   "pwdcript",     :limit => 100,                :null => false
     t.integer  "anagen_id"
-    t.integer  "user_tp",                   :default => 1
-    t.integer  "privilege",                 :default => 1
+    t.integer  "user_tp",                     :default => 1
+    t.integer  "privilege",                   :default => 1
+    t.string   "token"
+    t.datetime "dt_exp_token"
+    t.string   "email",        :limit => 60
   end
 
   add_index "users", ["azienda", "login"], :name => "idx_users_on_login", :unique => true

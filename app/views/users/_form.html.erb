@@ -1,9 +1,14 @@
 <%#= render :partial => 'shared/error_messages', :locals => {:f => @user} %>
 <%= form_for(@user) do |f| %>
   <div class="row">
-    <div class="twelve columns">
+    <div class="five columns">
       <%= f.label "Nome utente:" %>
       <%= f.text_field :login %>
+    </div>
+    <div class="two columns"></div>
+    <div class="five columns">
+      <%= f.label "Email:" %>
+      <%= f.text_field :email %>
     </div>
     <div class="five columns">
       <%= f.label "Password" %>

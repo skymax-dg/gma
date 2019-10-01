@@ -1,5 +1,6 @@
 # encoding: utf-8
 class UsersController < ApplicationController
+  before_filter :authenticate_request, if: :json_request?
   before_filter :authenticate, :except => [:new, :create]
   before_filter :force_fieldcase, :only => [:create, :update]
 
@@ -59,11 +60,58 @@ class UsersController < ApplicationController
     end
   end
   
+  #modes:
+  # 1 => make temporary account
+  # 2 => check token
+  # 3 => login user
+  # 4 => read user
+  # 5 => update user
+  def users_query
+    case params[:mode]
+    when "1"
+      #data la mail cerco l'utente e genero l'account provvisorio
+      st, ris = User.temporary_account(params[:email], @current_user.azienda)
+      if st > 0
+        render json: { status: true, token: ris.token, id: ris.id, email: ris.email }
+        return
+      else
+        render json: { status: false }
+        return
+      end
+
+    when "2"
+      st, user = User.check_token(params[:user_id], params[:token], @current_user.azienda)
+      render json: { status: st, user: map_user(user) }
+      return
+
+    when "3"
+      ris = User.gac_authenticate(params[:login], params[:password], @current_user.azienda)
+      render json: {result: ris ? ris.id : false}
+
+    when "4"
+      u = User.find(params[:id]) if User.exists? params[:id]
+      render json: u ? u.get_gac_user : nil
+
+    when "5"
+      st = User.appo_update(params)
+      Rails.logger.info "------------------ status: #{st}"
+      render json: { status: st, errors: "WIP" }
+
+    end
+  end
+
   private
     def correct_user
       @user = User.find(params[:id])
       redirect_to root_path, 
                   :alert => "Nome utente e password non trovate" unless current_user?(@user) 
+    end
+
+    def map_user(x)
+      a = [:id, :login]
+      h = {}
+      a.each { |y| h[y] = x[y] }
+      h
     end
 
   private

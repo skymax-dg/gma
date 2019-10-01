@@ -47,3 +47,20 @@
     <% end %>
   </div>
 </div>
+
+<div class="row">
+  <div class="two columns">
+    <%= label @user, "Token:", :class => "right" %>
+  </div>
+  <div class="ten columns">
+    <%= @user.token %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @user, "Scadenza token:", :class => "right" %>
+  </div>
+  <div class="ten columns">
+    <%= to_datetime(@user.dt_exp_token) %>
+  </div>
+</div>

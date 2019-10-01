@@ -15,11 +15,13 @@ class Anagen < ActiveRecord::Base
   belongs_to :localita, :foreign_key => "luogonas_id"
 
   has_one :agente, :dependent => :destroy
+  has_one :user, :dependent => :destroy
   
 #  default_scope :order => 'anagens.denomin ASC' Non funziona perchè c'è una select max
 
   attr_accessible :codice, :tipo, :denomin, :codfis, :pariva, :dtnas, :luogonas_id, :sesso,
-                  :telefono, :email, :fax, :web, :sconto, :referente, :codnaz, :codident, :pec, :bio
+                  :telefono, :email, :fax, :web, :sconto, :referente, :codnaz, :codident, :pec, :bio, :userp, :cod_cig, :cod_cup, 
+                  :split_payement, :cod_carta_docente, :cod_carta_studente
 
   validates :codice, :tipo, :denomin, :presence => true
   validates :codice, :denomin, :uniqueness => true
@@ -39,6 +41,11 @@ class Anagen < ActiveRecord::Base
   validates :web,       :length => {:maximum => 50}
 
   TIPO = $ParAzienda['ANAGEN']['TIPO_SOGGETTO']
+
+  SPLIT_PAYEMENTS = [
+    ["NO",0], 
+    ["SI",1]
+  ]
 
   def self.filter (tp, des, page)
     # Esegure la ricerca delle anagrafiche soggetto in base ai filtri impostati
@@ -221,6 +228,24 @@ class Anagen < ActiveRecord::Base
   def abbonamenti
     kw = KeyWordEvent.type_event_magazine
     self.events.joins(:key_words).where("key_words.id = ?", kw.id).order("events.dt_event DESC")
+  end
+
+  def encode_denomin(surname, name)
+    if surname.split.size > 1
+      self.denomin = "%s, %s"%[surname, name]
+    else
+      self.denomin = "%s %s"%[surname, name]
+    end
+  end
+
+  def decode_denomin
+    if self.denomin =~ /,/
+      self.denomin.split(",")[0..1]
+    else
+      surname = self.denomin.split()[0]
+      name = self.denomin.gsub(surname, '').strip
+      [surname, name]
+    end
   end
 
   private
