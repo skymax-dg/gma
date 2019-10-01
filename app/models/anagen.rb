@@ -20,7 +20,8 @@ class Anagen < ActiveRecord::Base
 #  default_scope :order => 'anagens.denomin ASC' Non funziona perchè c'è una select max
 
   attr_accessible :codice, :tipo, :denomin, :codfis, :pariva, :dtnas, :luogonas_id, :sesso,
-                  :telefono, :email, :fax, :web, :sconto, :referente, :codnaz, :codident, :pec, :bio, :user
+                  :telefono, :email, :fax, :web, :sconto, :referente, :codnaz, :codident, :pec, :bio, :userp, :cod_cig, :cod_cup, 
+                  :split_payement, :cod_carta_docente, :cod_carta_studente
 
   validates :codice, :tipo, :denomin, :presence => true
   validates :codice, :denomin, :uniqueness => true
@@ -40,6 +41,11 @@ class Anagen < ActiveRecord::Base
   validates :web,       :length => {:maximum => 50}
 
   TIPO = $ParAzienda['ANAGEN']['TIPO_SOGGETTO']
+
+  SPLIT_PAYEMENTS = [
+    ["NO",0], 
+    ["SI",1]
+  ]
 
   def self.filter (tp, des, page)
     # Esegure la ricerca delle anagrafiche soggetto in base ai filtri impostati

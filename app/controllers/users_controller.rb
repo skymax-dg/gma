@@ -71,8 +71,13 @@ class UsersController < ApplicationController
     when "1"
       #data la mail cerco l'utente e genero l'account provvisorio
       st, ris = User.temporary_account(params[:email], @current_user.azienda)
-      render json: { status: st > 0, token: ris.token, id: ris.id, email: ris.login }
-      return
+      if st > 0
+        render json: { status: true, token: ris.token, id: ris.id, email: ris.email }
+        return
+      else
+        render json: { status: false }
+        return
+      end
 
     when "2"
       st, user = User.check_token(params[:user_id], params[:token], @current_user.azienda)
@@ -81,7 +86,7 @@ class UsersController < ApplicationController
 
     when "3"
       ris = User.gac_authenticate(params[:login], params[:password], @current_user.azienda)
-      render json: {result: ris || false}
+      render json: {result: ris ? ris.id : false}
 
     when "4"
       u = User.find(params[:id]) if User.exists? params[:id]

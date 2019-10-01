@@ -6,6 +6,9 @@ ANAGEN:
     F: 'Pers.fisica'
     G: 'Pers.giuridica'
     I: 'Ditta individ.'
+    E: 'Ente statale'
+    S: 'Studente'
+    D: 'Docente'
 ANAIND:
   NRMAG:
     0: 'No'
