@@ -48,7 +48,7 @@ class KeyWordsController < ApplicationController
 
     respond_to do |format|
       if @key_word.save
-        format.html { redirect_to @key_word, notice: 'Key word was successfully created.' }
+        format.html { redirect_to key_word_path(@key_word), notice: 'Key word was successfully created.' }
         format.json { render json: @key_word, status: :created, location: @key_word }
       else
         format.html { render action: "new" }
@@ -64,7 +64,7 @@ class KeyWordsController < ApplicationController
 
     respond_to do |format|
       if @key_word.update_attributes(params[:key_word])
-        format.html { redirect_to @key_word, notice: 'Key word was successfully updated.' }
+        format.html { redirect_to key_word_path(@key_word), notice: 'Key word was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

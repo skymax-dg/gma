@@ -1,4 +1,4 @@
-<%= form_for(key_word_path(@key_word)) do |f| %>
+<%= form_for(@key_word, as: :key_word, url: { controller: :key_words, action: :update}) do |f| %>
     <%= f.hidden_field :parent_id, value: params[:parent_id]  %>
     <div class="twelve columns">
       <%= f.label "Descrizione" %>
