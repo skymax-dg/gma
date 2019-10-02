@@ -76,7 +76,7 @@ class User < ActiveRecord::Base
           
       ris = st.new(self.id, self.email, an.denomin, nome, cognome, self.privilege, an.codfis, an.pariva, an.telefono, an.fax, an.codident, an.pec, an.tipo, an.referente, an.cod_carta_studente, an.cod_carta_docente, an.cod_cig, an.cod_cup, sede, sped)
     else
-      ris = st.new(self.id, self.email, self.login, self.privilege, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil)
+      ris = st.new(self.id, self.email, self.login, nil, nil, self.privilege, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil)
     end
     ris
   end
