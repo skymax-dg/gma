@@ -54,8 +54,9 @@ class User < ActiveRecord::Base
   end
 
   def get_gac_user
-    st  = Struct.new(:id, :email, :denomin, :privilege, :codfis, :pariva, :telefono, :fax, :codident, :pec, :tipo, :referente, :cod_carta_studente, :cod_carta_docente, :cod_cig, :cod_cup, :ind_sede, :ind_sped)
-    ind = Struct.new(:id, :indir, :desloc, :cap)
+    st  = Struct.new(:id, :email, :denomin, :nome, :cognome, :privilege, :codfis, :pariva, :telefono, :fax, :codident, :pec, :tipo, :referente, :cod_carta_studente, :cod_carta_docente, :cod_cig, :cod_cup, :ind_sede, :ind_sped)
+    #ind = Struct.new(:id, :indir, :desloc, :cap)
+    ind = Struct.new(:id, :indirizzo, :civico, :citta, :cap, :paese, :prov)
 
     ris = nil
     an = self.anagen
@@ -64,11 +65,16 @@ class User < ActiveRecord::Base
       sped = nil
 
       tmp = an.anainds.where(flsp: "S").first #spedizione
-      sped = tmp ? ind.new(tmp.id, tmp.indir, tmp.desloc, tmp.cap) : nil
+      sped = tmp ? ind.new(tmp.id, tmp.decode_indir[0], tmp.decode_indir[1], tmp.desloc, tmp.cap, '', '') : nil
+      #sped = tmp ? ind.new(tmp.id, tmp.indir, tmp.desloc, tmp.cap) : nil
+
       tmp = an.anainds.where(flsl: "S").first #sede legale
-      sede = tmp ? ind.new(tmp.id, tmp.indir, tmp.desloc, tmp.cap) : nil
+      sede = tmp ? ind.new(tmp.id, tmp.decode_indir[0], tmp.decode_indir[1], tmp.desloc, tmp.cap, '', '') : nil
+      #sede = tmp ? ind.new(tmp.id, tmp.indir, tmp.desloc, tmp.cap) : nil
+
+      cognome, nome = an.decode_denomin
           
-      ris = st.new(self.id, self.email, an.denomin, self.privilege, an.codfis, an.pariva, an.telefono, an.fax, an.codident, an.pec, an.tipo, an.referente, an.cod_carta_studente, an.cod_carta_docente, an.cod_cig, an.cod_cup, sede, sped)
+      ris = st.new(self.id, self.email, an.denomin, nome, cognome, self.privilege, an.codfis, an.pariva, an.telefono, an.fax, an.codident, an.pec, an.tipo, an.referente, an.cod_carta_studente, an.cod_carta_docente, an.cod_cig, an.cod_cup, sede, sped)
     else
       ris = st.new(self.id, self.email, self.login, self.privilege, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil)
     end
@@ -157,9 +163,19 @@ class User < ActiveRecord::Base
       else
         an = Anagen.new(codice: Anagen.newcod)
       end
+      an.tipo = case par[:user_tp]
+                when "1" then "F" #privato (ita o straniero)
+                when "2" then "G" #società
+                when "3" then "I" #ditta individuale
+                when "4" then "G" #foreign company
+                when "5" then "E" #ente statale
+                when "6" then "S" #studente
+                when "7" then "D" #docente
+                else nil
+                end
 
       an.encode_denomin(par[:cognome], par[:nome]) if par[:cognome] != "" && par[:nome] != ""
-      an.denomin = par[:ragsoc] if par[:ragsoc] != ""
+      an.denomin = par[:ragsoc] if par[:ragsoc] != "" && an.use_rag_soc?
       Rails.logger.info "------------ denomin: #{an.denomin}"
 
       an.codfis = par[:codfis]
@@ -174,16 +190,6 @@ class User < ActiveRecord::Base
       an.cod_cig = par[:cod_cig]
       an.cod_cup = par[:cod_cup]
       #an.tipo = ["",nil].include?(an.pariva) ? "F" : "G"
-      an.tipo = case par[:user_tp]
-                when "1" then "F" #privato (ita o straniero)
-                when "2" then "G" #società
-                when "3" then "I" #ditta individuale
-                when "4" then "G" #foreign company
-                when "5" then "E" #ente statale
-                when "6" then "S" #studente
-                when "7" then "D" #docente
-                else nil
-                end
 
       if an.save 
         if par[:indirizzo] != ""
@@ -193,8 +199,15 @@ class User < ActiveRecord::Base
           if user.changed?
             Rails.logger.info "------------ ERR: #{user.errors.full_messages}" unless user.save
           end
-          ind = an.anainds.new(nrmag: 0)
-          ind.indir = "%s, %s"%[par[:indirizzo].gsub(",",""), par[:civico]]
+          if par[:indir_id] && an.anainds.exists?(par[:indir_id])
+            Rails.logger.info "------Cerco per id: #{ par[:indir_id] }"
+            ind = an.anainds.find(par[:indir_id])
+          else
+            Rails.logger.info "------Creo indirizzo"
+            ind = an.anainds.new(nrmag: 0)
+          end
+          ind.encode_indir(par[:indirizzo], par[:civico])
+          #ind.indir = "%s, %s"%[par[:indirizzo].gsub(",",""), par[:civico]]
           ind.desloc = par[:citta]
           ind.cap = par[:cap]
           ind.flsl = "N"
@@ -206,8 +219,15 @@ class User < ActiveRecord::Base
           end
 
           if st && par[:indirizzo2] != ""
-            ind2 = an.anainds.new(nrmag: 0)
-            ind2.indir = "%s, %s"%[par[:indirizzo2].gsub(",",""), par[:civico2]]
+            if par[:indir_id2] && an.anainds.exists?(par[:indir_id2])
+              Rails.logger.info "------Cerco per id: #{ par[:indir_id2] }"
+              ind2 = an.anainds.find(par[:indir_id2])
+            else
+              Rails.logger.info "------Creo indirizzo2 (#{ par[:indir_id2] })"
+              ind2 = an.anainds.new(nrmag: 0)
+            end
+            ind2.encode_indir(par[:indirizzo2], par[:civico2])
+            #ind2.indir = "%s, %s"%[par[:indirizzo2].gsub(",",""), par[:civico2]]
             ind2.desloc = par[:citta2]
             ind2.cap = par[:cap2]
             ind2.flsl = "S"

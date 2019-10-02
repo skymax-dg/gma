@@ -240,12 +240,16 @@ class Anagen < ActiveRecord::Base
 
   def decode_denomin
     if self.denomin =~ /,/
-      self.denomin.split(",")[0..1]
+      self.denomin.split(",")[0..1].map { |x| x.strip }
     else
-      surname = self.denomin.split()[0]
+      surname = self.denomin.split()[0].strip
       name = self.denomin.gsub(surname, '').strip
       [surname, name]
     end
+  end
+
+  def use_rag_soc?
+    ["G", "I", "E"].include? self.tipo
   end
 
   private
