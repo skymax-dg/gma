@@ -156,5 +156,13 @@
     <%= @article.quote %>
   </div>
 </div>
+<div class="row">
+  <div class="two columns">
+    <%= label @article, "Link Issuee:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= @article.issuee_link %>
+  </div>
+</div>
 
 <%= render "rel_datas" %>
