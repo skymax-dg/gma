@@ -252,6 +252,33 @@ class Anagen < ActiveRecord::Base
     ["G", "I", "E"].include? self.tipo
   end
 
+  def gac_dati_completi?
+    st = true
+    ds = []
+    ds << [:referente,          ["G", "I", "E"] ]
+    ds << [:denomin,            ["G", "I", "E", "F", "S", "D"] ]
+    ds << [:codfis,             ["G", "I", "E", "F", "S", "D"] ]
+    ds << [:pariva,             ["G", "I", "E"] ]
+    ds << [:cod_carta_studente, ["S"] ]
+    ds << [:cod_carta_docente,  ["D"] ]
+    ds << [:telefono,           ["G", "I", "E", "F", "S", "D"]]
+    ds << [:pariva,             ["G", "I", "E"] ]
+    ds << [:codident,           ["G", "I", "E"] ]
+    ds << [:pec,                ["G", "I", "E"] ]
+    ds << [:cod_cig,            ["E"] ]
+    ds << [:cod_cup,            ["E"] ]
+    
+    ds.each do |k, tps|
+      if tps.include?(self.tipo)
+        puts "Checking #{k}"
+        st = false if ["", nil].include?(self[k])
+      end
+      break unless st
+    end
+
+    st
+  end
+
   private
     def require_no_contos
       self.errors.add :base, "Almeno un conto fa riferimento all' anagrafica che si desidera eliminare."
