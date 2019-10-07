@@ -97,6 +97,11 @@ class UsersController < ApplicationController
       Rails.logger.info "------------------ status: #{st}"
       render json: { status: st, errors: st ? nil : "WIP" }
 
+    when "6"
+      st, id = Anagen.add_addr(params)
+      Rails.logger.info "------------------ status: #{st}, id: #{id}"
+      render json: { status: st, id: id }
+
     end
   end
 

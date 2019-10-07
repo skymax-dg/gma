@@ -279,6 +279,22 @@ class Anagen < ActiveRecord::Base
     st
   end
 
+  def self.add_addr(par)
+    if Anagen.exists?(par[:anagen_id])
+      an = Anagen.find(par[:anagen_id])
+      addr = an.anainds.create(flsl: "N", flsp: "S", flmg: "N", nrmag: 0)
+      addr.encode_indir(par[:indirizzo], par[:civico])
+      addr.desloc = par[:citta]
+      addr.cap = par[:cap]
+      if addr.save 
+        return [true, addr.id] 
+      else
+        Rails.logger.info addr.errors.full_messages
+        return [false, nil]
+      end
+    end
+  end
+
   private
     def require_no_contos
       self.errors.add :base, "Almeno un conto fa riferimento all' anagrafica che si desidera eliminare."
