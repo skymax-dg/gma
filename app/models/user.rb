@@ -163,33 +163,35 @@ class User < ActiveRecord::Base
       else
         an = Anagen.new(codice: Anagen.newcod)
       end
-      an.tipo = case par[:user_tp]
-                when "1" then "F" #privato (ita o straniero)
-                when "2" then "G" #società
-                when "3" then "I" #ditta individuale
-                when "4" then "G" #foreign company
-                when "5" then "E" #ente statale
-                when "6" then "S" #studente
-                when "7" then "D" #docente
-                else nil
-                end
+      if par[:user_tp]
+        an.tipo = case par[:user_tp]
+                  when "1" then "F" #privato (ita o straniero)
+                  when "2" then "G" #società
+                  when "3" then "I" #ditta individuale
+                  when "4" then "G" #foreign company
+                  when "5" then "E" #ente statale
+                  when "6" then "S" #studente
+                  when "7" then "D" #docente
+                  else nil
+                  end
 
-      an.encode_denomin(par[:cognome], par[:nome]) if par[:cognome] != "" && par[:nome] != ""
-      an.denomin = par[:ragsoc] if par[:ragsoc] != "" && an.use_rag_soc?
-      Rails.logger.info "------------ denomin: #{an.denomin}"
+        an.encode_denomin(par[:cognome], par[:nome]) if par[:cognome] != "" && par[:nome] != ""
+        an.denomin = par[:ragsoc] if par[:ragsoc] != "" && an.use_rag_soc?
+        Rails.logger.info "------------ denomin: #{an.denomin}"
 
-      an.codfis = par[:codfis]
-      an.pariva = par[:pariva]
-      an.telefono = par[:telefono]
-      an.fax = par[:fax]
-      an.codident = par[:coddest]
-      an.pec = par[:pec]
-      an.referente = par[:referente]
-      an.cod_carta_studente = par[:cod_carta_studente]
-      an.cod_carta_docente = par[:cod_carta_docente]
-      an.cod_cig = par[:cod_cig]
-      an.cod_cup = par[:cod_cup]
-      #an.tipo = ["",nil].include?(an.pariva) ? "F" : "G"
+        an.codfis = par[:codfis]
+        an.pariva = par[:pariva]
+        an.telefono = par[:telefono]
+        an.fax = par[:fax]
+        an.codident = par[:coddest]
+        an.pec = par[:pec]
+        an.referente = par[:referente]
+        an.cod_carta_studente = par[:cod_carta_studente]
+        an.cod_carta_docente = par[:cod_carta_docente]
+        an.cod_cig = par[:cod_cig]
+        an.cod_cup = par[:cod_cup]
+        #an.tipo = ["",nil].include?(an.pariva) ? "F" : "G"
+      end
 
       if an.save 
         if par[:indirizzo] != ""
@@ -218,7 +220,7 @@ class User < ActiveRecord::Base
             st = false 
           end
 
-          if st && par[:indirizzo2] != ""
+          if st && !(["", nil].include?(par[:indirizzo2]))
             if par[:indir_id2] && an.anainds.exists?(par[:indir_id2])
               Rails.logger.info "------Cerco per id: #{ par[:indir_id2] }"
               ind2 = an.anainds.find(par[:indir_id2])
