@@ -142,7 +142,8 @@ Gma::Application.routes.draw do
   get 'products_query', to: 'articles#products_query'
   get 'anagens_query',  to: 'anagens#anagens_query'
   get 'users_query',    to: 'users#users_query'
-  post 'users_query',    to: 'users#users_query'
+  post 'users_query',   to: 'users#users_query'
+  get 'get_localitas',  to: 'localitas#localitas_query'
       
 
   # The priority is based upon order of creation:
