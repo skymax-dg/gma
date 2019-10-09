@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20191003072527) do
+ActiveRecord::Schema.define(:version => 20191009092346) do
 
   create_table "agentes", :force => true do |t|
     t.integer  "anagen_id"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(:version => 20191003072527) do
     t.string   "cod_carta_studente", :limit => 7
     t.string   "cod_carta_docente",  :limit => 8
     t.integer  "attivo",                            :default => 1
+    t.integer  "primary_address_id"
   end
 
   add_index "anagens", ["codfis"], :name => "idx_anagens_on_codfis"

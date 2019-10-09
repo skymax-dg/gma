@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
   end
 
   def get_gac_user
-    st  = Struct.new(:id, :email, :denomin, :nome, :cognome, :privilege, :codfis, :pariva, :telefono, :fax, :codident, :pec, :tipo, :referente, :cod_carta_studente, :cod_carta_docente, :cod_cig, :cod_cup, :ind_sede, :ind_sped, :dati_completi, :anagen_id)
+    st  = Struct.new(:id, :email, :denomin, :nome, :cognome, :privilege, :codfis, :pariva, :telefono, :fax, :codident, :pec, :tipo, :referente, :cod_carta_studente, :cod_carta_docente, :cod_cig, :cod_cup, :ind_sede, :ind_sped, :dati_completi, :anagen_id, :primary_address)
     #ind = Struct.new(:id, :indir, :desloc, :cap)
     ind = Struct.new(:id, :indirizzo, :civico, :citta, :cap, :paese, :prov)
 
@@ -74,9 +74,12 @@ class User < ActiveRecord::Base
       #sede = tmp ? ind.new(tmp.id, tmp.decode_indir[0], tmp.decode_indir[1], tmp.desloc, tmp.cap, '', '') : nil
       #sede = tmp ? ind.new(tmp.id, tmp.indir, tmp.desloc, tmp.cap) : nil
 
+      tmp = an.primary_address
+      prim = ind.new(tmp.id, tmp.decode_indir[0], tmp.decode_indir[1], tmp.desloc, tmp.cap, '', '') if tmp
+
       cognome, nome = an.decode_denomin
           
-      ris = st.new(self.id, self.email, an.denomin, nome, cognome, self.privilege, an.codfis, an.pariva, an.telefono, an.fax, an.codident, an.pec, an.tipo, an.referente, an.cod_carta_studente, an.cod_carta_docente, an.cod_cig, an.cod_cup, sede, sped, an.gac_dati_completi? ? 1 : 0, an.id)
+      ris = st.new(self.id, self.email, an.denomin, nome, cognome, self.privilege, an.codfis, an.pariva, an.telefono, an.fax, an.codident, an.pec, an.tipo, an.referente, an.cod_carta_studente, an.cod_carta_docente, an.cod_cig, an.cod_cup, sede, sped, an.gac_dati_completi? ? 1 : 0, an.id, prim)
     else
       ris = st.new(self.id, self.email, self.login, nil, nil, self.privilege, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, 0)
     end
@@ -194,58 +197,62 @@ class User < ActiveRecord::Base
         an.cod_cup = par[:cod_cup]
         #an.tipo = ["",nil].include?(an.pariva) ? "F" : "G"
       end
+      an.primary_address_id = par[:primary_address_id] unless [nil, ""].include?(par[:primary_address_id])
 
-      if an.save 
-        if par[:indirizzo] != ""
-          unless user.anagen
-            user.anagen = an
-          end
-          if user.changed?
-            Rails.logger.info "------------ ERR: #{user.errors.full_messages}" unless user.save
-          end
-          if par[:indir_id] && an.anainds.exists?(par[:indir_id])
-            Rails.logger.info "------Cerco per id: #{ par[:indir_id] }"
-            ind = an.anainds.find(par[:indir_id])
-          else
-            Rails.logger.info "------Creo indirizzo"
-            ind = an.anainds.new(nrmag: 0)
-          end
-          ind.encode_indir(par[:indirizzo], par[:civico])
-          #ind.indir = "%s, %s"%[par[:indirizzo].gsub(",",""), par[:civico]]
-          ind.desloc = par[:citta]
-          ind.cap = par[:cap]
-          ind.flsl = "N"
-          ind.flsp = "S"
-          ind.flmg = "N"
-          unless ind.save
-            Rails.logger.info "--------------- Errore indirizzo 1: #{ind.errors.full_messages}"
-            st = false 
-          end
-
-          if st && !(["", nil].include?(par[:indirizzo2]))
-            if par[:indir_id2] && an.anainds.exists?(par[:indir_id2])
-              Rails.logger.info "------Cerco per id: #{ par[:indir_id2] }"
-              ind2 = an.anainds.find(par[:indir_id2])
-            else
-              Rails.logger.info "------Creo indirizzo2 (#{ par[:indir_id2] })"
-              ind2 = an.anainds.new(nrmag: 0)
-            end
-            ind2.encode_indir(par[:indirizzo2], par[:civico2])
-            #ind2.indir = "%s, %s"%[par[:indirizzo2].gsub(",",""), par[:civico2]]
-            ind2.desloc = par[:citta2]
-            ind2.cap = par[:cap2]
-            ind2.flsl = "S"
-            ind2.flsp = "N"
-            ind2.flmg = "N"
-            unless ind2.save
-              Rails.logger.info "--------------- Errore indirizzo 2: #{ind2.errors.full_messages}"
-              st = false 
-            end
-          end
-        end
-      else
+      if an.changed? && !an.save
         Rails.logger.info "--------------- Errore anagen: #{an.errors.full_messages}"
         st = false
+      end
+
+      if par[:indirizzo] != ""
+        unless user.anagen
+          user.anagen = an
+        end
+        if user.changed?
+          Rails.logger.info "------------ ERR: #{user.errors.full_messages}" unless user.save
+        end
+        if par[:indir_id] && an.anainds.exists?(par[:indir_id])
+          Rails.logger.info "------Cerco per id: #{ par[:indir_id] }"
+          ind = an.anainds.find(par[:indir_id])
+        else
+          Rails.logger.info "------Creo indirizzo"
+          ind = an.anainds.new(nrmag: 0)
+        end
+        ind.encode_indir(par[:indirizzo], par[:civico])
+        #ind.indir = "%s, %s"%[par[:indirizzo].gsub(",",""), par[:civico]]
+        ind.desloc = par[:citta]
+        ind.cap = par[:cap]
+        ind.flsl = "N"
+        ind.flsp = "S"
+        ind.flmg = "N"
+        if ind.save
+          an.primary_address = ind
+          an.save
+        else
+          Rails.logger.info "--------------- Errore indirizzo 1: #{ind.errors.full_messages}"
+          st = false 
+        end
+
+        if st && !(["", nil].include?(par[:indirizzo2]))
+          if par[:indir_id2] && an.anainds.exists?(par[:indir_id2])
+            Rails.logger.info "------Cerco per id: #{ par[:indir_id2] }"
+            ind2 = an.anainds.find(par[:indir_id2])
+          else
+            Rails.logger.info "------Creo indirizzo2 (#{ par[:indir_id2] })"
+            ind2 = an.anainds.new(nrmag: 0)
+          end
+          ind2.encode_indir(par[:indirizzo2], par[:civico2])
+          #ind2.indir = "%s, %s"%[par[:indirizzo2].gsub(",",""), par[:civico2]]
+          ind2.desloc = par[:citta2]
+          ind2.cap = par[:cap2]
+          ind2.flsl = "S"
+          ind2.flsp = "N"
+          ind2.flmg = "N"
+          unless ind2.save
+            Rails.logger.info "--------------- Errore indirizzo 2: #{ind2.errors.full_messages}"
+            st = false 
+          end
+        end
       end
       st
     end

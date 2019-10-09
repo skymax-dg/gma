@@ -13,6 +13,7 @@ class Anagen < ActiveRecord::Base
   has_many :events, through: :event_states
 
   belongs_to :localita, :foreign_key => "luogonas_id"
+  belongs_to :primary_address, :foreign_key => "primary_address_id", class_name: "Anaind"
 
   has_one :agente, :dependent => :destroy
   has_one :user, :dependent => :destroy
