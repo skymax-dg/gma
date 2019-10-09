@@ -61,15 +61,17 @@ class User < ActiveRecord::Base
     ris = nil
     an = self.anagen
     if an
-      sede = nil
-      sped = nil
+      sede = []
+      sped = []
 
-      tmp = an.anainds.where(flsp: "S").first #spedizione
-      sped = tmp ? ind.new(tmp.id, tmp.decode_indir[0], tmp.decode_indir[1], tmp.desloc, tmp.cap, '', '') : nil
+      tmp = an.anainds.where(flsp: "S") #spedizione
+      tmp.each { |x| sped << ind.new(x.id, x.decode_indir[0], x.decode_indir[1], x.desloc, x.cap, '', '') }
+      #sped = tmp ? ind.new(tmp.id, tmp.decode_indir[0], tmp.decode_indir[1], tmp.desloc, tmp.cap, '', '') : nil
       #sped = tmp ? ind.new(tmp.id, tmp.indir, tmp.desloc, tmp.cap) : nil
 
-      tmp = an.anainds.where(flsl: "S").first #sede legale
-      sede = tmp ? ind.new(tmp.id, tmp.decode_indir[0], tmp.decode_indir[1], tmp.desloc, tmp.cap, '', '') : nil
+      tmp = an.anainds.where(flsl: "S") #sede legale
+      tmp.each { |x| sede << ind.new(x.id, x.decode_indir[0], x.decode_indir[1], x.desloc, x.cap, '', '') }
+      #sede = tmp ? ind.new(tmp.id, tmp.decode_indir[0], tmp.decode_indir[1], tmp.desloc, tmp.cap, '', '') : nil
       #sede = tmp ? ind.new(tmp.id, tmp.indir, tmp.desloc, tmp.cap) : nil
 
       cognome, nome = an.decode_denomin
