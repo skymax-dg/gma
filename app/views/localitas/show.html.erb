@@ -21,6 +21,14 @@
 </div>
 <div class="row">
   <div class="two columns">
+    <%= label @localita, "Regione:", :class => "right" %>
+  </div>
+  <div class="ten columns">
+    <%= @localita.d_regione %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
     <%= label @localita, "Provincia:", :class => "right" %>
   </div>
   <div class="ten columns">

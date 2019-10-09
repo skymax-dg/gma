@@ -124,6 +124,15 @@
     <%= @anagen.cod_cup %>
   </div>
 </div>
+
+<div class="row">
+  <div class="two columns">
+    <%= label @anagen, "Indirizzo primario", :class => "right" %>
+  </div>
+  <div class="ten columns">
+    <%= @anagen.primary_address_id %>
+  </div>
+</div>
 <div class="row">
   <div class="two columns">
     <%= label @anagen, "Biografia:", :class => "right" %>

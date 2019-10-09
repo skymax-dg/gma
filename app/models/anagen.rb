@@ -13,6 +13,7 @@ class Anagen < ActiveRecord::Base
   has_many :events, through: :event_states
 
   belongs_to :localita, :foreign_key => "luogonas_id"
+  belongs_to :primary_address, :foreign_key => "primary_address_id", class_name: "Anaind"
 
   has_one :agente, :dependent => :destroy
   has_one :user, :dependent => :destroy
@@ -250,6 +251,49 @@ class Anagen < ActiveRecord::Base
 
   def use_rag_soc?
     ["G", "I", "E"].include? self.tipo
+  end
+
+  def gac_dati_completi?
+    st = true
+    ds = []
+    ds << [:referente,          ["G", "I", "E"] ]
+    ds << [:denomin,            ["G", "I", "E", "F", "S", "D"] ]
+    ds << [:codfis,             ["G", "I", "E", "F", "S", "D"] ]
+    ds << [:pariva,             ["G", "I", "E"] ]
+    ds << [:cod_carta_studente, ["S"] ]
+    ds << [:cod_carta_docente,  ["D"] ]
+    ds << [:telefono,           ["G", "I", "E", "F", "S", "D"]]
+    ds << [:pariva,             ["G", "I", "E"] ]
+    ds << [:codident,           ["G", "I", "E"] ]
+    ds << [:pec,                ["G", "I", "E"] ]
+    ds << [:cod_cig,            ["E"] ]
+    ds << [:cod_cup,            ["E"] ]
+    
+    ds.each do |k, tps|
+      if tps.include?(self.tipo)
+        puts "Checking #{k}"
+        st = false if ["", nil].include?(self[k])
+      end
+      break unless st
+    end
+
+    st
+  end
+
+  def self.add_addr(par)
+    if Anagen.exists?(par[:anagen_id])
+      an = Anagen.find(par[:anagen_id])
+      addr = an.anainds.create(flsl: "N", flsp: "S", flmg: "N", nrmag: 0)
+      addr.encode_indir(par[:indirizzo], par[:civico])
+      addr.desloc = par[:citta]
+      addr.cap = par[:cap]
+      if addr.save 
+        return [true, addr.id] 
+      else
+        Rails.logger.info addr.errors.full_messages
+        return [false, nil]
+      end
+    end
   end
 
   private
