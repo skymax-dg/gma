@@ -18,6 +18,7 @@ class Article < ActiveRecord::Base
   validates :descriz, :length => {:maximum => 50}
   
   scope :azienda, lambda { |azd| {:conditions => ['articles.azienda = ?', azd]}}
+  scope :not_hidden, -> { where("articles.state != 5") }
   scope :by_author, ->(aid) { includes(:anagen_articles).where("anagen_articles.mode = 1 AND anagen_articles.anagen_id=?", aid) }
   scope :by_key_word, ->(kid) { includes(:key_word_rels).where("key_word_rels.key_word_id = ?", kid) }
 
@@ -27,7 +28,8 @@ class Article < ActiveRecord::Base
     ["Disponibile",2], 
     ["In ristampa",3], 
     ["Fuori catalogo",4], 
-    ["Nascosto",5]
+    ["Nascosto",5],
+    ["In prenotazione",6]
   ]
 
   RILEGATURE = [
