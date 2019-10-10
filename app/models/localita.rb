@@ -15,6 +15,9 @@ class Localita < ActiveRecord::Base
   validates :codfis, :length => { :maximum => 4}
   validates :prov, :length => { :maximum => 2}
 
+  scope :by_region, lambda { |cod| where(:cod_regione => cod) }
+  scope :by_province, lambda { |cod| where(:prov => cod) }
+
   REGIONI = []
   REGIONI << ["Piemonte",              1]
   REGIONI << ["Valle d'Aosta",         2]
