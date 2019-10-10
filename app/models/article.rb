@@ -251,7 +251,8 @@ class Article < ActiveRecord::Base
   end
 
   def can_buy?
-    self.state == 2
+    [2, 3, 6].include? self.state
+    #self.state == 2
   end
 
   def final_price
