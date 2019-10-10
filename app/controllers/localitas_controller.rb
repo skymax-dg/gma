@@ -1,5 +1,5 @@
 class LocalitasController < ApplicationController
-  #before_filter :authenticate_request, if: :json_request?
+  before_filter :authenticate_request, if: :json_request?
   before_filter :authenticate
   before_filter :force_fieldcase, :only => [:create, :update]
 
@@ -77,8 +77,8 @@ class LocalitasController < ApplicationController
     Rails.logger.info prv
 
     case params[:mode]
-    when "1" then ris << Localita.by_region(reg).map(&:prov).uniq!
-    when "2" then ris << Localita.by_region(reg).by_province(prv).map { |x| [x.id, x.descriz] }
+    when "1" then ris = Localita.by_region(reg).order(:prov).map(&:prov).uniq!
+    when "2" then ris = Localita.by_region(reg).by_province(prv).order(:descriz).map { |x| [x.id, x.descriz] }
     end
     render json: ris
   end

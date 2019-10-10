@@ -56,7 +56,7 @@ class User < ActiveRecord::Base
   def get_gac_user
     st  = Struct.new(:id, :email, :denomin, :nome, :cognome, :privilege, :codfis, :pariva, :telefono, :fax, :codident, :pec, :tipo, :referente, :cod_carta_studente, :cod_carta_docente, :cod_cig, :cod_cup, :ind_sede, :ind_sped, :dati_completi, :anagen_id, :primary_address)
     #ind = Struct.new(:id, :indir, :desloc, :cap)
-    ind = Struct.new(:id, :indirizzo, :civico, :citta, :cap, :paese, :prov)
+    ind = Struct.new(:id, :indirizzo, :civico, :citta, :cap, :paese, :regione, :prov, :comune)
 
     ris = nil
     an = self.anagen
@@ -65,23 +65,44 @@ class User < ActiveRecord::Base
       sped = []
 
       tmp = an.anainds.where(flsp: "S") #spedizione
-      tmp.each { |x| sped << ind.new(x.id, x.decode_indir[0], x.decode_indir[1], x.desloc, x.cap, '', '') }
+      tmp.each do |x| 
+        loc  = x.localita
+        naz  = loc ? 'IT' : nil
+        reg  = loc ? loc.cod_regione : nil
+        prov = loc ? loc.prov : nil
+        com  = loc ? loc.descriz : nil
+        sped << ind.new(x.id, x.decode_indir[0], x.decode_indir[1], x.desloc, x.cap, naz, reg, prov, com) 
+      end
       #sped = tmp ? ind.new(tmp.id, tmp.decode_indir[0], tmp.decode_indir[1], tmp.desloc, tmp.cap, '', '') : nil
       #sped = tmp ? ind.new(tmp.id, tmp.indir, tmp.desloc, tmp.cap) : nil
 
       tmp = an.anainds.where(flsl: "S") #sede legale
-      tmp.each { |x| sede << ind.new(x.id, x.decode_indir[0], x.decode_indir[1], x.desloc, x.cap, '', '') }
+      tmp.each do |x| 
+        loc  = x.localita
+        naz  = loc ? 'IT' : nil
+        reg  = loc ? loc.cod_regione : nil
+        prov = loc ? loc.prov : nil
+        com  = loc ? loc.descriz : nil
+        sede << ind.new(x.id, x.decode_indir[0], x.decode_indir[1], x.desloc, x.cap, naz, reg, prov, com) 
+      end
       #sede = tmp ? ind.new(tmp.id, tmp.decode_indir[0], tmp.decode_indir[1], tmp.desloc, tmp.cap, '', '') : nil
       #sede = tmp ? ind.new(tmp.id, tmp.indir, tmp.desloc, tmp.cap) : nil
 
       tmp = an.primary_address
-      prim = ind.new(tmp.id, tmp.decode_indir[0], tmp.decode_indir[1], tmp.desloc, tmp.cap, '', '') if tmp
+      if tmp
+        loc  = tmp.localita
+        naz  = loc ? 'IT' : nil
+        reg  = loc ? loc.cod_regione : nil
+        prov = loc ? loc.prov : nil
+        com  = loc ? loc.descriz : nil
+        prim = ind.new(tmp.id, tmp.decode_indir[0], tmp.decode_indir[1], tmp.desloc, tmp.cap, naz, reg, prov, com) 
+      end
 
       cognome, nome = an.decode_denomin
           
       ris = st.new(self.id, self.email, an.denomin, nome, cognome, self.privilege, an.codfis, an.pariva, an.telefono, an.fax, an.codident, an.pec, an.tipo, an.referente, an.cod_carta_studente, an.cod_carta_docente, an.cod_cig, an.cod_cup, sede, sped, an.gac_dati_completi? ? 1 : 0, an.id, prim)
     else
-      ris = st.new(self.id, self.email, self.login, nil, nil, self.privilege, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, nil, 0)
+      ris = st.new(self.id, self.email, self.login, nil, nil, self.privilege)
     end
     ris
   end
@@ -220,6 +241,7 @@ class User < ActiveRecord::Base
         end
         ind.encode_indir(par[:indirizzo], par[:civico])
         #ind.indir = "%s, %s"%[par[:indirizzo].gsub(",",""), par[:civico]]
+        ind.localita_id = par[:city_id]
         ind.desloc = par[:citta]
         ind.cap = par[:cap]
         ind.flsl = "N"
