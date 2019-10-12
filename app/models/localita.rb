@@ -7,11 +7,11 @@ class Localita < ActiveRecord::Base
 
   belongs_to :paese
 
-  attr_accessible :cap, :codfis, :descriz, :prov, :paese_id, :cod_regione
+  attr_accessible :cap, :codfis, :descriz, :prov, :paese_id, :cod_regione, :state
 
   validates :descriz, :paese_id, :presence => true
   validates :descriz, :length => { :maximum => 50}
-  validates :cap, :length => { :maximum => 5}
+  validates :cap, :length => { :maximum => 10}
   validates :codfis, :length => { :maximum => 4}
   validates :prov, :length => { :maximum => 2}
 

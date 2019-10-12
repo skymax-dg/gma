@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20191009140814) do
+ActiveRecord::Schema.define(:version => 20191012105926) do
 
   create_table "agentes", :force => true do |t|
     t.integer  "anagen_id"
@@ -69,14 +69,14 @@ ActiveRecord::Schema.define(:version => 20191009140814) do
     t.integer  "anagen_id"
     t.string   "indir"
     t.string   "desloc"
-    t.string   "cap",         :limit => 5
-    t.integer  "nrmag",                                     :null => false
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
+    t.string   "cap",         :limit => 10
+    t.integer  "nrmag",                                      :null => false
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
     t.integer  "localita_id"
-    t.string   "flsl",        :limit => 1, :default => "S", :null => false
-    t.string   "flsp",        :limit => 1, :default => "S", :null => false
-    t.string   "flmg",        :limit => 1, :default => "N", :null => false
+    t.string   "flsl",        :limit => 1,  :default => "S", :null => false
+    t.string   "flsp",        :limit => 1,  :default => "S", :null => false
+    t.string   "flmg",        :limit => 1,  :default => "N", :null => false
   end
 
   add_index "anainds", ["anagen_id"], :name => "index_anainds_on_anagen_id"
@@ -262,12 +262,13 @@ ActiveRecord::Schema.define(:version => 20191009140814) do
   create_table "localitas", :force => true do |t|
     t.string   "descriz",     :limit => 50, :null => false
     t.string   "prov",        :limit => 2
-    t.string   "cap",         :limit => 5
+    t.string   "cap",         :limit => 10
     t.integer  "paese_id"
     t.string   "codfis",      :limit => 4
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
     t.integer  "cod_regione"
+    t.string   "state",       :limit => 30
   end
 
   add_index "localitas", ["descriz"], :name => "idx_localitas_on_descriz"

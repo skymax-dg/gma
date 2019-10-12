@@ -34,7 +34,14 @@
       <%= collection_select :localita,     :paese_id, Paese.all,
                             :id, :descriz %>
     </div>
-    <div class="six columns"> </div>
+  </div>
+  <div class="row">
+    <div class="five columns">
+      <%= f.label "Nome regione/stato (estero)" %>
+      <%= f.text_field :state %>
+    </div>
+  </div>
+
     <div class="twelve columns">
       <%= f.submit 'SALVA', :class => "button radius small success foundicon-checkmark" %>
       <%= link_to 'ANNULLA', resque_location(:back), :class => "button radius small alert foundicon-remove" %>
