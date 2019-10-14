@@ -164,7 +164,17 @@ class User < ActiveRecord::Base
     self.save
   end
 
-  def self.check_token(user_id, token, azienda)
+  def self.check_token(token, azienda)
+    if User.exists?(token: token, azienda: azienda)
+      u = User.where(token: token, azienda: azienda).first
+      [true, u]
+    else
+      [false, nil]
+    end
+  end
+
+  #deprecated
+  def self.check_token_old(user_id, token, azienda)
     if User.exists?(id: user_id, azienda: azienda)
       u = User.find user_id
       if u.dt_exp_token > Time.now

@@ -80,7 +80,8 @@ class UsersController < ApplicationController
       end
 
     when "2"
-      st, user = User.check_token(params[:user_id], params[:token], @current_user.azienda)
+      st, user = User.check_token(params[:token], @current_user.azienda)
+      #st, user = User.check_token(params[:user_id], params[:token], @current_user.azienda)
       render json: { status: st, user: map_user(user) }
       return
 
