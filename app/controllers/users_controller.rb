@@ -90,7 +90,14 @@ class UsersController < ApplicationController
       render json: {result: ris ? ris.id : false}
 
     when "4"
-      u = User.find(params[:id]) if User.exists? params[:id]
+      #u = User.find(params[:id]) if User.exists? params[:id]
+      if params[:id] && User.exists?(params[:id])
+        u = User.find(params[:id])
+      elsif params[:token]
+        u = User.where(token: params[:token]).first
+      else
+        u = nil
+      end
       render json: u ? u.get_gac_user : nil
 
     when "5"
