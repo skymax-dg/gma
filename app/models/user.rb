@@ -56,7 +56,7 @@ class User < ActiveRecord::Base
   def get_gac_user
     st  = Struct.new(:id, :email, :denomin, :nome, :cognome, :privilege, :codfis, :pariva, :telefono, :fax, :codident, :pec, :tipo, :referente, :cod_carta_studente, :cod_carta_docente, :cod_cig, :cod_cup, :ind_sede, :ind_sped, :dati_completi, :anagen_id, :primary_address)
     #ind = Struct.new(:id, :indir, :desloc, :cap)
-    ind = Struct.new(:id, :indirizzo, :civico, :citta, :cap, :paese, :regione, :prov, :comune)
+    ind = Struct.new(:id, :indirizzo, :civico, :citta, :cap, :paese, :regione, :prov, :comune, :city_id, :nation_id, :state)
 
     ris = nil
     an = self.anagen
@@ -66,12 +66,15 @@ class User < ActiveRecord::Base
 
       tmp = an.anainds.where(flsp: "S") #spedizione
       tmp.each do |x| 
-        loc  = x.localita
-        naz  = loc ? 'IT' : nil
-        reg  = loc ? loc.cod_regione : nil
-        prov = loc ? loc.prov : nil
-        com  = loc ? loc.descriz : nil
-        sped << ind.new(x.id, x.decode_indir[0], x.decode_indir[1], x.desloc, x.cap, naz, reg, prov, com) 
+        loc   = x.localita
+        naz   = loc ? 'IT'            : nil
+        reg   = loc ? loc.cod_regione : nil
+        prov  = loc ? loc.prov        : nil
+        com   = loc ? loc.descriz     : nil
+        cid   = loc ? loc.id          : nil
+        pid   = loc ? loc.paese_id    : nil
+        state = loc ? loc.state       : nil
+        sped << ind.new(x.id, x.decode_indir[0], x.decode_indir[1], x.desloc, x.cap, naz, reg, prov, com, cid, pid, state) 
       end
       #sped = tmp ? ind.new(tmp.id, tmp.decode_indir[0], tmp.decode_indir[1], tmp.desloc, tmp.cap, '', '') : nil
       #sped = tmp ? ind.new(tmp.id, tmp.indir, tmp.desloc, tmp.cap) : nil
@@ -102,7 +105,7 @@ class User < ActiveRecord::Base
           
       ris = st.new(self.id, self.email, an.denomin, nome, cognome, self.privilege, an.codfis, an.pariva, an.telefono, an.fax, an.codident, an.pec, an.tipo, an.referente, an.cod_carta_studente, an.cod_carta_docente, an.cod_cig, an.cod_cup, sede, sped, an.gac_dati_completi? ? 1 : 0, an.id, prim)
     else
-      ris = st.new(self.id, self.email, self.login, nil, nil, self.privilege)
+      ris = st.new(self.id, self.email, nil, nil, nil, self.privilege)
     end
     ris
   end
@@ -241,7 +244,18 @@ class User < ActiveRecord::Base
         end
         ind.encode_indir(par[:indirizzo], par[:civico])
         #ind.indir = "%s, %s"%[par[:indirizzo].gsub(",",""), par[:civico]]
-        ind.localita_id = par[:city_id]
+        Rails.logger.info "------------- START"
+        if par[:city_id]
+          ind.localita_id = par[:city_id]
+        elsif par[:nazione_id] && Paese.exists?(par[:nazione_id])
+          paese = Paese.find(par[:nazione_id]) 
+          tmp = paese.localitas.where(state: par[:state], descriz: par[:citta]).first
+          Rails.logger.info "------------------ creo localita..." unless tmp
+          tmp = paese.localitas.create(state: par[:state], descriz: par[:citta], cap: par[:cap]) unless tmp
+          Rails.logger.info "------------------ Errore creazione localita: #{tmp.errors.full_messages}" if tmp.errors.any?
+          ind.localita = tmp
+        end
+        Rails.logger.info "------------- END"
         ind.desloc = par[:citta]
         ind.cap = par[:cap]
         ind.flsl = "N"

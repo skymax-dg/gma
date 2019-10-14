@@ -70,15 +70,12 @@ class LocalitasController < ApplicationController
   #mode 1 -> estraggo le province
   #mode 2 -> estraggo i comuni
   def localitas_query
-    reg = params[:cod_reg] ? params[:cod_reg].to_i : ""
     prv = params[:cod_prv] ? params[:cod_prv] : ""
     ris = []
-    Rails.logger.info reg
-    Rails.logger.info prv
 
     case params[:mode]
-    when "1" then ris = Localita.by_region(reg).order(:prov).map(&:prov).uniq!
-    when "2" then ris = Localita.by_region(reg).by_province(prv).order(:descriz).map { |x| [x.id, x.descriz] }
+    when "1" then ris = Paese.select([:id, :descriz]).order(:descriz)
+    when "2" then ris = Localita.by_province(prv).order(:descriz).map { |x| [x.id, x.descriz] }
     end
     render json: ris
   end
