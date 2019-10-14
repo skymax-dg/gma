@@ -59,3 +59,11 @@
     <%= @localita.paese.descriz %>
   </div>
 </div>
+<div class="row">
+  <div class="two columns">
+    <%= label @localita, "Nome regione/stato (estero)", :class => "right" %>
+  </div>
+  <div class="ten columns">
+    <%= @localita.state %>
+  </div>
+</div>
