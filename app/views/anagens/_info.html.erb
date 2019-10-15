@@ -129,8 +129,14 @@
   <div class="two columns">
     <%= label @anagen, "Indirizzo primario", :class => "right" %>
   </div>
-  <div class="ten columns">
-    <%= @anagen.primary_address_id %>
+  <div class="four columns left">
+    <%= @anagen.primary_address ? @anagen.primary_address.indir : '-' %>
+  </div>
+  <div class="two columns">
+    <%= label @anagen, "Paese di nascita:", :class => "right" unless @anagen.tipo == "G" %>
+  </div>
+  <div class="four columns left">
+    <%= @anagen.paese_nas.descriz unless @anagen.tipo == "G" || @anagen.paese_nas.nil? %>
   </div>
 </div>
 <div class="row">
