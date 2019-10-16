@@ -201,6 +201,7 @@ class User < ActiveRecord::Base
         Rails.logger.info "----------- SET PASSWORD: #{par[:password1]}"
         user.pwd = par[:password1]
         user.token = nil
+        user.save
       end
 
       if user.anagen

@@ -219,6 +219,11 @@ class Article < ActiveRecord::Base
     self.has_key_word?(kw)
   end
 
+  def generico?
+    kw = KeyWordArticle.where(desc: "Generico").first
+    self.has_key_word?(kw)
+  end
+
   def self.libri
     kw = KeyWordArticle.where(desc: "Libro").first
     Rails.logger.info "--------------------- kw.id: #{kw.id}"
