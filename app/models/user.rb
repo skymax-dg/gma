@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
   end
 
   def get_gac_user
-    st  = Struct.new(:id, :email, :denomin, :nome, :cognome, :privilege, :codfis, :pariva, :telefono, :fax, :codident, :pec, :tipo, :referente, :cod_carta_studente, :cod_carta_docente, :cod_cig, :cod_cup, :ind_sede, :ind_sped, :dati_completi, :anagen_id, :primary_address)
+    st  = Struct.new(:id, :email, :denomin, :nome, :cognome, :privilege, :codfis, :pariva, :telefono, :fax, :codident, :pec, :tipo, :referente, :cod_carta_studente, :cod_carta_docente, :cod_cig, :cod_cup, :ind_sede, :ind_sped, :dati_completi, :anagen_id, :primary_address, :dtnas, :gender, :luogo_nas, :prov_nas, :paese_nas)
     #ind = Struct.new(:id, :indir, :desloc, :cap)
     ind = Struct.new(:id, :indirizzo, :civico, :citta, :cap, :paese, :regione, :prov, :comune, :city_id, :nation_id, :state)
 
@@ -86,7 +86,10 @@ class User < ActiveRecord::Base
         reg  = loc ? loc.cod_regione : nil
         prov = loc ? loc.prov : nil
         com  = loc ? loc.descriz : nil
-        sede << ind.new(x.id, x.decode_indir[0], x.decode_indir[1], x.desloc, x.cap, naz, reg, prov, com) 
+        cid   = loc ? loc.id          : nil
+        pid   = loc ? loc.paese_id    : nil
+        state = loc ? loc.state       : nil
+        sede << ind.new(x.id, x.decode_indir[0], x.decode_indir[1], x.desloc, x.cap, naz, reg, prov, com, cid, pid, state) 
       end
       #sede = tmp ? ind.new(tmp.id, tmp.decode_indir[0], tmp.decode_indir[1], tmp.desloc, tmp.cap, '', '') : nil
       #sede = tmp ? ind.new(tmp.id, tmp.indir, tmp.desloc, tmp.cap) : nil
@@ -98,12 +101,15 @@ class User < ActiveRecord::Base
         reg  = loc ? loc.cod_regione : nil
         prov = loc ? loc.prov : nil
         com  = loc ? loc.descriz : nil
-        prim = ind.new(tmp.id, tmp.decode_indir[0], tmp.decode_indir[1], tmp.desloc, tmp.cap, naz, reg, prov, com) 
+        cid   = loc ? loc.id          : nil
+        pid   = loc ? loc.paese_id    : nil
+        state = loc ? loc.state       : nil
+        prim = ind.new(tmp.id, tmp.decode_indir[0], tmp.decode_indir[1], tmp.desloc, tmp.cap, naz, reg, prov, com, cid, pid, state) 
       end
 
       cognome, nome = an.decode_denomin
           
-      ris = st.new(self.id, self.email, an.denomin, nome, cognome, self.privilege, an.codfis, an.pariva, an.telefono, an.fax, an.codident, an.pec, an.tipo, an.referente, an.cod_carta_studente, an.cod_carta_docente, an.cod_cig, an.cod_cup, sede, sped, an.gac_dati_completi? ? 1 : 0, an.id, prim)
+      ris = st.new(self.id, self.email, an.denomin, nome, cognome, self.privilege, an.codfis, an.pariva, an.telefono, an.fax, an.codident, an.pec, an.tipo, an.referente, an.cod_carta_studente, an.cod_carta_docente, an.cod_cig, an.cod_cup, sede, sped, an.gac_dati_completi? ? 1 : 0, an.id, prim, an.dtnas, an.sesso, an.luogonas_id, an.localita ? an.localita.prov : '', an.paese_nas_id)
     else
       ris = st.new(self.id, self.email, nil, nil, nil, self.privilege)
     end
@@ -164,7 +170,17 @@ class User < ActiveRecord::Base
     self.save
   end
 
-  def self.check_token(user_id, token, azienda)
+  def self.check_token(token, azienda)
+    if User.exists?(token: token, azienda: azienda)
+      u = User.where(token: token, azienda: azienda).first
+      [true, u]
+    else
+      [false, nil]
+    end
+  end
+
+  #deprecated
+  def self.check_token_old(user_id, token, azienda)
     if User.exists?(id: user_id, azienda: azienda)
       u = User.find user_id
       if u.dt_exp_token > Time.now
@@ -192,34 +208,38 @@ class User < ActiveRecord::Base
       else
         an = Anagen.new(codice: Anagen.newcod)
       end
-      if par[:user_tp]
-        an.tipo = case par[:user_tp]
-                  when "1" then "F" #privato (ita o straniero)
-                  when "2" then "G" #società
-                  when "3" then "I" #ditta individuale
-                  when "4" then "G" #foreign company
-                  when "5" then "E" #ente statale
-                  when "6" then "S" #studente
-                  when "7" then "D" #docente
-                  else nil
-                  end
+      #if par[:user_tp]
+      if par[:nome] || par[:rag_soc]
+      #  an.tipo = case par[:user_tp]
+      #            when "1" then "F" #privato (ita o straniero)
+      #            when "2" then "G" #società
+      #            when "3" then "I" #ditta individuale
+      #            when "4" then "G" #foreign company
+      #            when "5" then "E" #ente statale
+      #            when "6" then "S" #studente
+      #            when "7" then "D" #docente
+      #            else nil
+      #            end
 
         an.encode_denomin(par[:cognome], par[:nome]) if par[:cognome] != "" && par[:nome] != ""
         an.denomin = par[:ragsoc] if par[:ragsoc] != "" && an.use_rag_soc?
         Rails.logger.info "------------ denomin: #{an.denomin}"
 
-        an.codfis = par[:codfis]
-        an.pariva = par[:pariva]
-        an.telefono = par[:telefono]
-        an.fax = par[:fax]
-        an.codident = par[:coddest]
-        an.pec = par[:pec]
-        an.referente = par[:referente]
+        an.codfis             = par[:codfis]
+        an.pariva             = par[:pariva]
+        an.telefono           = par[:telefono]
+        an.fax                = par[:fax]
+        an.codident           = par[:coddest]
+        an.pec                = par[:pec]
+        an.referente          = par[:referente]
         an.cod_carta_studente = par[:cod_carta_studente]
-        an.cod_carta_docente = par[:cod_carta_docente]
-        an.cod_cig = par[:cod_cig]
-        an.cod_cup = par[:cod_cup]
-        #an.tipo = ["",nil].include?(an.pariva) ? "F" : "G"
+        an.cod_carta_docente  = par[:cod_carta_docente]
+        an.cod_cig            = par[:cod_cig]
+        an.cod_cup            = par[:cod_cup]
+        an.sesso              = par[:gender]
+        an.dtnas              = par[:dtnas]
+        an.luogonas_id        = par[:city_nasc]
+        an.paese_nas_id       = par[:paese_nas]
       end
       an.primary_address_id = par[:primary_address_id] unless [nil, ""].include?(par[:primary_address_id])
 
@@ -228,7 +248,7 @@ class User < ActiveRecord::Base
         st = false
       end
 
-      if par[:indirizzo] != ""
+      if par[:indirizzo] != "" && par[:indirizzo] != nil
         unless user.anagen
           user.anagen = an
         end
