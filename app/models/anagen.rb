@@ -297,6 +297,13 @@ class Anagen < ActiveRecord::Base
     end
   end
 
+  def self.random_author
+    kw = KeyWordAnagen.where(desc: "Autore").first
+    n = Random.rand(kw.key_word_rels.count)
+    id = kw.key_word_rels.offset(n).first.key_wordable_id
+    Anagen.find(id)
+  end
+
   private
     def require_no_contos
       self.errors.add :base, "Almeno un conto fa riferimento all' anagrafica che si desidera eliminare."
