@@ -20,7 +20,11 @@ class AnagensController < ApplicationController
   end
 
   def show
-    @anagen = Anagen.find(params[:id])
+    if params[:id].to_i > 0
+      @anagen = Anagen.find(params[:id])
+    elsif params[:id].to_i == -1
+      @anagen = Anagen.random_author
+    end
     @title = "Soggetto/Societa'"
     @art_author = @anagen.anagen_articles.by_author
     @art_print = @anagen.anagen_articles.by_printer
