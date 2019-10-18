@@ -111,7 +111,41 @@
   <div class="four columns left">
     <%= @article.drilegatura %>
   </div>
-  <div class="six columns">
+  <div class="two columns">
+    <%= label @article, "Link pres. YouTube:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= link_to @article.youtube_presentation, @article.youtube_presentation, target: "_blank" %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <%= label @article, "Traduttore:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @article.translator %>
+  </div>
+  <div class="two columns">
+    <%= label @article, "A cura di:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @article.collaborator %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <%= label @article, "Collana:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @article.series %>
+  </div>
+  <div class="two columns">
+    <%= label @article, "Direttore di collana:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @article.director_series %>
   </div>
 </div>
 

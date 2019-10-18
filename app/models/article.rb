@@ -10,12 +10,17 @@ class Article < ActiveRecord::Base
   has_many :anagens, through: :anagen_articles
   has_many :events
 
-  attr_accessible :codice, :descriz, :prezzo, :azienda, :categ, :iva_id, :costo, :subtitle, :sinossi, :abstract, :quote, :weigth, :ppc, :ppb, :state, :width, :height, :dtpub, :discount, :pagine, :rilegatura, :issuee_link
+  attr_accessible :codice, :descriz, :prezzo, :azienda, :categ, :iva_id, :costo, :subtitle, :sinossi, :abstract, :quote, :weigth, :ppc, :ppb, :state, :width, :height, :dtpub, :discount, :pagine, :rilegatura, :issuee_link, :translator, :series, :director_series, :collaborator, :youtube_presentation
 
   validates :codice, :descriz, :azienda, :categ, :iva_id, :costo, :presence => true
   #validates :codice, :descriz, :uniqueness => {:case_sensitive => false}
-  validates :codice,  :length => {:maximum => 20}
-  validates :descriz, :length => {:maximum => 50}
+  validates :codice,               :length => {:maximum => 20}
+  validates :descriz,              :length => {:maximum => 50}
+  validates :translator,           :length => {:maximum => 30}
+  validates :series,               :length => {:maximum => 30}
+  validates :director_series,      :length => {:maximum => 30}
+  validates :collaborator,         :length => {:maximum => 30}
+  validates :youtube_presentation, :length => {:maximum => 40}
   
   scope :azienda, lambda { |azd| {:conditions => ['articles.azienda = ?', azd]}}
   scope :not_hidden, -> { where("articles.state != 5") }

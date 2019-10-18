@@ -75,9 +75,31 @@
       <%= f.label "Rilegatura" %>
       <%= select(:article, :rilegatura, Article::RILEGATURE, prompt: true) %>
     </div>
-    <div class="seven columns"></div>
+    <div class="two columns"></div>
+    <div class="five columns">
+      <%= f.label "Link presentazione YouTube" %>
+      <%= f.text_field :youtube_presentation %>
+    </div>
     
 
+    <div class="five columns">
+      <%= f.label "Traduttore" %>
+      <%= f.text_field :translator %>
+    </div>
+    <div class="two columns"></div>
+    <div class="five columns">
+      <%= f.label "A cura di" %>
+      <%= f.text_field :collaborator %>
+    </div>
+    <div class="five columns">
+      <%= f.label "Collana" %>
+      <%= f.text_field :series %>
+    </div>
+    <div class="two columns"></div>
+    <div class="five columns">
+      <%= f.label "Direttore di collana" %>
+      <%= f.text_field :director_series %>
+    </div>
 
     <div class="twelve columns">
       <%= f.label :descrizione %>

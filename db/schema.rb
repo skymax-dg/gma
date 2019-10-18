@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20191015125151) do
+ActiveRecord::Schema.define(:version => 20191018143616) do
 
   create_table "agentes", :force => true do |t|
     t.integer  "anagen_id"
@@ -83,30 +83,35 @@ ActiveRecord::Schema.define(:version => 20191015125151) do
   add_index "anainds", ["anagen_id"], :name => "index_anainds_on_anagen_id"
 
   create_table "articles", :force => true do |t|
-    t.integer  "azienda",                                                                     :null => false
-    t.string   "codice",      :limit => 20,                                                   :null => false
-    t.string   "descriz",     :limit => 100,                                                  :null => false
-    t.decimal  "prezzo",                     :precision => 12, :scale => 6, :default => 0.0,  :null => false
-    t.datetime "created_at",                                                                  :null => false
-    t.datetime "updated_at",                                                                  :null => false
-    t.string   "categ",       :limit => 2,                                  :default => "GE", :null => false
-    t.integer  "iva_id",                                                    :default => 1,    :null => false
-    t.decimal  "costo",                      :precision => 8,  :scale => 2, :default => 0.0,  :null => false
+    t.integer  "azienda",                                                                              :null => false
+    t.string   "codice",               :limit => 20,                                                   :null => false
+    t.string   "descriz",              :limit => 100,                                                  :null => false
+    t.decimal  "prezzo",                              :precision => 12, :scale => 6, :default => 0.0,  :null => false
+    t.datetime "created_at",                                                                           :null => false
+    t.datetime "updated_at",                                                                           :null => false
+    t.string   "categ",                :limit => 2,                                  :default => "GE", :null => false
+    t.integer  "iva_id",                                                             :default => 1,    :null => false
+    t.decimal  "costo",                               :precision => 8,  :scale => 2, :default => 0.0,  :null => false
     t.text     "subtitle"
     t.text     "sinossi"
     t.text     "abstract"
     t.text     "quote"
     t.integer  "weigth"
-    t.integer  "ppc",                                                       :default => 1
+    t.integer  "ppc",                                                                :default => 1
     t.integer  "ppb"
     t.integer  "state"
     t.integer  "width"
     t.integer  "height"
     t.date     "dtpub"
-    t.decimal  "discount",                   :precision => 5,  :scale => 2, :default => 0.0,  :null => false
+    t.decimal  "discount",                            :precision => 5,  :scale => 2, :default => 0.0,  :null => false
     t.integer  "pagine"
     t.integer  "rilegatura"
     t.text     "issuee_link"
+    t.string   "translator",           :limit => 30
+    t.string   "series",               :limit => 30
+    t.string   "director_series",      :limit => 30
+    t.string   "collaborator",         :limit => 30
+    t.string   "youtube_presentation", :limit => 40
   end
 
   add_index "articles", ["azienda", "codice"], :name => "idx_articles_on_codice", :unique => true
