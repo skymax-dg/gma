@@ -20,7 +20,7 @@ class Article < ActiveRecord::Base
   validates :series,               :length => {:maximum => 30}
   validates :director_series,      :length => {:maximum => 30}
   validates :collaborator,         :length => {:maximum => 30}
-  validates :youtube_presentation, :length => {:maximum => 40}
+  validates :youtube_presentation, :length => {:maximum => 50}
   
   scope :azienda, lambda { |azd| {:conditions => ['articles.azienda = ?', azd]}}
   scope :not_hidden, -> { where("articles.state != 5") }
