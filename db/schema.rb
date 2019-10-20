@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20191018143616) do
+ActiveRecord::Schema.define(:version => 20191020134834) do
 
   create_table "agentes", :force => true do |t|
     t.integer  "anagen_id"
@@ -111,7 +111,7 @@ ActiveRecord::Schema.define(:version => 20191018143616) do
     t.string   "series",               :limit => 30
     t.string   "director_series",      :limit => 30
     t.string   "collaborator",         :limit => 30
-    t.string   "youtube_presentation", :limit => 40
+    t.string   "youtube_presentation", :limit => 50
   end
 
   add_index "articles", ["azienda", "codice"], :name => "idx_articles_on_codice", :unique => true
