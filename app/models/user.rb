@@ -170,6 +170,19 @@ class User < ActiveRecord::Base
     self.save
   end
 
+  def self.gen_token(mail)
+    if User.exists?(email: mail)
+      user = User.where(email: mail).first
+      user.gen_token
+      user.save
+      st = true
+    else
+      st = false
+      user = false
+    end
+    [st, user]
+  end
+
   def self.check_token(token, azienda)
     if User.exists?(token: token, azienda: azienda)
       u = User.where(token: token, azienda: azienda).first
@@ -192,6 +205,7 @@ class User < ActiveRecord::Base
 
   def self.appo_update(par)
     Rails.logger.info "--------- PAR: #{par}"
+    errs = []
     if User.exists? par[:user_id]
       user = User.find(par[:user_id])
       par = par.symbolize_keys
@@ -209,19 +223,10 @@ class User < ActiveRecord::Base
       else
         an = Anagen.new(codice: Anagen.newcod)
       end
-      #if par[:user_tp]
-      if par[:nome] || par[:rag_soc]
-      #  an.tipo = case par[:user_tp]
-      #            when "1" then "F" #privato (ita o straniero)
-      #            when "2" then "G" #società
-      #            when "3" then "I" #ditta individuale
-      #            when "4" then "G" #foreign company
-      #            when "5" then "E" #ente statale
-      #            when "6" then "S" #studente
-      #            when "7" then "D" #docente
-      #            else nil
-      #            end
 
+      if par[:nome] || par[:rag_soc]
+
+        an.tipo = par[:tipo]
         an.encode_denomin(par[:cognome], par[:nome]) if par[:cognome] != "" && par[:nome] != ""
         an.denomin = par[:ragsoc] if par[:ragsoc] != "" && an.use_rag_soc?
         Rails.logger.info "------------ denomin: #{an.denomin}"
@@ -247,15 +252,15 @@ class User < ActiveRecord::Base
       if an.changed? && !an.save
         Rails.logger.info "--------------- Errore anagen: #{an.errors.full_messages}"
         st = false
+        errs = an.errors.full_messages
+      end
+      unless user.anagen
+        Rails.logger.info "XXXXXXXXXXXXXXXX ASSEGNO ANAGEN!!!"
+        user.anagen = an
+        Rails.logger.info "XXXXXXXXXXXXXXXX Errore save: #{user.errors.full_messages}" unless user.save
       end
 
       if par[:indirizzo] != "" && par[:indirizzo] != nil
-        unless user.anagen
-          user.anagen = an
-        end
-        if user.changed?
-          Rails.logger.info "------------ ERR: #{user.errors.full_messages}" unless user.save
-        end
         if par[:indir_id] && an.anainds.exists?(par[:indir_id])
           Rails.logger.info "------Cerco per id: #{ par[:indir_id] }"
           ind = an.anainds.find(par[:indir_id])
@@ -288,6 +293,7 @@ class User < ActiveRecord::Base
         else
           Rails.logger.info "--------------- Errore indirizzo 1: #{ind.errors.full_messages}"
           st = false 
+          errs = ind.errors.full_messages
         end
 
         if st && !(["", nil].include?(par[:indirizzo2]))
@@ -308,12 +314,12 @@ class User < ActiveRecord::Base
           unless ind2.save
             Rails.logger.info "--------------- Errore indirizzo 2: #{ind2.errors.full_messages}"
             st = false 
+            errs = ind2.errors.full_messages
           end
         end
       end
-      st
     end
-    st
+    [st, errs]
   end
 
   private
