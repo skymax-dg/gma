@@ -284,8 +284,8 @@ class User < ActiveRecord::Base
         Rails.logger.info "------------- END"
         ind.desloc = par[:citta]
         ind.cap = par[:cap]
-        ind.flsl = "N"
-        ind.flsp = "S"
+        ind.flsl = par[:flsl] || "N"
+        ind.flsp = par[:flsp] || "S"
         ind.flmg = "N"
         if ind.save
           an.primary_address = ind
@@ -296,27 +296,27 @@ class User < ActiveRecord::Base
           errs = ind.errors.full_messages
         end
 
-        if st && !(["", nil].include?(par[:indirizzo2]))
-          if par[:indir_id2] && an.anainds.exists?(par[:indir_id2])
-            Rails.logger.info "------Cerco per id: #{ par[:indir_id2] }"
-            ind2 = an.anainds.find(par[:indir_id2])
-          else
-            Rails.logger.info "------Creo indirizzo2 (#{ par[:indir_id2] })"
-            ind2 = an.anainds.new(nrmag: 0)
-          end
-          ind2.encode_indir(par[:indirizzo2], par[:civico2])
-          #ind2.indir = "%s, %s"%[par[:indirizzo2].gsub(",",""), par[:civico2]]
-          ind2.desloc = par[:citta2]
-          ind2.cap = par[:cap2]
-          ind2.flsl = "S"
-          ind2.flsp = "N"
-          ind2.flmg = "N"
-          unless ind2.save
-            Rails.logger.info "--------------- Errore indirizzo 2: #{ind2.errors.full_messages}"
-            st = false 
-            errs = ind2.errors.full_messages
-          end
-        end
+        #if st && !(["", nil].include?(par[:indirizzo2]))
+        #  if par[:indir_id2] && an.anainds.exists?(par[:indir_id2])
+        #    Rails.logger.info "------Cerco per id: #{ par[:indir_id2] }"
+        #    ind2 = an.anainds.find(par[:indir_id2])
+        #  else
+        #    Rails.logger.info "------Creo indirizzo2 (#{ par[:indir_id2] })"
+        #    ind2 = an.anainds.new(nrmag: 0)
+        #  end
+        #  ind2.encode_indir(par[:indirizzo2], par[:civico2])
+        #  #ind2.indir = "%s, %s"%[par[:indirizzo2].gsub(",",""), par[:civico2]]
+        #  ind2.desloc = par[:citta2]
+        #  ind2.cap = par[:cap2]
+        #  ind2.flsl = "S"
+        #  ind2.flsp = "N"
+        #  ind2.flmg = "N"
+        #  unless ind2.save
+        #    Rails.logger.info "--------------- Errore indirizzo 2: #{ind2.errors.full_messages}"
+        #    st = false 
+        #    errs = ind2.errors.full_messages
+        #  end
+        #end
       end
     end
     [st, errs]
