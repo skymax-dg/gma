@@ -224,30 +224,40 @@ class User < ActiveRecord::Base
         an = Anagen.new(codice: Anagen.newcod)
       end
 
-      if par[:nome] || par[:rag_soc]
+      if par[:edit_anagen]
+        if !(["", nil].include?(par[:cognome])) &&  !(["", nil].include?(par[:nome])) 
+          an.encode_denomin(par[:cognome], par[:nome]) 
+        end
+        if !(["", nil].include?(par[:ragsoc])) && an.use_rag_soc?
+          an.denomin = par[:ragsoc] 
+        end
 
-        an.tipo = par[:tipo]
-        an.encode_denomin(par[:cognome], par[:nome]) if par[:cognome] != "" && par[:nome] != ""
-        an.denomin = par[:ragsoc] if par[:ragsoc] != "" && an.use_rag_soc?
-        Rails.logger.info "------------ denomin: #{an.denomin}"
-
-        an.codfis             = par[:codfis]
-        an.pariva             = par[:pariva]
-        an.telefono           = par[:telefono]
-        an.fax                = par[:fax]
-        an.codident           = par[:coddest]
-        an.pec                = par[:pec]
-        an.referente          = par[:referente]
-        an.cod_carta_studente = par[:cod_carta_studente]
-        an.cod_carta_docente  = par[:cod_carta_docente]
-        an.cod_cig            = par[:cod_cig]
-        an.cod_cup            = par[:cod_cup]
-        an.sesso              = par[:gender]
-        an.dtnas              = par[:dtnas]
-        an.luogonas_id        = par[:city_nasc]
-        an.paese_nas_id       = par[:paese_nas]
+        an.tipo               = par[:tipo]               unless ["", nil].include?(par[:tipo])
+        an.codfis             = par[:codfis]             unless ["", nil].include?(par[:codfis])
+        an.pariva             = par[:pariva]             unless ["", nil].include?(par[:pariva])
+        an.telefono           = par[:telefono]           unless ["", nil].include?(par[:telefono])
+        an.fax                = par[:fax]                unless ["", nil].include?(par[:fax])
+        an.codident           = par[:coddest]            unless ["", nil].include?(par[:coddest])
+        an.pec                = par[:pec]                unless ["", nil].include?(par[:pec])
+        an.referente          = par[:referente]          unless ["", nil].include?(par[:referente])
+        an.cod_carta_studente = par[:cod_carta_studente] unless ["", nil].include?(par[:cod_carta_studente])
+        an.cod_carta_docente  = par[:cod_carta_docente]  unless ["", nil].include?(par[:cod_carta_docente])
+        an.cod_cig            = par[:cod_cig]            unless ["", nil].include?(par[:cod_cig])
+        an.cod_cup            = par[:cod_cup]            unless ["", nil].include?(par[:cod_cup])
+        an.sesso              = par[:gender]             unless ["", nil].include?(par[:gender])
+        an.dtnas              = par[:dtnas]              unless ["", nil].include?(par[:dtnas])
+        an.luogonas_id        = par[:city_nasc]          unless ["", nil].include?(par[:city_nasc])
+        an.paese_nas_id       = par[:paese_nas]          unless ["", nil].include?(par[:paese_nas])
+        an.fl1_consenso       = par[:fl1_consenso]       unless ["", nil].include?(par[:fl1_consenso])
+        an.fl2_consenso       = par[:fl2_consenso]       unless ["", nil].include?(par[:fl2_consenso])
+        an.dt_consenso        = par[:dt_consenso]        unless ["", nil].include?(par[:dt_consenso])
+        an.fl_newsletter      = par[:fl_newsletter]      unless ["", nil].include?(par[:fl_newsletter])
       end
       an.primary_address_id = par[:primary_address_id] unless [nil, ""].include?(par[:primary_address_id])
+      an.fl1_consenso   = par[:fl1_consenso].to_i   unless [nil, ""].include?(par[:fl1_consenso])
+      an.fl2_consenso   = par[:fl2_consenso].to_i   unless [nil, ""].include?(par[:fl2_consenso])
+      an.dt_consenso    = par[:dt_consenso]         unless [nil, ""].include?(par[:dt_consenso])
+      an.fl_newsletter  = par[:fl_newsletter].to_i  unless [nil, ""].include?(par[:fl_newsletter])
 
       if an.changed? && !an.save
         Rails.logger.info "--------------- Errore anagen: #{an.errors.full_messages}"

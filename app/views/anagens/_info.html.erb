@@ -141,6 +141,34 @@
 </div>
 <div class="row">
   <div class="two columns">
+    <%= label @anagen, "Tratt. dati pers.", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @anagen.fl1_consenso == 1 ? "SI" : "NO" %>
+  </div>
+  <div class="two columns">
+    <%= label @anagen, "Data consenso:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= to_mydate(@anagen.dt_consenso) %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @anagen, "Profilazione", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @anagen.fl2_consenso == 1 ? "SI" : "NO" %>
+  </div>
+  <div class="two columns">
+    <%= label @anagen, "Newsletter?", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @anagen.fl_newsletter == 1 ? "SI" : "NO" %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
     <%= label @anagen, "Biografia:", :class => "right" %>
   </div>
   <div class="ten columns">
