@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
   end
 
   def get_gac_user
-    st  = Struct.new(:id, :email, :denomin, :nome, :cognome, :privilege, :codfis, :pariva, :telefono, :fax, :codident, :pec, :tipo, :referente, :cod_carta_studente, :cod_carta_docente, :cod_cig, :cod_cup, :ind_sede, :ind_sped, :dati_completi, :anagen_id, :primary_address, :dtnas, :gender, :luogo_nas, :prov_nas, :paese_nas)
+    st  = Struct.new(:id, :email, :denomin, :nome, :cognome, :privilege, :codfis, :pariva, :telefono, :fax, :codident, :pec, :tipo, :referente, :cod_carta_studente, :cod_carta_docente, :cod_cig, :cod_cup, :ind_sede, :ind_sped, :dati_completi, :anagen_id, :primary_address, :dtnas, :gender, :luogo_nas, :prov_nas, :paese_nas, :cellulare)
     #ind = Struct.new(:id, :indir, :desloc, :cap)
     ind = Struct.new(:id, :indirizzo, :civico, :citta, :cap, :paese, :regione, :prov, :comune, :city_id, :nation_id, :state)
 
@@ -109,7 +109,7 @@ class User < ActiveRecord::Base
 
       cognome, nome = an.decode_denomin
           
-      ris = st.new(self.id, self.email, an.denomin, nome, cognome, self.privilege, an.codfis, an.pariva, an.telefono, an.fax, an.codident, an.pec, an.tipo, an.referente, an.cod_carta_studente, an.cod_carta_docente, an.cod_cig, an.cod_cup, sede, sped, an.gac_dati_completi? ? 1 : 0, an.id, prim, an.dtnas, an.sesso, an.luogonas_id, an.localita ? an.localita.prov : '', an.paese_nas_id)
+      ris = st.new(self.id, self.email, an.denomin, nome, cognome, self.privilege, an.codfis, an.pariva, an.telefono, an.fax, an.codident, an.pec, an.tipo, an.referente, an.cod_carta_studente, an.cod_carta_docente, an.cod_cig, an.cod_cup, sede, sped, an.gac_dati_completi? ? 1 : 0, an.id, prim, an.dtnas, an.sesso, an.luogonas_id, an.localita ? an.localita.prov : '', an.paese_nas_id, an.cellulare)
     else
       ris = st.new(self.id, self.email, nil, nil, nil, self.privilege)
     end
@@ -236,6 +236,7 @@ class User < ActiveRecord::Base
         an.codfis             = par[:codfis]             unless ["", nil].include?(par[:codfis])
         an.pariva             = par[:pariva]             unless ["", nil].include?(par[:pariva])
         an.telefono           = par[:telefono]           unless ["", nil].include?(par[:telefono])
+        an.cellulare          = par[:cellulare]          unless ["", nil].include?(par[:cellulare])
         an.fax                = par[:fax]                unless ["", nil].include?(par[:fax])
         an.codident           = par[:coddest]            unless ["", nil].include?(par[:coddest])
         an.pec                = par[:pec]                unless ["", nil].include?(par[:pec])
