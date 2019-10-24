@@ -75,7 +75,7 @@ class LocalitasController < ApplicationController
 
     case params[:mode]
     when "1" then ris = Paese.select([:id, :descriz]).order(:descriz)
-    when "2" then ris = Localita.by_province(prv).order(:descriz).map { |x| [x.id, x.descriz] }
+    when "2" then ris = Localita.by_province(prv).order(:descriz).map { |x| [x.id, x.descriz, x.cap] }
     end
     render json: ris
   end

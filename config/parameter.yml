@@ -9,6 +9,8 @@ ANAGEN:
     E: 'Ente statale'
     S: 'Studente'
     D: 'Docente'
+    B: 'Buisness'
+    P: 'Personal'
 ANAIND:
   NRMAG:
     0: 'No'

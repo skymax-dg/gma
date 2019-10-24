@@ -66,6 +66,8 @@ class UsersController < ApplicationController
   # 3 => login user
   # 4 => read user
   # 5 => update user
+  # 6 => add expedition address
+  # 7 => gen token x cambio password
   def users_query
     case params[:mode]
     when "1"
@@ -101,14 +103,20 @@ class UsersController < ApplicationController
       render json: u ? u.get_gac_user : nil
 
     when "5"
-      st = User.appo_update(params)
+      st, errs = User.appo_update(params)
       Rails.logger.info "------------------ status: #{st} (#{st.class})"
-      render json: { status: st, errors: st ? nil : "WIP" }
+      render json: { status: st, errors: st ? nil : errs }
 
     when "6"
       st, id = Anagen.add_addr(params)
       Rails.logger.info "------------------ status: #{st}, id: #{id}"
       render json: { status: st, id: id }
+
+    when "7"
+      st, user = User.gen_token(params[:email])
+      name = (user && user.anagen) ? user.anagen.denomin : ""
+      Rails.logger.info "------------------ status: #{st}, user: #{user ? user.id : nil}"
+      render json: { status: st, token: user ? user.token : nil, email: user ? user.email : nil, name: name }
 
     end
   end
