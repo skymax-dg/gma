@@ -23,7 +23,8 @@ class Anagen < ActiveRecord::Base
 
   attr_accessible :codice, :tipo, :denomin, :codfis, :pariva, :dtnas, :luogonas_id, :sesso,
                   :telefono, :email, :fax, :web, :sconto, :referente, :codnaz, :codident, :pec, :bio, :userp, :cod_cig, :cod_cup, 
-                  :split_payement, :cod_carta_docente, :cod_carta_studente, :fl1_consenso, :fl2_consenso, :dt_consenso, :fl_newsletter
+                  :split_payement, :cod_carta_docente, :cod_carta_studente, :fl1_consenso, :fl2_consenso, :dt_consenso, :fl_newsletter,
+                  :cellulare
 
   validates :codice, :tipo, :denomin, :presence => true
   validates :codice, :denomin, :uniqueness => true
@@ -41,6 +42,7 @@ class Anagen < ActiveRecord::Base
   validates :email,     :length => {:maximum => 50}
   validates :fax,       :length => {:maximum => 20}
   validates :web,       :length => {:maximum => 50}
+  validates :cellulare, :length => {:maximum => 15}
 
   TIPO = $ParAzienda['ANAGEN']['TIPO_SOGGETTO']
 
