@@ -278,6 +278,9 @@ class Article < ActiveRecord::Base
     end
   end
 
+  def in_prenotazione?
+    self.state == 6
+  end
   private
     def require_no_rigdocs
       self.errors.add :base, "Almeno una riga documento fa riferimento all'articolo che si desidera eliminare."

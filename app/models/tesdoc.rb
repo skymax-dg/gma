@@ -635,4 +635,17 @@ class Tesdoc < ActiveRecord::Base
                            AND articles.id = #{idart} #{filter_anagen} 
                      ORDER BY data_doc, Numero")
   end
+
+  def self.make_by_json(par, azienda)
+    Rails.logger.info "---------- keys: #{par[:info_sped]}"
+    info_sped = JSON.parse(par[:info_sped])#.deep_symbolize_keys!
+    puts info_sped
+
+    caus = Causmag.find 77
+    Rails.logger.info "DIO CANE: #{par[:info_sped][:dt_ord]}"
+    data = DateTime.parse(par[:info_sped][:dt_ord])
+    arts = []
+
+    return { status: "WIP" }
+  end
 end

@@ -144,6 +144,7 @@ Gma::Application.routes.draw do
   get 'users_query',    to: 'users#users_query'
   post 'users_query',   to: 'users#users_query'
   get 'get_localitas',  to: 'localitas#localitas_query'
+  get 'push_order',     to: 'tesdocs#create_by_json'
       
 
   # The priority is based upon order of creation:
