@@ -142,7 +142,7 @@ class TesdocsController < ApplicationController
   end
 
   def create_by_json
-    ris = Tesdoc.make_by_json(params, @current_user.azienda)
+    ris = Tesdoc.make_by_json(params)
     render json: ris
   end
 
