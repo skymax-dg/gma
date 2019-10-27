@@ -690,16 +690,17 @@ class Tesdoc < ActiveRecord::Base
       @tesdoc.sconto = @conto.sconto
       @tesdoc.save
 
-    articles.each do |riga|
+    articles.each do |k, riga|
       if Article.exists? riga[0]
         newprg = @tesdoc.lastprgrig + 1
         @rigdoc = @tesdoc.rigdocs.build
         @rigdoc.prgrig = newprg
         @rigdoc.sconto = @tesdoc.sconto
-        @rigdoc.iva_id = @tesdoc.iva_id
         @rigdoc.qta = riga[1]
         @rigdoc.article = Article.find(riga[0])
         @rigdoc.prezzo = @rigdoc.article.prezzo
+        @rigdoc.iva = @rigdoc.article.iva
+        @rigdoc.descriz = @rigdoc.article.descriz
         @rigdoc.save
       end
     end
