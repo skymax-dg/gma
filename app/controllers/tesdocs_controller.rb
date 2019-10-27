@@ -143,7 +143,7 @@ class TesdocsController < ApplicationController
 
   def create_by_json
     ris = Tesdoc.make_by_json(params)
-    render json: ris
+    render json: {result: ris }
   end
 
   def upload_xls
