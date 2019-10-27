@@ -681,8 +681,13 @@ class Tesdoc < ActiveRecord::Base
       @tesdoc.azienda = azienda
       @tesdoc.annoese = anno_ese
       @tesdoc.data_doc  = dt_doc
-      @tesdoc.causmag_id = @causmag.id
+      @tesdoc.causmag = @causmag
       @tesdoc.num_doc = Tesdoc.new_num_doc(@causmag.grp_prg, @tesdoc.annoese, @tesdoc.azienda)
+      @tesdoc.conto = @conto
+      @tesdoc.nrmagsrc = 1
+      @tesdoc.nrmagdst = 0
+      @tesdoc.seguefatt = 'N'
+      @tesdoc.sconto = @conto.sconto
       @tesdoc.save
 
       Rails.logger.info "-- tesdoc "+@tesdoc.to_s
