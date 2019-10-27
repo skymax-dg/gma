@@ -637,12 +637,21 @@ class Tesdoc < ActiveRecord::Base
   end
 
   def self.make_by_json(par, azienda)
-    Rails.logger.info "---------- keys: #{par[:info_sped]}"
-    info_sped = JSON.parse(par[:info_sped])#.deep_symbolize_keys!
-    puts info_sped
+    Rails.logger.info "---------- make_by_json: #{par[:cart]}"
+    Rails.logger.info "---------- make_by_json: #{par[:info_sped]}"
+    Rails.logger.info "---------- make_by_json: #{par[:info_pagam]}"
+#    info_sped = JSON.parse(par[:info_sped])#.deep_symbolize_keys!
+#    puts info_sped
 
+#      @causmag = Causmag.find(@conf.defcausmag) if @conf.defcausmag
+#      @tesdoc = Tesdoc.new
+#      @spediz = @tesdoc.build_spediz
+#      @tesdoc.azienda = current_user.azienda
+#      @tesdoc.annoese = current_annoese
+#      @tesdoc.causmag_id = @causmag.id
+#      @tesdoc.num_doc = Tesdoc.new_num_doc(@causmag.grp_prg, @tesdoc.annoese, @tesdoc.azienda)
     caus = Causmag.find 77
-    Rails.logger.info "DIO CANE: #{par[:info_sped][:dt_ord]}"
+    Rails.logger.info " #{par[:info_sped][:dt_ord]}"
     data = DateTime.parse(par[:info_sped][:dt_ord])
     arts = []
 
