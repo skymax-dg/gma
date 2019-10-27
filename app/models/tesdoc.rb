@@ -641,13 +641,16 @@ class Tesdoc < ActiveRecord::Base
     Rails.logger.info "---------- make_by_json: #{par[:cart]}"
     Rails.logger.info "---------- make_by_json: #{par[:info_sped]}"
     Rails.logger.info "---------- make_by_json: #{par[:info_pagam]}"
-    info_sped = par[:info_sped]
-    info_pagam = par[:info_pagam]
-    articles = par[:cart]
-    dt_doc = Date.parse(info_sped["dt_ord"])
+    info_sped = JSON.parse(par[:info_sped].gsub('=>',' : '))
+    info_pagam = JSON.parse(par[:info_pagam].gsub('=>',' : '))
+    articles = JSON.parse(par[:cart].gsub('=>',' : '))
+
+    Rails.logger.info "---------- dt_ord: #{info_sped[:dt_ord]}"
+
+    dt_doc = Date.parse(info_sped[:dt_ord])
     anno_ese = dt_doc.year
-    user_id = info_sped["user_id"]
-    anagen_id = info_sped['anagen_id'].to_i
+    user_id = info_sped[:user_id]
+    anagen_id = info_sped[:anagen_id].to_i
 
       @causmag = Causmag.find(77)
 
