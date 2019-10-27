@@ -645,12 +645,12 @@ class Tesdoc < ActiveRecord::Base
     info_pagam = JSON.parse(par[:info_pagam].gsub('=>',' : '))
     articles = JSON.parse(par[:cart].gsub('=>',' : '))
 
-    Rails.logger.info "---------- dt_ord: #{info_sped[:dt_ord]}"
+    Rails.logger.info "---------- dt_ord: #{info_sped["dt_ord"]}"
 
-    dt_doc = Date.parse(info_sped[:dt_ord])
+    dt_doc = Date.parse(info_sped["dt_ord"])
     anno_ese = dt_doc.year
-    user_id = info_sped[:user_id]
-    anagen_id = info_sped[:anagen_id].to_i
+    user_id = info_sped["user_id"].to_i
+    anagen_id = info_sped["anagen_id"].to_i
 
       @causmag = Causmag.find(77)
 
