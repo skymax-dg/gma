@@ -657,16 +657,21 @@ class Tesdoc < ActiveRecord::Base
       @user = User.find(user_id) if User.exists?(user_id)
       return -1 unless @user
 
+      Rails.logger.info "-- user trovato"
       azienda = @user.azienda
 
       @anagen = Anagen.find(anagen_id) if Anagen.exists?(anagen_id)
       return -2 unless @anagen
 
+      Rails.logger.info "-- anagen trovato"
+
       if @anagen.contocli(azienda, anno_ese).size > 0
         @conto = @anagen.contocli(azienda, anno_ese).first
+        Rails.logger.info "-- conto trovato"
       else
         @conto, err  = Conto.create_default(azienda, 'C', anagen_id, anno_ese)
         return -3 if err.size > 0
+        Rails.logger.info "-- conto creato"
       end
       return -3 unless @conto
 
@@ -680,6 +685,7 @@ class Tesdoc < ActiveRecord::Base
       @tesdoc.num_doc = Tesdoc.new_num_doc(@causmag.grp_prg, @tesdoc.annoese, @tesdoc.azienda)
       @tesdoc.save
 
+      Rails.logger.info "-- tesdoc "+@tesdoc.to_s
     return 0
   end
 end

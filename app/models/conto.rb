@@ -34,7 +34,7 @@ class Conto < ActiveRecord::Base
 
     err=Array.new
     err<<"Tipologia conto errato" if tpc!='C' && tpc!='F' 
-    err<<"Anagrafica generale non presente" if Anagen.where(:id=>ana_id).count=0
+    err<<"Anagrafica generale non presente" if Anagen.where(:id=>ana_id).count == 0
     err<<"Conto gia' presente" if Conto.where(:annoese  =>@conto.annoese,   :azienda  =>@conto.azienda,
                                               :tipoconto=>@conto.tipoconto, :anagen_id=>@conto.anagen_id).count > 0
     if err.count==0
