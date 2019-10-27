@@ -677,7 +677,7 @@ class Tesdoc < ActiveRecord::Base
 
       @tesdoc = Tesdoc.new
 #      @spediz = @tesdoc.build_spediz
-      @tesdoc.descriz = "ordine da internet, spedizione %s, pagamento %s" % [info_sped["descriz"], info_pagam["descriz"]]
+      @tesdoc.descriz = "ordine da internet, spedizione %s, pagamento %s" % [info_sped["desc"], info_pagam["descriz"]]
       @tesdoc.azienda = azienda
       @tesdoc.annoese = anno_ese
       @tesdoc.data_doc  = dt_doc
