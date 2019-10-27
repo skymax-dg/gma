@@ -18,3 +18,5 @@
 backup/*
 *.tar.gz
 *.tar
+
+.DS_Store
