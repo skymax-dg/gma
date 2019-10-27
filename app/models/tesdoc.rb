@@ -1,4 +1,5 @@
 include TesdocsHelper
+require 'date'
 class Tesdoc < ActiveRecord::Base
   belongs_to :causmag
   belongs_to :conto
@@ -643,7 +644,7 @@ class Tesdoc < ActiveRecord::Base
     info_sped = par[:info_sped]
     info_pagam = par[:info_pagam]
     articles = par[:cart]
-    dt_doc = DateTime.parse(info_sped["dt_ord"])
+    dt_doc = Date.parse(info_sped["dt_ord"])
     anno_ese = dt_doc.year
     user_id = info_sped["user_id"]
     anagen_id = info_sped['anagen_id'].to_i
