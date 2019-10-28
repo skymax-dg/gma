@@ -206,6 +206,7 @@ class User < ActiveRecord::Base
   def self.appo_update(par)
     Rails.logger.info "--------- PAR: #{par}"
     errs = []
+    st = false    # se lo user non esiste ritorno false
     if User.exists? par[:user_id]
       user = User.find(par[:user_id])
       par = par.symbolize_keys
@@ -220,20 +221,27 @@ class User < ActiveRecord::Base
 
       if user.anagen
         an = user.anagen
+        fnew = false
+      elsif Anagen.where(codfis: par[:codfis]).size == 1
+        an = Anagen.where(codfis: par[:codfis]).first
+        fnew = false
       else
         an = Anagen.new(codice: Anagen.newcod)
+        fnew = true
       end
 
       if par[:edit_anagen]
-        if !(["", nil].include?(par[:cognome])) &&  !(["", nil].include?(par[:nome])) 
-          an.encode_denomin(par[:cognome], par[:nome]) 
-        end
-        if !(["", nil].include?(par[:ragsoc])) && an.use_rag_soc?
-          an.denomin = par[:ragsoc] 
+        if fnew
+          if !(["", nil].include?(par[:cognome])) &&  !(["", nil].include?(par[:nome])) 
+            an.encode_denomin(par[:cognome], par[:nome]) 
+          end
+          if !(["", nil].include?(par[:ragsoc])) && an.use_rag_soc?
+            an.denomin = par[:ragsoc] 
+          end
+          an.codfis             = par[:codfis]             unless ["", nil].include?(par[:codfis])
         end
 
         an.tipo               = par[:tipo]               unless ["", nil].include?(par[:tipo])
-        an.codfis             = par[:codfis]             unless ["", nil].include?(par[:codfis])
         an.pariva             = par[:pariva]             unless ["", nil].include?(par[:pariva])
         an.telefono           = par[:telefono]           unless ["", nil].include?(par[:telefono])
         an.cellulare          = par[:cellulare]          unless ["", nil].include?(par[:cellulare])
