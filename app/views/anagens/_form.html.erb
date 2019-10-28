@@ -29,6 +29,7 @@
     <span id="datinas">
       <%= render(:partial => 'datinas') %>
     </span>
+
     <div class="five columns">
       <%= f.label "Telefono" %>
       <%= f.text_field :telefono %>
@@ -38,6 +39,16 @@
       <%= f.label "Fax" %>
       <%= f.text_field :fax %>
     </div>
+    <div class="five columns">
+      <%= f.label "Cellulare" %>
+      <%= f.text_field :cellulare %>
+    </div>
+    <div class="two columns"></div>
+    <div class="five columns">
+      <%= f.label "Codice carta docente" %>
+      <%= f.text_field :cod_carta_docente %>
+    </div>
+
     <div class="five columns">
       <%= f.label "E-mail" %>
       <%= f.text_field :email %>
