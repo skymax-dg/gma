@@ -705,7 +705,7 @@ class Tesdoc < ActiveRecord::Base
       end
     end
 
-    Rails.logger.info "-- tesdoc "+@tesdoc.rigdocs.size.to_i
+    Rails.logger.info "-- tesdoc #{@tesdoc.rigdocs.size.to_i}"
     return 0
   end
 end
