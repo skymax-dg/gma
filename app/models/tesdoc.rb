@@ -638,7 +638,7 @@ class Tesdoc < ActiveRecord::Base
   end
 
   def appo_add_rigdoc(id, codice, qta, prezzo, sconto)
-    if id && Article.exists? id
+    if id && Article.exists?(id)
       art = Article.find id
     elsif codice 
       art = Article.where(codice: codice).first
@@ -650,9 +650,9 @@ class Tesdoc < ActiveRecord::Base
     newprg = self.lastprgrig + 1
     rigdoc = self.rigdocs.build
     rigdoc.prgrig = newprg
-    rigdoc.sconto = sconto || self.sconto
     rigdoc.qta = qta
     rigdoc.article = art
+    rigdoc.sconto = sconto || rigdoc.article.discount
     rigdoc.prezzo = prezzo || rigdoc.article.prezzo
     rigdoc.iva = rigdoc.article.iva
     rigdoc.descriz = rigdoc.article.descriz
@@ -720,11 +720,13 @@ class Tesdoc < ActiveRecord::Base
 
     costo_contrass = info_sped["cost_contrass"].to_f
     if costo_contrass > 0.0
+      costo_contrass = ( costo_contrass / 1.22).round(2)
       @tesdoc.appo_add_rigdoc(nil, "CONTRASS", 1, costo_contrass, 0.0)
     end
 
     costo_spediz = info_sped["cost_spediz"].to_f
     if costo_spediz > 0.0
+      costo_spediz = ( costo_spediz / 1.22).round(2)
       @tesdoc.appo_add_rigdoc(nil, "SPEDIZ", 1, costo_spediz, 0.0)
     end
 
