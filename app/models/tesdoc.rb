@@ -637,6 +637,30 @@ class Tesdoc < ActiveRecord::Base
                      ORDER BY data_doc, Numero")
   end
 
+  def appo_add_rigdoc(id, codice, qta, prezzo, sconto)
+    if id && Article.exists?(id)
+      art = Article.find id
+    elsif codice 
+      art = Article.where(codice: codice).first
+    end
+    unless art
+      Rails.logger.info("save order - article not found id  #{id} codice #{codice}")
+      return -1
+    end
+    newprg = self.lastprgrig + 1
+    rigdoc = self.rigdocs.build
+    rigdoc.prgrig = newprg
+    rigdoc.qta = qta
+    rigdoc.article = art
+    rigdoc.sconto = sconto || rigdoc.article.discount
+    rigdoc.prezzo = prezzo || rigdoc.article.prezzo
+    rigdoc.iva = rigdoc.article.iva
+    rigdoc.descriz = rigdoc.article.descriz
+    rigdoc.save
+    
+    0
+  end
+
   def self.make_by_json(par)
     Rails.logger.info "---------- make_by_json: #{par[:cart]}"
     Rails.logger.info "---------- make_by_json: #{par[:info_sped]}"
@@ -691,19 +715,22 @@ class Tesdoc < ActiveRecord::Base
       @tesdoc.save
 
     articles.each do |k, riga|
-      if Article.exists? riga[0]
-        newprg = @tesdoc.lastprgrig + 1
-        @rigdoc = @tesdoc.rigdocs.build
-        @rigdoc.prgrig = newprg
-        @rigdoc.sconto = @tesdoc.sconto
-        @rigdoc.qta = riga[1]
-        @rigdoc.article = Article.find(riga[0])
-        @rigdoc.prezzo = @rigdoc.article.prezzo
-        @rigdoc.iva = @rigdoc.article.iva
-        @rigdoc.descriz = @rigdoc.article.descriz
-        @rigdoc.save
-      end
+      @tesdoc.appo_add_rigdoc(riga[0], nil, riga[1], nil, nil)
     end
+
+    costo_contrass = info_sped["cost_contrass"].to_f
+    if costo_contrass > 0.0
+      costo_contrass = ( costo_contrass / 1.22).round(2)
+      @tesdoc.appo_add_rigdoc(nil, "CONTRASS", 1, costo_contrass, 0.0)
+    end
+
+    costo_spediz = info_sped["cost_spediz"].to_f
+    if costo_spediz > 0.0
+      costo_spediz = ( costo_spediz / 1.22).round(2)
+      @tesdoc.appo_add_rigdoc(nil, "SPEDIZ", 1, costo_spediz, 0.0)
+    end
+
+    user_id = info_sped["user_id"].to_i
 
     Rails.logger.info "-- tesdoc #{@tesdoc.rigdocs.size.to_i}"
     return 0
