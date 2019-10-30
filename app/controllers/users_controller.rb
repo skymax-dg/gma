@@ -1,7 +1,7 @@
 # encoding: utf-8
 class UsersController < ApplicationController
   before_filter :authenticate_request, if: :json_request?
-  before_filter :authenticate, :except => [:new, :create]
+  before_filter :authenticate#, :except => [:new, :create]
   before_filter :force_fieldcase, :only => [:create, :update]
 
   def new
