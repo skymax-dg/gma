@@ -225,6 +225,9 @@ class User < ActiveRecord::Base
       elsif Anagen.where(codfis: par[:codfis]).size == 1
         an = Anagen.where(codfis: par[:codfis]).first
         fnew = false
+      elsif Anagen.where(pariva: par[:pariva]).size == 1
+        an = Anagen.where(pariva: par[:pariva]).first
+        fnew = false
       else
         an = Anagen.new(codice: Anagen.newcod)
         fnew = true
@@ -239,10 +242,10 @@ class User < ActiveRecord::Base
             an.denomin = par[:ragsoc] 
           end
           an.codfis             = par[:codfis]             unless ["", nil].include?(par[:codfis])
+          an.pariva             = par[:pariva]             unless ["", nil].include?(par[:pariva])
         end
 
         an.tipo               = par[:tipo]               unless ["", nil].include?(par[:tipo])
-        an.pariva             = par[:pariva]             unless ["", nil].include?(par[:pariva])
         an.telefono           = par[:telefono]           unless ["", nil].include?(par[:telefono])
         an.cellulare          = par[:cellulare]          unless ["", nil].include?(par[:cellulare])
         an.fax                = par[:fax]                unless ["", nil].include?(par[:fax])
