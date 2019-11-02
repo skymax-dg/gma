@@ -257,6 +257,10 @@ class Anagen < ActiveRecord::Base
   end
 
   def gac_dati_completi?
+    self.appo_info_check[0]
+  end
+
+  def appo_info_check
     st = true
     ds = []
     ds << [:referente,          ["G", "I", "E"] ]
@@ -270,16 +274,28 @@ class Anagen < ActiveRecord::Base
     ds << [:pec,                ["G", "I", "E"] ]
     ds << [:cod_cig,            ["E"] ]
     ds << [:cod_cup,            ["E"] ]
+
+    ee = []
     
     ds.each do |k, tps|
       if tps.include?(self.tipo)
         puts "Checking #{k}"
         st = false if ["", nil].include?(self[k])
+        ee << "manca #{k}" unless st
       end
-      break unless st
     end
 
-    st
+    [ ee == [], ee ]
+  end
+
+  # LCG 191102
+  def info_check
+    ck = appo_info_check
+    if ck[0]
+      "dati corretti"
+    else
+      ck[1].join(",")
+    end
   end
 
   def self.add_addr(par)
