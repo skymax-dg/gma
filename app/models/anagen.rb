@@ -279,9 +279,8 @@ class Anagen < ActiveRecord::Base
     
     ds.each do |k, tps|
       if tps.include?(self.tipo)
-        puts "Checking #{k}"
-        st = false if ["", nil].include?(self[k])
-        ee << "manca #{k}" unless st
+        puts "Checking #{k} on #{self[k]}"
+        ee << "manca #{k}" if ["", nil].include?(self[k])
       end
     end
 
