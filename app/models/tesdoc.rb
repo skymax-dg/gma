@@ -1,4 +1,5 @@
 include TesdocsHelper
+require 'date'
 class Tesdoc < ActiveRecord::Base
   belongs_to :causmag
   belongs_to :conto
@@ -634,5 +635,104 @@ class Tesdoc < ActiveRecord::Base
                            AND causmags.tipo IN ('U','E','V','R')
                            AND articles.id = #{idart} #{filter_anagen} 
                      ORDER BY data_doc, Numero")
+  end
+
+  def appo_add_rigdoc(id, codice, qta, prezzo, sconto)
+    if id && Article.exists?(id)
+      art = Article.find id
+    elsif codice 
+      art = Article.where(codice: codice).first
+    end
+    unless art
+      Rails.logger.info("save order - article not found id  #{id} codice #{codice}")
+      return -1
+    end
+    newprg = self.lastprgrig + 1
+    rigdoc = self.rigdocs.build
+    rigdoc.prgrig = newprg
+    rigdoc.qta = qta
+    rigdoc.article = art
+    rigdoc.sconto = sconto || rigdoc.article.discount
+    rigdoc.prezzo = prezzo || rigdoc.article.prezzo
+    rigdoc.iva = rigdoc.article.iva
+    rigdoc.descriz = rigdoc.article.descriz
+    rigdoc.save
+    
+    0
+  end
+
+  def self.make_by_json(par)
+    Rails.logger.info "---------- make_by_json: #{par[:cart]}"
+    Rails.logger.info "---------- make_by_json: #{par[:info_sped]}"
+    Rails.logger.info "---------- make_by_json: #{par[:info_pagam]}"
+    info_sped = JSON.parse(par[:info_sped].gsub('=>',' : '))
+    info_pagam = JSON.parse(par[:info_pagam].gsub('=>',' : '))
+    articles = JSON.parse(par[:cart].gsub('=>',' : '))
+
+    Rails.logger.info "---------- dt_ord: #{info_sped["dt_ord"]}"
+
+    dt_doc = Date.parse(info_sped["dt_ord"])
+    anno_ese = dt_doc.year
+    user_id = info_sped["user_id"].to_i
+    anagen_id = info_sped["anagen_id"].to_i
+
+      @causmag = Causmag.find(77)
+
+      @user = User.find(user_id) if User.exists?(user_id)
+      return -1 unless @user
+
+      Rails.logger.info "-- user trovato"
+      azienda = @user.azienda
+
+      @anagen = Anagen.find(anagen_id) if Anagen.exists?(anagen_id)
+      return -2 unless @anagen
+
+      Rails.logger.info "-- anagen trovato"
+
+      if @anagen.contocli(azienda, anno_ese).size > 0
+        @conto = @anagen.contocli(azienda, anno_ese).first
+        Rails.logger.info "-- conto trovato"
+      else
+        @conto, err  = Conto.create_default(azienda, 'C', anagen_id, anno_ese)
+        return -3 if err.size > 0
+        Rails.logger.info "-- conto creato"
+      end
+      return -3 unless @conto
+
+      @tesdoc = Tesdoc.new
+#      @spediz = @tesdoc.build_spediz
+      @tesdoc.descriz = "ordine da internet, spedizione %s, pagamento %s" % [info_sped["desc"], info_pagam["descriz"]]
+      @tesdoc.azienda = azienda
+      @tesdoc.annoese = anno_ese
+      @tesdoc.data_doc  = dt_doc
+      @tesdoc.causmag = @causmag
+      @tesdoc.num_doc = Tesdoc.new_num_doc(@causmag.grp_prg, @tesdoc.annoese, @tesdoc.azienda)
+      @tesdoc.conto = @conto
+      @tesdoc.nrmagsrc = 1
+      @tesdoc.nrmagdst = 0
+      @tesdoc.seguefatt = 'N'
+      @tesdoc.sconto = @conto.sconto
+      @tesdoc.save
+
+    articles.each do |k, riga|
+      @tesdoc.appo_add_rigdoc(riga[0], nil, riga[1], nil, nil)
+    end
+
+    costo_contrass = info_sped["cost_contrass"].to_f
+    if costo_contrass > 0.0
+      costo_contrass = ( costo_contrass / 1.22).round(2)
+      @tesdoc.appo_add_rigdoc(nil, "CONTRASS", 1, costo_contrass, 0.0)
+    end
+
+    costo_spediz = info_sped["cost_spediz"].to_f
+    if costo_spediz > 0.0
+      costo_spediz = ( costo_spediz / 1.22).round(2)
+      @tesdoc.appo_add_rigdoc(nil, "SPEDIZ", 1, costo_spediz, 0.0)
+    end
+
+    user_id = info_sped["user_id"].to_i
+
+    Rails.logger.info "-- tesdoc #{@tesdoc.rigdocs.size.to_i}"
+    return 0
   end
 end

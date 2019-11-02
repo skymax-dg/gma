@@ -1,0 +1,22 @@
+<%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
+
+<div class="button-bar">
+  <ul class="button-group">
+    <li>
+      <%= link_to "NUOVO", new_event_path(), class: "button radius small new foundicon-add-doc" %>
+    </li>
+  </ul>
+</div>
+<% unless @events.nil?||@events.empty? %>
+  <table>
+    <thead>
+      <tr>
+        <th width="15%">Descrizione</th>
+        <th width="4%"></th>
+      </tr>
+    </thead>
+    <tbody>
+        <%= render :partial => 'line', :collection => @events, as: :item %>
+    </tbody>
+  </table>
+<% end %>

@@ -15,3 +15,13 @@
 /log/*
 /tmp/
 /public/
+backup/*
+*.tar.gz
+*.tar
+
+.DS_Store
+/config/database.yml
+
+.ruby-version
+.ruby-gemset
+

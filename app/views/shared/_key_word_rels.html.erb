@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="six columns">
+    <table>
+      <thead>
+        <tr>
+          <th width="90%">Key Word Associate</th>
+          <th width="10%"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% orig.key_word_rels.each do |item| %>
+          <% if item.key_word %>
+            <tr>
+              <td><%= item.key_word.get_dinasty %></td>
+              <td>
+                <%= link_to '', manage_key_word_rels_key_word_path(id: item.key_word.id, mode: 1, kwr_id: item.id), 
+                  confirm: 'Confermi?', class: "button radius tiny alert foundicon-trash", title: "Cancella" %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+        </tbody>
+    </table>
+  </div>
+  <div class="six columns">
+    <table>
+      <thead>
+        <tr>
+          <th width="90%">Key Word Associabili</th>
+          <th width="10%"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% items_addable.each do |item| %>
+          <% if !orig.has_key_word?(item) && item.leaf? %>
+            <tr>
+              <td><%= item.get_dinasty %></td>
+              <td>
+                <%= link_to '', manage_key_word_rels_key_word_path(id: item.id, mode: 0, ot_id: orig.id, ot_cls: orig.class),
+                  class: "button radius tiny success foundicon-plus", title: "Aggiungi" %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+        </tbody>
+    </table>
+  </div>
+</div>

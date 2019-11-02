@@ -1,0 +1,14 @@
+<div class="twelve columns">
+  <table>
+    <thead>
+      <tr>
+        <th width="30%">Descrizione</th>
+        <th width="25%"></th>
+        <th width="3%"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render partial: 'line', collection: @key_word.childs, as: :item %>
+    </tbody>
+  </table>
+</div>

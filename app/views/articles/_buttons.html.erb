@@ -1,0 +1,15 @@
+<div class="button-bar">
+  <ul class="button-group">
+    <li>
+      <%= link_to 'INDIETRO',  resque_location(articles_path), :class => "button radius small back foundicon-left-arrow" %>
+    </li>
+    <li>
+      <%= link_to 'MODIFICA', edit_article_path(@article), :class => "button radius small modify foundicon-edit" %>
+    </li>
+    <li>
+      <%= link_to 'ELIMINA', @article, :confirm => 'Confermi eliminazione?',
+                                       :method => :delete, :class => "button radius small alert foundicon-trash" %>
+    </li>
+  </ul>
+  <%= render :partial => 'btn_stp' %>
+</div>

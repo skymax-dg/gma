@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130206135914) do
+ActiveRecord::Schema.define(:version => 20191024074759) do
 
   create_table "agentes", :force => true do |t|
     t.integer  "anagen_id"
@@ -20,22 +20,50 @@ ActiveRecord::Schema.define(:version => 20130206135914) do
     t.datetime "updated_at",                               :null => false
   end
 
+  create_table "anagen_articles", :force => true do |t|
+    t.integer  "anagen_id"
+    t.integer  "article_id"
+    t.integer  "mode",       :default => 0
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "anagen_articles", ["mode"], :name => "index_anagen_articles_on_mode"
+
   create_table "anagens", :force => true do |t|
-    t.integer  "codice",                     :null => false
-    t.string   "tipo",        :limit => 1,   :null => false
-    t.string   "codfis",      :limit => 16
-    t.string   "pariva",      :limit => 11
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
-    t.string   "denomin",     :limit => 150, :null => false
-    t.string   "telefono",    :limit => 20
-    t.string   "email",       :limit => 50
-    t.string   "fax",         :limit => 20
-    t.string   "web",         :limit => 50
+    t.integer  "codice",                                           :null => false
+    t.string   "tipo",               :limit => 1,                  :null => false
+    t.string   "codfis",             :limit => 16
+    t.string   "pariva",             :limit => 11
+    t.datetime "created_at",                                       :null => false
+    t.datetime "updated_at",                                       :null => false
+    t.string   "denomin",            :limit => 150,                :null => false
+    t.string   "telefono",           :limit => 20
+    t.string   "email",              :limit => 50
+    t.string   "fax",                :limit => 20
+    t.string   "web",                :limit => 50
     t.date     "dtnas"
-    t.string   "sesso",       :limit => 1
+    t.string   "sesso",              :limit => 1
     t.integer  "luogonas_id"
-    t.string   "referente",   :limit => 150
+    t.string   "referente",          :limit => 150
+    t.string   "type"
+    t.string   "codnaz",             :limit => 2
+    t.string   "codident",           :limit => 20
+    t.string   "pec",                :limit => 50
+    t.text     "bio"
+    t.string   "cod_cig",            :limit => 20
+    t.string   "cod_cup",            :limit => 20
+    t.integer  "split_payement",                    :default => 0
+    t.string   "cod_carta_studente", :limit => 7
+    t.string   "cod_carta_docente",  :limit => 8
+    t.integer  "attivo",                            :default => 1
+    t.integer  "primary_address_id"
+    t.integer  "paese_nas_id"
+    t.integer  "fl1_consenso",                      :default => 0
+    t.integer  "fl2_consenso",                      :default => 0
+    t.date     "dt_consenso"
+    t.integer  "fl_newsletter",                     :default => 0
+    t.string   "cellulare",          :limit => 15
   end
 
   add_index "anagens", ["codfis"], :name => "idx_anagens_on_codfis"
@@ -47,28 +75,48 @@ ActiveRecord::Schema.define(:version => 20130206135914) do
     t.integer  "anagen_id"
     t.string   "indir"
     t.string   "desloc"
-    t.string   "cap",         :limit => 5
-    t.integer  "nrmag",                                     :null => false
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
+    t.string   "cap",         :limit => 10
+    t.integer  "nrmag",                                      :null => false
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
     t.integer  "localita_id"
-    t.string   "flsl",        :limit => 1, :default => "S", :null => false
-    t.string   "flsp",        :limit => 1, :default => "S", :null => false
-    t.string   "flmg",        :limit => 1, :default => "N", :null => false
+    t.string   "flsl",        :limit => 1,  :default => "S", :null => false
+    t.string   "flsp",        :limit => 1,  :default => "S", :null => false
+    t.string   "flmg",        :limit => 1,  :default => "N", :null => false
   end
 
   add_index "anainds", ["anagen_id"], :name => "index_anainds_on_anagen_id"
 
   create_table "articles", :force => true do |t|
-    t.integer  "azienda",                                                                    :null => false
-    t.string   "codice",     :limit => 20,                                                   :null => false
-    t.string   "descriz",    :limit => 100,                                                  :null => false
-    t.decimal  "prezzo",                    :precision => 12, :scale => 6, :default => 0.0,  :null => false
-    t.datetime "created_at",                                                                 :null => false
-    t.datetime "updated_at",                                                                 :null => false
-    t.string   "categ",      :limit => 2,                                  :default => "GE", :null => false
-    t.integer  "iva_id",                                                   :default => 1,    :null => false
-    t.decimal  "costo",                     :precision => 8,  :scale => 2, :default => 0.0,  :null => false
+    t.integer  "azienda",                                                                              :null => false
+    t.string   "codice",               :limit => 20,                                                   :null => false
+    t.string   "descriz",              :limit => 100,                                                  :null => false
+    t.decimal  "prezzo",                              :precision => 12, :scale => 6, :default => 0.0,  :null => false
+    t.datetime "created_at",                                                                           :null => false
+    t.datetime "updated_at",                                                                           :null => false
+    t.string   "categ",                :limit => 2,                                  :default => "GE", :null => false
+    t.integer  "iva_id",                                                             :default => 1,    :null => false
+    t.decimal  "costo",                               :precision => 8,  :scale => 2, :default => 0.0,  :null => false
+    t.text     "subtitle"
+    t.text     "sinossi"
+    t.text     "abstract"
+    t.text     "quote"
+    t.integer  "weigth"
+    t.integer  "ppc",                                                                :default => 1
+    t.integer  "ppb"
+    t.integer  "state"
+    t.integer  "width"
+    t.integer  "height"
+    t.date     "dtpub"
+    t.decimal  "discount",                            :precision => 5,  :scale => 2, :default => 0.0,  :null => false
+    t.integer  "pagine"
+    t.integer  "rilegatura"
+    t.text     "issuee_link"
+    t.string   "translator",           :limit => 30
+    t.string   "series",               :limit => 30
+    t.string   "director_series",      :limit => 30
+    t.string   "collaborator",         :limit => 30
+    t.string   "youtube_presentation", :limit => 50
   end
 
   add_index "articles", ["azienda", "codice"], :name => "idx_articles_on_codice", :unique => true
@@ -164,6 +212,35 @@ ActiveRecord::Schema.define(:version => 20130206135914) do
   add_index "costos", ["data"], :name => "index_costos_on_data"
   add_index "costos", ["tesdoc_id"], :name => "index_costos_on_tesdoc_id"
 
+  create_table "event_states", :force => true do |t|
+    t.integer  "event_id"
+    t.integer  "anagen_id"
+    t.integer  "mode"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "events", :force => true do |t|
+    t.string   "type",           :limit => 24
+    t.string   "description",    :limit => 40
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.integer  "article_id"
+    t.string   "timetable",      :limit => 20
+    t.text     "dressing"
+    t.integer  "duration"
+    t.integer  "quantity"
+    t.integer  "nr_item"
+    t.integer  "yr_item"
+    t.integer  "site_anagen_id"
+    t.integer  "state"
+    t.integer  "mode"
+    t.integer  "cut_off"
+    t.date     "dt_event"
+    t.date     "dt_end_isc"
+    t.date     "dt_discount"
+  end
+
   create_table "ivas", :force => true do |t|
     t.integer  "codice",                                                  :null => false
     t.string   "descriz",    :limit => 50,                                :null => false
@@ -174,14 +251,35 @@ ActiveRecord::Schema.define(:version => 20130206135914) do
     t.datetime "updated_at",                                              :null => false
   end
 
+  create_table "key_word_rels", :force => true do |t|
+    t.integer  "key_word_id"
+    t.string   "desc",              :limit => 32
+    t.integer  "key_wordable_id"
+    t.string   "key_wordable_type"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+  end
+
+  create_table "key_words", :force => true do |t|
+    t.string   "desc",         :limit => 32
+    t.integer  "parent_id"
+    t.integer  "keyword_type",               :default => 0
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+    t.string   "type",         :limit => 24
+    t.integer  "n_order",                    :default => 0
+  end
+
   create_table "localitas", :force => true do |t|
-    t.string   "descriz",    :limit => 50, :null => false
-    t.string   "prov",       :limit => 2
-    t.string   "cap",        :limit => 5
+    t.string   "descriz",     :limit => 50, :null => false
+    t.string   "prov",        :limit => 2
+    t.string   "cap",         :limit => 10
     t.integer  "paese_id"
-    t.string   "codfis",     :limit => 4
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+    t.string   "codfis",      :limit => 4
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+    t.integer  "cod_regione"
+    t.string   "state",       :limit => 30
   end
 
   add_index "localitas", ["descriz"], :name => "idx_localitas_on_descriz"
@@ -292,12 +390,18 @@ ActiveRecord::Schema.define(:version => 20130206135914) do
   add_index "tesdocs", ["data_doc", "num_doc"], :name => "idx_tesdocs_on_data_doc_num_doc"
 
   create_table "users", :force => true do |t|
-    t.integer  "azienda",                   :null => false
-    t.string   "login",      :limit => 20,  :null => false
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
-    t.string   "salt",       :limit => 100, :null => false
-    t.string   "pwdcript",   :limit => 100, :null => false
+    t.integer  "azienda",                                    :null => false
+    t.string   "login",        :limit => 20,                 :null => false
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
+    t.string   "salt",         :limit => 100,                :null => false
+    t.string   "pwdcript",     :limit => 100,                :null => false
+    t.integer  "anagen_id"
+    t.integer  "user_tp",                     :default => 1
+    t.integer  "privilege",                   :default => 1
+    t.string   "token"
+    t.datetime "dt_exp_token"
+    t.string   "email",        :limit => 60
   end
 
   add_index "users", ["azienda", "login"], :name => "idx_users_on_login", :unique => true

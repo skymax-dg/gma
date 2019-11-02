@@ -1,5 +1,14 @@
 Gma::Application.routes.draw do
 
+  resources :key_words do 
+    member do
+      get 'manage_key_word_rels'
+      get 'change_n_order'
+    end
+  end
+
+  resources :events
+
   root :to => "menu#home"
 
   get "menu/contact"
@@ -71,6 +80,8 @@ Gma::Application.routes.draw do
     collection do
       get :filter
       get :chg_tipo
+      get :change_article
+      get :change_event
     end
   end
 
@@ -117,6 +128,25 @@ Gma::Application.routes.draw do
       get :down
     end
   end
+
+	post 'authenticate',  to: 'authentication#authenticate'
+  get 'authors',        to: 'anagens#authors'
+  get 'teachers',       to: 'anagens#teachers'
+  get 'events',         to: 'articles#events'
+  get 'categories',     to: 'key_words#categories'
+  get 'products',       to: 'articles#products'
+  get 'announcements',  to: 'articles#announcements'
+  get 'promotions',     to: 'articles#promotions'
+  get 'bestsellers',    to: 'articles#bestsellers'
+  get 'products',       to: 'articles#products'
+  get 'products_query', to: 'articles#products_query'
+  get 'anagens_query',  to: 'anagens#anagens_query'
+  get 'users_query',    to: 'users#users_query'
+  post 'users_query',   to: 'users#users_query'
+  get 'get_localitas',  to: 'localitas#localitas_query'
+  get 'push_order',     to: 'tesdocs#create_by_json'
+      
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

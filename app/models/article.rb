@@ -1,19 +1,47 @@
 class Article < ActiveRecord::Base
   #acts_as_reportable
   before_destroy :require_no_rigdocs
-  has_many :rigdocs
   belongs_to :iva
 
-  attr_accessible :codice, :descriz, :prezzo, :azienda, :categ, :iva_id, :costo
+  has_many :rigdocs
+  has_many :key_word_rels, as: :key_wordable
+  has_many :key_words, through: :key_word_rels
+  has_many :anagen_articles
+  has_many :anagens, through: :anagen_articles
+  has_many :events
+
+  attr_accessible :codice, :descriz, :prezzo, :azienda, :categ, :iva_id, :costo, :subtitle, :sinossi, :abstract, :quote, :weigth, :ppc, :ppb, :state, :width, :height, :dtpub, :discount, :pagine, :rilegatura, :issuee_link, :translator, :series, :director_series, :collaborator, :youtube_presentation
 
   validates :codice, :descriz, :azienda, :categ, :iva_id, :costo, :presence => true
   #validates :codice, :descriz, :uniqueness => {:case_sensitive => false}
-  validates :codice,  :length => {:maximum => 20}
-  validates :descriz, :length => {:maximum => 50}
+  validates :codice,               :length => {:maximum => 20}
+  validates :descriz,              :length => {:maximum => 50}
+  validates :translator,           :length => {:maximum => 30}
+  validates :series,               :length => {:maximum => 30}
+  validates :director_series,      :length => {:maximum => 30}
+  validates :collaborator,         :length => {:maximum => 30}
+  validates :youtube_presentation, :length => {:maximum => 50}
   
   scope :azienda, lambda { |azd| {:conditions => ['articles.azienda = ?', azd]}}
+  scope :not_hidden, -> { where("articles.state != 5") }
+  scope :by_author, ->(aid) { includes(:anagen_articles).where("anagen_articles.mode = 1 AND anagen_articles.anagen_id=?", aid) }
+  scope :by_key_word, ->(kid) { includes(:key_word_rels).where("key_word_rels.key_word_id = ?", kid) }
 
   CATEG = $ParAzienda['ARTICLE']['CATEG']
+  STATES = [
+    ["In preparazione",1], 
+    ["Disponibile",2], 
+    ["In ristampa",3], 
+    ["Fuori catalogo",4], 
+    ["Nascosto",5],
+    ["In prenotazione",6]
+  ]
+
+  RILEGATURE = [
+    ["Cartonato",1], 
+    ["Brossura",2], 
+    ["Libretto + CD",2], 
+  ]
 
   def self.filter(azienda, tp, des, page)
     # Esegure la ricerca articoli in base ai filtri impostati
@@ -163,6 +191,96 @@ class Article < ActiveRecord::Base
     return data.string
   end
 
+  def dstate
+    if self.state
+      tmp = STATES.select { |x| x[1] == self.state }
+      tmp.size > 0 && tmp[0][0]
+    end
+  end
+
+  def drilegatura
+    if self.rilegatura
+      tmp = RILEGATURE.select { |x| x[1] == self.rilegatura }
+      tmp.size > 0 && tmp[0][0]
+    end
+  end
+
+  def has_key_word?(kw)
+    self.key_words.include?(kw)
+  end
+
+  def libro?
+    kw = KeyWordArticle.where(desc: "Libro").first
+    self.has_key_word?(kw)
+  end
+
+  def rivista?
+    kw = KeyWordArticle.where(desc: "Rivista").first
+    self.has_key_word?(kw)
+  end
+
+  def evento?
+    kw = KeyWordArticle.where(desc: "Evento").first
+    self.has_key_word?(kw)
+  end
+
+  def generico?
+    kw = KeyWordArticle.where(desc: "Generico").first
+    self.has_key_word?(kw)
+  end
+
+  def self.libri
+    kw = KeyWordArticle.where(desc: "Libro").first
+    Rails.logger.info "--------------------- kw.id: #{kw.id}"
+    Article.joins(:key_words).where("key_words.id = ?", kw.id)
+  end
+
+  def self.eventi
+    kw = KeyWordArticle.where(desc: "Evento").first
+    Article.joins(:key_words).where("key_words.id = ?", kw.id)
+  end
+
+  def self.announcements
+    kw = KeyWordArticle.where(desc: "Novita'").first
+    Article.joins(:key_words).where("key_words.id = ?", kw.id)
+  end
+  
+  def self.promotions
+    kw = KeyWordArticle.where(desc: "Promozioni").first
+    Article.joins(:key_words).where("key_words.id = ?", kw.id)
+  end
+  
+  def self.bestsellers
+    kw = KeyWordArticle.where(desc: "Bestseller").first
+    Article.joins(:key_words).where("key_words.id = ?", kw.id)
+  end
+  
+  def self.products
+    kw = KeyWordArticle.where(desc: "Generico").first
+    Article.joins(:key_words).where("key_words.id = ?", kw.id)
+  end
+
+  def can_buy?
+    [2, 3, 6].include? self.state
+    #self.state == 2
+  end
+
+  def final_price
+    (self.prezzo - ((self.prezzo*self.discount)/100)).round(2)
+  end
+
+  def price_with_vat
+    if self.iva && self.iva.aliq
+      al = self.iva.aliq / 100
+      (self.prezzo * (1.0 + al)).round(2)   
+    else
+      self.prezzo
+    end
+  end
+
+  def in_prenotazione?
+    self.state == 6
+  end
   private
     def require_no_rigdocs
       self.errors.add :base, "Almeno una riga documento fa riferimento all'articolo che si desidera eliminare."

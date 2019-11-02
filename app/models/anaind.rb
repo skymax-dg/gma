@@ -37,4 +37,14 @@ class Anaind < ActiveRecord::Base
     return false if nr == 0
     return true
   end
+
+  def decode_indir
+    self.indir.split(",")[0..1].map { |x| x.strip }
+  end
+
+  def encode_indir(ind, civ)
+    ind.gsub!(",","")
+    civ.gsub!(",","")
+    self.indir = "%s, %s"%[ind, civ]
+  end
 end

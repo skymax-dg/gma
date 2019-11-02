@@ -2,15 +2,29 @@ class Anagen < ActiveRecord::Base
   #has_many :prezzoarticclis, :foreign_key => "anag_id",
   #                           :dependent => :destroy
   before_destroy :require_no_contos
+
   has_many :contos
   has_many :anainds, :dependent => :destroy
+  has_many :key_word_rels, as: :key_wordable
+  has_many :key_words, through: :key_word_rels
+  has_many :anagen_articles
+  has_many :articles, through: :anagen_articles
+  has_many :event_states
+  has_many :events, through: :event_states
+
   belongs_to :localita, :foreign_key => "luogonas_id"
+  belongs_to :paese_nas, :foreign_key => "paese_nas_id", class_name: "Paese"
+  belongs_to :primary_address, :foreign_key => "primary_address_id", class_name: "Anaind"
+
   has_one :agente, :dependent => :destroy
+  has_one :user, :dependent => :destroy
   
 #  default_scope :order => 'anagens.denomin ASC' Non funziona perchè c'è una select max
 
   attr_accessible :codice, :tipo, :denomin, :codfis, :pariva, :dtnas, :luogonas_id, :sesso,
-                  :telefono, :email, :fax, :web, :sconto, :referente
+                  :telefono, :email, :fax, :web, :sconto, :referente, :codnaz, :codident, :pec, :bio, :userp, :cod_cig, :cod_cup, 
+                  :split_payement, :cod_carta_docente, :cod_carta_studente, :fl1_consenso, :fl2_consenso, :dt_consenso, :fl_newsletter,
+                  :cellulare
 
   validates :codice, :tipo, :denomin, :presence => true
   validates :codice, :denomin, :uniqueness => true
@@ -28,8 +42,14 @@ class Anagen < ActiveRecord::Base
   validates :email,     :length => {:maximum => 50}
   validates :fax,       :length => {:maximum => 20}
   validates :web,       :length => {:maximum => 50}
+  validates :cellulare, :length => {:maximum => 15}
 
   TIPO = $ParAzienda['ANAGEN']['TIPO_SOGGETTO']
+
+  SPLIT_PAYEMENTS = [
+    ["NO",0], 
+    ["SI",1]
+  ]
 
   def self.filter (tp, des, page)
     # Esegure la ricerca delle anagrafiche soggetto in base ai filtri impostati
@@ -108,6 +128,198 @@ class Anagen < ActiveRecord::Base
                   WHERE contos.tipoconto = '#{tipoconto.to_s}' AND contos.azienda = #{azienda.to_s} 
                   ORDER BY anagens.denomin")
   end
+
+  #def self.tables_list
+  #  list  = []
+  #  list << {plural: 'Clienti',       singular: "Cliente",       type: :Customer,   cls: Customer}
+  #  list << {plural: 'Fornitori',     singular: "Fornitore",     type: :Supplier,   cls: Supplier}
+  #  list << {plural: 'Insegnanti',    singular: "Insegnante",    type: :Teacher,    cls: Teacher}
+  #  list << {plural: 'Organizzatori', singular: "Organizzatore", type: :Organizer,  cls: Organizer}
+  #  list << {plural: 'Autori',        singular: "Autore",        type: :Author,     cls: Author}
+  #  list << {plural: 'Abbonati',      singular: "Abbonato",      type: :Subscriber, cls: Subscriber}
+  #  list << {plural: 'Studenti',      singular: "Studente",      type: :Student,    cls: Student}
+  #  #list << {plural: '', singular: "" ,type: , cls: }
+
+  #  list.sort { |e1,e2| e1[:plural] <=> e2[:plural] }
+  #end
+
+  #def self.decode_table(cls)
+  #  self.tables_list.find { |r| r[:type] == cls } || {}
+  #end
+
+  def has_key_word?(kw)
+    self.key_words.include?(kw)
+  end
+
+  def author?
+    kw = KeyWordAnagen.where(desc: "Autore").first
+    self.has_key_word? kw 
+  end
+
+  def stampatore?
+    kw = KeyWordAnagen.where(desc: "Stampatore").first
+    self.has_key_word? kw 
+  end
+
+  def connect_article(art_id)
+    if Article.exists? art_id
+      art = Article.find(art_id)
+      unless self.has_article?(art)
+        self.articles << art
+        true
+      end
+    end
+  end
+
+  def has_article?(art)
+    self.articles.include? art
+  end
+
+  def remove_article(art_id)
+    if Article.exists? art_id
+      art = Article.find(art_id)
+      self.articles.delete(art)
+      true
+    end
+  end
+
+  def self.teachers
+    kw = KeyWordAnagen.where(desc: "Insegnante").first
+    kw ? Anagen.joins(:key_words).where("key_words.id = ?", kw.id).order("anagens.denomin") : []
+  end
+
+  def self.authors
+    kw = KeyWordAnagen.where(desc: "Autore").first
+    kw ? Anagen.joins(:key_words).where("key_words.id = ?", kw.id).order("anagens.denomin") : []
+  end
+
+  def self.printers
+    kw = KeyWordAnagen.where(desc: "Stampatore").first
+    kw ? Anagen.joins(:key_words).where("key_words.id = ?", kw.id).order("anagens.denomin") : []
+  end
+
+  def connect_event(event_id, mode)
+    if Event.exists? event_id
+      unless self.has_event?(event_id, mode)
+        EventState.create(anagen: self, event_id: event_id, mode: mode)
+        true
+      end
+    end
+  end
+
+  def has_event?(event_id, mode)
+    self.event_states.where(mode: mode, event_id: event_id).count > 0
+  end
+
+  def remove_event(event_id, mode)
+    if Event.exists? event_id
+      event = Event.find(event_id)
+      self.events.delete(event)
+      true
+    end
+  end
+
+  def prenotazioni
+    kw = KeyWordEvent.type_event_book
+    self.events.joins(:key_words).where("key_words.id = ?", kw.id).order("events.dt_event DESC")
+  end
+
+  def corsi
+    kw = KeyWordEvent.type_event_course
+    self.events.joins(:key_words).where("key_words.id = ?", kw.id).order("events.dt_event DESC")
+  end
+
+  def abbonamenti
+    kw = KeyWordEvent.type_event_magazine
+    self.events.joins(:key_words).where("key_words.id = ?", kw.id).order("events.dt_event DESC")
+  end
+
+  def encode_denomin(surname, name)
+    if surname.split.size > 1
+      self.denomin = "%s, %s"%[surname, name]
+    else
+      self.denomin = "%s %s"%[surname, name]
+    end
+  end
+
+  def decode_denomin
+    if self.denomin =~ /,/
+      self.denomin.split(",")[0..1].map { |x| x.strip }
+    else
+      surname = self.denomin.split()[0].strip
+      name = self.denomin.gsub(surname, '').strip
+      [surname, name]
+    end
+  end
+
+  def use_rag_soc?
+    ["G", "I", "E"].include? self.tipo
+  end
+
+  def gac_dati_completi?
+    self.appo_info_check[0]
+  end
+
+  def appo_info_check
+    st = true
+    ds = []
+    ds << [:referente,          ["G", "I", "E"] ]
+    ds << [:denomin,            ["G", "I", "E", "F", "S", "D"] ]
+    ds << [:codfis,             ["G", "I", "E", "F", "S", "D"] ]
+    ds << [:pariva,             ["G", "I", "E"] ]
+    ds << [:cod_carta_studente, ["S"] ]
+    ds << [:cod_carta_docente,  ["D"] ]
+    ds << [:cellulare,          ["G", "I", "E", "F", "S", "D"]]
+    ds << [:codident,           ["G", "I", "E"] ]
+    ds << [:pec,                ["G", "I", "E"] ]
+    ds << [:cod_cig,            ["E"] ]
+    ds << [:cod_cup,            ["E"] ]
+
+    ee = []
+    
+    ds.each do |k, tps|
+      if tps.include?(self.tipo)
+        puts "Checking #{k} on #{self[k]}"
+        ee << "manca #{k}" if ["", nil].include?(self[k])
+      end
+    end
+
+    [ ee == [], ee ]
+  end
+
+  # LCG 191102
+  def info_check
+    ck = appo_info_check
+    if ck[0]
+      "dati corretti"
+    else
+      ck[1].join(",")
+    end
+  end
+
+  def self.add_addr(par)
+    if Anagen.exists?(par[:anagen_id])
+      an = Anagen.find(par[:anagen_id])
+      addr = an.anainds.create(flsl: "N", flsp: "S", flmg: "N", nrmag: 0)
+      addr.encode_indir(par[:indirizzo], par[:civico])
+      addr.desloc = par[:citta]
+      addr.cap = par[:cap]
+      if addr.save 
+        return [true, addr.id] 
+      else
+        Rails.logger.info addr.errors.full_messages
+        return [false, nil]
+      end
+    end
+  end
+
+  def self.random_author
+    kw = KeyWordAnagen.where(desc: "Autore").first
+    n = Random.rand(kw.key_word_rels.count)
+    id = kw.key_word_rels.offset(n).first.key_wordable_id
+    Anagen.find(id)
+  end
+
   private
     def require_no_contos
       self.errors.add :base, "Almeno un conto fa riferimento all' anagrafica che si desidera eliminare."

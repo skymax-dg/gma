@@ -13,16 +13,35 @@
       <%= f.label "CodFis" %>
       <%= f.text_field :codfis %>
     </div>
+    <div class="seven columns"> </div>
+  </div>
+
+  <div class="row">
+    <div class="four columns">
+      <%= f.label "Regione" %>
+      <%= select(:localita, :cod_regione, (Localita::REGIONI)) %>
+    </div>
     <div class="two columns">
       <%= f.label "Provincia" %>
       <%= f.text_field :prov %>
     </div>
     <div class="two columns"></div>
+  </div>
+
+  <div class="row">
     <div class="five columns">
       <%= f.label "Stato/Nazione" %>
       <%= collection_select :localita,     :paese_id, Paese.all,
                             :id, :descriz %>
     </div>
+  </div>
+  <div class="row">
+    <div class="five columns">
+      <%= f.label "Nome regione/stato (estero)" %>
+      <%= f.text_field :state %>
+    </div>
+  </div>
+
     <div class="twelve columns">
       <%= f.submit 'SALVA', :class => "button radius small success foundicon-checkmark" %>
       <%= link_to 'ANNULLA', resque_location(:back), :class => "button radius small alert foundicon-remove" %>

@@ -1,0 +1,202 @@
+<div class="row">
+  <div class="two columns">
+    <%= label @article, "Codice:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @article.codice %>
+  </div>
+  <div class="two columns">
+    <%= label @article, "Prezzo di acquisto:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @article.costo %> 
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <%= label @article, "Categoria:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= Article::CATEG[@article.categ] %>
+  </div>
+  <div class="two columns">
+    <%= label @article, "Prezzo di vendita:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @article.prezzo %> 
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <%= label @article, "Peso (gr):", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @article.weigth %>
+  </div>
+  <div class="two columns">
+    <%= label @article, "Pezzi x confezione:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @article.ppc %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <%= label @article, "Larghezza (mm):", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @article.width %>
+  </div>
+  <div class="two columns">
+    <%= label @article, "Pezzi x scatola:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @article.ppb %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <%= label @article, "Altezza (mm):", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @article.height %>
+  </div>
+  <div class="two columns">
+    <%= label @article, "Data pubb:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= to_mydate(@article.dtpub) %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <%= label @article, "Stato:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @article.dstate %>
+  </div>
+
+  <div class="two columns">
+    <%= label @article, "Sconto:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @article.discount %> %
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <%= label @article, "Numero pagine:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @article.pagine %>
+  </div>
+  <div class="two columns">
+    <%= label @article, "Prezzo scontato:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @article.final_price %> 
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <%= label @article, "Rilegatura:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @article.drilegatura %>
+  </div>
+  <div class="two columns">
+    <%= label @article, "Link pres. YouTube:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= link_to @article.youtube_presentation, @article.youtube_presentation, target: "_blank" %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <%= label @article, "Traduttore:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @article.translator %>
+  </div>
+  <div class="two columns">
+    <%= label @article, "A cura di:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @article.collaborator %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <%= label @article, "Collana:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @article.series %>
+  </div>
+  <div class="two columns">
+    <%= label @article, "Direttore di collana:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @article.director_series %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <%= label @article, "Descrizione:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= @article.descriz %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @article, "Sottotitolo:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= @article.subtitle %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <%= label @article, "Sinossi:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= @article.sinossi %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @article, "Abstract:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= @article.abstract %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @article, "Commento:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= @article.quote %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @article, "Link Issuee:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= @article.issuee_link %>
+  </div>
+</div>
+
+<%= render "rel_datas" %>

@@ -29,6 +29,7 @@
     <span id="datinas">
       <%= render(:partial => 'datinas') %>
     </span>
+
     <div class="five columns">
       <%= f.label "Telefono" %>
       <%= f.text_field :telefono %>
@@ -39,6 +40,16 @@
       <%= f.text_field :fax %>
     </div>
     <div class="five columns">
+      <%= f.label "Cellulare" %>
+      <%= f.text_field :cellulare %>
+    </div>
+    <div class="two columns"></div>
+    <div class="five columns">
+      <%= f.label "Codice carta docente" %>
+      <%= f.text_field :cod_carta_docente %>
+    </div>
+
+    <div class="five columns">
       <%= f.label "E-mail" %>
       <%= f.text_field :email %>
     </div>
@@ -47,10 +58,45 @@
       <%= f.label "Sito Web" %>
       <%= f.text_field :web %>
     </div>
-    <div class="twelve columns">
+
+    <div class="five columns">
+      <%= f.label "Codice nazione" %>
+      <%= f.text_field :codnaz %>
+    </div>
+    <div class="two columns"></div>
+    <div class="five columns">
+      <%= f.label "Codice fatt sdi:" %>
+      <%= f.text_field :codident %>
+    </div>
+    <div class="five columns">
+      <%= f.label "PEC" %>
+      <%= f.text_field :pec %>
+    </div>
+    <div class="two columns"></div>
+    <div class="five columns">
       <%= f.label "Referente" %>
       <%= f.text_field :referente %>
     </div>
+
+    <div class="five columns">
+      <%= f.label "CIG" %>
+      <%= f.text_field :cod_cig %>
+    </div>
+    <div class="two columns"></div>
+    <div class="five columns">
+      <%= f.label "CUP" %>
+      <%= f.text_field :cod_cup %>
+    </div>
+    <div class="two columns">
+      <%= f.label "Split Payement" %>
+      <%= f.select(:split_payement, Anagen::SPLIT_PAYEMENTS, { :prompt => true}) %>
+    </div>
+    <div class="three columns">
+      <%= f.label "Codice carta studente" %>
+      <%= f.text_field :cod_carta_studente %>
+    </div>
+    <div class="two columns"></div>
+
     <% if @anagen.denomin.nil? %>
       <div class="five columns">
         <%= f.label "Inserisci Conto Cliente" %>
@@ -59,10 +105,14 @@
       <div class="two columns"></div>
       <div class="five columns"></div>
     <% end %> 
+    <div class="twelve columns">
+      <%= f.label "Biografia" %>
+      <%= f.text_area :bio %>
+    </div>
     <hr />
     <div class="twelve columns">
       <%= f.submit 'SALVA', :class => "button radius small success foundicon-checkmark" %>
-      <%= link_to 'ANNULLA', anagens_path, :class => "button radius small alert foundicon-remove" %>
+      <%= link_to 'ANNULLA', anagens_path(type: params[:type] || @anagen.type), :class => "button radius small alert foundicon-remove" %>
     </div>
   </div>
 <% end %>

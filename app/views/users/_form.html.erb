@@ -1,9 +1,14 @@
 <%#= render :partial => 'shared/error_messages', :locals => {:f => @user} %>
 <%= form_for(@user) do |f| %>
   <div class="row">
-    <div class="twelve columns">
+    <div class="five columns">
       <%= f.label "Nome utente:" %>
       <%= f.text_field :login %>
+    </div>
+    <div class="two columns"></div>
+    <div class="five columns">
+      <%= f.label "Email:" %>
+      <%= f.text_field :email %>
     </div>
     <div class="five columns">
       <%= f.label "Password" %>
@@ -17,6 +22,16 @@
     <div class="three columns">
       <%= f.label :azienda %>
       <%= select(:user, :azienda, (StaticData::ELNCAZND).invert.sort) %>
+    </div>
+    <div class="twelve columns"></div>
+    <div class="two columns">
+      <%= f.label :user_tp %>
+      <%= select(:user, :user_tp, (User::USER_TPS)) %>
+    </div>
+    <div class="one columns"></div>
+    <div class="two columns">
+      <%= f.label :privilege %>
+      <%= f.number_field :privilege %>
     </div>
     <div class="twelve columns">
       <%= f.submit 'SALVA', :class => "button radius small success foundicon-checkmark" %>

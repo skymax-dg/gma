@@ -1,14 +1,15 @@
 class AnagensController < ApplicationController
 
+  before_filter :authenticate_request, if: :json_request?
   before_filter :authenticate
   before_filter :force_fieldcase, :only => [:create, :update]
 
   def filter
-    @title = "Elenco Soggetti/Societa'"
     @tpfilter  = params[:tpfilter]
     @desfilter = params[:desfilter].strip
     @anagens, nrrecord = Anagen.filter(@tpfilter, @desfilter, params[:page])
     flash_cnt(nrrecord) if params[:page].nil?
+    @title = "Elenco Soggetti/Societa'"
     render "index"
   end
 
@@ -19,19 +20,38 @@ class AnagensController < ApplicationController
   end
 
   def show
-    @title = "Mostra Soggetto/Societa'"
-    @anagen = Anagen.find(params[:id])
-  end
+    if params[:id].to_i > 0
+      @anagen = Anagen.find(params[:id])
+    elsif params[:id].to_i == -1
+      @anagen = Anagen.random_author
+    end
+    @title = "Soggetto/Societa'"
+    @art_author = @anagen.anagen_articles.by_author
+    @art_print = @anagen.anagen_articles.by_printer
+    #@tesdocs = @anagen.tesdocs.order(data_doc: :desc)
+    @bookings = @anagen.prenotazioni
+    @subscriptions = @anagen.abbonamenti
+    @courses = @anagen.corsi
+
+    @key_words_addable = KeyWord.sort_by_din(KeyWordAnagen.all)
+    @articles_addable = Article.libri
+
+    respond_to do |format|
+      format.html # renders .html.erb
+      #format.json { render :json => { st: true, v: @anagen.to_json } }
+      format.json { render json: map_json_result(@anagen) }
+    end
+  end 
 
   def new
-    @title = "Nuovo Soggetto/Societa'"
+    @title = "Inserimento Soggetto/Societa'"
     @anagen = Anagen.new
     @anagen.codice = Anagen.newcod
   end
 
   def edit
-    @title = "Modifica Soggetto/Societa'"
     @anagen = Anagen.find(params[:id])
+    @title = "Modifica Soggetto/Societa'"
   end
 
   def chg_tipo
@@ -130,8 +150,65 @@ class AnagensController < ApplicationController
 redirect_back_or @anagen
   end
 
+  def change_article
+    anagen = Anagen.find(params[:id])
+    art_id = params[:article_id] && params[:article_id].to_i
+    mode   = params[:mode] && params[:mode].to_i
+
+    if mode == 1 
+      st = anagen.connect_article(art_id)
+    else 
+      st = anagen.remove_article(art_id)
+    end
+    redirect_to :back, notice: st ? "Operazione completata" : "Operazione fallita"
+  end
+
+  def change_event
+    anagen   = Anagen.find(params[:id])
+    event_id = params[:event_id] && params[:event_id].to_i
+    mode     = params[:mode] && params[:mode].to_i
+    mode2    = params[:mode2] && params[:mode2].to_i
+
+    if mode == 1 
+      st = anagen.connect_event(event_id, mode2)
+    else 
+      st = anagen.remove_event(event_id, mode2)
+    end
+    redirect_to :back, notice: st ? "Operazione completata" : "Operazione fallita"
+  end
+
+  def authors
+    ds = Anagen.authors.select("anagens.id, anagens.denomin, anagens.codnaz")
+    render json: ds 
+  end
+
+  def teachers
+    ds = Anagen.teachers.select("anagens.id, anagens.denomin, anagens.codnaz")
+    render json: ds 
+  end
+
+  def anagens_query
+     ds = Anagen.where(codfis: params[:codice])
+    render json: map_json_array(ds, true)
+  end
+
   private
     def force_fieldcase
       set_fieldcase(:anagen, [:codfis, :pariva, :fax, :telefono], [:email, :web])
+    end
+
+    def map_json_array(ds, min=false)
+      ris = []
+      ds.each do |x|
+        ris << map_json_result(x,min)
+      end
+      ris
+    end
+
+    def map_json_result(x, min=false)
+      a = min ? [:denomin] : [:bio, :denomin, :codnaz, :id, :codfis]
+      h = {}
+      a.each { |y| h[y] = x[y] }
+      h
     end
 end

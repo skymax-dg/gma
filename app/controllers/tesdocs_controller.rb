@@ -4,6 +4,7 @@ require "prawn/measurement_extensions"
 require 'will_paginate/array'
 
 class TesdocsController < ApplicationController
+  before_filter :authenticate_request, if: :json_request?
   before_filter :authenticate
 
   def import_by_xml
@@ -138,6 +139,11 @@ class TesdocsController < ApplicationController
 
       render 'import_by_xml'
     end
+  end
+
+  def create_by_json
+    ris = Tesdoc.make_by_json(params)
+    render json: {result: ris }
   end
 
   def upload_xls
@@ -542,5 +548,9 @@ class TesdocsController < ApplicationController
       flash[:alert] = $!.message
     end
     redirect_back_or @tesdoc
+  end
+
+  def push_order
+
   end
 end

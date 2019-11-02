@@ -18,6 +18,10 @@
       <%= f.label "Via e Nr civico" %>
       <%= f.text_field :indir %>
     </div>
+    <div class="twelve columns">
+      <%= f.label "CAP" %>
+      <%= f.text_field :cap %>
+    </div>
     <div class="five columns">
       <%= f.label "Localita' codificata" %>
       <%= collection_select(:anaind, :localita_id, Localita.all, :id, :descriz,

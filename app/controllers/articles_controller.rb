@@ -3,6 +3,7 @@ require "prawn/measurement_extensions"
 
 class ArticlesController < ApplicationController
 
+  before_filter :authenticate_request, if: :json_request?
   before_filter :authenticate
   before_filter :force_fieldcase, :only => [:create, :update]
 
@@ -200,6 +201,18 @@ class ArticlesController < ApplicationController
   def show
     @title = "Mostra Articolo"
     @article = Article.find(params[:id])
+    @key_words_addable = KeyWord.sort_by_din(KeyWordArticle.all)
+
+    @art_author = @article.anagen_articles.by_author
+    @art_print  = @article.anagen_articles.by_printer
+    @authors_addable  = Anagen.authors
+    @printers_addable = Anagen.printers
+
+    respond_to do |format|
+      format.html # renders .html.erb
+      #format.json { render :json => { st: true, v: @anagen.to_json } }
+      format.json { render json: map_json_data(@article) }
+    end
   end
 
   def new
@@ -247,8 +260,61 @@ class ArticlesController < ApplicationController
     redirect_back_or @article
   end
 
+  def events
+    ds = Article.corsi
+    render json: map_json_array(ds)
+  end
+
+  def announcements
+    ds = Article.announcements
+    render json: map_json_array(ds) 
+  end
+  
+  def promotions
+    ds = Article.promotions
+    render json: map_json_array(ds) 
+  end
+  
+  def bestsellers
+    ds = Article.bestsellers
+    render json: map_json_array(ds) 
+  end
+  
+  def products
+    ds = Article.products
+    render json: map_json_array(ds) 
+  end
+  
+  def products_query
+    Rails.logger.info "------- params: #{params}"
+    ds = case params[:tp]
+         when "1" then params[:author_id]   ? Article.not_hidden.libri.by_author(params[:author_id]).order("articles.dtpub DESC")  : []
+         when "2" then params[:author_id]   ? Article.not_hidden.eventi.by_author(params[:author_id]).order("articles.dtpub DESC") : []
+         when "3" then params[:category_id] ? Article.not_hidden.by_key_word(params[:category_id]).order("articles.dtpub DESC")    : []
+         when "4" then params[:codice]      ? Article.not_hidden.where(codice: params[:codice]).order("articles.dtpub DESC")       : []
+         else []
+         end
+
+    render json: map_json_array(ds) 
+  end
+
   private
     def force_fieldcase
       set_fieldcase(:article, [:codice], [])
+    end
+
+    def map_json_array(ds)
+      ris = []
+      ds.each do |x|
+        ris << map_json_data(x)
+      end
+      ris
+    end
+
+    def map_json_data(x)
+      st = Struct.new(:id, :isbn, :title, :subtitle, :description, :price, :imponib, :imposta, :aliq, :discount, :authors, :state, :d_state, :can_buy, :categories, :is_event, :pagine, :rilegatura, :width, :height, :n_pag, :dt_pub, :weight, :issuee_link, :generico, :translator, :series, :director_series, :collaborator, :youtube_presentation, :in_prenotazione)
+      auths = x.anagen_articles.by_author.map { |y| [y.anagen.id, y.anagen.denomin] }
+      dtpub = x.dtpub ? x.dtpub.strftime("%d/%m/%Y") : ""
+      st.new(x.id, x.codice, x.descriz, x.subtitle, x.sinossi, x.price_with_vat, x.prezzo, x.price_with_vat - x.prezzo, x.iva.aliq, x.discount, auths, x.state, x.dstate, x.can_buy?, [], x.evento? ? 1 : 0, x.pagine, x.drilegatura, x.width, x.height, x.pagine, dtpub, x.weigth, x.issuee_link, x.generico?, x.translator, x.series, x.director_series, x.collaborator, x.youtube_presentation, x.in_prenotazione?)
     end
 end

@@ -1,138 +1,40 @@
 <%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
-<div class="row">
-  <div class="twelve columns button-bar">
-    <ul class="button-group">
-      <li>
-        <%= link_to 'INDIETRO', resque_location(anagens_path), :class => "button radius small cancel foundicon-left-arrow" %>
-      </li>
-      <li>
-        <%= link_to 'MODIFICA', edit_anagen_path(@anagen), :class => "button radius small modify foundicon-edit" %>
-      </li>
-      <li>
-        <%= link_to 'ELIMINA', @anagen, :confirm => 'Confermi eliminazione?',
-                                        :method => :delete, :class => "button radius small alert foundicon-trash" %>
-      </li>
-    </ul>
-    <ul class="button-group">
-      <li>
-        <%= link_to 'AGGIUNGI INDIRIZZO', new_anaind_path(:id => @anagen.id), :class => "button radius small new foundicon-add-doc" %>
-      </li>
-    </ul>
-  </div>
-</div>
-<div class="row">
-  <div class="two columns">
-    <%= label @anagen, "Codice:", :class => "right" %>
-  </div>
-  <div class="four columns left">
-    <%= @anagen.codice %>
-  </div>
-  <div class="two columns">
-    <%= label @anagen, "Luogo di nascita:", :class => "right" unless @anagen.tipo == "G" %>
-  </div>
-  <div class="four columns left">
-    <%= @anagen.localita.descriz unless @anagen.tipo == "G" || @anagen.localita.nil? %>
-  </div>
-</div>
-<div class="row">
-  <div class="two columns">
-    <%= label @anagen, "Tipo:", :class => "right" %>
-  </div>
-  <div class="four columns left">
-    <%= Anagen::TIPO[@anagen.tipo] %>
-  </div>
-  <div class="two columns">
-    <%= label @anagen, "Data di nascita:", :class => "right" unless @anagen.tipo == "G" %>
-  </div>
-  <div class="four columns left">
-    <%= @anagen.dtnas.strftime('%d-%m-%Y') unless @anagen.tipo == "G" || @anagen.dtnas.nil?%>
-  </div>
-</div>
-<div class="row">
-  <div class="two columns">
-    <%= label @anagen, "Denominazione:", :class => "right" %>
-  </div>
-  <div class="four columns left">
-    <%= @anagen.denomin %>
-  </div>
-  <div class="two columns">
-    <%= label @anagen, "Sesso:", :class => "right" unless @anagen.tipo == "G" %>
-  </div>
-  <div class="four columns left">
-    <%= {"F"=>"Femminile", "M"=>"Maschile"}[@anagen.sesso] unless @anagen.tipo == "G" %>
-  </div>
-</div>
-<div class="row">
-  <div class="two columns">
-    <%= label @anagen, "Codice fiscale:", :class => "right" %>
-  </div>
-  <div class="four columns left">
-    <%= @anagen.codfis %>
-  </div>
-  <div class="two columns">
-    <%= label @anagen, "Partita iva:", :class => "right" %>
-  </div>
-  <div class="four columns left">
-    <%= @anagen.pariva %>
-  </div>
-</div>
-<div class="row">
-  <div class="two columns">
-    <%= label @anagen, "Telefono:", :class => "right" %>
-  </div>
-  <div class="four columns left">
-    <%= @anagen.telefono %>
-  </div>
-  <div class="two columns">
-    <%= label @anagen, "Fax:", :class => "right" %>
-  </div>
-  <div class="four columns left">
-    <%= @anagen.fax %>
-  </div>
-</div>
-<div class="row">
-  <div class="two columns">
-    <%= label @anagen, "E-mail:", :class => "right" %>
-  </div>
-  <div class="four columns left">
-    <%= @anagen.email %>
-  </div>
-  <div class="two columns">
-    <%= label @anagen, "Sito Web:", :class => "right" %>
-  </div>
-  <div class="four columns left">
-    <%= @anagen.web %>
-  </div>
-</div>
-<div class="row">
-  <div class="two columns">
-    <%= label @anagen, "Referente:", :class => "right" %>
-  </div>
-  <div class="ten columns">
-    <%= @anagen.referente %>
-  </div>
-</div>
-<% unless @anagen.anainds.empty? %>
-  <div class="twelve columns">
-    <table>
-      <thead>
-        <tr>
-          <th width="30%">Indirizzo</th>
-          <th width="30%">Localita</th>
-<!--
-          <th width="10%">Cap</th>
--->
-          <th width="6%">Sede</th>
-          <th width="6%">Sped.</th>
-          <th width="6%">Mag.</th>
-          <th width="9%">Rif.</th>
-          <th width="3%"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <%= render :partial => '/anainds/line',
-                   :collection => @anagen.anainds %>
-      </tbody>
-    </table>
-  </div>
-<% end %>
+<%= render partial: "buttons" %>
+
+<hr>
+
+<dl class="tabs">
+  <dd class="active"><a href="#gen">Dati anagrafici</a></dd>
+  <dd><a href="#addresses">Indirizzi</a></dd>
+  <dd><a href="#keywords">Key Word</a></dd>
+  <% if @anagen.author? %>
+    <dd><a href="#articles">Libri pubblicati</a></dd>
+  <% end %>
+  <% if @anagen.stampatore? %>
+    <dd><a href="#printers">Libri stampati</a></dd>
+  <% end %>
+</dl>
+
+<ul class="tabs-content">
+  <li class="active" id="genTab">
+    <%= render partial: "info" %>
+  </li>
+
+  <li id="addressesTab">
+    <%= render partial: "anainds" %>
+  </li>
+
+  <li id="keywordsTab">
+    <%= render partial: "shared/key_word_rels", locals: {orig: @anagen, items_addable: @key_words_addable} %>
+  </li>
+
+  <li id="articlesTab">
+    <%= render partial: "articles", locals: {anagen_articles: @art_author} %>
+  </li>
+
+  <li id="printersTab">
+    <%= render partial: "articles", locals: {anagen_articles: @art_print} %>
+  </li>
+</ul>
+
+

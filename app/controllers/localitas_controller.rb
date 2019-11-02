@@ -1,4 +1,5 @@
 class LocalitasController < ApplicationController
+  before_filter :authenticate_request, if: :json_request?
   before_filter :authenticate
   before_filter :force_fieldcase, :only => [:create, :update]
 
@@ -66,6 +67,18 @@ class LocalitasController < ApplicationController
     redirect_back_or @localita
   end
 
+  #mode 1 -> estraggo le province
+  #mode 2 -> estraggo i comuni
+  def localitas_query
+    prv = params[:cod_prv] ? params[:cod_prv] : ""
+    ris = []
+
+    case params[:mode]
+    when "1" then ris = Paese.select([:id, :descriz]).order(:descriz)
+    when "2" then ris = Localita.by_province(prv).order(:descriz).map { |x| [x.id, x.descriz, x.cap] }
+    end
+    render json: ris
+  end
   private
     def force_fieldcase
       set_fieldcase(:localita, [:prov, :cap, :codfis], [])

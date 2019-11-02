@@ -29,6 +29,26 @@
 </div>
 <div class="row">
   <div class="two columns">
+    <%= label @anaind, "CAP:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= @anaind.cap %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @anaind, "Localita' codificata:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <% if @anaind.localita %>
+      <%= link_to @anaind.localita.descriz, @anaind.localita %>
+    <% else %>
+      <%= @anaind.localita.class %>
+    <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
     <%= label @anaind, "Valido come:", :class => "right" %>
   </div>
   <div class="ten columns left">

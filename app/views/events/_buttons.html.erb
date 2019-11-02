@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="twelve columns button-bar">
+    <ul class="button-group">
+      <li>
+        <%= link_to 'INDIETRO', events_path(type: @event.type), :class => "button radius small cancel foundicon-left-arrow" %>
+      </li>
+      <li>
+        <%= link_to 'MODIFICA', edit_event_path(@event), :class => "button radius small modify foundicon-edit" %>
+      </li>
+      <li>
+        <%= link_to 'ELIMINA', event_path(@event), :confirm => 'Confermi eliminazione?',
+                                        :method => :delete, :class => "button radius small alert foundicon-trash" %>
+      </li>
+    </ul>
+  </div>
+</div>

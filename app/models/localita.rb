@@ -7,16 +7,46 @@ class Localita < ActiveRecord::Base
 
   belongs_to :paese
 
-  attr_accessible :cap, :codfis, :descriz, :prov, :paese_id
+  attr_accessible :cap, :codfis, :descriz, :prov, :paese_id, :cod_regione, :state
 
   validates :descriz, :paese_id, :presence => true
   validates :descriz, :length => { :maximum => 50}
-  validates :cap, :length => { :maximum => 5}
+  validates :cap, :length => { :maximum => 10}
   validates :codfis, :length => { :maximum => 4}
   validates :prov, :length => { :maximum => 2}
 
+  scope :by_region, lambda { |cod| where(:cod_regione => cod) }
+  scope :by_province, lambda { |cod| where(:prov => cod) }
+
+  REGIONI = []
+  REGIONI << ["Piemonte",              1]
+  REGIONI << ["Valle d'Aosta",         2]
+  REGIONI << ["Lombardia",             3]
+  REGIONI << ["Trentino-Alto Adige",   4]
+  REGIONI << ["Veneto",                5]
+  REGIONI << ["Friuli-Venezia Giulia", 6]
+  REGIONI << ["Liguria",               7]
+  REGIONI << ["Emilia-Romagna",        8]
+  REGIONI << ["Toscana",               9]
+  REGIONI << ["Umbria",               10]
+  REGIONI << ["Marche",               11]
+  REGIONI << ["Lazio",                12]
+  REGIONI << ["Abruzzo",              13]
+  REGIONI << ["Molise",               14]
+  REGIONI << ["Campania",             15]
+  REGIONI << ["Puglia",               16]
+  REGIONI << ["Basilicata",           17]
+  REGIONI << ["Calabria",             18]
+  REGIONI << ["Sicilia",              19]
+  REGIONI << ["Sardegna",             10]
+
   def self.find_by_cf(cf)
     find_by_codfis(Cfpi.locnas_by_cf(cf)) if Cfpi.locnas_by_cf(cf)
+  end
+
+  def d_regione
+    tmp = REGIONI.select { |a,b| b == self.cod_regione }
+    tmp.size > 0 ? tmp[0][0] : ''
   end
 
   private

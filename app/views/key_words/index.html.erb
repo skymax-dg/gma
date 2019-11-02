@@ -1,0 +1,15 @@
+<%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
+
+<% unless @key_words.nil?||@key_words.empty? %>
+  <table>
+    <thead>
+      <tr>
+        <th width="10%">Descrizione</th>
+        <th width="5%"></th>
+      </tr>
+    </thead>
+    <tbody>
+        <%= render :partial => 'line', :collection => @key_words, as: :item %>
+    </tbody>
+  </table>
+<% end %>

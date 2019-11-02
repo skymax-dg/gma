@@ -1,0 +1,113 @@
+<div class="row">
+  <div class="two columns">
+    <%= label @event, "Descrizione:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= @event.description %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <%= label @event, "Data evento:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= to_mydate(@event.dt_event) %>
+  </div>
+  <div class="two columns">
+    <%= label @event, "Tiratura:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @event.quantity %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <%= label @event, "Orario:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @event.timetable %>
+  </div>
+  <div class="two columns">
+    <%= label @event, "Numero x rivista:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @event.nr_item %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <%= label @event, "Durata (gg):", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @event.duration %>
+  </div>
+  <div class="two columns">
+    <%= label @event, "Anno x rivista:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @event.yr_item %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <%= label @event, "Chiusura isc:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= to_mydate(@event.dt_end_isc) %>
+  </div>
+  <div class="two columns">
+    <%= label @event, "Stato:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @event.dstate %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <%= label @event, "Data limite sconto:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= to_mydate(@event.dt_discount) %>
+  </div>
+  <div class="two columns">
+    <%= label @event, "Mode:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @event.mode %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <%= label @event, "Gg x chiusura iscr:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= to_mydate(@event.dt_end_isc) %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <%= label @event, "Sede", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= link_to(@event.site_anagen.denomin, @event.site_anagen, target: "_blank") if @event.site_anagen %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <%= label @event, "Abbigliamento consigliato:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= @event.dressing %>
+  </div>
+</div>
+
+
+

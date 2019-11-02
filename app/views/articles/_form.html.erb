@@ -11,10 +11,6 @@
       <%= f.label :Categoria %>
       <%= select(:article, :categ, Article::CATEG.invert.sort) %>
     </div>
-    <div class="twelve columns">
-      <%= f.label :descrizione %>
-      <%= f.text_field :descriz %>
-    </div>
     <div class="two columns">
       <%= f.label "Prezzo di vendita" %>
       <%= f.text_field :prezzo %>
@@ -25,10 +21,111 @@
       <%= f.text_field :costo %>
     </div>
     <div class="two columns"></div>
-    <div class="five columns">
+    <div class="two columns">
+      <%= f.label "Sconto (%)" %>
+      <%= f.number_field :discount %>
+    </div>
+    <div class="one columns"></div>
+    <div class="two columns">
       <%= f.label :Iva %>
       <%= collection_select :article, :iva_id, Iva.all, :id, :descriz, {:include_blank => true} %>
     </div>
+
+    <div class="two columns">
+      <%= f.label "Peso (gr)" %>
+      <%= f.number_field :weigth %>
+    </div>
+    <div class="one columns"></div>
+    <div class="two columns">
+      <%= jdate_field(:article, :dtpub, "Data pubblicazione", date: true, value: @article.dtpub, readonly: true) %>
+    </div>
+    <div class="two columns"></div>
+    <div class="two columns">
+      <%= f.label "Pezzi x conf" %>
+      <%= f.number_field :ppc %>
+    </div>
+    <div class="one columns"></div>
+    <div class="two columns">
+      <%= f.label "Pezzi x scatola" %>
+      <%= f.number_field :ppb %>
+    </div>
+
+    <div class="two columns">
+      <%= f.label "Larghezza (mm)" %>
+      <%= f.number_field :width %>
+    </div>
+    <div class="one columns"></div>
+    <div class="two columns">
+      <%= f.label "Altezza (mm)" %>
+      <%= f.number_field :height %>
+    </div>
+
+    <div class="two columns"></div>
+    <div class="five columns">
+      <%= f.label "Stato" %>
+      <%= select(:article, :state, Article::STATES, prompt: true) %>
+    </div>
+
+    <div class="two columns">
+      <%= f.label "Numero pagine" %>
+      <%= f.number_field :pagine %>
+    </div>
+    <div class="one columns"></div>
+    <div class="two columns">
+      <%= f.label "Rilegatura" %>
+      <%= select(:article, :rilegatura, Article::RILEGATURE, prompt: true) %>
+    </div>
+    <div class="two columns"></div>
+    <div class="five columns">
+      <%= f.label "Link presentazione YouTube" %>
+      <%= f.text_field :youtube_presentation %>
+    </div>
+    
+
+    <div class="five columns">
+      <%= f.label "Traduttore" %>
+      <%= f.text_field :translator %>
+    </div>
+    <div class="two columns"></div>
+    <div class="five columns">
+      <%= f.label "A cura di" %>
+      <%= f.text_field :collaborator %>
+    </div>
+    <div class="five columns">
+      <%= f.label "Collana" %>
+      <%= f.text_field :series %>
+    </div>
+    <div class="two columns"></div>
+    <div class="five columns">
+      <%= f.label "Direttore di collana" %>
+      <%= f.text_field :director_series %>
+    </div>
+
+    <div class="twelve columns">
+      <%= f.label :descrizione %>
+      <%= f.text_field :descriz %>
+    </div>
+    <div class="twelve columns">
+      <%= f.label :sottotitolo %>
+      <%= f.text_field :subtitle %>
+    </div>
+    <div class="twelve columns">
+      <%= f.label :sinossi %>
+      <%= f.text_area :sinossi, rows: 4 %>
+    </div>
+    <div class="twelve columns">
+      <%= f.label :estratto %>
+      <%= f.text_area :abstract, rows: 4 %>
+    </div>
+    <div class="twelve columns">
+      <%= f.label :commento %>
+      <%= f.text_area :quote, rows: 4 %>
+    </div>
+    <div class="twelve columns">
+      <%= f.label :link_issuee %>
+      <%= f.text_field :issuee_link %>
+    </div>
+
     <div class="twelve columns">
       <%= f.submit 'SALVA', :class => "button radius small success foundicon-checkmark" %>
       <%= link_to 'ANNULLA', resque_location(:back), :class => "button radius small alert foundicon-remove" %>

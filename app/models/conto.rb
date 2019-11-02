@@ -25,21 +25,23 @@ class Conto < ActiveRecord::Base
                                              {:ae=>anno, :azd=>azd, :tpc=>tpc}]).to_i||0) + 1
   end
 
-  def self.create_default(azd, tpc, ana_id)
-    @conto = Conto.new(:annoese   => current_annoese, :azienda=>azd, :tipoconto => tpc,
+  def self.create_default(azd, tpc, ana_id, anno_ese = nil)
+    anno_ese = current_annoese unless anno_ese
+
+    @conto = Conto.new(:annoese   => anno_ese, :azienda=>azd, :tipoconto => tpc,
                        :anagen_id => ana_id,          :tipopeo => "P")
     @conto.codice = Conto.new_codice(@conto.annoese, @conto.azienda, @conto.tipoconto)
 
     err=Array.new
     err<<"Tipologia conto errato" if tpc!='C' && tpc!='F' 
-    err<<"Anagrafica generale non presente" if Anagen.where(:id=>ana_id).count=0
+    err<<"Anagrafica generale non presente" if Anagen.where(:id=>ana_id).count == 0
     err<<"Conto gia' presente" if Conto.where(:annoese  =>@conto.annoese,   :azienda  =>@conto.azienda,
                                               :tipoconto=>@conto.tipoconto, :anagen_id=>@conto.anagen_id).count > 0
     if err.count==0
       @conto.descriz = Anagen.find(ana_id).denomin
       err<<"salvataggio fallito" unless @conto.save
     end
-    err
+    [@conto, err]
   end
 
   def self.filter (tpc, tp, des, azienda, annoese, page)
