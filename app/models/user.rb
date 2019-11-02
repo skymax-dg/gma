@@ -344,6 +344,15 @@ class User < ActiveRecord::Base
     [st, errs]
   end
 
+  # LCG 191102
+  def info_check
+    if self.anagen
+      self.anagen.info_check 
+    else
+      "anagrafica non inserita"
+    end
+  end
+
   private
     def encrypt_password
       self.salt = make_salt if new_record?
