@@ -20,3 +20,8 @@ backup/*
 *.tar
 
 .DS_Store
+/config/database.yml
+
+.ruby-version
+.ruby-gemset
+
