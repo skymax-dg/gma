@@ -3,6 +3,9 @@ class MenuController < ApplicationController
 
   def home
 	  redirect_to :new_session unless signed_in?
+    stat = User.statistics
+    @stat_users = stat[0]
+    @stat_orders = stat[1]
   end
 
   def contact

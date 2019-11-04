@@ -10,6 +10,9 @@ class User < ActiveRecord::Base
 				    :length => {:within => 6..20},
             :unless => "pwd.blank? || pwd.nil?"
 
+  scope :has_anagen, lambda { }
+
+
   belongs_to :anagen
 
   before_save :encrypt_password
@@ -351,6 +354,31 @@ class User < ActiveRecord::Base
     else
       "anagrafica non inserita"
     end
+  end
+
+  def self.statistics
+    nt = User.all.size
+    na = User.where("anagen_id <> 0").size
+    nc = 0
+    User.where("anagen_id <> 0").each { |u| nc += 1 if u.anagen.gac_dati_completi? }
+
+
+    # statistica utenti
+    h = {}
+    h["stand by"] = [nt-na, 100.0*(nt-na).to_f/nt]
+    h["completi"] = [nc, 100.0*nc.to_f/nt ]
+    h["dati mancanti"] = [na-nc, 100.0*(na-nc).to_f/nt ]
+    h["totale"] = [nt, 100.0]
+    
+    # Statistica Ordini
+    o2 = []
+    nt = Tesdoc.where(causmag_id: 77).size
+    o2 << ["",nt]
+    Tesdoc.select("date(data_doc) as data, count(*) as numero").where("causmag_id = 77").group("date(data_doc)").each do |r|
+      o2 << [r["data"].to_s , r["numero"].to_i ]
+    end
+    
+    [h, o2]
   end
 
   private
