@@ -365,16 +365,16 @@ class User < ActiveRecord::Base
 
     # statistica utenti
     h = {}
-    h["stand by"] = [nt-na, 100.0*(nt-na).to_f/nt]
     h["completi"] = [nc, 100.0*nc.to_f/nt ]
     h["dati mancanti"] = [na-nc, 100.0*(na-nc).to_f/nt ]
+    h["stand by"] = [nt-na, 100.0*(nt-na).to_f/nt]
     h["totale"] = [nt, 100.0]
     
     # Statistica Ordini
     o2 = []
     nt = Tesdoc.where(causmag_id: 77).size
     o2 << ["",nt]
-    Tesdoc.select("date(data_doc) as data, count(*) as numero").where("causmag_id = 77").group("date(data_doc)").each do |r|
+    Tesdoc.select("date(data_doc) as data, count(*) as numero").where("causmag_id = 77").group("date(data_doc)").order('data DESC').each do |r|
       o2 << [r["data"].to_s , r["numero"].to_i ]
     end
     
