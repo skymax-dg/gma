@@ -68,6 +68,8 @@ class UsersController < ApplicationController
   # 5 => update user
   # 6 => add expedition address
   # 7 => gen token x cambio password
+  # 8 => get tesdocs
+  # 9 => find tesdoc
   def users_query
     case params[:mode]
     when "1"
@@ -115,8 +117,31 @@ class UsersController < ApplicationController
     when "7"
       st, user = User.gen_token(params[:email])
       name = (user && user.anagen) ? user.anagen.denomin : ""
-      Rails.logger.info "------------------ status: #{st}, user: #{user ? user.id : nil}"
       render json: { status: st, token: user ? user.token : nil, email: user ? user.email : nil, name: name }
+
+    when "8"
+      st = false
+      if Anagen.exists?(params[:anagen_id])
+        anagen = Anagen.find(params[:anagen_id])
+        st = true
+        ris = []
+        c = anagen.contos.where(tipoconto: "C").first
+        if c
+          c.tesdocs.each { |x| ris << x.map_json }
+        end
+      end
+      render json: { status: st, ds: ris }
+
+    when "9"
+      an_id = params[:anagen_id]
+      td_id = params[:tesdoc_id]
+      if Anagen.exists?(an_id)
+        anagen = Anagen.find(an_id)
+        st = true
+        c = anagen.contos.where(tipoconto: "C").first
+        t = c.tesdocs.where(id: td_id).first if c
+      end
+      render json: { status: t ? true : false, tesdoc: t && t.map_json }
 
     end
   end

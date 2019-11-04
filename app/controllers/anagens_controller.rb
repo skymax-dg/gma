@@ -188,7 +188,7 @@ redirect_back_or @anagen
   end
 
   def anagens_query
-     ds = Anagen.where(codfis: params[:codice])
+    ds = Anagen.where(codfis: params[:codice])
     render json: map_json_array(ds, true)
   end
 

@@ -31,6 +31,11 @@ class Rigdoc < ActiveRecord::Base
     self.qta != 0 && self.prezzo != 0 ? self.qta*(self.prezzo*(100-self.sconto)/100) : 0
   end
 
+  def prezzo_vendita
+    return 0.0 unless self.iva
+    (1+self.iva.aliq/100) * (self.prezzo*(100-self.sconto)/100)
+  end
+
   def imp_list
     self.article&&self.article.prezzo != 0&&self.qta != 0 ? self.qta * self.article.prezzo : 0
   end
@@ -39,4 +44,8 @@ class Rigdoc < ActiveRecord::Base
     self.iva.aliq > 0 && self.impon  !=  0 ? self.impon*self.iva.aliq/100 : 0;
   end
 
+  def map_json
+    st = Struct.new(:id, :descriz, :qta, :prezzo, :sconto, :prezzo_finale)
+    st.new(self.id, self.descriz, self.qta, self.prezzo_vendita, self.sconto, self.qta*self.prezzo)
+  end
 end

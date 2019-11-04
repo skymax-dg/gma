@@ -735,4 +735,23 @@ class Tesdoc < ActiveRecord::Base
     Rails.logger.info "-- tesdoc #{@tesdoc.rigdocs.size.to_i}"
     return 0
   end
+
+  def map_json
+    st = Struct.new(:id, :num_doc, :anno, :data_doc, :sconto, :rigdocs, :subtot_iva, :spediz, :costo_spediz, :costo_contras) 
+    costo_sped = 0.0
+    costo_ctrs = 0.0
+
+    rigs = []
+    self.rigdocs.each do |r|
+      case r.article.codice
+      when "SPEDIZ"   then costo_sped = (r.prezzo * (1+r.iva.aliq/100) ).round(2)
+      when "CONTRASS" then costo_ctrs = (r.prezzo * (1+r.iva.aliq/100) ).round(2)
+      else
+        rigs << r.map_json
+      end
+    end
+
+    spediz = self.descriz.split(",")[1].gsub("spedizione",'').strip if self.descriz
+    st.new(self.id, self.num_doc, self.annoese, self.data_doc, self.sconto, rigs, self.subtot_iva, spediz, costo_sped, costo_ctrs) 
+  end
 end
