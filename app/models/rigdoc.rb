@@ -45,7 +45,7 @@ class Rigdoc < ActiveRecord::Base
   end
 
   def map_json
-    st = Struct.new(:id, :descriz, :qta, :prezzo, :sconto, :prezzo_finale)
-    st.new(self.id, self.descriz, self.qta, self.prezzo_vendita, self.sconto, self.qta*self.prezzo)
+    st = Struct.new(:id, :descriz, :qta, :prezzo, :sconto, :prezzo_finale, :article_id, :is_course)
+    st.new(self.id, self.descriz, self.qta, self.prezzo_vendita, self.sconto, self.qta*self.prezzo, self.article_id, self.article.evento? ? 1 : 0)
   end
 end
