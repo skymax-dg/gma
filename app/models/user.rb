@@ -273,6 +273,7 @@ class User < ActiveRecord::Base
       an.fl2_consenso   = par[:fl2_consenso].to_i   unless [nil, ""].include?(par[:fl2_consenso])
       an.dt_consenso    = par[:dt_consenso]         unless [nil, ""].include?(par[:dt_consenso])
       an.fl_newsletter  = par[:fl_newsletter].to_i  unless [nil, ""].include?(par[:fl_newsletter])
+      an.email          = user.email
 
       if an.changed? && !an.save
         Rails.logger.info "--------------- Errore anagen: #{an.errors.full_messages}"
