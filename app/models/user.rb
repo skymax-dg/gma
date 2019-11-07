@@ -232,12 +232,16 @@ class User < ActiveRecord::Base
         an = Anagen.new(codice: Anagen.newcod)
         fnew = true
       end
+      Rails.logger.info "-------------- new_record? #{an.new_record?} | #{fnew}"
 
       if par[:edit_anagen]
+        an.tipo               = par[:tipo]               unless ["", nil].include?(par[:tipo])
+
         if fnew
           if !(["", nil].include?(par[:cognome])) &&  !(["", nil].include?(par[:nome])) 
             an.encode_denomin(par[:cognome], par[:nome]) 
           end
+          Rails.logger.info "-------------- use rag_soc? #{an.use_rag_soc?} (#{par[:ragsoc]}) - tipo: #{an.tipo}"
           if !(["", nil].include?(par[:ragsoc])) && an.use_rag_soc?
             an.denomin = par[:ragsoc] 
           end
@@ -245,7 +249,6 @@ class User < ActiveRecord::Base
           an.pariva             = par[:pariva]             unless ["", nil].include?(par[:pariva])
         end
 
-        an.tipo               = par[:tipo]               unless ["", nil].include?(par[:tipo])
         an.telefono           = par[:telefono]           unless ["", nil].include?(par[:telefono])
         an.cellulare          = par[:cellulare]          unless ["", nil].include?(par[:cellulare])
         an.fax                = par[:fax]                unless ["", nil].include?(par[:fax])
