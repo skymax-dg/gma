@@ -1,0 +1,26 @@
+<table>
+  <thead>
+    <tr>
+      <th width="12%">Nr doc</th>
+      <th width="13%">Del</th>
+      <th width="30%">Causale</th>
+      <th width="40%">Totale</th>
+      <th width="5%"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% orders.each do |line| %>
+      <tr>
+        <td><%= line.num_doc_letter %></td>
+        <td><%= line.data_doc.strftime('%d-%m-%Y') %></td>
+        <td><%= line.causmag.descriz %></td>
+        <td><%= to_currency(line.subtot_iva[:T][:T][:tot]) %></td>
+        <td>
+          <div class="large-icons">
+          <%= link_to '', line, :class => "button tiny detail foundicon-page", :title => "Dettaglio" %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

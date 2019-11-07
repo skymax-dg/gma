@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20191024074759) do
+ActiveRecord::Schema.define(:version => 20191107081146) do
 
   create_table "agentes", :force => true do |t|
     t.integer  "anagen_id"
@@ -211,6 +211,19 @@ ActiveRecord::Schema.define(:version => 20191024074759) do
 
   add_index "costos", ["data"], :name => "index_costos_on_data"
   add_index "costos", ["tesdoc_id"], :name => "index_costos_on_tesdoc_id"
+
+  create_table "coupons", :force => true do |t|
+    t.integer  "anagen_id"
+    t.integer  "state",      :default => 0
+    t.decimal  "value",      :default => 0.0
+    t.decimal  "perc",       :default => 0.0
+    t.date     "dt_start"
+    t.date     "dt_end"
+    t.date     "dt_use"
+    t.decimal  "ord_min",    :default => 0.0
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+  end
 
   create_table "event_states", :force => true do |t|
     t.integer  "event_id"
