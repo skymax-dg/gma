@@ -35,6 +35,9 @@ class AnagensController < ApplicationController
 
     @key_words_addable = KeyWord.sort_by_din(KeyWordAnagen.all)
     @articles_addable = Article.libri
+    tmp = @anagen.contos.where(tipoconto: "C").first
+    @eshop_orders = tmp ? tmp.tesdocs : []
+    @coupons = @anagen.coupons
 
     respond_to do |format|
       format.html # renders .html.erb

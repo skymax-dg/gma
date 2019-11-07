@@ -1,0 +1,38 @@
+<%= form_for(@coupon) do |f| %>
+  <%= f.hidden_field :anagen_id, value: @anagen.id %>
+  <div class="row">
+    <div class="two columns">
+      <%= jdate_field(:coupon, :dt_start, "Data inizio", :date=>true, :value => @coupon.dt_start, :readonly => true) %>
+    </div>
+    <div class="one columns"></div>
+    <div class="two columns">
+      <%= jdate_field(:coupon, :dt_end, "Data fine", :date=>true, :value => @coupon.dt_end, :readonly => true) %>
+    </div>
+    <div class="one columns"></div>
+    <div class="two columns">
+      <%= f.label "Ordine minimo:" %>
+      <%= f.number_field :ord_min %>
+    </div>
+    <div class="four columns"></div>
+  </div>
+
+  <div class="row">
+    <div class="two columns">
+      <%= f.label "Valore coupon:" %>
+      <%= f.number_field :value %>
+    </div>
+    <div class="one columns"></div>
+    <div class="two columns">
+      <%= f.label "Percentuale coupon:" %>
+      <%= f.number_field :perc %>
+    </div>
+    <div class="seven columns"></div>
+  </div>
+
+  <div class="row">
+    <div class="twelve columns">
+      <%= f.submit 'SALVA', :class => "button radius small success foundicon-checkmark" %>
+      <%= link_to 'ANNULLA', @anagen, :class => "button radius small cancel foundicon-remove" %>
+    </div>
+  </div>
+<% end %>

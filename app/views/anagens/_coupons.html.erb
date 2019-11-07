@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="twelve columns button-bar">
+    <ul class="button-group">
+      <%= link_to 'AGGIUNGI COUPON', new_coupon_path(:anagen_id => @anagen.id), :class => "button radius small new foundicon-add-doc" %>
+    </ul>
+  </div>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Data inizio</th>
+      <th>Data fine</th>
+      <th>Valore</th>
+      <th>Percentuale</th>
+      <th>Ordine min</th>
+      <th>Stato</th>
+      <th>Dato utilizzo</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% coupons.each do |line| %>
+      <tr>
+        <td><%= to_mydate(line.dt_start) %></td>
+        <td><%= to_mydate(line.dt_end) %></td>
+        <td><%= to_currency(line.value) %></td>
+        <td><%= line.perc || 0.0 %> %</td>
+        <td><%= to_currency(line.ord_min) %></td>
+        <td><%= line.d_state %></td>
+        <td><%= to_mydate(line.dt_use) %></td>
+        <td><%= link_to '', edit_coupon_path(line), :class => "button radius tiny modify foundicon-edit", :title => "Modifica" %></td>
+        <td><%= link_to '', line, :confirm => 'Confermi?', :method => :delete, :class => "button radius tiny alert foundicon-trash", :title => "Cancella" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

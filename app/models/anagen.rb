@@ -11,6 +11,7 @@ class Anagen < ActiveRecord::Base
   has_many :articles, through: :anagen_articles
   has_many :event_states
   has_many :events, through: :event_states
+  has_many :coupons, dependent: :destroy
 
   belongs_to :localita, :foreign_key => "luogonas_id"
   belongs_to :paese_nas, :foreign_key => "paese_nas_id", class_name: "Paese"
@@ -320,6 +321,9 @@ class Anagen < ActiveRecord::Base
     Anagen.find(id)
   end
 
+  def get_coupons
+    self.coupons.not_used.map { |x| x.map_json }
+  end
   private
     def require_no_contos
       self.errors.add :base, "Almeno un conto fa riferimento all' anagrafica che si desidera eliminare."

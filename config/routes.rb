@@ -1,5 +1,7 @@
 Gma::Application.routes.draw do
 
+  resources :coupons
+
   resources :key_words do 
     member do
       get 'manage_key_word_rels'
