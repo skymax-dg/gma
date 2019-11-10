@@ -90,6 +90,7 @@ class UsersController < ApplicationController
     when "3"
       ris = User.gac_authenticate(params[:login], params[:password], @current_user.azienda)
       render json: {result: ris ? ris.id : false}
+      return
 
     when "4"
       #u = User.find(params[:id]) if User.exists? params[:id]
@@ -100,23 +101,32 @@ class UsersController < ApplicationController
       else
         u = nil
       end
-      render json: u ? u.get_gac_user : nil
+      if u
+        render json: { status: true, user: u.get_gac_user }
+      else
+        render json: { status: false, user: {} }
+      end
+      # render json: u ? u.get_gac_user : {}
+      return
 
     when "5"
       st, errs = User.appo_update(params)
       Rails.logger.info "------------------ status: #{st} (#{st.class})"
       render json: { status: st, errors: st ? nil : errs }
+      return
 
     when "6"
       st, id = Anagen.add_addr(params)
       Rails.logger.info "------------------ status: #{st}, id: #{id}"
       render json: { status: st, id: id }
+      return
 
     when "7"
       st, user = User.gen_token(params[:email])
       name = (user && user.anagen) ? user.anagen.denomin : ""
       Rails.logger.info "------------------ status: #{st}, user: #{user ? user.id : nil}"
       render json: { status: st, token: user ? user.token : nil, email: user ? user.email : nil, name: name }
+      return
 
     end
   end
