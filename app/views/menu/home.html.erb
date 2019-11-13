@@ -1,7 +1,33 @@
 <h2 style="text-align: center;">PAGINA PRINCIPALE G.M.A.</h2>
 </br>
-</br>
-<h3 style="text-align: center;"></h3>
-</br>
-<h3 style="text-align: center;">LA SOLUZIONE WEB</h3>
-<h3 style="text-align: center;">MULTIPIATTAFORMA</h3>
+
+<table width=100%>
+<tr>
+<td>
+<h5 style="text-align: center;">Utenti&nbsp-&nbsp;totale&nbsp;<%= @stat_users["totale"][0]%></h5>
+</td>
+<td>
+<h5 style="text-align: center;">Ordini&nbsp-&nbsp;totale&nbsp;<%= @stat_orders[0][1] %></h5>
+</td>
+</tr>
+<tr>
+<td>
+<% @stat_users.each do |k,v| %>
+  <% if k != "totale" %>
+  <div style="margin: 8px">
+  <b><%= k %></b> <%= v[0] %>&nbsp;&nbsp;(<%= v[1].round(2) %>%)
+  <% end %>
+  </div>
+<% end %>
+</td>
+<td>
+<% @stat_orders[1..-1].each do |v| %>
+  <div  style='<%= "width: #{ 100 + v[1]*10}px" %>; background-color:blue; margin: 4px; padding:2px '>
+  <span style="color: yellow;"><%= v[0] %>&nbsp;:&nbsp;</span>
+  <span style="color: white; background-color:blue"> <b><%= v[1] %></b> </span>
+  </div>
+<% end %>
+</td>
+</table>
+</tr>
+
