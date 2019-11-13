@@ -25,7 +25,7 @@ class Anagen < ActiveRecord::Base
   attr_accessible :codice, :tipo, :denomin, :codfis, :pariva, :dtnas, :luogonas_id, :sesso,
                   :telefono, :email, :fax, :web, :sconto, :referente, :codnaz, :codident, :pec, :bio, :userp, :cod_cig, :cod_cup, 
                   :split_payement, :cod_carta_docente, :cod_carta_studente, :fl1_consenso, :fl2_consenso, :dt_consenso, :fl_newsletter,
-                  :cellulare
+                  :cellulare, :youtube_presentation
 
   validates :codice, :tipo, :denomin, :presence => true
   validates :codice, :denomin, :uniqueness => true

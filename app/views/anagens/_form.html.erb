@@ -96,6 +96,10 @@
       <%= f.text_field :cod_carta_studente %>
     </div>
     <div class="two columns"></div>
+    <div class="five columns">
+      <%= f.label "Link presentazione YouTube" %>
+      <%= f.text_field :youtube_presentation %>
+    </div>
 
     <% if @anagen.denomin.nil? %>
       <div class="five columns">
