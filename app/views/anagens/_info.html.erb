@@ -72,8 +72,14 @@
   <div class="two columns">
     <%= label @anagen, "Cellulare:", :class => "right" %>
   </div>
-  <div class="ten columns left">
+  <div class="four columns left">
     <%= @anagen.cellulare %>
+  </div>
+  <div class="two columns">
+    <%= label @anagen, "Link pres. YouTube:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= link_to @anagen.youtube_presentation, @anagen.youtube_presentation, target: "_blank" %>
   </div>
 </div>
 <div class="row">
