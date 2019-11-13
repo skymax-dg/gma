@@ -6,6 +6,7 @@
   <dd><a href="#keywords">Key Word</a></dd>
   <dd><a href="#authors">Autori</a></dd>
   <dd><a href="#printers">Stampatori</a></dd>
+  <dd><a href="#suppliers">Produttori</a></dd>
 </dl>
 
 <ul class="tabs-content">
@@ -23,6 +24,10 @@
 
   <li id="printersTab">
     <%= render partial: "anagens", locals: {anagen_articles: @art_print, addables: @printers_addable} %>
+  </li>
+
+  <li id="suppliersTab">
+    <%= render partial: "anagens", locals: {anagen_articles: @art_suppl, addables: @suppliers_addable} %>
   </li>
 </ul>
 

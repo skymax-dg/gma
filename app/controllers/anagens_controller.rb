@@ -209,7 +209,7 @@ redirect_back_or @anagen
     end
 
     def map_json_result(x, min=false)
-      a = min ? [:denomin] : [:bio, :denomin, :codnaz, :id, :codfis]
+      a = min ? [:denomin] : [:bio, :denomin, :codnaz, :id, :codfis, :youtube_presentation]
       h = {}
       a.each { |y| h[y] = x[y] }
       h

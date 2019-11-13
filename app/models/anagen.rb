@@ -162,6 +162,11 @@ class Anagen < ActiveRecord::Base
     self.has_key_word? kw 
   end
 
+  def produttore?
+    kw = KeyWordAnagen.where(desc: "Produttore").first
+    self.has_key_word? kw 
+  end
+
   def connect_article(art_id)
     if Article.exists? art_id
       art = Article.find(art_id)
@@ -196,6 +201,11 @@ class Anagen < ActiveRecord::Base
 
   def self.printers
     kw = KeyWordAnagen.where(desc: "Stampatore").first
+    kw ? Anagen.joins(:key_words).where("key_words.id = ?", kw.id).order("anagens.denomin") : []
+  end
+
+  def self.suppliers
+    kw = KeyWordAnagen.where(desc: "Produttore").first
     kw ? Anagen.joins(:key_words).where("key_words.id = ?", kw.id).order("anagens.denomin") : []
   end
 
