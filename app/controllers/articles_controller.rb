@@ -205,8 +205,10 @@ class ArticlesController < ApplicationController
 
     @art_author = @article.anagen_articles.by_author
     @art_print  = @article.anagen_articles.by_printer
-    @authors_addable  = Anagen.authors
-    @printers_addable = Anagen.printers
+    @art_suppl  = @article.anagen_articles.by_supplier
+    @authors_addable   = Anagen.authors
+    @printers_addable  = Anagen.printers
+    @suppliers_addable = Anagen.suppliers
 
     respond_to do |format|
       format.html # renders .html.erb
@@ -292,6 +294,7 @@ class ArticlesController < ApplicationController
          when "2" then params[:author_id]   ? Article.not_hidden.eventi.by_author(params[:author_id]).order("articles.dtpub DESC") : []
          when "3" then params[:category_id] ? Article.not_hidden.by_key_word(params[:category_id]).order("articles.dtpub DESC")    : []
          when "4" then params[:codice]      ? Article.not_hidden.where(codice: params[:codice]).order("articles.dtpub DESC")       : []
+         when "5" then params[:supplier_id] ? Article.not_hidden.by_supplier(params[:supplier_id])                                 : []
          else []
          end
 
@@ -312,9 +315,11 @@ class ArticlesController < ApplicationController
     end
 
     def map_json_data(x)
-      st = Struct.new(:id, :isbn, :title, :subtitle, :description, :price, :imponib, :imposta, :aliq, :discount, :authors, :state, :d_state, :can_buy, :categories, :is_event, :pagine, :rilegatura, :width, :height, :n_pag, :dt_pub, :weight, :issuee_link, :generico, :translator, :series, :director_series, :collaborator, :youtube_presentation, :in_prenotazione)
+      st = Struct.new(:id, :isbn, :title, :subtitle, :description, :price, :imponib, :imposta, :aliq, :discount, :authors, :state, :d_state, :can_buy, :categories, :is_event, :pagine, :rilegatura, :width, :height, :n_pag, :dt_pub, :weight, :issuee_link, :generico, :translator, :series, :director_series, :collaborator, :youtube_presentation, :in_prenotazione, :produttori)
       auths = x.anagen_articles.by_author.map { |y| [y.anagen.id, y.anagen.denomin] }
       dtpub = x.dtpub ? x.dtpub.strftime("%d/%m/%Y") : ""
-      st.new(x.id, x.codice, x.descriz, x.subtitle, x.sinossi, x.price_with_vat, x.prezzo, x.price_with_vat - x.prezzo, x.iva.aliq, x.discount, auths, x.state, x.dstate, x.can_buy?, [], x.evento? ? 1 : 0, x.pagine, x.drilegatura, x.width, x.height, x.pagine, dtpub, x.weigth, x.issuee_link, x.generico?, x.translator, x.series, x.director_series, x.collaborator, x.youtube_presentation, x.in_prenotazione?)
+      suppl = x.anagen_articles.by_supplier.map { |y| [y.anagen_id, y.anagen.denomin] }
+
+      st.new(x.id, x.codice, x.descriz, x.subtitle, x.sinossi, x.price_with_vat, x.prezzo, x.price_with_vat - x.prezzo, x.iva.aliq, x.discount, auths, x.state, x.dstate, x.can_buy?, [], x.evento? ? 1 : 0, x.pagine, x.drilegatura, x.width, x.height, x.pagine, dtpub, x.weigth, x.issuee_link, x.generico?, x.translator, x.series, x.director_series, x.collaborator, x.youtube_presentation, x.in_prenotazione?, suppl)
     end
 end
