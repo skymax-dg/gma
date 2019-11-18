@@ -13,14 +13,15 @@
       <th>Valore</th>
       <th>Stato</th>
       <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
     <% @socials.each do |line| %>
       <tr>
-        <td><%= line.stype %></td>
+        <td><%= line.dtype %></td>
         <td><%= line.saddr %></td>
-        <td><%= line.state %></td>
+        <td><%= line.dstate %></td>
         <td><%= link_to '', edit_anag_social_path(line), :class => "button radius tiny modify foundicon-edit", :title => "Modifica" %></td>
         <td><%= link_to '', line, :confirm => 'Confermi?', :method => :delete, :class => "button radius tiny alert foundicon-trash", :title => "Cancella" %></td>
       </tr>

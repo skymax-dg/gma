@@ -1,24 +1,33 @@
-<%= form_for(@social) do |f| %>
+<%= form_for(@anag_social) do |f| %>
   <%= f.hidden_field :anagen_id, value: @anagen.id %>
 
+
   <div class="row">
+    <div class="four columns">
+      <%= f.label "Nome social:" %>
+      <%= f.select(:stype, AnagSocial::TIPO.invert.sort, { :prompt => true}) %> 
+    </div>
+    <div class="one columns"></div>
     <div class="two columns">
+      <%= f.label "Stato:" %>
+      <%= f.select(:state, AnagSocial::STATI) %> 
+    </div>
+    <div class="five columns"></div>
+  </div>
+
+
+  <div class="row">
+    <div class="seven columns">
       <%= f.label "Indirizzo:" %>
       <%= f.text_field :saddr %>
     </div>
-      <%= f.select(:stype, AnagSocial::TIPO.invert.sort, { :prompt => true}, 
-    <div class="one colums"></div>
-    <div class="two columns">
-      <%= f.label "Stato (1 visibile 0 nascosto):" %>
-      <%= f.number_field :state %>
-    </div>
-    <div class="seven columns"></div>
+    <div class="five columns"></div>
   </div>
 
   <div class="row">
     <div class="twelve columns">
       <%= f.submit 'SALVA', :class => "button radius small success foundicon-checkmark" %>
-      <%= link_to 'ANNULLA', @social, :class => "button radius small cancel foundicon-remove" %>
+      <%= link_to 'ANNULLA', @anagen, :class => "button radius small cancel foundicon-remove" %>
     </div>
   </div>
 <% end %>
