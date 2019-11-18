@@ -1,0 +1,24 @@
+<%= form_for(@social) do |f| %>
+  <%= f.hidden_field :anagen_id, value: @anagen.id %>
+
+  <div class="row">
+    <div class="two columns">
+      <%= f.label "Indirizzo:" %>
+      <%= f.text_field :saddr %>
+    </div>
+      <%= f.select(:stype, AnagSocial::TIPO.invert.sort, { :prompt => true}, 
+    <div class="one colums"></div>
+    <div class="two columns">
+      <%= f.label "Stato (1 visibile 0 nascosto):" %>
+      <%= f.number_field :state %>
+    </div>
+    <div class="seven columns"></div>
+  </div>
+
+  <div class="row">
+    <div class="twelve columns">
+      <%= f.submit 'SALVA', :class => "button radius small success foundicon-checkmark" %>
+      <%= link_to 'ANNULLA', @social, :class => "button radius small cancel foundicon-remove" %>
+    </div>
+  </div>
+<% end %>
