@@ -5,6 +5,7 @@ class Anagen < ActiveRecord::Base
 
   has_many :contos
   has_many :anainds, :dependent => :destroy
+  has_many :anag_socials, :dependent => :destroy
   has_many :key_word_rels, as: :key_wordable
   has_many :key_words, through: :key_word_rels
   has_many :anagen_articles
