@@ -38,6 +38,7 @@ class AnagensController < ApplicationController
     tmp = @anagen.contos.where(tipoconto: "C").first
     @eshop_orders = tmp ? tmp.tesdocs : []
     @coupons = @anagen.coupons
+    @socials = @anagen.anag_socials
 
     respond_to do |format|
       format.html # renders .html.erb

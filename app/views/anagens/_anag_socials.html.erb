@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="twelve columns button-bar">
+    <ul class="button-group">
+      <%= link_to 'AGGIUNGI SOCIAL', new_anag_social_path(:anagen_id => @anagen.id), :class => "button radius small new foundicon-add-doc" %>
+    </ul>
+  </div>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tipo</th>
+      <th>Valore</th>
+      <th>Stato</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @socials.each do |line| %>
+      <tr>
+        <td><%= line.dtype %></td>
+        <td><%= line.saddr %></td>
+        <td><%= line.dstate %></td>
+        <td><%= link_to '', edit_anag_social_path(line), :class => "button radius tiny modify foundicon-edit", :title => "Modifica" %></td>
+        <td><%= link_to '', line, :confirm => 'Confermi?', :method => :delete, :class => "button radius tiny alert foundicon-trash", :title => "Cancella" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

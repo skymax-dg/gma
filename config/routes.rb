@@ -1,6 +1,7 @@
 Gma::Application.routes.draw do
 
   resources :coupons
+  resources :anag_socials
 
   resources :key_words do 
     member do
