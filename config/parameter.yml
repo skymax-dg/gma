@@ -11,6 +11,31 @@ ANAGEN:
     D: 'Docente'
     B: 'Business'
     P: 'Personal'
+
+  TIPO_SOCIAL:
+    LK: 'LinkedIn'
+    IG: 'Instagram'
+    FB: 'Facebook'
+    TW: 'Twitter'
+    TG: 'Telegram'
+    WA: 'Watsapp'
+    XI: 'Xing'
+    SN: 'SnapChat'
+    TU: 'Tumblir'
+    TO: 'Twoo'
+    DI: 'Disqus'
+    GP: 'Google+'
+    RE: 'Renren'
+    PI: 'Pinterest'
+    YU: 'YouTube'
+    VI: 'Vine'
+    MU: 'Meetup'
+    ME: 'Medium'
+    RE: 'Reddit'
+    GH: 'GitHub'
+    GL: 'GitLab'
+    SO: 'StackOverflow'
+
 ANAIND:
   NRMAG:
     0: 'No'

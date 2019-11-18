@@ -11,13 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20191113153640) do
+ActiveRecord::Schema.define(:version => 20191117172048) do
 
   create_table "agentes", :force => true do |t|
     t.integer  "anagen_id"
     t.decimal  "provv",      :precision => 5, :scale => 2, :null => false
     t.datetime "created_at",                               :null => false
     t.datetime "updated_at",                               :null => false
+  end
+
+  create_table "anag_socials", :force => true do |t|
+    t.integer  "anagen_id"
+    t.string   "stype",      :limit => 4
+    t.string   "saddr",      :limit => 50
+    t.integer  "state",                    :default => 1
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
   end
 
   create_table "anagen_articles", :force => true do |t|
