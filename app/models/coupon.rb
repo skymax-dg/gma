@@ -1,9 +1,10 @@
 class Coupon < ActiveRecord::Base
-  attr_accessible :anagen_id, :state, :value, :perc, :dt_start, :dt_end, :dt_use, :ord_min
+  attr_accessible :anagen_id, :state, :value, :perc, :dt_start, :dt_end, :dt_use, :ord_min, :code
 
   belongs_to :anagen
 
   scope :not_used, lambda {{:conditions => ['state = ?', 0]}}
+  scope :generic, lambda {{:conditions => ['anagen_id = ?', 0]}}
 
   STATES = [ ["DISPONIBILE",0], ["USATO",1] ]
 

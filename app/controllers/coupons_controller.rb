@@ -2,7 +2,8 @@ class CouponsController < ApplicationController
   # GET /coupons
   # GET /coupons.json
   def index
-    @coupons = Coupon.all
+    @title = "Lista coupon generici"
+    @coupons = Coupon.generic.paginate(:page => params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -26,7 +27,7 @@ class CouponsController < ApplicationController
   def new 
     @title = "Nuovo coupon"
     @coupon = Coupon.new
-    @anagen = Anagen.find(params[:anagen_id])
+    @anagen = Anagen.find(params[:anagen_id]) if params[:anagen_id] 
 
     respond_to do |format|
       format.html # new.html.erb
@@ -48,7 +49,7 @@ class CouponsController < ApplicationController
 
     respond_to do |format|
       if @coupon.save
-        format.html { redirect_to @coupon.anagen, notice: 'Coupon was successfully created.' }
+        format.html { redirect_to @coupon.anagen || coupons_path, notice: 'Coupon was successfully created.' }
         format.json { render json: @coupon, status: :created, location: @coupon }
       else
         format.html { render action: "new" }
@@ -64,7 +65,7 @@ class CouponsController < ApplicationController
 
     respond_to do |format|
       if @coupon.update_attributes(params[:coupon])
-        format.html { redirect_to @coupon.anagen, notice: 'Coupon was successfully updated.' }
+        format.html { redirect_to @coupon.anagen || coupons_path, notice: 'Coupon was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
