@@ -81,7 +81,7 @@ class CouponsController < ApplicationController
     @coupon.destroy
 
     respond_to do |format|
-      format.html { redirect_to @coupon.anagen }
+      format.html { redirect_to @coupon.anagen || coupons_path }
       format.json { head :no_content }
     end
   end
