@@ -4,6 +4,7 @@ class Coupon < ActiveRecord::Base
   belongs_to :anagen
 
   scope :not_used, lambda {{:conditions => ['state = ?', 0]}}
+  scope :generic, lambda {{:conditions => ['anagen_id = ?', 0]}}
 
   STATES = [ ["DISPONIBILE",0], ["USATO",1] ]
 

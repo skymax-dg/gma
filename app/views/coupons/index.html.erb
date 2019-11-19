@@ -1,21 +1,41 @@
-<h1>Listing coupons</h1>
+<%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
+<div class="button-bar">
+  <ul class="button-group">
+    <li>
+      <%= link_to 'NUOVO', new_coupon_path, :class => "button radius small new foundicon-add-doc" %>
+    </li>
+  </ul>
+</div>
 
 <table>
-  <tr>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @coupons.each do |coupon| %>
-  <tr>
-    <td><%= link_to 'Show', coupon %></td>
-    <td><%= link_to 'Edit', edit_coupon_path(coupon) %></td>
-    <td><%= link_to 'Destroy', coupon, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
+  <thead>
+    <tr>
+      <th>Data inizio</th>
+      <th>Data fine</th>
+      <th>Valore</th>
+      <th>Percentuale</th>
+      <th>Ordine min</th>
+      <th>Stato</th>
+      <th>Dato utilizzo</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @coupons.each do |line| %>
+      <tr>
+        <td><%= to_mydate(line.dt_start) %></td>
+        <td><%= to_mydate(line.dt_end) %></td>
+        <td><%= to_currency(line.value) %></td>
+        <td><%= line.perc || 0.0 %> %</td>
+        <td><%= to_currency(line.ord_min) %></td>
+        <td><%= line.d_state %></td>
+        <td><%= to_mydate(line.dt_use) %></td>
+        <td><%= link_to '', edit_coupon_path(line), :class => "button radius tiny modify foundicon-edit", :title => "Modifica" %></td>
+        <td><%= link_to '', line, :confirm => 'Confermi?', :method => :delete, :class => "button radius tiny alert foundicon-trash", :title => "Cancella" %></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
 
-<br />
-
-<%= link_to 'New Coupon', new_coupon_path %>
+<%= will_paginate @coupons %>

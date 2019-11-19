@@ -1,5 +1,5 @@
 <%= form_for(@coupon) do |f| %>
-  <%= f.hidden_field :anagen_id, value: @anagen.id %>
+  <%= f.hidden_field :anagen_id, value: @anagen ? @anagen.id : 0 %>
   <div class="row">
     <div class="two columns">
       <%= jdate_field(:coupon, :dt_start, "Data inizio", :date=>true, :value => @coupon.dt_start, :readonly => true) %>
@@ -32,7 +32,7 @@
   <div class="row">
     <div class="twelve columns">
       <%= f.submit 'SALVA', :class => "button radius small success foundicon-checkmark" %>
-      <%= link_to 'ANNULLA', @anagen, :class => "button radius small cancel foundicon-remove" %>
+      <%= link_to 'ANNULLA', @anagen || coupons_path, :class => "button radius small cancel foundicon-remove" %>
     </div>
   </div>
 <% end %>
