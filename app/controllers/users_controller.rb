@@ -70,6 +70,7 @@ class UsersController < ApplicationController
   # 7 => gen token x cambio password
   # 8 => get tesdocs
   # 9 => find tesdoc
+  # 10 => get socials
   def users_query
     case params[:mode]
     when "1"
@@ -152,6 +153,12 @@ class UsersController < ApplicationController
         t = c.tesdocs.where(id: td_id).first if c
       end
       render json: { status: t ? true : false, tesdoc: t && t.map_json }
+
+    when "10"
+      if params[:anagen_id] && Anagen.exists?(params[:anagen_id])
+        an = Anagen.find(params[:anagen_id])
+      end
+      render json: { status: an ? true : false, socials: an ? an.get_socials : {} }
 
     end
   end
