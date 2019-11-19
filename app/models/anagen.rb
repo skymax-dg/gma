@@ -334,7 +334,7 @@ class Anagen < ActiveRecord::Base
 
   def get_coupons
     c1 = self.coupons.not_used.map { |x| x.map_json }
-    c1.concat Coupons.generic.map { |x| x.map_json }
+    c1.concat Coupon.generic.map { |x| x.map_json }
   end
 
   def get_socials
