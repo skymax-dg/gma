@@ -17,6 +17,10 @@ module ApplicationHelper
     number_to_currency(value, :precision => 2, :separator => ",", :delimiter => ".", :format => "%n %u")
   end
 
+  def to_date(date)
+    date ? date.strftime("%d/%m/%Y") : ''
+  end
+
   def to_datetime(date)
     date ? date.strftime("%d/%m/%y - %H.%M") : ''
   end

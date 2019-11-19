@@ -1,5 +1,5 @@
 class Coupon < ActiveRecord::Base
-  attr_accessible :anagen_id, :state, :value, :perc, :dt_start, :dt_end, :dt_use, :ord_min
+  attr_accessible :anagen_id, :state, :value, :perc, :dt_start, :dt_end, :dt_use, :ord_min, :code
 
   belongs_to :anagen
 

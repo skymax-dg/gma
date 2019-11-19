@@ -10,6 +10,7 @@
 <table>
   <thead>
     <tr>
+      <th>Codice</th>
       <th>Data inizio</th>
       <th>Data fine</th>
       <th>Valore</th>
@@ -24,13 +25,14 @@
   <tbody>
     <% @coupons.each do |line| %>
       <tr>
-        <td><%= to_mydate(line.dt_start) %></td>
-        <td><%= to_mydate(line.dt_end) %></td>
+        <td><%= line.code %></td>
+        <td><%= to_date(line.dt_start) %></td>
+        <td><%= to_date(line.dt_end) %></td>
         <td><%= to_currency(line.value) %></td>
         <td><%= line.perc || 0.0 %> %</td>
         <td><%= to_currency(line.ord_min) %></td>
         <td><%= line.d_state %></td>
-        <td><%= to_mydate(line.dt_use) %></td>
+        <td><%= to_date(line.dt_use) %></td>
         <td><%= link_to '', edit_coupon_path(line), :class => "button radius tiny modify foundicon-edit", :title => "Modifica" %></td>
         <td><%= link_to '', line, :confirm => 'Confermi?', :method => :delete, :class => "button radius tiny alert foundicon-trash", :title => "Cancella" %></td>
       </tr>
