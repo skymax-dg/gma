@@ -1,6 +1,7 @@
 class AnagSocial < ActiveRecord::Base
   attr_accessible :saddr, :state, :stype, :anagen_id
   belongs_to :anagen
+  scope :not_hidden, lambda {{:conditions => ['state = ?', 1]}}
 
   TIPO = $ParAzienda['ANAGEN']['TIPO_SOCIAL']
   STATI = [

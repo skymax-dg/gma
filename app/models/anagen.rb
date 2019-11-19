@@ -335,6 +335,14 @@ class Anagen < ActiveRecord::Base
   def get_coupons
     self.coupons.not_used.map { |x| x.map_json }
   end
+
+  def get_socials
+    h = {}
+    self.anag_socials.not_hidden.map do |x| 
+      h[x.dtype] = x.saddr
+    end
+    h
+  end
   private
     def require_no_contos
       self.errors.add :base, "Almeno un conto fa riferimento all' anagrafica che si desidera eliminare."
