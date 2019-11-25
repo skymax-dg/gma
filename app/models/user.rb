@@ -84,11 +84,11 @@ class User < ActiveRecord::Base
 
       tmp = an.anainds.where(flsl: "S") #sede legale
       tmp.each do |x| 
-        loc  = x.localita
-        naz  = loc ? 'IT' : nil
-        reg  = loc ? loc.cod_regione : nil
-        prov = loc ? loc.prov : nil
-        com  = loc ? loc.descriz : nil
+        loc   = x.localita
+        naz   = loc ? 'IT'            : nil
+        reg   = loc ? loc.cod_regione : nil
+        prov  = loc ? loc.prov        : nil
+        com   = loc ? loc.descriz     : nil
         cid   = loc ? loc.id          : nil
         pid   = loc ? loc.paese_id    : nil
         state = loc ? loc.state       : nil
@@ -99,11 +99,11 @@ class User < ActiveRecord::Base
 
       tmp = an.primary_address
       if tmp
-        loc  = tmp.localita
-        naz  = loc ? 'IT' : nil
-        reg  = loc ? loc.cod_regione : nil
-        prov = loc ? loc.prov : nil
-        com  = loc ? loc.descriz : nil
+        loc   = tmp.localita
+        naz   = loc ? 'IT'            : nil
+        reg   = loc ? loc.cod_regione : nil
+        prov  = loc ? loc.prov        : nil
+        com   = loc ? loc.descriz     : nil
         cid   = loc ? loc.id          : nil
         pid   = loc ? loc.paese_id    : nil
         state = loc ? loc.state       : nil
@@ -383,6 +383,56 @@ class User < ActiveRecord::Base
     end
     
     [h, o2]
+  end
+
+  def self.export_filter(filters, azienda)
+    ds = []
+
+    #STATO
+    case filters["status"]
+    when "1" #anagrafica non completa
+      #User.all.each { |u| ds << u unless u.anagen && u.anagen.gac_dati_completi? }
+      ds = User.clear_nil( User.where("anagen_id <> 0").map { |u| u unless u.anagen && u.anagen.gac_dati_completi? } )
+    when "2" #anagrafica completa
+      #User.all.each { |u| ds << u if u.anagen && u.anagen.gac_dati_completi? }
+      ds = User.clear_nil( User.where("anagen_id <> 0").map { |u| u if u.anagen && u.anagen.gac_dati_completi? } )
+    end
+    
+    #CONSENSO NEWSLETTER
+    ds = User.clear_nil( ds.map { |u| u if u.anagen && u.anagen.fl_newsletter  } ) if filters["fl_newsletter"] == "1"
+
+    #ORDINE EFFETTUATO
+    case filters["fl_ordine"] 
+    when "0"
+      tmp = ds.map { |u| u if u.anagen.orders(azienda).size == 0 }
+    when "1"
+      tmp = ds.map { |u| u if u.anagen.orders(azienda).size != 0 }
+    end
+    ds = User.clear_nil( tmp )
+    
+    Rails.logger.info "XXXXXX params: #{filters}"
+    Rails.logger.info "XXXXXX size: #{ds.size}"
+    User.export_xls(ds)
+  end
+
+  def self.clear_nil(ds)
+    ds.delete_if { |x| !x }
+  end
+
+  def self.export_xls(ds)
+    book = Spreadsheet::Workbook.new # istanzio il workbook (file xls)
+    sheet = book.create_worksheet :name => 'Utenti' # istanzio lo sheet
+
+    sheet.row(0).concat %w{Nome Cognome Email}
+    ds.each_with_index do |u,i|
+      n,c = u.anagen.decode_denomin
+      sheet.row(i+1).concat [n, c, u.email]
+    end
+
+    data = StringIO.new('')
+    book.write(data)
+    return data.string
+    #book.write Rails.root.join "test.xls"
   end
 
   private

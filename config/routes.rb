@@ -22,7 +22,12 @@ Gma::Application.routes.draw do
 
   resources :sessions, :only => [:new, :create, :destroy]
   
-  resources :users
+  resources :users do
+    collection do
+      get :export_filter
+      post :do_export_filter
+    end
+  end
 
   resources :confs
 
