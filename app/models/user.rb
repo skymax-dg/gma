@@ -385,6 +385,7 @@ class User < ActiveRecord::Base
     [h, o2]
   end
 
+  #x = User.export_filter( {"status" => "2", "fl_newsletter" => "0", "fl_ordine" => "1"}, 9 ); x.size
   def self.export_filter(filters, azienda)
     ds = []
 
@@ -392,14 +393,14 @@ class User < ActiveRecord::Base
     case filters["status"]
     when "1" #anagrafica non completa
       #User.all.each { |u| ds << u unless u.anagen && u.anagen.gac_dati_completi? }
-      ds = User.clear_nil( User.where("anagen_id <> 0").map { |u| u unless u.anagen && u.anagen.gac_dati_completi? } )
+      ds = User.clear_nil( User.where("anagen_id <> 0").map { |u| u unless u.anagen.gac_dati_completi? } )
     when "2" #anagrafica completa
       #User.all.each { |u| ds << u if u.anagen && u.anagen.gac_dati_completi? }
-      ds = User.clear_nil( User.where("anagen_id <> 0").map { |u| u if u.anagen && u.anagen.gac_dati_completi? } )
+      ds = User.clear_nil( User.where("anagen_id <> 0").map { |u| u if u.anagen.gac_dati_completi? } )
     end
     
     #CONSENSO NEWSLETTER
-    ds = User.clear_nil( ds.map { |u| u if u.anagen && u.anagen.fl_newsletter  } ) if filters["fl_newsletter"] == "1"
+    ds = User.clear_nil( ds.map { |u| u if u.anagen && u.anagen.newsletter?  } ) if filters["fl_newsletter"] == "1"
 
     #ORDINE EFFETTUATO
     case filters["fl_ordine"] 
@@ -412,7 +413,8 @@ class User < ActiveRecord::Base
     
     Rails.logger.info "XXXXXX params: #{filters}"
     Rails.logger.info "XXXXXX size: #{ds.size}"
-    User.export_xls(ds)
+    return ds
+    #User.export_xls(ds)
   end
 
   def self.clear_nil(ds)
@@ -423,10 +425,9 @@ class User < ActiveRecord::Base
     book = Spreadsheet::Workbook.new # istanzio il workbook (file xls)
     sheet = book.create_worksheet :name => 'Utenti' # istanzio lo sheet
 
-    sheet.row(0).concat %w{Nome Cognome Email}
     ds.each_with_index do |u,i|
       n,c = u.anagen.decode_denomin
-      sheet.row(i+1).concat [n, c, u.email]
+      sheet.row(i).concat [n, c, u.email]
     end
 
     data = StringIO.new('')

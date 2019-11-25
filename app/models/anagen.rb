@@ -352,8 +352,12 @@ class Anagen < ActiveRecord::Base
       ds = Conto.joins(:tesdocs).where(azienda: cod_azienda, annoese: anno, tipoconto: "C", anagen_id: self.id)
     end
 
-    tmp = ds.map { |x| x.tesdocs }
-    tmp.flatten
+    tmp = ds.map { |x| x.tesdocs.where(causmag_id: 77) }
+    tmp.flatten.uniq
+  end
+
+  def newsletter?
+    self.fl_newsletter == 1
   end
   private
     def require_no_contos
