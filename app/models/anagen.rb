@@ -344,6 +344,17 @@ class Anagen < ActiveRecord::Base
     end
     h
   end
+
+  def orders(cod_azienda, anno=0)
+    if anno == 0
+      ds = Conto.joins(:tesdocs).where(azienda: cod_azienda, tipoconto: "C", anagen_id: self.id)
+    else
+      ds = Conto.joins(:tesdocs).where(azienda: cod_azienda, annoese: anno, tipoconto: "C", anagen_id: self.id)
+    end
+
+    tmp = ds.map { |x| x.tesdocs }
+    tmp.flatten
+  end
   private
     def require_no_contos
       self.errors.add :base, "Almeno un conto fa riferimento all' anagrafica che si desidera eliminare."

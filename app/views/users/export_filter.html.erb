@@ -1,0 +1,51 @@
+<fieldset>
+  <legend> Estrazione utenti </legend>
+  <%= form_tag(do_export_filter_users_path, :method => :post) do %>
+
+    <div class="row">
+      <div class="two columns">
+        <label>
+          Tipo anagrafica
+        </label>
+      </div>
+      <div class="three columns">
+        <%= select_tag("status", options_for_select([["Anagrafica non completa", 1], ["Anagrafica completa", 2]], 1)) %>
+      </div>
+      <div class="seven columns"> </div>
+    </div>
+
+    <div class="row">
+      <div class="two columns">
+        <label>
+          Verifica consenso
+        </label>
+      </div>
+      <div class="three columns">
+        <%= select_tag("fl_consenso", options_for_select([["Si", 1], ["No", 0]], 1)) %>
+      </div>
+
+      <div class="seven columns"> </div>
+    </div>
+
+    <div class="row">
+      <div class="two columns">
+        <label>
+          Ordine effettuato
+        </label>
+      </div>
+      <div class="three columns">
+        <%= select_tag("fl_ordine", options_for_select([["Si", 1], ["No", 0]], 1)) %>
+      </div>
+      <div class="seven columns"> </div>
+    </div>
+
+
+    <div class="twelve">
+      <div class="four columns">
+        <i class="foundicon-search">
+          <%= submit_tag 'RICERCA', :class => "button radius small search foundicon-search", :title => "Esegui Ricerca" %>
+        </i>
+      </div>
+    </div>
+  <% end %>
+</fieldset>

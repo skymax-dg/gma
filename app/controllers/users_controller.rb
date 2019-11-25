@@ -163,6 +163,19 @@ class UsersController < ApplicationController
     end
   end
 
+  def export_filter
+  end
+
+  def do_export_filter
+    data = User.export_filter(params, current_user.azienda)
+    send_data(data, {
+      :disposition => 'attachment',
+      :encoding => 'utf8',
+      :stream => false,
+      :type => 'application/excel',
+      :filename => 'export_users.xls'})
+  end
+
   private
     def correct_user
       @user = User.find(params[:id])
