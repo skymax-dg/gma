@@ -57,7 +57,7 @@ class User < ActiveRecord::Base
   end
 
   def get_gac_user
-    st  = Struct.new(:id, :email, :denomin, :nome, :cognome, :privilege, :codfis, :pariva, :telefono, :fax, :codident, :pec, :tipo, :referente, :cod_carta_studente, :cod_carta_docente, :cod_cig, :cod_cup, :ind_sede, :ind_sped, :dati_completi, :anagen_id, :primary_address, :dtnas, :gender, :luogo_nas, :prov_nas, :paese_nas, :cellulare, :coupons)
+    st  = Struct.new(:id, :email, :denomin, :nome, :cognome, :privilege, :codfis, :pariva, :telefono, :fax, :codident, :pec, :tipo, :referente, :cod_carta_studente, :cod_carta_docente, :cod_cig, :cod_cup, :ind_sede, :ind_sped, :dati_completi, :anagen_id, :primary_address, :dtnas, :gender, :luogo_nas, :prov_nas, :paese_nas, :cellulare, :coupons, :dt_consenso, :dt_revoca_consenso, :fl1_consenso, :fl2_consenso, :fl3_consenso, :fl4_consenso, :fl5_consenso, :fl6_consenso)
     #ind = Struct.new(:id, :indir, :desloc, :cap)
     ind = Struct.new(:id, :indirizzo, :civico, :citta, :cap, :paese, :regione, :prov, :comune, :city_id, :nation_id, :state)
 
@@ -112,7 +112,7 @@ class User < ActiveRecord::Base
 
       cognome, nome = an.decode_denomin
           
-      ris = st.new(self.id, self.email, an.denomin, nome, cognome, self.privilege, an.codfis, an.pariva, an.telefono, an.fax, an.codident, an.pec, an.tipo, an.referente, an.cod_carta_studente, an.cod_carta_docente, an.cod_cig, an.cod_cup, sede, sped, an.gac_dati_completi? ? 1 : 0, an.id, prim, an.dtnas, an.sesso, an.luogonas_id, an.localita ? an.localita.prov : '', an.paese_nas_id, an.cellulare, an.get_coupons)
+      ris = st.new(self.id, self.email, an.denomin, nome, cognome, self.privilege, an.codfis, an.pariva, an.telefono, an.fax, an.codident, an.pec, an.tipo, an.referente, an.cod_carta_studente, an.cod_carta_docente, an.cod_cig, an.cod_cup, sede, sped, an.gac_dati_completi? ? 1 : 0, an.id, prim, an.dtnas, an.sesso, an.luogonas_id, an.localita ? an.localita.prov : '', an.paese_nas_id, an.cellulare, an.get_coupons, an.dt_consenso, an.dt_revoca_consenso, an.fl1_consenso, an.fl2_consenso, an.fl3_consenso, an.fl4_consenso, an.fl5_consenso, an.fl6_consenso)
     else
       ris = st.new(self.id, self.email, nil, nil, nil, self.privilege)
     end
@@ -266,15 +266,16 @@ class User < ActiveRecord::Base
         an.dtnas              = par[:dtnas]              unless ["", nil].include?(par[:dtnas])
         an.luogonas_id        = par[:city_nasc]          unless ["", nil].include?(par[:city_nasc])
         an.paese_nas_id       = par[:paese_nas]          unless ["", nil].include?(par[:paese_nas])
-        an.fl1_consenso       = par[:fl1_consenso]       unless ["", nil].include?(par[:fl1_consenso])
-        an.fl2_consenso       = par[:fl2_consenso]       unless ["", nil].include?(par[:fl2_consenso])
-        an.dt_consenso        = par[:dt_consenso]        unless ["", nil].include?(par[:dt_consenso])
-        an.fl_newsletter      = par[:fl_newsletter]      unless ["", nil].include?(par[:fl_newsletter])
       end
       an.primary_address_id = par[:primary_address_id] unless [nil, ""].include?(par[:primary_address_id])
       an.fl1_consenso   = par[:fl1_consenso].to_i   unless [nil, ""].include?(par[:fl1_consenso])
       an.fl2_consenso   = par[:fl2_consenso].to_i   unless [nil, ""].include?(par[:fl2_consenso])
+      an.fl3_consenso   = par[:fl3_consenso].to_i   unless [nil, ""].include?(par[:fl3_consenso])
+      an.fl4_consenso   = par[:fl4_consenso].to_i   unless [nil, ""].include?(par[:fl4_consenso])
+      an.fl5_consenso   = par[:fl5_consenso].to_i   unless [nil, ""].include?(par[:fl5_consenso])
+      an.fl6_consenso   = par[:fl6_consenso].to_i   unless [nil, ""].include?(par[:fl6_consenso])
       an.dt_consenso    = par[:dt_consenso]         unless [nil, ""].include?(par[:dt_consenso])
+      an.dt_revoca_consenso = par[:dt_revoca_consenso] unless [nil, ""].include?(par[:dt_revoca_consenso])
       an.fl_newsletter  = par[:fl_newsletter].to_i  unless [nil, ""].include?(par[:fl_newsletter])
       an.email          = user.email
 
@@ -385,6 +386,7 @@ class User < ActiveRecord::Base
     [h, o2]
   end
 
+  # deprecato
   #x = User.export_filter( {"status" => "2", "fl_newsletter" => "0", "fl_ordine" => "1"}, 9 ); x.size
   def self.export_filter0(filters, azienda)
     ds = []
@@ -434,6 +436,7 @@ class User < ActiveRecord::Base
     User.export_xls(ds)
   end
 
+  # deprecato
   def self.clear_nil(ds)
     ds.delete_if { |x| !x }
   end
