@@ -346,14 +346,13 @@ class Anagen < ActiveRecord::Base
   end
 
   def orders(cod_azienda, anno=0)
-    if anno == 0
-      ds = Conto.joins(:tesdocs).where(azienda: cod_azienda, tipoconto: "C", anagen_id: self.id)
-    else
-      ds = Conto.joins(:tesdocs).where(azienda: cod_azienda, annoese: anno, tipoconto: "C", anagen_id: self.id)
+    h = { azienda: cod_azienda, tipoconto: "C", anagen_id: self.id, tesdocs: {causmag_id: 77} }
+    if anno != 0
+      h[:annoese] = anno
     end
-
-    tmp = ds.map { |x| x.tesdocs.where(causmag_id: 77) }
-    tmp.flatten.uniq
+    Conto.joins(:tesdocs).where( h )
+    #tmp = ds.map { |x| x.tesdocs.where(causmag_id: 77) }
+    #tmp.flatten.uniq
   end
 
   def newsletter?
