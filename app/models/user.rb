@@ -57,7 +57,7 @@ class User < ActiveRecord::Base
   end
 
   def get_gac_user
-    st  = Struct.new(:id, :email, :denomin, :nome, :cognome, :privilege, :codfis, :pariva, :telefono, :fax, :codident, :pec, :tipo, :referente, :cod_carta_studente, :cod_carta_docente, :cod_cig, :cod_cup, :ind_sede, :ind_sped, :dati_completi, :anagen_id, :primary_address, :dtnas, :gender, :luogo_nas, :prov_nas, :paese_nas, :cellulare, :coupons, :dt_consenso, :dt_revoca_consenso, :fl1_consenso, :fl2_consenso, :fl3_consenso, :fl4_consenso, :fl5_consenso, :fl6_consenso)
+    st  = Struct.new(:id, :email, :denomin, :nome, :cognome, :privilege, :codfis, :pariva, :telefono, :fax, :codident, :pec, :tipo, :referente, :cod_carta_studente, :cod_carta_docente, :cod_cig, :cod_cup, :ind_sede, :ind_sped, :dati_completi, :anagen_id, :primary_address, :dtnas, :gender, :luogo_nas, :prov_nas, :paese_nas, :cellulare, :coupons, :dt_consenso, :dt_revoca_consenso, :fl1_consenso, :fl2_consenso, :fl3_consenso, :fl4_consenso, :fl5_consenso, :fl6_consenso, :stato_consenso)
     #ind = Struct.new(:id, :indir, :desloc, :cap)
     ind = Struct.new(:id, :indirizzo, :civico, :citta, :cap, :paese, :regione, :prov, :comune, :city_id, :nation_id, :state)
 
@@ -112,7 +112,7 @@ class User < ActiveRecord::Base
 
       cognome, nome = an.decode_denomin
           
-      ris = st.new(self.id, self.email, an.denomin, nome, cognome, self.privilege, an.codfis, an.pariva, an.telefono, an.fax, an.codident, an.pec, an.tipo, an.referente, an.cod_carta_studente, an.cod_carta_docente, an.cod_cig, an.cod_cup, sede, sped, an.gac_dati_completi? ? 1 : 0, an.id, prim, an.dtnas, an.sesso, an.luogonas_id, an.localita ? an.localita.prov : '', an.paese_nas_id, an.cellulare, an.get_coupons, an.dt_consenso, an.dt_revoca_consenso, an.fl1_consenso, an.fl2_consenso, an.fl3_consenso, an.fl4_consenso, an.fl5_consenso, an.fl6_consenso)
+      ris = st.new(self.id, self.email, an.denomin, nome, cognome, self.privilege, an.codfis, an.pariva, an.telefono, an.fax, an.codident, an.pec, an.tipo, an.referente, an.cod_carta_studente, an.cod_carta_docente, an.cod_cig, an.cod_cup, sede, sped, an.gac_dati_completi? ? 1 : 0, an.id, prim, an.dtnas, an.sesso, an.luogonas_id, an.localita ? an.localita.prov : '', an.paese_nas_id, an.cellulare, an.get_coupons, an.dt_consenso, an.dt_revoca_consenso, an.fl1_consenso, an.fl2_consenso, an.fl3_consenso, an.fl4_consenso, an.fl5_consenso, an.fl6_consenso, an.stato_consenso)
     else
       ris = st.new(self.id, self.email, nil, nil, nil, self.privilege)
     end
@@ -277,6 +277,7 @@ class User < ActiveRecord::Base
       an.dt_consenso    = par[:dt_consenso]         unless [nil, ""].include?(par[:dt_consenso])
       an.dt_revoca_consenso = par[:dt_revoca_consenso] unless [nil, ""].include?(par[:dt_revoca_consenso])
       an.fl_newsletter  = par[:fl_newsletter].to_i  unless [nil, ""].include?(par[:fl_newsletter])
+      an.stato_consenso = par[:state].to_i          unless [nil, ""].include?(par[:state])
       an.email          = user.email
 
       if an.changed? && !an.save

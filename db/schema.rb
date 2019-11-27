@@ -75,10 +75,11 @@ ActiveRecord::Schema.define(:version => 20191126145731) do
     t.string   "cellulare",            :limit => 15
     t.string   "youtube_presentation", :limit => 50
     t.date     "dt_revoca_consenso"
-    t.integer  "fl3_consenso"
-    t.integer  "fl4_consenso"
-    t.integer  "fl5_consenso"
-    t.integer  "fl6_consenso"
+    t.integer  "fl3_consenso",                        :default => 0
+    t.integer  "fl4_consenso",                        :default => 0
+    t.integer  "fl5_consenso",                        :default => 0
+    t.integer  "fl6_consenso",                        :default => 0
+    t.integer  "stato_consenso",                      :default => 0
   end
 
   add_index "anagens", ["codfis"], :name => "idx_anagens_on_codfis"
