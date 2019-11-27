@@ -219,8 +219,10 @@
     <%= @anagen.fl6_consenso == 1 ? "SI" : "NO" %>
   </div>
   <div class="two columns">
+    <%= label @anagen, "Consenso?", :class => "right" %>
   </div>
   <div class="four columns left">
+    <%= @anagen.stato_consenso == 1 ? "SI" : "NO" %>
   </div>
 </div>
 <div class="row">
