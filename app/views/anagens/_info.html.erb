@@ -177,10 +177,52 @@
     <%= @anagen.fl2_consenso == 1 ? "SI" : "NO" %>
   </div>
   <div class="two columns">
+    <%= label @anagen, "Dt revoca cons.:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= to_mydate(@anagen.dt_revoca_consenso) %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @anagen, "Flag 3", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @anagen.fl3_consenso == 1 ? "SI" : "NO" %>
+  </div>
+  <div class="two columns">
     <%= label @anagen, "Newsletter?", :class => "right" %>
   </div>
   <div class="four columns left">
     <%= @anagen.fl_newsletter == 1 ? "SI" : "NO" %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @anagen, "Flag 4", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @anagen.fl4_consenso == 1 ? "SI" : "NO" %>
+  </div>
+  <div class="two columns">
+    <%= label @anagen, "Flag 5", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @anagen.fl5_consenso == 1 ? "SI" : "NO" %>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <%= label @anagen, "Flag 6", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @anagen.fl6_consenso == 1 ? "SI" : "NO" %>
+  </div>
+  <div class="two columns">
+    <%= label @anagen, "Consenso?", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @anagen.stato_consenso == 1 ? "SI" : "NO" %>
   </div>
 </div>
 <div class="row">
