@@ -27,7 +27,8 @@ class AnagensController < ApplicationController
     end
     @title = "Soggetto/Societa'"
     @art_author = @anagen.anagen_articles.by_author
-    @art_print = @anagen.anagen_articles.by_printer
+    @art_print  = @anagen.anagen_articles.by_printer
+    @art_own    = @anagen.anagen_articles.by_cd_owner
     #@tesdocs = @anagen.tesdocs.order(data_doc: :desc)
     @bookings = @anagen.prenotazioni
     @subscriptions = @anagen.abbonamenti
