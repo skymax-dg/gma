@@ -4,6 +4,7 @@
   <dd><a href="#events">Corsi / Eventi</a></dd>
   <dd><a href="#subscrib">Abbonamenti</a></dd>
   <dd><a href="#ordini">Ordini eshop</a></dd>
+  <dd><a href="#cdOwn">Contenuti digitali</a></dd>
   <dd><a href="#coupon">Coupons</a></dd>
 </dl>
 
@@ -30,5 +31,9 @@
 
   <li id="couponTab">
     <%= render partial: "coupons", locals: { coupons: @coupons } %>
+  </li>
+
+  <li id="cdOwnTab">
+    <%= render partial: "articles", locals: {anagen_articles: @art_own} %>
   </li>
 </ul>

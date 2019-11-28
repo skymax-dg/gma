@@ -8,21 +8,27 @@ class AnagenArticle < ActiveRecord::Base
   AUTHOR   = 1
   PRINTER  = 2
   SUPPLIER = 3
+  CD_OWNER = 4
 
   before_create :set_mode
 
   scope :by_author, where(:mode => AUTHOR)
   scope :by_printer, where(:mode => PRINTER)
   scope :by_supplier, where(:mode => SUPPLIER)
+  scope :by_cd_owner, where(:mode => CD_OWNER)
 
   private
     def set_mode
-      self.mode = if self.anagen.author? 
-                    AUTHOR 
-                  elsif self.anagen.stampatore? 
-                    PRINTER
-                  elsif self.anagen.produttore? 
-                    SUPPLIER
-                  end
+      #unless self.mode
+        self.mode = if self.anagen.author? 
+                      AUTHOR 
+                    elsif self.anagen.stampatore? 
+                      PRINTER
+                    elsif self.anagen.produttore? 
+                      SUPPLIER
+                    else
+                      CD_OWNER
+                    end
+      #end
     end
 end
