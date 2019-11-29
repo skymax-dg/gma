@@ -215,6 +215,14 @@ class Article < ActiveRecord::Base
     self.has_key_word?(kw)
   end
 
+  def contenuto_digitale?
+    kw = KeyWordArticle.where(desc: "Digitale").first
+    kw.childs.each do |k|
+      return true if self.has_key_word?(k)
+    end
+    false
+  end
+
   def rivista?
     kw = KeyWordArticle.where(desc: "Rivista").first
     self.has_key_word?(kw)
@@ -282,6 +290,7 @@ class Article < ActiveRecord::Base
   def in_prenotazione?
     self.state == 6
   end
+
   private
     def require_no_rigdocs
       self.errors.add :base, "Almeno una riga documento fa riferimento all'articolo che si desidera eliminare."
