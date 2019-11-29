@@ -71,6 +71,7 @@ class UsersController < ApplicationController
   # 8 => get tesdocs
   # 9 => find tesdoc
   # 10 => get socials
+  # 11 => get digital products
   def users_query
     case params[:mode]
     when "1"
@@ -159,6 +160,15 @@ class UsersController < ApplicationController
         an = Anagen.find(params[:anagen_id])
       end
       render json: { status: an ? true : false, socials: an ? an.get_socials : {} }
+
+    when "11"
+      st = false
+      if Anagen.exists?(params[:anagen_id])
+        anagen = Anagen.find(params[:anagen_id])
+        st = true
+        ris = anagen.anagen_articles.by_cd_owner.map { |x| x.article.codice }
+      end
+      render json: { status: st, ds: ris }
 
     end
   end
