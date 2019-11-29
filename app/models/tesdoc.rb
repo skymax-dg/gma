@@ -716,6 +716,12 @@ class Tesdoc < ActiveRecord::Base
 
     articles.each do |k, riga|
       @tesdoc.appo_add_rigdoc(riga[0], nil, riga[1], nil, nil)
+      if Article.exists?(riga[0])
+        art = Article.find(riga[0]) 
+        if art.contenuto_digitale?
+          @anagen.connect_article(art.id, AnagenArticle::CD_OWNER)
+        end
+      end
     end
 
     costo_contrass = info_sped["cost_contrass"].to_f
@@ -733,6 +739,7 @@ class Tesdoc < ActiveRecord::Base
     user_id = info_sped["user_id"].to_i
 
     Rails.logger.info "-- tesdoc #{@tesdoc.rigdocs.size.to_i}"
+
     return 0
   end
 

@@ -168,11 +168,15 @@ class Anagen < ActiveRecord::Base
     self.has_key_word? kw 
   end
 
-  def connect_article(art_id)
+  def connect_article(art_id, mode=nil)
     if Article.exists? art_id
       art = Article.find(art_id)
       unless self.has_article?(art)
-        self.articles << art
+        if mode
+          AnagenArticle.create(anagen: self, article: art, mode: mode)
+        else
+          self.articles << art
+        end
         true
       end
     end
@@ -358,6 +362,10 @@ class Anagen < ActiveRecord::Base
   def newsletter?
     self.fl_newsletter == 1
   end
+
+  def add_digital_content(article_id)
+  end
+
   private
     def require_no_contos
       self.errors.add :base, "Almeno un conto fa riferimento all' anagrafica che si desidera eliminare."

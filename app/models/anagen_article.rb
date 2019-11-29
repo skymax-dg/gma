@@ -2,6 +2,7 @@ class AnagenArticle < ActiveRecord::Base
   # attr_accessible :title, :body
   belongs_to :anagen
   belongs_to :article
+  attr_accessible :anagen_id, :article_id, :article, :anagen, :mode
 
   #validates :anagen, :uniqueness => {:scope => [:article, :mode]}
 
@@ -19,7 +20,7 @@ class AnagenArticle < ActiveRecord::Base
 
   private
     def set_mode
-      #unless self.mode
+      unless self.mode
         self.mode = if self.anagen.author? 
                       AUTHOR 
                     elsif self.anagen.stampatore? 
@@ -29,6 +30,6 @@ class AnagenArticle < ActiveRecord::Base
                     else
                       CD_OWNER
                     end
-      #end
+      end
     end
 end
