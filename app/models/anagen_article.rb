@@ -20,7 +20,7 @@ class AnagenArticle < ActiveRecord::Base
 
   private
     def set_mode
-      unless self.mode
+      if self.mode == 0
         self.mode = if self.anagen.author? 
                       AUTHOR 
                     elsif self.anagen.stampatore? 
