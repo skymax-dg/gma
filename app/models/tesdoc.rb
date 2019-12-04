@@ -758,7 +758,10 @@ class Tesdoc < ActiveRecord::Base
       end
     end
 
-    spediz = self.descriz.split(",")[1].gsub("spedizione",'').strip if self.descriz
+    if self.descriz
+      tmp = self.descriz.split(",")[1]
+      spediz = tmp ? tmp.gsub("spedizione",'').strip : ''
+    end
     totiva = self.subtot_iva.map { |k,v| { Article::CATEG[k] => v } }
     st.new(self.id, self.num_doc, self.annoese, self.data_doc, self.sconto, rigs, totiva, spediz, costo_sped, costo_ctrs) 
   end
