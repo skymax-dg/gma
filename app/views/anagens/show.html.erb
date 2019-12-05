@@ -30,11 +30,11 @@
   </li>
 
   <li id="articlesTab">
-    <%= render partial: "articles", locals: {anagen_articles: @art_author} %>
+    <%= render partial: "articles", locals: {anagen_articles: @art_author, articles_addable: @articles_addable} %>
   </li>
 
   <li id="printersTab">
-    <%= render partial: "articles", locals: {anagen_articles: @art_print} %>
+    <%= render partial: "articles", locals: {anagen_articles: @art_print, articles_addable: @articles_addable} %>
   </li>
 
   <li id="socialsTab">

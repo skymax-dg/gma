@@ -238,6 +238,13 @@ class Article < ActiveRecord::Base
     self.has_key_word?(kw)
   end
 
+  def self.contenuti_digitali
+    kw = KeyWordArticle.where(desc: "Digitale").first
+    ids = kw.childs.map { |x| x.id }
+
+    Article.joins(:key_words).where("key_words.id in (?)", ids)
+  end
+
   def self.libri
     kw = KeyWordArticle.where(desc: "Libro").first
     Rails.logger.info "--------------------- kw.id: #{kw.id}"

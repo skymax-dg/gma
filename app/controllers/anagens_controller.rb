@@ -35,7 +35,8 @@ class AnagensController < ApplicationController
     @courses = @anagen.corsi
 
     @key_words_addable = KeyWord.sort_by_din(KeyWordAnagen.all)
-    @articles_addable = Article.libri
+    @articles_addable = Article.libri.order(:descriz)
+    @cd_addable = Article.contenuti_digitali.order(:descriz)
     tmp = @anagen.contos.where(tipoconto: "C").first
     @eshop_orders = tmp ? tmp.tesdocs : []
     @coupons = @anagen.coupons
