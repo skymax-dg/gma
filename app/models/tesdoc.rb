@@ -19,6 +19,7 @@ class Tesdoc < ActiveRecord::Base
   validates :descriz, :oggetto, :length => { :maximum => 150}
 
   scope :azdanno, lambda { |azd, anno| {:conditions => ['tesdocs.azienda = ? and tesdocs.annoese = ?', azd, anno]}}
+  scope :by_causmag_id, lambda { |id| {:conditions => ['causmag_id = ?', id]}}
 
   NRMAG     = $ParAzienda['ANAIND']['NRMAG']
   SEGUEFATT = $ParAzienda['TESDOC']['SEGUEFATT']

@@ -23,6 +23,7 @@ class Causmag < ActiveRecord::Base
   MAGCLI = $ParAzienda['CAUSMAG']['MAGCLI']
   CONTABILE = $ParAzienda['CAUSMAG']['CONTABILE']
   NRMAG = $ParAzienda['ANAIND']['NRMAG']
+  ESHOP = 77
 
   private
     def require_no_tesdocs
