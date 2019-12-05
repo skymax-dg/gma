@@ -19,6 +19,7 @@ class Tesdoc < ActiveRecord::Base
   validates :descriz, :oggetto, :length => { :maximum => 150}
 
   scope :azdanno, lambda { |azd, anno| {:conditions => ['tesdocs.azienda = ? and tesdocs.annoese = ?', azd, anno]}}
+  scope :by_causmag_id, lambda { |id| {:conditions => ['causmag_id = ?', id]}}
 
   NRMAG     = $ParAzienda['ANAIND']['NRMAG']
   SEGUEFATT = $ParAzienda['TESDOC']['SEGUEFATT']
@@ -758,7 +759,10 @@ class Tesdoc < ActiveRecord::Base
       end
     end
 
-    spediz = self.descriz.split(",")[1].gsub("spedizione",'').strip if self.descriz
+    if self.descriz
+      tmp = self.descriz.split(",")[1]
+      spediz = tmp ? tmp.gsub("spedizione",'').strip : ''
+    end
     totiva = self.subtot_iva.map { |k,v| { Article::CATEG[k] => v } }
     st.new(self.id, self.num_doc, self.annoese, self.data_doc, self.sconto, rigs, totiva, spediz, costo_sped, costo_ctrs) 
   end

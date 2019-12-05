@@ -136,10 +136,13 @@ class UsersController < ApplicationController
       if Anagen.exists?(params[:anagen_id])
         anagen = Anagen.find(params[:anagen_id])
         st = true
+        cs = anagen.orders(anagen.user.azienda)
         ris = []
-        c = anagen.contos.where(tipoconto: "C").first
-        if c
-          c.tesdocs.each { |x| ris << x.map_json }
+        #c = anagen.contos.where(tipoconto: "C").first
+        if cs
+          cs.each do |c|
+            c.tesdocs.by_causmag_id(Causmag::ESHOP).each { |x| ris << x.map_json }
+          end
         end
       end
       render json: { status: st, ds: ris }

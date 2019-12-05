@@ -26,7 +26,7 @@
   <%= form_tag( change_article_anagens_path(), method: :get ) do %>
     <%= hidden_field_tag :id, @anagen.id %>
     <%= hidden_field_tag :mode, 1 %>
-    <%= select_tag "article_id", options_from_collection_for_select(@articles_addable, "id", "descriz")%>
+    <%= select_tag "article_id", options_from_collection_for_select(articles_addable, "id", "descriz")%>
     <div class="action">
       <%= submit_tag "Collega" %>
     </div>
