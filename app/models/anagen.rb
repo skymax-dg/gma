@@ -341,6 +341,21 @@ class Anagen < ActiveRecord::Base
     c1.concat Coupon.generic.map { |x| x.map_json }
   end
 
+  def self.gen_coupon(anagen_id, params, user_id)
+    h = {
+      anagen_id: anagen_id, 
+      code: params[:coupon_code], 
+      dt_start: params[:coupon][:dt_start],
+      dt_end: params[:coupon][:dt_end],
+      value: params[:coupon_val],
+      perc: params[:coupon_perc],
+      ord_min: params[:coupon_ord_min],
+      batch_code: Coupon.gen_batch_code(user_id)
+    }
+    Rails.logger.info "-------------------- ANAGEN.GEN_COUPON -> h: #{h.to_s}"
+    Coupon.create( h ) 
+  end
+
   def get_socials
     h = {}
     self.anag_socials.not_hidden.map do |x| 

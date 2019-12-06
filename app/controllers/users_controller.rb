@@ -180,13 +180,19 @@ class UsersController < ApplicationController
   end
 
   def do_export_filter
-    data = User.export_filter(params, current_user.azienda)
-    send_data(data, {
-      :disposition => 'attachment',
-      :encoding => 'utf8',
-      :stream => false,
-      :type => 'application/excel',
-      :filename => 'export_users.xls'})
+    if params[:export_xls]
+      data = User.filter_and_export_to_xls(params, current_user.azienda)
+      send_data(data, {
+        :disposition => 'attachment',
+        :encoding => 'utf8',
+        :stream => false,
+        :type => 'application/excel',
+        :filename => 'export_users.xls'})
+      return
+    elsif params[:gen_coupons]
+      num, notice = User.filter_and_generate_coupons(params, current_user.azienda, current_user.id)
+      redirect_to :back, notice: notice || "Generati %d coupon"%[num]
+    end
   end
 
   private

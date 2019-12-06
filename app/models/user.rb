@@ -421,20 +421,50 @@ class User < ActiveRecord::Base
     #User.export_xls(ds)
   end
 
+  def self.gen_coupons(ds, params, user_id)
+    ds.each { |d| Anagen.gen_coupon(d[-1], params, user_id) }
+  end
+
+  def self.filter_and_generate_coupons(params, azienda, user_id)
+    Rails.logger.info "------------- GEN_COUPON PARAMS: #{params}"
+    
+    if params[:coupon][:dt_start] && params[:coupon][:dt_end] && Date.parse(params[:coupon][:dt_start]) <= Date.parse(params[:coupon][:dt_end])
+      if params[:coupon_val] && params[:coupon_val].to_i >= 0 && params[:coupon_perc] && params[:coupon_perc].to_i >= 0 && params[:coupon_perc].to_i <= 100 
+        if params[:coupon_val].to_i == 0 && params[:coupon_perc].to_i == 0
+          [-3, "Definire una percentuale e/o un valore assoluto"]
+        else
+          Rails.logger.info "------------- INIZIO GENERAZIONE"
+          ds = self.export_filter(params, azienda)
+          Rails.logger.info "------------- DS: #{ds.size}"
+          self.gen_coupons(ds, params, user_id) 
+          [ds.size, nil]
+        end
+      else
+        [-2, "Percentuale e/o valore assoluto non valido"]
+      end
+    else
+      [-1, "Date non valide"]
+    end
+  end
+
+  def self.filter_and_export_to_xls(params, azienda)
+    ds = self.export_filter(params, azienda)
+    self.export_xls(ds)
+  end
+
   def self.export_filter(filters, azienda)
     ds = []
-    User.where("anagen_id <> 0").each do |u|
+    self.where("anagen_id <> 0").each do |u|
       if  (filters["status"] == "1" && !u.anagen.gac_dati_completi?) || (filters["status"] == "2" && u.anagen.gac_dati_completi?) || (filters["status"] == "3")
         if (filters["fl_newsletter"] == "1" && u.anagen.newsletter?) || (filters["fl_newsletter"] != "1")
           if (filters["fl_ordine"] == "1" && u.anagen.orders(azienda).size > 0) || (filters["fl_ordine"] != "1")
             n,c = u.anagen.decode_denomin
-            ds << [n, c, u.email]
+            ds << [n, c, u.email, u.anagen_id]
           end
         end
       end
     end
-    Rails.logger.info "---------- ds.size: #{ds.size}"
-    User.export_xls(ds)
+    ds
   end
 
   # deprecato
@@ -447,7 +477,7 @@ class User < ActiveRecord::Base
     sheet = book.create_worksheet :name => 'Utenti' # istanzio lo sheet
 
     ds.each_with_index do |u,i|
-      sheet.row(i).concat u
+      sheet.row(i).concat u[0..2]
     end
 
     data = StringIO.new('')
