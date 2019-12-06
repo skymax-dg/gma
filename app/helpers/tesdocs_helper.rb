@@ -3,9 +3,13 @@ module TesdocsHelper
     @clifilter = "C"
     @forfilter = "F"
     @altfilter = "A"
-    @causmags = Causmag.find(:all, :conditions => ["tipo_doc = :tpd and azienda = :azd", {:tpd => se_tipo_doc, :azd => current_user.azienda}])
     @contos = Conto.find4docfilter([@clifilter, @forfilter, @altfilter], @tpfilter||"", @desfilter||"", current_user.azienda, current_annoese)
+    @causmags = elenco_causali
 #    render "index"
+  end
+
+  def elenco_causali
+    Causmag.find(:all, :conditions => ["tipo_doc = :tpd and azienda = :azd", {:tpd => se_tipo_doc, :azd => current_user.azienda}])
   end
 
   def store_tipo_doc (td)

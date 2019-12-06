@@ -365,11 +365,13 @@ class Anagen < ActiveRecord::Base
   end
 
   def orders(cod_azienda, anno=0)
-    h = { azienda: cod_azienda, tipoconto: "C", anagen_id: self.id, tesdocs: {causmag_id: 77} }
-    if anno != 0
-      h[:annoese] = anno
-    end
-    Conto.joins(:tesdocs).where( h )
+    #h = { azienda: cod_azienda, tipoconto: "C", anagen_id: self.id, tesdocs: {causmag_id: 77} }
+    #if anno != 0
+    #  h[:annoese] = anno
+    #end
+    #Conto.joins(:tesdocs).where( h )
+    query = 'SELECT * FROM "contos" INNER JOIN "tesdocs" ON "tesdocs"."conto_id" = "contos"."id" WHERE "contos"."azienda" = %d AND "contos"."tipoconto" = %s AND "contos"."anagen_id" = %d AND "tesdocs"."causmag_id" = 77 ORDER BY contos.descriz ASC'%[cod_azienda, "'C'", self.id]
+    Conto.find_by_sql( query )
     #tmp = ds.map { |x| x.tesdocs.where(causmag_id: 77) }
     #tmp.flatten.uniq
   end

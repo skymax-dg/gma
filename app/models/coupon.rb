@@ -22,4 +22,17 @@ class Coupon < ActiveRecord::Base
     date = Time.now.strftime("%Y%m%d%H%M")
     "%d_%d"%[user_id, date]
   end
+
+  def mail_body
+    msg = ""
+    msg
+  end
+
+  def mail_body
+    msg = ""
+    if self.anagen
+      msg << "Ciao #{self.anagen.denomin}!\n"
+    end
+    msg
+  end
 end

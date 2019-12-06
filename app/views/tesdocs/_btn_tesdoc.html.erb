@@ -38,4 +38,9 @@
       <%= link_to 'Avviso Corr.', stp_tesdoc_path(:doc=>:avvcor), :class => "button radius small print foundicon-graph" %>
     </li>
   </ul>
+  <ul class="button-group">
+    <li>
+      <%= link_to 'Duplica', form_duplicate_tesdocs_path(orig_id: @tesdoc.id), :class => "button radius small print foundicon-graph" %>
+    </li>
+  </ul>
 </div>
