@@ -23,8 +23,8 @@ class Coupon < ActiveRecord::Base
     "%d_%d"%[user_id, date]
   end
 
-  def mail_body
-    msg = ""
+  def mail_title
+    msg = "TITOLO DI TEST"
     msg
   end
 
