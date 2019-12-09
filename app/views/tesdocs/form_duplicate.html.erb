@@ -1,0 +1,16 @@
+<%= render :partial => 'shared/page_title', :locals => {:record => nil} %>
+
+<%= form_tag(exec_duplicate_tesdocs_path) do %>
+  <%= hidden_field_tag :orig_id, params[:orig_id] %>
+
+  <div class="row">
+    <div class="four columns">
+      <%= label :filter_tesdocs, "Causale di magazzino" %>
+      <div id="sel_causmag">
+        <%= render :partial=>'sel_causmags', :locals=>{:blank=>false}%>
+      </div>
+    </div>
+  </div>
+
+  <%= submit_tag "Converti", :class => "button radius small success foundicon-checkmark" %>
+<% end %>

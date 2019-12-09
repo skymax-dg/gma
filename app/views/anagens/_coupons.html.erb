@@ -31,7 +31,7 @@
         <td><%= to_currency(line.ord_min) %></td>
         <td><%= line.d_state %></td>
         <td><%= to_date(line.dt_use) %></td>
-        <td><%= link_to '', "mailto:#{@anagen.email}?subject=#{line.mail_title}&body=#{line.mail_body}", :class => "button radius tiny modify foundicon-edit", :title => "Modifica" %></td>
+        <td><%= link_to '', "mailto:#{@anagen.email}?subject=#{line.mail_title}&body=#{line.mail_body}", :class => "button radius tiny", :title => "Invia mail" %></td>
         <td><%= link_to '', edit_coupon_path(line), :class => "button radius tiny modify foundicon-edit", :title => "Modifica" %></td>
         <td><%= link_to '', line, :confirm => 'Confermi?', :method => :delete, :class => "button radius tiny alert foundicon-trash", :title => "Cancella" %></td>
       </tr>
