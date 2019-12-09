@@ -1,0 +1,82 @@
+<div class="row">
+  <div class="four columns">
+    <label>
+      Descrizione
+    </label>
+  </div>
+  <div class="six columns">
+    <%= text_field_tag("coupon_code", "") %>
+  </div>
+  <div class="two columns"> </div>
+</div>
+
+<div class="row">
+  <div class="four columns">
+    <label style="padding-top: 15px;">
+      Data inizio
+    </label>
+  </div>
+  <div class="six columns">
+    <%= jdate_field(:coupon, :dt_start, nil, date: true, value: Date.today, readonly: true) %>
+  </div>
+  <div class="two columns"> </div>
+</div>
+
+<div class="row">
+  <div class="four columns">
+    <label style="padding-top: 15px;">
+      Data fine
+    </label>
+  </div>
+  <div class="six columns">
+    <%= jdate_field(:coupon, :dt_end, nil, date: true, value: Date.today+30.days, readonly: true) %>
+  </div>
+  <div class="two columns"> </div>
+</div>
+
+
+
+
+<div class="row">
+  <div class="four columns">
+    <label>
+      Valore assoluto
+    </label>
+  </div>
+  <div class="six columns">
+    <%= number_field_tag("coupon_val", "0") %>
+  </div>
+  <div class="two columns"> </div>
+</div>
+
+<div class="row">
+  <div class="four columns">
+    <label>
+      Percentuale
+    </label>
+  </div>
+  <div class="six columns">
+    <%= number_field_tag("coupon_perc", "0") %>
+  </div>
+  <div class="two columns"> </div>
+</div>
+
+<div class="row">
+  <div class="four columns">
+    <label>
+      Ordine minimo
+    </label>
+  </div>
+  <div class="six columns">
+    <%= number_field_tag("coupon_ord_min", "10") %>
+  </div>
+  <div class="two columns"> </div>
+</div>
+
+<div class="row">
+  <div class="four columns"> </div>
+  <div class="four columns">
+    <%= submit_tag 'GENERA COUPON', :class => "button radius small search foundicon-search", name: "gen_coupons" %>
+  </div>
+  <div class="two columns"> </div>
+</div>

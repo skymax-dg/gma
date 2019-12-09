@@ -109,6 +109,8 @@ Gma::Application.routes.draw do
       get :genera_xls_articoli
       get :import_by_xml
       post :create_by_xml
+      get :form_duplicate
+      post :exec_duplicate
     end
     member do
       get :add1row4article

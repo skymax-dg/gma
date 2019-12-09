@@ -3,48 +3,57 @@
   <%= form_tag(do_export_filter_users_path, :method => :post) do %>
 
     <div class="row">
-      <div class="two columns">
-        <label>
-          Tipo anagrafica
-        </label>
+      <div class="six columns">
+        <div class="row">
+          <div class="four columns">
+            <label>
+              Tipo anagrafica
+            </label>
+          </div>
+          <div class="six columns">
+            <%= select_tag("status", options_for_select([["Anagrafica non completa", 1], ["Anagrafica completa", 2]], 1)) %>
+          </div>
+          <div class="two columns"> </div>
+        </div>
+
+        <div class="row">
+          <div class="four columns">
+            <label>
+              Verifica consenso
+            </label>
+          </div>
+          <div class="six columns">
+            <%= select_tag("fl_consenso", options_for_select([["Si", 1], ["No", 0]], 1)) %>
+          </div>
+
+          <div class="two columns"> </div>
+        </div>
+
+        <div class="row">
+          <div class="four columns">
+            <label>
+              Ordine effettuato
+            </label>
+          </div>
+          <div class="six columns">
+            <%= select_tag("fl_ordine", options_for_select([["Si", 1], ["No", 0]], 1)) %>
+          </div>
+          <div class="two columns"> </div>
+        </div>
+
+        <div class="row">
+          <div class="four columns"> </div>
+          <div class="six columns">
+            <%= submit_tag 'ELABORA', :class => "button radius small search foundicon-search", name: "export_xls" %>
+          </div>
+          <div class="two columns"> </div>
+        </div>
+
       </div>
-      <div class="three columns">
-        <%= select_tag("status", options_for_select([["Anagrafica non completa", 1], ["Anagrafica completa", 2]], 1)) %>
+      <div class="six columns coupons">
+        <%= render "coupons_form" %>
       </div>
-      <div class="seven columns"> </div>
     </div>
 
-    <div class="row">
-      <div class="two columns">
-        <label>
-          Verifica consenso
-        </label>
-      </div>
-      <div class="three columns">
-        <%= select_tag("fl_consenso", options_for_select([["Si", 1], ["No", 0]], 1)) %>
-      </div>
-
-      <div class="seven columns"> </div>
-    </div>
-
-    <div class="row">
-      <div class="two columns">
-        <label>
-          Ordine effettuato
-        </label>
-      </div>
-      <div class="three columns">
-        <%= select_tag("fl_ordine", options_for_select([["Si", 1], ["No", 0]], 1)) %>
-      </div>
-      <div class="seven columns"> </div>
-    </div>
-
-    <div class="row">
-      <div class="two columns"> </div>
-      <div class="four columns">
-        <%= submit_tag 'ELABORA', :class => "button radius small search foundicon-search", :title => "Esegui Ricerca" %>
-      </div>
-      <div class="six columns"> </div>
-    </div>
   <% end %>
 </fieldset>

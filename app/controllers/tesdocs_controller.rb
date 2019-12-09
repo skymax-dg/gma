@@ -553,4 +553,24 @@ class TesdocsController < ApplicationController
   def push_order
 
   end
+
+  def form_duplicate
+    @title = "Duplicazione documento"
+    @causmags = elenco_causali
+    @orig_id = params[:orig_id]
+  end
+
+  def exec_duplicate
+    orig_id = params[:orig_id]
+    Rails.logger.info "XXXXXXXXX orig_id: #{params[:orig_id]}"
+    causmag_id = params[:causmagfilter]
+
+    t1 = Tesdoc.find(orig_id)
+    t2 = t1.duplicate_as(causmag_id)
+    if t2
+      redirect_to t2
+    else
+      redirect_to t1, notice: "Duplicazione fallita"
+    end
+  end
 end

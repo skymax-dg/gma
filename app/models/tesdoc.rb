@@ -766,4 +766,21 @@ class Tesdoc < ActiveRecord::Base
     totiva = self.subtot_iva.map { |k,v| { Article::CATEG[k] => v } }
     st.new(self.id, self.num_doc, self.annoese, self.data_doc, self.sconto, rigs, totiva, spediz, costo_sped, costo_ctrs) 
   end
+
+  def duplicate_as(causmag_id)
+    causmag = Causmag.find causmag_id
+    t2 = self.dup
+    t2.causmag = causmag
+    t2.data_doc = Date.today
+    t2.num_doc = Tesdoc.new_num_doc(causmag.grp_prg, self.annoese, self.azienda)
+    #magsrc = self.findmags("S")
+    #magdst = self.findmags("D")
+    t2.save
+    self.rigdocs.each do |r|
+      r2 = r.dup
+      r2.tesdoc = t2
+      r2.save
+    end
+    t2
+  end
 end
