@@ -75,6 +75,18 @@ class KeyWord < ActiveRecord::Base
     end
   end
 
+  def get_childs
+    ris = []
+    self.childs.each do |c|
+      if c.childs.count > 0
+        c.childs.each { |x| ris << x.get_childs }
+      else
+        ris << c
+      end
+    end
+    ris
+  end
+
   private
     def assign_type
       if !self.type && self.parent

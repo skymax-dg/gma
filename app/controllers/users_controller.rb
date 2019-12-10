@@ -177,6 +177,10 @@ class UsersController < ApplicationController
   end
 
   def export_filter
+    kw = KeyWord.find(125) #Categorie
+    @key_words = KeyWord.sort_by_din(kw.get_childs.flatten)
+
+    @articles = Article.all.sort_by { |x| x.descriz }
   end
 
   def do_export_filter
