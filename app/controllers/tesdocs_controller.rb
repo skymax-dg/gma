@@ -556,7 +556,12 @@ class TesdocsController < ApplicationController
 
   def form_duplicate
     @title = "Duplicazione documento"
-    @causmags = elenco_causali
+    @causmags = []
+    [0,1].each do |n|
+      store_tipo_doc(n)
+      @causmags << elenco_causali
+    end
+    @causmags = @causmags.flatten.sort_by { |x| x.descriz }
     @orig_id = params[:orig_id]
   end
 
