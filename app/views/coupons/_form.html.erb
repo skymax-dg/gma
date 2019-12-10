@@ -33,7 +33,12 @@
       <%= f.label "Percentuale coupon:" %>
       <%= f.number_field :perc %>
     </div>
-    <div class="seven columns"></div>
+    <div class="one columns"></div>
+    <div class="two columns">
+      <%= f.label "Toglie spese sped?" %>
+      <%= f.select(:togli_spese_spedizione, Coupon::SPEDIZ, { :prompt => false}) %>
+    </div>
+    <div class="four columns"></div>
   </div>
 
   <div class="row">

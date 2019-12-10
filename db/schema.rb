@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20191206082356) do
+ActiveRecord::Schema.define(:version => 20191210092329) do
 
   create_table "agentes", :force => true do |t|
     t.integer  "anagen_id"
@@ -230,17 +230,18 @@ ActiveRecord::Schema.define(:version => 20191206082356) do
 
   create_table "coupons", :force => true do |t|
     t.integer  "anagen_id"
-    t.integer  "state",                    :default => 0
-    t.decimal  "value",                    :default => 0.0
-    t.decimal  "perc",                     :default => 0.0
+    t.integer  "state",                                :default => 0
+    t.decimal  "value",                                :default => 0.0
+    t.decimal  "perc",                                 :default => 0.0
     t.date     "dt_start"
     t.date     "dt_end"
     t.date     "dt_use"
-    t.decimal  "ord_min",                  :default => 0.0
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
-    t.string   "code",       :limit => 30
-    t.string   "batch_code", :limit => 20
+    t.decimal  "ord_min",                              :default => 0.0
+    t.datetime "created_at",                                            :null => false
+    t.datetime "updated_at",                                            :null => false
+    t.string   "code",                   :limit => 30
+    t.string   "batch_code",             :limit => 20
+    t.integer  "togli_spese_spedizione",               :default => 1
   end
 
   create_table "event_states", :force => true do |t|
