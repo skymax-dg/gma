@@ -14,7 +14,8 @@
       <th>Data inizio</th>
       <th>Data fine</th>
       <th>Valore</th>
-      <th>Percentuale</th>
+      <th>Perc.</th>
+      <th>Sped?</th>
       <th>Ordine min</th>
       <th>Stato</th>
       <th>Dato utilizzo</th>
@@ -30,6 +31,7 @@
         <td><%= to_date(line.dt_end) %></td>
         <td><%= to_currency(line.value) %></td>
         <td><%= line.perc || 0.0 %> %</td>
+        <td><%= line.d_spediz %></td>
         <td><%= to_currency(line.ord_min) %></td>
         <td><%= line.d_state %></td>
         <td><%= to_date(line.dt_use) %></td>
