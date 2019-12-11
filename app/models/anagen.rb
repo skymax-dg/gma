@@ -380,10 +380,96 @@ class Anagen < ActiveRecord::Base
     self.fl_newsletter == 1
   end
 
-  def add_digital_content(article_id)
+  #def add_digital_content(article_id)
+  #end
+
+  def has_order_in_dt_range?(dt1, dt2)
+    if (dt1 && dt2 && dt1 <= dt2) 
+      dt1.year.upto(dt2.year) do |y|
+        self.orders(self.user.azienda, y).each do |c|
+          dt = Date.parse(c.data_doc)
+          return true if dt >= dt1 && dt <= dt2
+        end
+      end
+    end
+    false
+  end
+
+  def has_order_by_key_word?(kw_id, dt1=nil, dt2=nil)
+    kw = KeyWord.find kw_id
+    if (dt1 && dt2 && dt1 <= dt2) 
+      dt1.year.upto(dt2.year) do |y|
+        self.orders(self.user.azienda, y).each do |c|
+          return true if check_key_word_tesdoc(c.id, kw)
+        end
+      end
+    else
+      self.orders(self.user.azienda).each do |c|
+        return true if check_key_word_tesdoc(c.id, kw)
+      end
+    end
+    false
+  end
+
+  def has_order_by_article?(art_id, dt1=nil, dt2=nil)
+    if (dt1 && dt2 && dt1 <= dt2) 
+      dt1.year.upto(dt2.year) do |y|
+        self.orders(self.user.azienda, y).each do |c|
+          return true if check_article_tesdoc(c.id, art_id)
+        end
+      end
+    else
+      self.orders(self.user.azienda).each do |c|
+        return true if check_article_tesdoc(c.id, art_id)
+      end
+    end
+    false
+  end
+
+  def coupon_in_scadenza?
+    self.coupons.each do |c|
+      if !c.used? && c.dt_start <= Date.today && c.dt_end >= Date.today && (Date.today + Coupon::NOTIFY_DAYS.days >= c.dt_end)
+        return true
+      end
+    end
+    false
+  end
+
+  def is_in_region?(reg_code)
+    self.anainds.each do |ind|
+      if ind.localita && ind.localita.cod_regione == reg_code
+        return true
+      end
+    end
+    false
+  end
+
+  def is_in_province?(prov_code)
+    self.anainds.each do |ind|
+      if ind.localita && ind.localita.prov == prov_code
+        return true
+      end
+    end
+    false
   end
 
   private
+    def check_article_tesdoc(t_id, art_id)
+      t = Tesdoc.find(t_id)
+      t.rigdocs.each do |r|
+        return true if r.article && r.article_id == art_id
+      end
+      false
+    end
+
+    def check_key_word_tesdoc(t_id, kw)
+      t = Tesdoc.find(t_id)
+      t.rigdocs.each do |r|
+        return true if r.article && r.article.has_key_word?(kw)
+      end
+      false
+    end
+
     def require_no_contos
       self.errors.add :base, "Almeno un conto fa riferimento all' anagrafica che si desidera eliminare."
       raise ActiveRecord::RecordInvalid.new self unless contos.count == 0

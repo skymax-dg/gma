@@ -38,7 +38,7 @@ class Localita < ActiveRecord::Base
   REGIONI << ["Basilicata",           17]
   REGIONI << ["Calabria",             18]
   REGIONI << ["Sicilia",              19]
-  REGIONI << ["Sardegna",             10]
+  REGIONI << ["Sardegna",             20]
 
   def self.find_by_cf(cf)
     find_by_codfis(Cfpi.locnas_by_cf(cf)) if Cfpi.locnas_by_cf(cf)

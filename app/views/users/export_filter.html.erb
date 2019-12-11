@@ -96,7 +96,31 @@
             </label>
           </div>
           <div class="six columns">
-            <%= select_tag(:coupon_in_scadenza, Anagen::SPLIT_PAYEMENTS, {prompt: true}) %>
+            <%= select_tag("coupon_in_scadenza", options_for_select([["No",0], ["Si",1]])) %>
+          </div>
+          <div class="two columns"> </div>
+        </div>
+
+        <div class="row">
+          <div class="four columns">
+            <label style="padding-top: 15px;">
+              Regione
+            </label>
+          </div>
+          <div class="six columns">
+            <%= select_tag("region_code", options_for_select(Localita::REGIONI), { prompt: "--- seleziona ---" }) %>
+          </div>
+          <div class="two columns"> </div>
+        </div>
+
+        <div class="row">
+          <div class="four columns">
+            <label style="padding-top: 15px;">
+              Provincia
+            </label>
+          </div>
+          <div class="six columns">
+            <%= text_field_tag("province_codes") %>
           </div>
           <div class="two columns"> </div>
         </div>
