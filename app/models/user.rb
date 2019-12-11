@@ -452,18 +452,61 @@ class User < ActiveRecord::Base
     self.export_xls(ds)
   end
 
-  def self.export_filter(filters, azienda)
+  def self.export_filter(params, azienda)
     ds = []
+    st = false
     self.where("anagen_id <> 0").each do |u|
-      if  (filters["status"] == "1" && !u.anagen.gac_dati_completi?) || (filters["status"] == "2" && u.anagen.gac_dati_completi?) || (filters["status"] == "3")
-        if (filters["fl_newsletter"] == "1" && u.anagen.newsletter?) || (filters["fl_newsletter"] != "1")
-          if (filters["fl_ordine"] == "1" && u.anagen.orders(azienda).size > 0) || (filters["fl_ordine"] != "1")
-            n,c = u.anagen.decode_denomin
-            ds << [n, c, u.email, u.anagen_id]
+      st = 0 if u.anagen_id == 3421
+      if  (params["status"] == "1" && !u.anagen.gac_dati_completi?) || (params["status"] == "2" && u.anagen.gac_dati_completi?) || (params["status"] == "3")
+        st = 1 if u.anagen_id == 3421
+
+        if (params["fl_newsletter"] == "1" && u.anagen.newsletter?) || (params["fl_newsletter"] != "1")
+          st = 2 if u.anagen_id == 3421
+          fl_ordine = params["fl_ordine"] == "1"
+
+          if (fl_ordine && u.anagen.orders(azienda).size > 0) || !fl_ordine
+            st = 3 if u.anagen_id == 3421
+            dt1 = ["",nil].include?(params["export_filter"]["dt_start"]) ? nil : Date.parse(params["export_filter"]["dt_start"])
+            dt2 = ["",nil].include?(params["export_filter"]["dt_end"])   ? nil : Date.parse(params["export_filter"]["dt_end"])
+
+            Rails.logger.info "------------ fl_ordine? #{fl_ordine}"
+            if fl_ordine && (!dt1 || !dt2 || u.anagen.has_order_in_dt_range?(dt1, dt2)) || !fl_ordine
+              st = 4 if u.anagen_id == 3421
+              kw_id = [nil, ""].include?(params["key_word_id"]) ? nil : params["key_word_id"]
+
+              if fl_ordine && ((kw_id && u.anagen.has_order_by_key_word?(kw_id, dt1, dt2)) || !kw_id) || !fl_ordine
+                st = 5 if u.anagen_id == 3421
+                art_id = [nil, ""].include?(params["article_id"]) ? nil : params["article_id"].to_i
+
+                if fl_ordine && ( (art_id && u.anagen.has_order_by_article?(art_id, dt1, dt2)) || !art_id ) || !fl_ordine
+                  st = 6 if u.anagen_id == 3421
+                  coupon_scad = [nil, ""].include?(params["coupon_in_scadenza"]) ? nil : params["coupon_in_scadenza"].to_i
+
+                  if (coupon_scad == 1 && u.anagen.coupon_in_scadenza?) || coupon_scad != 1
+                    st = 7 if u.anagen_id == 3421
+                    reg_code = ["",nil].include?(params["region_code"]) ? nil : params["region_code"].to_i
+                    Rails.logger.info "---------- reg_code: #{reg_code} (#{reg_code.class})"
+
+                    if (reg_code  && u.anagen.is_in_region?(reg_code)) || !reg_code 
+                      st = 8 if u.anagen_id == 3421
+                      prov_code = ["",nil].include?(params["province_code"]) ? nil : params["province_code"]
+
+                      if (prov_code  && u.anagen.is_in_province?(prov_code)) || !prov_code 
+                        st = 9 if u.anagen_id == 3421
+                        n,c = u.anagen.decode_denomin
+                        ds << [n, c, u.email, u.anagen_id]
+                      end
+                    end
+                  end
+                end
+              end
+            end
           end
         end
       end
     end
+    Rails.logger.info "---------- st: #{st}"
+    Rails.logger.info "---------- ds.size: #{ds.size}"
     ds
   end
 

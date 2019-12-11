@@ -8,10 +8,15 @@ class Coupon < ActiveRecord::Base
 
   STATES = [ ["DISP.",0], ["USATO",1] ]
   SPEDIZ = [ ["NO",0], ["SI",1] ]
+  NOTIFY_DAYS = 30
 
   def d_state
     tmp = STATES.select { |a,b| b == self.state }
     tmp.size > 0 ? tmp[0][0] : ''
+  end
+
+  def used?
+    self.state == 1
   end
 
   def map_json

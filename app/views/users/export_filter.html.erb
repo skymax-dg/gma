@@ -42,6 +42,90 @@
         </div>
 
         <div class="row">
+          <div class="four columns">
+            <label style="padding-top: 15px;">
+              Data ultimo ordine da
+            </label>
+          </div>
+          <div class="six columns">
+            <%= jdate_field(:export_filter, :dt_start, nil, date: true) %>
+          </div>
+          <div class="two columns"> </div>
+        </div>
+
+        <div class="row">
+          <div class="four columns">
+            <label style="padding-top: 15px;">
+              Data ultimo ordine a
+            </label>
+          </div>
+          <div class="six columns">
+            <%= jdate_field(:export_filter, :dt_end, nil, date: true) %>
+          </div>
+          <div class="two columns"> </div>
+        </div>
+
+        <div class="row">
+          <div class="four columns">
+            <label style="padding-top: 15px;">
+              Categoria
+            </label>
+          </div>
+          <div class="six columns">
+            <%= select_tag "key_word_id", options_from_collection_for_select(@key_words, "id", "get_dinasty"), { prompt: "--- seleziona ---" } %>
+          </div>
+          <div class="two columns"> </div>
+        </div>
+
+        <div class="row">
+          <div class="four columns">
+            <label style="padding-top: 15px;">
+              Articolo
+            </label>
+          </div>
+          <div class="six columns">
+            <%= select_tag "article_id", options_from_collection_for_select(@articles, "id", "descriz"), { prompt: "--- seleziona ---" } %>
+          </div>
+          <div class="two columns"> </div>
+        </div>
+
+        <div class="row">
+          <div class="four columns">
+            <label style="padding-top: 15px;">
+              Coupon in scadenza?
+            </label>
+          </div>
+          <div class="six columns">
+            <%= select_tag("coupon_in_scadenza", options_for_select([["No",0], ["Si",1]])) %>
+          </div>
+          <div class="two columns"> </div>
+        </div>
+
+        <div class="row">
+          <div class="four columns">
+            <label style="padding-top: 15px;">
+              Regione
+            </label>
+          </div>
+          <div class="six columns">
+            <%= select_tag("region_code", options_for_select(Localita::REGIONI), { prompt: "--- seleziona ---" }) %>
+          </div>
+          <div class="two columns"> </div>
+        </div>
+
+        <div class="row">
+          <div class="four columns">
+            <label style="padding-top: 15px;">
+              Provincia
+            </label>
+          </div>
+          <div class="six columns">
+            <%= text_field_tag("province_codes") %>
+          </div>
+          <div class="two columns"> </div>
+        </div>
+
+        <div class="row">
           <div class="four columns"> </div>
           <div class="six columns">
             <%= submit_tag 'ELABORA', :class => "button radius small search foundicon-search", name: "export_xls" %>
