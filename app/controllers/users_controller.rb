@@ -141,7 +141,9 @@ class UsersController < ApplicationController
         #c = anagen.contos.where(tipoconto: "C").first
         if cs
           cs.each do |c|
-            c.tesdocs.by_causmag_id(Causmag::ESHOP).each { |x| ris << x.map_json }
+            #c.tesdocs.by_causmag_id(Causmag::ESHOP).each { |x| ris << x.map_json }
+            t = Tesdoc.find c.id
+            ris << t.map_json
           end
         end
       end
