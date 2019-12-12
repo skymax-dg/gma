@@ -30,16 +30,36 @@ class Coupon < ActiveRecord::Base
   end
 
   def mail_title
-    msg = "TITOLO DI TEST"
+    msg = "Conferma di iscrizione alla newsletter e COUPON Sconto!"
     msg
   end
 
   def mail_body
     msg = ""
     if self.anagen
-      msg << "Ciao #{self.anagen.denomin}!\n"
+      msg << "Ciao #{self.anagen.denomin},\n\n"
+
+      msg << "grazie per esserti iscritto alla nostra Newsletter, ti terremo sempre aggiornato sui nuovi prodotti e sulle nostre incredibili offerte.\n\n"
+
+      msg << "Siamo felici di comunicarti che il tuo COUPON SCONTO e' ora attivo!\n"
+      msg << "Per poterlo utilizzare non ti resta che andare su www.eifis.it, accedere, e fare i tuoi acquisti, al momento del pagamento ti sara' data la possibilita' di utilizzare il tuo COUPON.\n\n\n"
+
+
+
+      val = "%.2f"%[self.value]
+      msg << "IL COUPON HA UN VALORE DI #{val} EURO\n"
+      dt = "#{self.dt_end.day}/#{self.dt_end.month}/#{self.dt_end.year}" 
+      msg << "e sara' valido fino al #{dt}\n\n\n"
+
+
+      msg << "Per qualsiasi richiesta, dubbio o necessita' scrivici a ordini@eifis.it\n\n"
+
+
+      msg << "Porta piu' Energia nella tua vita!\n"
+      msg << "Lo staff di EIFIS Editore\n"
+      msg << "www.eifis.it\n\n"
     end
-    msg
+    msg.gsub("\n","%0D%0A")
   end
 
   def d_spediz
