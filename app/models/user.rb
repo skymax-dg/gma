@@ -453,6 +453,7 @@ class User < ActiveRecord::Base
   end
 
   def self.export_filter(params, azienda)
+    Rails.logger.info "ZZZZZZZ params: #{params}"
     ds = []
     st = false
     self.where("anagen_id <> 0").each do |u|
@@ -460,7 +461,7 @@ class User < ActiveRecord::Base
       if  (params["status"] == "1" && !u.anagen.gac_dati_completi?) || (params["status"] == "2" && u.anagen.gac_dati_completi?) || (params["status"] == "3")
         st = 1 if u.anagen_id == 3421
 
-        if (params["fl_newsletter"] == "1" && u.anagen.newsletter?) || (params["fl_newsletter"] != "1")
+        if (params["fl_consenso"] == "1" && u.anagen.newsletter?) || (params["fl_consenso"] != "1")
           st = 2 if u.anagen_id == 3421
           fl_ordine = params["fl_ordine"] == "1"
 
