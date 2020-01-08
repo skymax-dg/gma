@@ -246,9 +246,13 @@ class Article < ActiveRecord::Base
   end
 
   def self.libri
-    kw = KeyWordArticle.where(desc: "Libri").first
-    Rails.logger.info "--------------------- kw.id: #{kw && kw.id}"
-    Article.joins(:key_words).where("key_words.id = ?", kw.id)
+    kw = KeyWordArticle.where(desc: "Libro").first
+    if kw
+      Rails.logger.info "--------------------- kw.id: #{kw.id}"
+      Article.joins(:key_words).where("key_words.id = ?", kw.id)
+    else
+      []
+    end
   end
 
   def self.eventi
