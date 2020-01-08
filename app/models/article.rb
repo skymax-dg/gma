@@ -246,8 +246,8 @@ class Article < ActiveRecord::Base
   end
 
   def self.libri
-    kw = KeyWordArticle.where(desc: "Libro").first
-    Rails.logger.info "--------------------- kw.id: #{kw.id}"
+    kw = KeyWordArticle.where(desc: "Libri").first
+    Rails.logger.info "--------------------- kw.id: #{kw && kw.id}"
     Article.joins(:key_words).where("key_words.id = ?", kw.id)
   end
 
