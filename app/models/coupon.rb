@@ -46,7 +46,7 @@ class Coupon < ActiveRecord::Base
 
 
 
-      val = "%.2f"%[self.value]
+      val = "%.2f"%[self.value || 0.0]
       msg << "IL COUPON HA UN VALORE DI #{val} EURO\n"
       dt = "#{self.dt_end.day}/#{self.dt_end.month}/#{self.dt_end.year}" 
       msg << "e sara' valido fino al #{dt}\n\n\n"
