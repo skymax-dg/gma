@@ -54,20 +54,24 @@ class Event < ActiveRecord::Base
     ds.join(", ")
   end
 
+  #deprecated
   def has_key_word?(kw)
     self.key_words.include?(kw)
   end
 
+  #deprecated
   def rivista?
     kw = KeyWordEvent.where(desc: "Rivista").first
     kw ? self.has_key_word?(kw) :  []
   end
 
+  #deprecated
   def libro?
     kw = KeyWordEvent.where(desc: "Libri").first
     kw ? self.has_key_word?(kw) :  []
   end
 
+  #deprecated
   def corso?
     kw = KeyWordEvent.where(desc: "Corsi").first
     kw ? self.has_key_word?(kw) :  []

@@ -1,0 +1,17 @@
+<dl class="tabs">
+  <dd class="active"><a href="#gen">Dati generali</a></dd>
+  <dd><a href="#ships">Spedizioni</a></dd>
+</dl>
+
+
+<ul class="tabs-content">
+  <li class="active" id="genTab">
+    <%= render partial: "info_magazine" %>
+  </li>
+
+  <li id="shipsTab">
+    <%= render partial: "event_states", locals: { event_states: @shipments, mode: EventState::SHIPMENT, addables: @anagens_addable  } %>
+  </li>
+</ul>
+
+

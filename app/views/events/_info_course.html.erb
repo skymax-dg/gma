@@ -45,25 +45,10 @@
     <%= @event.timetable %>
   </div>
   <div class="two columns">
-    <%= label @event, "Numero x rivista:", :class => "right" %>
-  </div>
-  <div class="four columns left">
-    <%= @event.nr_item %>
-  </div>
-</div>
-
-<div class="row">
-  <div class="two columns">
     <%= label @event, "Durata (gg):", :class => "right" %>
   </div>
   <div class="four columns left">
     <%= @event.duration %>
-  </div>
-  <div class="two columns">
-    <%= label @event, "Anno x rivista:", :class => "right" %>
-  </div>
-  <div class="four columns left">
-    <%= @event.yr_item %>
   </div>
 </div>
 
@@ -90,25 +75,10 @@
     <%= to_mydate(@event.dt_discount) %>
   </div>
   <div class="two columns">
-    <%= label @event, "Mode:", :class => "right" %>
-  </div>
-  <div class="four columns left">
-    <%= @event.mode %>
-  </div>
-</div>
-
-<div class="row">
-  <div class="two columns">
     <%= label @event, "Gg x chiusura iscr:", :class => "right" %>
   </div>
   <div class="four columns left">
     <%= to_mydate(@event.dt_end_isc) %>
-  </div>
-  <div class="two columns">
-    <%= label @event, "Tiratura:", :class => "right" %>
-  </div>
-  <div class="four columns left">
-    <%= @event.quantity %>
   </div>
 </div>
 
@@ -129,6 +99,7 @@
     <%= @event.dressing %>
   </div>
 </div>
+
 
 
 

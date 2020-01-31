@@ -19,14 +19,21 @@ class EventsController < ApplicationController
   def show
     @event = Event.find(params[:id])
     @key_words_addable = KeyWord.sort_by_din(KeyWordEvent.all)
-    @shipments   = @event.event_states.by_shipments
-    @teachers    = @event.event_states.by_teachers
-    @organizers  = @event.event_states.by_organizers
-    @subscribers = @event.event_states.by_subscribers
-    @teachers_addable = Anagen.teachers
-    @organizers_addable = Anagen.organizers
-    @courses_locations_addable = Anagen.courses_locations
     @anagens_addable = Anagen.order(:denomin)
+    @article = @event.article
+
+    if @article.rivista? 
+      @shipments = @event.event_states.by_shipments
+    else 
+      unless @article.libro? 
+        @teachers    = @event.event_states.by_teachers
+        @organizers  = @event.event_states.by_organizers
+        @teachers_addable   = Anagen.teachers
+        @organizers_addable = Anagen.organizers
+        @courses_locations_addable = Anagen.courses_locations
+      end 
+      @subscribers = @event.event_states.by_subscribers
+    end 
 
     respond_to do |format|
       format.html # show.html.erb
@@ -40,6 +47,7 @@ class EventsController < ApplicationController
     @event = Event.new
     @title = "Inserimento evento"
     @courses_locations = Anagen.courses_locations
+    @article = Article.find(params[:article_id]) if Article.exists?(params[:article_id])
 
     respond_to do |format|
       format.html # new.html.erb
@@ -52,6 +60,7 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     @title = "Modifica evento"
     @courses_locations = Anagen.courses_locations
+    @article = @event.article
   end
 
   # POST /events

@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="six columns">
+    <%= link_to 'Aggiungi', new_event_path(article_id: params[:id]), :class => "button radius small back" %>
+
+    <table>
+      <thead>
+        <tr>
+          <th width="33%">Data</th>
+          <th width="33%">Tiratura</th>
+          <th width="34%"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% events.each do |event| %>
+          <tr>
+            <td> <%= to_date(event.dt_event) %> </td>
+            <td> <%= event.quantity %> </td>
+            <td> <%= render :partial => 'shared/btn_vmc', :locals => {:v_edit => edit_event_path(event), :line => event} %> </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+

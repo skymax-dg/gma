@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="twelve columns">
+    <%= link_to 'Aggiungi', new_event_path(article_id: params[:id]), :class => "button radius small back" %>
+
+    <table>
+      <thead>
+        <tr>
+          <th width="20%">Data</th>
+          <th width="10%">Numero</th>
+          <th width="10%">Anno</th>
+          <th width="30%">Tiratura</th>
+          <th width="30%"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% events.each do |event| %>
+          <tr>
+            <td> <%= to_date(event.dt_event) %> </td>
+            <td> <%= event.nr_item %> </td>
+            <td> <%= event.yr_item %> </td>
+            <td> <%= event.quantity %> </td>
+            <td> <%= render :partial => 'shared/btn_vmc', :locals => {:v_edit => edit_event_path(event), :line => event} %> </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+

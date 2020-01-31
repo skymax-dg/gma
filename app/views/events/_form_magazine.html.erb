@@ -1,0 +1,35 @@
+<%= form_for(@event) do |f| %>
+  <%= f.hidden_field :article_id, value: @article.id if @article %>
+
+  <div class="row">
+    <div class="ten columns">
+      <%= f.label "Descrizione" %>
+      <%= f.text_field :description %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="two columns">
+      <%= jdate_field(:event, :dt_event, "Data", date: true, value: @event.dt_event, readonly: true) %>
+    </div>
+    <div class="two columns">
+      <%= f.label :Tiratura %>
+      <%= f.text_field :quantity %>
+    </div>
+    <div class="two columns">
+      <%= f.label "Numero" %>
+      <%= f.text_field :nr_item %>
+    </div>
+    <div class="two columns">
+      <%= f.label "Anno" %>
+      <%= f.text_field :yr_item %>
+    </div>
+    <div class="two columns">
+    </div>
+  </div>
+
+  <div class="twelve columns">
+    <%= f.submit 'SALVA', :class => "button radius small success foundicon-checkmark" %>
+    <%= link_to 'ANNULLA', @article || events_path(type: params[:type] || @event.type), :class => "button radius small alert foundicon-remove" %>
+  </div>
+<% end %>

@@ -1,0 +1,26 @@
+<dl class="tabs">
+  <dd class="active"><a href="#gen">Dati generali</a></dd>
+  <dd><a href="#teachers">Istruttori</a></dd>
+  <dd><a href="#organizers">Organizzatori</a></dd>
+  <dd><a href="#subscribers">Iscritti</a></dd>
+</dl>
+
+
+<ul class="tabs-content">
+  <li class="active" id="genTab">
+    <%= render partial: "info_course" %>
+  </li>
+
+  <li id="teachersTab">
+    <%= render partial: "event_states", locals: { event_states: @teachers, mode: EventState::TEACHER, addables: @teachers_addable } %>
+  </li>
+
+  <li id="organizersTab">
+    <%= render partial: "event_states", locals: { event_states: @organizers, mode: EventState::ORGANIZER, addables: @organizers_addable  } %>
+  </li>
+
+  <li id="subscribersTab">
+    <%= render partial: "event_states", locals: { event_states: @subscribers, mode: EventState::SUBSCRIBER, addables: @anagens_addable  } %>
+  </li>
+</ul>
+

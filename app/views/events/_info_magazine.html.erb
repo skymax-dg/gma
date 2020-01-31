@@ -1,0 +1,45 @@
+<div class="row">
+  <div class="two columns">
+    <%= label @event, "Descrizione:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= @event.description %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <%= label @event, "Data:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= to_mydate(@event.dt_event) %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <%= label @event, "Numero x rivista:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= @event.nr_item %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <%= label @event, "Anno x rivista:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= @event.yr_item %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <%= label @event, "Tiratura:", :class => "right" %>
+  </div>
+  <div class="ten columns left">
+    <%= @event.quantity %>
+  </div>
+</div>
+

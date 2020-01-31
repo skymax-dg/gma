@@ -1,27 +1,32 @@
 <dl class="tabs">
-  <dd><a href="#docs">Documenti</a></dd>
-  <% if @article.libro? %>
-    <dd><a href="#exit">Uscita libro</a></dd>
-  <% end %>
-  <% if @article.rivista? %>
-    <dd><a href="#nums">Numero rivista</a></dd>
-  <% end %>
-  <% if @article.evento? %>
-    <dd><a href="#date">Data evento / corso</a></dd>
+  <dd class="active"><a href="#docs">Documenti</a></dd>
+
+  <% if @article.libro? || @article.rivista? || @article.evento? %>
+    <dd>
+      <a href="#event">
+        <% if @article.libro? %>
+          Uscita libro
+        <% elsif @article.rivista? %>
+          Numero rivista
+        <% elsif @article.evento? %>
+          Data evento / corso
+        <% end %>
+      </a>
+    </dd>
   <% end %>
 </dl>
 
 <ul class="tabs-content">
-  <li id="docsTab">
+  <li id="docsTab" class="active">
   </li>
 
-  <li id="exitTab">
-  </li>
-
-  <li id="numsTab">
-  </li>
-
-  <li id="dateTab">
-    <%= render partial: "event_states", locals: {events: @events} %>
+  <li id="eventTab">
+    <% if @article.libro? %>
+      <%= render partial: "event_states_book", locals: {events: @events} %>
+    <% elsif @article.rivista? %>
+      <%= render partial: "event_states_magazine", locals: {events: @events} %>
+    <% elsif @article.evento? %>
+      <%= render partial: "event_states_course", locals: {events: @events} %>
+    <% end %>
   </li>
 </ul>
