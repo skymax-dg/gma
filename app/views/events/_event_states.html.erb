@@ -23,13 +23,15 @@
 </div>
 
 <div class="six columns">
-  <%= form_tag( change_event_anagens_path(), method: :get ) do %>
-    <%= hidden_field_tag :event_id, @event.id %>
-    <%= hidden_field_tag :mode, 1 %>
-    <%= hidden_field_tag :mode2, mode %>
-    <%= select_tag "id", options_from_collection_for_select(addables, "id", "denomin")%>
-    <div class="action">
-      <%= submit_tag "Collega" %>
-    </div>
+  <% if addables %> 
+    <%= form_tag( change_event_anagens_path(), method: :get ) do %>
+      <%= hidden_field_tag :event_id, @event.id %>
+      <%= hidden_field_tag :mode, 1 %>
+      <%= hidden_field_tag :mode2, mode %>
+      <%= select_tag "id", options_from_collection_for_select(addables, "id", "denomin"), prompt: "Selezionare..." %>
+      <div class="action">
+        <%= submit_tag "Collega" %>
+      </div>
+    <% end %> 
   <% end %> 
 </div>

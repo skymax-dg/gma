@@ -19,7 +19,7 @@ class EventsController < ApplicationController
   def show
     @event = Event.find(params[:id])
     @key_words_addable = KeyWord.sort_by_din(KeyWordEvent.all)
-    @anagens_addable = Anagen.order(:denomin)
+    #@anagens_addable = Anagen.order(:denomin)
     @article = @event.article
 
     if @article.rivista? 
