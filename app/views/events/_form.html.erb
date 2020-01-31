@@ -75,7 +75,7 @@
   <div class="row">
     <div class="four columns">
       <%= f.label "Codice anagrafica sede" %>
-      <%= number_field :site_anagen_code, nil, value: @event.site_anagen && @event.site_anagen.codice %>
+      <%= collection_select(:event, :site_anagen_id, @courses_locations, :id, :denomin, prompt: true) %>
     </div>
     <div class="twelve columns">
       <%= f.label "Abbigliamento consigliato" %>

@@ -23,6 +23,9 @@ class EventsController < ApplicationController
     @teachers    = @event.event_states.by_teachers
     @organizers  = @event.event_states.by_organizers
     @subscribers = @event.event_states.by_subscribers
+    @teachers_addable = Anagen.teachers
+    @organizers_addable = Anagen.organizers
+    @courses_locations_addable = Anagen.courses_locations
     @anagens_addable = Anagen.order(:denomin)
 
     respond_to do |format|
@@ -36,6 +39,7 @@ class EventsController < ApplicationController
   def new
     @event = Event.new
     @title = "Inserimento evento"
+    @courses_locations = Anagen.courses_locations
 
     respond_to do |format|
       format.html # new.html.erb
@@ -47,6 +51,7 @@ class EventsController < ApplicationController
   def edit
     @event = Event.find(params[:id])
     @title = "Modifica evento"
+    @courses_locations = Anagen.courses_locations
   end
 
   # POST /events
