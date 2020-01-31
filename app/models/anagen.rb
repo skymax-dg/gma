@@ -199,6 +199,16 @@ class Anagen < ActiveRecord::Base
     kw ? Anagen.joins(:key_words).where("key_words.id = ?", kw.id).order("anagens.denomin") : []
   end
 
+  def self.organizers
+    kw = KeyWordAnagen.where(desc: "Organizzatore").first
+    kw ? Anagen.joins(:key_words).where("key_words.id = ?", kw.id).order("anagens.denomin") : []
+  end
+
+  def self.courses_locations
+    kw = KeyWordAnagen.where(desc: "Sede corso").first
+    kw ? Anagen.joins(:key_words).where("key_words.id = ?", kw.id).order("anagens.denomin") : []
+  end
+
   def self.authors
     kw = KeyWordAnagen.where(desc: "Autore").first
     kw ? Anagen.joins(:key_words).where("key_words.id = ?", kw.id).order("anagens.denomin") : []

@@ -27,11 +27,11 @@
   </li>
 
   <li id="teachersTab">
-    <%= render partial: "event_states", locals: { event_states: @teachers, mode: EventState::TEACHER, addables: @anagens_addable } %>
+    <%= render partial: "event_states", locals: { event_states: @teachers, mode: EventState::TEACHER, addables: @teachers_addable } %>
   </li>
 
   <li id="organizersTab">
-    <%= render partial: "event_states", locals: { event_states: @organizers, mode: EventState::ORGANIZER, addables: @anagens_addable  } %>
+    <%= render partial: "event_states", locals: { event_states: @organizers, mode: EventState::ORGANIZER, addables: @organizers_addable  } %>
   </li>
 
   <li id="subscribersTab">
