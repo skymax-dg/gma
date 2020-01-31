@@ -9,16 +9,31 @@
 
 <div class="row">
   <div class="two columns">
-    <%= label @event, "Data evento:", :class => "right" %>
+    <%= label @event, "1° data evento:", :class => "right" %>
   </div>
   <div class="four columns left">
     <%= to_mydate(@event.dt_event) %>
   </div>
   <div class="two columns">
-    <%= label @event, "Tiratura:", :class => "right" %>
+    <%= label @event, "2° data evento:", :class => "right" %>
   </div>
   <div class="four columns left">
-    <%= @event.quantity %>
+    <%= to_mydate(@event.dt_event2) %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <%= label @event, "3° data evento:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= to_mydate(@event.dt_event3) %>
+  </div>
+  <div class="two columns">
+    <%= label @event, "4° data evento:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= to_mydate(@event.dt_event4) %>
   </div>
 </div>
 
@@ -86,14 +101,20 @@
   <div class="two columns">
     <%= label @event, "Gg x chiusura iscr:", :class => "right" %>
   </div>
-  <div class="ten columns left">
+  <div class="four columns left">
     <%= to_mydate(@event.dt_end_isc) %>
+  </div>
+  <div class="two columns">
+    <%= label @event, "Tiratura:", :class => "right" %>
+  </div>
+  <div class="four columns left">
+    <%= @event.quantity %>
   </div>
 </div>
 
 <div class="row">
   <div class="two columns">
-    <%= label @event, "Sede", :class => "right" %>
+    <%= label @event, "Sede:", :class => "right" %>
   </div>
   <div class="ten columns left">
     <%= link_to(@event.site_anagen.denomin, @event.site_anagen, target: "_blank") if @event.site_anagen %>

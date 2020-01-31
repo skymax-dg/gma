@@ -1,13 +1,31 @@
 <%= form_for(@event) do |f| %>
+  <%= f.hidden_field :article_id, value: params[:article_id] if params[:article_id] %>
+
   <div class="row">
     <div class="twelve columns">
       <%= f.label "Descrizione" %>
       <%= f.text_field :description %>
     </div>
+  </div>
 
+  <div class="row">
     <div class="two columns">
-      <%= jdate_field(:event, :dt_event, "Data evento", date: true, value: @event.dt_event, readonly: true) %>
+      <%= jdate_field(:event, :dt_event, "1° data evento", date: true, value: @event.dt_event, readonly: true) %>
     </div>
+    <div class="two columns">
+      <%= jdate_field(:event, :dt_event2, "2° data evento", date: true, value: @event.dt_event2, readonly: true) %>
+    </div>
+    <div class="two columns">
+      <%= jdate_field(:event, :dt_event3, "3° data evento", date: true, value: @event.dt_event3, readonly: true) %>
+    </div>
+    <div class="two columns">
+      <%= jdate_field(:event, :dt_event4, "4° data evento", date: true, value: @event.dt_event4, readonly: true) %>
+    </div>
+    <div class="four columns">
+    </div>
+  </div>
+
+  <div class="row">
     <div class="two columns">
       <%= f.label :Orario %>
       <%= f.text_field :timetable %>
@@ -25,6 +43,8 @@
     <div class="two columns">
       <%= f.label "GG x chiusura iscr" %>
       <%= f.number_field :cut_off %>
+    </div>
+    <div class="two columns">
     </div>
   </div>
 

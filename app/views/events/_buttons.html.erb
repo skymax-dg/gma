@@ -2,7 +2,7 @@
   <div class="twelve columns button-bar">
     <ul class="button-group">
       <li>
-        <%= link_to 'INDIETRO', events_path(type: @event.type), :class => "button radius small cancel foundicon-left-arrow" %>
+        <%= link_to 'INDIETRO', @event.article, :class => "button radius small cancel foundicon-left-arrow" %>
       </li>
       <li>
         <%= link_to 'MODIFICA', edit_event_path(@event), :class => "button radius small modify foundicon-edit" %>

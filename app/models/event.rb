@@ -1,13 +1,13 @@
 class Event < ActiveRecord::Base
   # attr_accessible :title, :body
-  attr_accessible :description, :timetable, :dressing, :duration, :quantity, :nr_item, :yr_item, :site_anagen_id, :state, :mode, :cut_off, :dt_event, :dt_end_isc, :dt_discount
+  attr_accessible :description, :timetable, :dressing, :duration, :quantity, :nr_item, :yr_item, :site_anagen_id, :state, :mode, :cut_off, :dt_event, :dt_end_isc, :dt_discount, :article_id, :dt_event2, :dt_event3, :dt_event4
 
   has_many :key_word_rels, as: :key_wordable
   has_many :key_words, through: :key_word_rels
   has_many :event_states
   has_many :anagens, through: :event_states
-  belongs_to :site_anagen, foreign_key: :site_anagen_id, class_name: :Anagen
 
+  belongs_to :site_anagen, foreign_key: :site_anagen_id, class_name: :Anagen
   belongs_to :article
 
   STATES = [
@@ -38,6 +38,20 @@ class Event < ActiveRecord::Base
       tmp = STATES.select { |x| x[1] == self.state }
       tmp.size > 0 && tmp[0][0]
     end
+  end
+
+  def dsite_anagen
+    self.site_anagen ? self.site_anagen.denomin : ""
+  end
+
+  def dteachers
+    ds = self.event_states.by_teachers.map { |x| x.anagen.denomin }
+    ds.join(", ")
+  end
+
+  def dorganizers
+    ds = self.event_states.by_organizers.map { |x| x.anagen.denomin }
+    ds.join(", ")
   end
 
   def has_key_word?(kw)
