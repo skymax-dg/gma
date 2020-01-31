@@ -58,8 +58,8 @@ class EventsController < ApplicationController
 
     respond_to do |format|
       if @event.save
-        format.html { redirect_to @event, notice: notice }
-        format.json { render json: @event, status: :created, location: @event }
+        format.html { redirect_to @event.article, notice: notice }
+        format.json { render json: @event.article, status: :created, location: @event.article }
       else
         format.html { render action: "new" }
         format.json { render json: @event.errors, status: :unprocessable_entity }
@@ -92,7 +92,7 @@ class EventsController < ApplicationController
     @event.destroy
 
     respond_to do |format|
-      format.html { redirect_to events_url }
+      format.html { redirect_to @event.article }
       format.json { head :no_content }
     end
   end

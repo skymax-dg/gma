@@ -210,6 +210,8 @@ class ArticlesController < ApplicationController
     @printers_addable  = Anagen.printers
     @suppliers_addable = Anagen.suppliers
 
+    @events = @article.events.order(dt_event: :desc)
+
     respond_to do |format|
       format.html # renders .html.erb
       #format.json { render :json => { st: true, v: @anagen.to_json } }
