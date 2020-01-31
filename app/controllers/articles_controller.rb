@@ -210,7 +210,7 @@ class ArticlesController < ApplicationController
     @printers_addable  = Anagen.printers
     @suppliers_addable = Anagen.suppliers
 
-    @events = @article.events.order(dt_event: :desc)
+    @events = @article.events.order(:dt_event)
 
     respond_to do |format|
       format.html # renders .html.erb
