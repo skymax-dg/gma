@@ -155,7 +155,8 @@ Gma::Application.routes.draw do
   post 'users_query',   to: 'users#users_query'
   get 'get_localitas',  to: 'localitas#localitas_query'
   get 'push_order',     to: 'tesdocs#create_by_json'
-      
+
+  get "api/eshop/v1/get_events", to: "events#filter_events_ajax"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

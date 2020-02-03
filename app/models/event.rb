@@ -82,4 +82,16 @@ class Event < ActiveRecord::Base
     kw ? Event.joins(:key_words).where("key_words.id = ?", kw.id) : []
   end
 
+  def self.map_json(ds)
+    struct = Struct.new(:id, :date, :course_type, :locality, :locality_id, :notes, :article_id)
+    ris = []
+    ds.each do |d|
+      e = d.event
+      if e
+        a = e.article
+        ris << struct.new(e.id, e.dt_event, a ? a.descriz : "", e.dsite_anagen, e.site_anagen_id, e.dressing, e.article_id)
+      end
+    end
+    ris
+  end
 end

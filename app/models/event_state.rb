@@ -17,5 +17,5 @@ class EventState < ActiveRecord::Base
   scope :by_organizers,  where(:mode => ORGANIZER )
   scope :by_subscribers, where(:mode => SUBSCRIBER )
 
-
+  scope :by_anagen, lambda { |id| where(anagen_id: id) }
 end
