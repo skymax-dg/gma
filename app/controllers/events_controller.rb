@@ -112,9 +112,12 @@ class EventsController < ApplicationController
   end
 
   def filter_events_ajax
-    teacher_id = params[:teacher_id] && params[:teacher_id].to_i
-    if teacher_id
-      tmp = EventState.by_anagen(teacher_id).by_teachers
+    if params[:teacher_id]
+      tmp = EventState.by_anagen(params[:teacher_id].to_i).by_teachers
+      ris = Event.map_json(tmp)
+      st = true
+    elsif params[:article_id]
+      tmp = Event.by_article(params[:article_id].to_i)
       ris = Event.map_json(tmp)
       st = true
     else

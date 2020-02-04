@@ -10,6 +10,8 @@ class Event < ActiveRecord::Base
   belongs_to :site_anagen, foreign_key: :site_anagen_id, class_name: :Anagen
   belongs_to :article
 
+  scope :by_article, lambda { |id| where(article_id: id) }
+
   STATES = [
     ["Desiderato",1], 
     ["Confermato",2], 
@@ -83,13 +85,14 @@ class Event < ActiveRecord::Base
   end
 
   def self.map_json(ds)
-    struct = Struct.new(:id, :date, :course_type, :locality, :locality_id, :notes, :article_id)
+    struct = Struct.new(:id, :date, :course_type, :locality, :locality_id, :notes, :article_id, :teachers)
     ris = []
     ds.each do |d|
-      e = d.event
+      e = d.class == Event ? d : d.event
       if e
         a = e.article
-        ris << struct.new(e.id, e.dt_event, a ? a.descriz : "", e.dsite_anagen, e.site_anagen_id, e.dressing, e.article_id)
+        ts = e.event_states.by_teachers.map { |x| [x.anagen.id, x.anagen.denomin] }
+        ris << struct.new(e.id, e.dt_event, a ? a.descriz : "", e.dsite_anagen, e.site_anagen_id, e.dressing, e.article_id, ts)
       end
     end
     ris
