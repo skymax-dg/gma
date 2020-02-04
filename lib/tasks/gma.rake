@@ -109,4 +109,10 @@ namespace :gma do
     puts "OK KeyWord Event"
 
   end
+
+  task import_events: :environment do
+    puts "Inizio elaborazione: %s"%[Time.now]
+    ImportEvent.process ENV['file']
+    puts "Fine elaborazione: %s"%[Time.now]
+  end
 end

@@ -113,7 +113,6 @@ class EventsController < ApplicationController
 
   def filter_events_ajax
     teacher_id = params[:teacher_id] && params[:teacher_id].to_i
-    Rails.logger.info "XXXXXXXXXXXXX '#{teacher_id}'"
     if teacher_id
       tmp = EventState.by_anagen(teacher_id).by_teachers
       ris = Event.map_json(tmp)

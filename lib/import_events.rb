@@ -6,7 +6,7 @@ class ImportEvent
     if File.exists?(fp) && File.extname(fp).downcase == ".csv"
       self.import(fp)
     else
-      return [-1, "Errore file non valido"]
+      puts "Errore file non valido"
     end
   end
 
@@ -33,15 +33,21 @@ class ImportEvent
   def self.make_event(h)
     art = Article.where(codice: h[:codice_articolo]).first
     if art
-      teach = Anagen.where(codice: h[:codice_insegnante]).first
+      teachs =  []
+      if h[:codice_insegnante]
+        h[:codice_insegnante].split.each do |x|
+          tmp = Anagen.where(codice: x).first
+          teachs << tmp if tmp 
+        end
+      end
       locat = Anagen.where(codice: h[:codice_sede]).first
       durat = self.decode_duration(h)
 
-      event = Event.create( description: h[:descrizione], article: art, timetable: h[:timeline], dt_event: h[:dt1], dt_event2: h[:dt2], dt_event3: h[:dt3], dt_event4: h[:dt4], duration: durat, site_anagen: locat, dressing: h[:abbigliamento])
+      event = Event.create( description: h[:descrizione], article: art, timetable: h[:timeline], dt_event: h[:dt1], dt_event2: h[:dt2], dt_event3: h[:dt3], dt_event4: h[:dt4], duration: durat, site_anagen: locat, dressing: h[:abbigliamento], state: 2)
       if event.errors.any?
         [-2, "Errore creazione: %s"%[event.errors.full_messages]]
       else
-        EventState.create(event: event, anagen: teach, mode: EventState::TEACHER) if teach
+        teachs.each { |x| EventState.create(event: event, anagen: x, mode: EventState::TEACHER) }
         [1, ""]
       end
     else
