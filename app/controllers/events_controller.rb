@@ -113,11 +113,11 @@ class EventsController < ApplicationController
 
   def filter_events_ajax
     if params[:teacher_id]
-      tmp = EventState.by_anagen(params[:teacher_id].to_i).by_teachers
+      tmp = EventState.by_anagen(params[:teacher_id].to_i).by_teachers.includes(:event).order('events.dt_event')
       ris = Event.map_json(tmp)
       st = true
     elsif params[:article_id]
-      tmp = Event.by_article(params[:article_id].to_i)
+      tmp = Event.by_article(params[:article_id].to_i).order(:dt_event)
       ris = Event.map_json(tmp)
       st = true
     else
