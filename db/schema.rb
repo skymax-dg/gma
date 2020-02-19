@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20200131095106) do
+ActiveRecord::Schema.define(:version => 20200219123132) do
 
   create_table "actions_counters", :force => true do |t|
     t.integer  "counter"
@@ -1122,6 +1122,7 @@ ActiveRecord::Schema.define(:version => 20200131095106) do
     t.datetime "updated_at",                                :null => false
     t.string   "type",         :limit => 24
     t.integer  "n_order",                    :default => 0
+    t.integer  "state",                      :default => 1
   end
 
   create_table "languages", :force => true do |t|

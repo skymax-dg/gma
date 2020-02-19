@@ -1,6 +1,6 @@
 class KeyWord < ActiveRecord::Base
   # attr_accessible :title, :body
-  attr_accessible :desc, :parent_id, :keyword_type, :type, :n_order
+  attr_accessible :desc, :parent_id, :keyword_type, :type, :n_order, :state
 
   belongs_to :parent, class_name: "KeyWord" , foreign_key: "parent_id"
   has_many :childs, class_name: "KeyWord" , foreign_key: "parent_id", dependent: :destroy
@@ -10,6 +10,10 @@ class KeyWord < ActiveRecord::Base
   after_create :set_n_order
 
   default_scope order("n_order ASC")
+  
+  scope :not_hidden, -> { where(state: 1) }
+
+  STATES = [ ["Nascosto",0], ["Visibile",1] ]
 
   def get_dinasty
     if self.parent
@@ -85,6 +89,11 @@ class KeyWord < ActiveRecord::Base
       end
     end
     ris
+  end
+
+  def d_state
+    tmp = STATES.select { |a,b| b == self.state }
+    tmp.size > 0 ? tmp[0][0] : ''
   end
 
   private

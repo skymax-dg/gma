@@ -1,8 +1,17 @@
 <%= form_for(@key_word, as: :key_word, url: { controller: :key_words, action: @key_word.new_record? ? :create : :update}) do |f| %>
     <%= f.hidden_field :parent_id, value: params[:parent_id] if params[:parent_id] %>
-    <div class="twelve columns">
-      <%= f.label "Descrizione" %>
-      <%= f.text_field :desc, value: @key_word.desc %>
+    <div class="row">
+      <div class="six columns">
+        <%= f.label "Descrizione" %>
+        <%= f.text_field :desc, value: @key_word.desc %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="two columns">
+        <%= f.label "Stato" %>
+        <%= select(:key_word, :state, (KeyWord::STATES)) %>
+      </div>
     </div>
 
 
