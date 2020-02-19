@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20200219123132) do
+ActiveRecord::Schema.define(:version => 20200219150029) do
 
   create_table "actions_counters", :force => true do |t|
     t.integer  "counter"
@@ -440,6 +440,8 @@ ActiveRecord::Schema.define(:version => 20200219123132) do
     t.string   "code",                   :limit => 30
     t.string   "batch_code",             :limit => 20
     t.integer  "togli_spese_spedizione",               :default => 1
+    t.string   "discount_code",          :limit => 30
+    t.integer  "article_id"
   end
 
   create_table "currencies", :force => true do |t|

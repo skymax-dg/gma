@@ -35,7 +35,8 @@
             <li> <%= link_to "IVA/ESENZIONI", ivas_path %> </li>
             <li> <%= link_to "AGENTI", agentes_path %> </li>
             <li> <%= link_to "EVENTI", events_path() %> </li>
-            <li> <%= link_to "COUPON GENERICI", coupons_path() %> </li>
+            <li> <%= link_to "CODICI SCONTO", coupons_path(state: 2) %> </li>
+            <li> <%= link_to "COUPON GENERICI", coupons_path(state: 1) %> </li>
           </ul>
         </li>
         <li class="has-dropdown">

@@ -1,12 +1,15 @@
 class Coupon < ActiveRecord::Base
-  attr_accessible :anagen_id, :state, :value, :perc, :dt_start, :dt_end, :dt_use, :ord_min, :code, :batch_code, :togli_spese_spedizione
+  attr_accessible :anagen_id, :state, :value, :perc, :dt_start, :dt_end, :dt_use, :ord_min, :code, :batch_code, :togli_spese_spedizione, :article_id, :discount_code
 
   belongs_to :anagen
+  belongs_to :article
 
-  scope :not_used, lambda {{:conditions => ['state = ?', 0]}}
-  scope :generic, lambda {{:conditions => ['anagen_id = ?', 0]}}
+  scope :not_used,           lambda {{:conditions => ['state = ?', 0]}}
+  scope :discount_codes,     lambda {{:conditions => ['state = ?', 2]}}
+  scope :not_discount_codes, lambda {{:conditions => ['state != ?', 2]}}
+  scope :generic,            lambda {{:conditions => ['anagen_id = ?', 0]}}
 
-  STATES = [ ["DISP.",0], ["USATO",1] ]
+  STATES = [ ["DISP.",0], ["USATO",1], ["CODICE SCONTO", 2] ]
   SPEDIZ = [ ["NO",0], ["SI",1] ]
   NOTIFY_DAYS = 30
 
@@ -65,5 +68,13 @@ class Coupon < ActiveRecord::Base
   def d_spediz
     tmp = SPEDIZ.select { |a,b| b == self.state }
     tmp.size > 0 ? tmp[0][0] : ''
+  end
+
+  def duplicate
+    self.dup
+  end
+
+  def d_article
+    self.article ? self.article.descriz : ""
   end
 end

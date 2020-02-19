@@ -1,5 +1,6 @@
 <%= form_for(@coupon) do |f| %>
   <%= f.hidden_field :anagen_id, value: @anagen ? @anagen.id : 0 %>
+  <%= f.hidden_field :state, value: params[:state] if params[:state] %>
   <div class="row">
     <div class="five columns">
       <%= f.label "Descrizione" %>
@@ -40,6 +41,21 @@
     </div>
     <div class="four columns"></div>
   </div>
+
+  <% if @state == 2 %>
+    <div class="row">
+      <div class="two columns">
+        <%= f.label "Codice sconto:" %>
+        <%= f.text_field :discount_code %>
+      </div>
+      <div class="one columns"></div>
+      <div class="two columns">
+        <%= f.label "Codice articolo" %>
+        <%= text_field_tag :article_code %>
+      </div>
+      <div class="four columns"></div>
+    </div>
+  <% end %>
 
   <div class="row">
     <div class="twelve columns">

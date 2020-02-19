@@ -348,7 +348,7 @@ class Anagen < ActiveRecord::Base
 
   def get_coupons
     c1 = self.coupons.not_used.map { |x| x.map_json }
-    c1.concat Coupon.generic.map { |x| x.map_json }
+    c1.concat Coupon.not_discount_codes.generic.map { |x| x.map_json }
   end
 
   def self.gen_coupon(anagen_id, params, user_id)
@@ -461,6 +461,21 @@ class Anagen < ActiveRecord::Base
       end
     end
     false
+  end
+
+  def self.activate_discount_code(anag_id, dc)
+    n = 0
+    if Anagen.exists? anag_id
+      cs = Coupon.discount_codes.where(discount_code: dc)
+      cs.each do |c|
+        nc = c.duplicat
+        nc.state = 0	# coupon attivo
+        nc.anagen_id = anag_id
+        nc.save
+        n += 1
+      end # each
+    end # if
+    n	# ritorno il numero di coupon generati, se vale 0 c'è stato un problema
   end
 
   private
