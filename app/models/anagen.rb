@@ -468,7 +468,7 @@ class Anagen < ActiveRecord::Base
     if Anagen.exists? anag_id
       cs = Coupon.discount_codes.where(discount_code: dc)
       cs.each do |c|
-        nc = c.duplicat
+        nc = c.duplicate
         nc.state = 0	# coupon attivo
         nc.anagen_id = anag_id
         nc.save

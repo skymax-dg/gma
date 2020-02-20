@@ -104,6 +104,14 @@ class CouponsController < ApplicationController
     end
   end
 
+  def activate_discount
+    code = params[:code]
+    anag_id = params[:anag_id]
+
+    ris = Anagen.activate_discount_code(anag_id, code)
+    render json: { status: ris != 0, result: ris}
+  end
+
   private
     def decode_article
       if params[:coupon] && params[:article_code] && params[:article_code] != ""
