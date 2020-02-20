@@ -23,8 +23,8 @@ class Coupon < ActiveRecord::Base
   end
 
   def map_json
-    st = Struct.new(:id, :state, :value, :perc, :dt_start, :dt_end, :dt_use, :ord_min, :togli_spese_spedizione)
-    st.new(self.id, self.state, self.value, self.perc, self.dt_start, self.dt_end, self.dt_use, self.ord_min, self.togli_spese_spedizione)
+    st = Struct.new(:id, :state, :value, :perc, :dt_start, :dt_end, :dt_use, :ord_min, :togli_spese_spedizione, :article_id)
+    st.new(self.id, self.state, self.value, self.perc, self.dt_start, self.dt_end, self.dt_use, self.ord_min, self.togli_spese_spedizione, self.article_id)
   end
 
   def self.gen_batch_code(user_id)
