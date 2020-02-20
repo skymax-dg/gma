@@ -465,7 +465,7 @@ class Anagen < ActiveRecord::Base
 
   def self.activate_discount_code(anag_id, dc)
     n = 0
-    if Anagen.exists? anag_id
+    if Anagen.exists?(anag_id) && !Coupon.has_anagen?(anag_id, dc)
       cs = Coupon.discount_codes.where(discount_code: dc)
       cs.each do |c|
         nc = c.duplicate

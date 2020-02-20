@@ -77,4 +77,9 @@ class Coupon < ActiveRecord::Base
   def d_article
     self.article ? self.article.descriz : ""
   end
+
+  def self.has_anagen?(anag_id, code)
+    Coupon.where(discount_code: code, anagen_id: anag_id).size > 0
+  end
+
 end
