@@ -246,18 +246,24 @@ class Anagen < ActiveRecord::Base
   end
 
   def prenotazioni
-    kw = KeyWordEvent.type_event_book
-    self.events.joins(:key_words).where("key_words.id = ?", kw.id).order("events.dt_event DESC")
+    #kw = KeyWordEvent.type_event_book
+    #self.events.joins(:key_words).where("key_words.id = ?", kw.id).order("events.dt_event DESC")
+    kw = KeyWordArticle.where(desc: "Libro").first
+    self.events.select { |e| e.article.has_key_word?(kw) }
   end
 
   def corsi
-    kw = KeyWordEvent.type_event_course
-    self.events.joins(:key_words).where("key_words.id = ?", kw.id).order("events.dt_event DESC")
+    #kw = KeyWordEvent.type_event_course
+    #self.events.joins(:key_words).where("key_words.id = ?", kw.id).order("events.dt_event DESC")
+    kw = KeyWordArticle.where(desc: "Evento").first
+    self.events.select { |e| e.article.has_key_word?(kw) }
   end
 
   def abbonamenti
-    kw = KeyWordEvent.type_event_magazine
-    self.events.joins(:key_words).where("key_words.id = ?", kw.id).order("events.dt_event DESC")
+    kw = KeyWordArticle.where(desc: "Rivista").first
+    self.events.select { |e| e.article.has_key_word?(kw) }
+    #kw = KeyWordEvent.type_event_magazine
+    #self.events.joins(:key_words).where("key_words.id = ?", kw.id).order("events.dt_event DESC")
   end
 
   def encode_denomin(surname, name)
