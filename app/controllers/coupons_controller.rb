@@ -31,10 +31,10 @@ class CouponsController < ApplicationController
   # GET /coupons/new
   # GET /coupons/new.json
   def new 
-    @title = "Nuovo coupon"
     @coupon = Coupon.new
     @anagen = Anagen.find(params[:anagen_id]) if params[:anagen_id] 
     @state = params[:state] ? params[:state].to_i : 1
+    @title = "Nuovo #{@state == 1 ? "coupon" : "codice sconto"}"
 
     respond_to do |format|
       format.html # new.html.erb
@@ -44,10 +44,10 @@ class CouponsController < ApplicationController
 
   # GET /coupons/1/edit
   def edit
-    @title = "Modifica coupon"
     @coupon = Coupon.find(params[:id])
     @anagen = @coupon.anagen
     @state = @coupon.state
+    @title = "Modifica #{@state == 1 ? "coupon" : "codice sconto"}"
   end
 
   # POST /coupons
