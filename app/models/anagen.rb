@@ -347,8 +347,8 @@ class Anagen < ActiveRecord::Base
   end
 
   def get_coupons
-    c1 = self.coupons.not_used.map { |x| x.map_json }
-    c1.concat Coupon.not_discount_codes.generic.map { |x| x.map_json }
+    c1 = self.coupons.not_used.order("coupons.dt_start DESC").map { |x| x.map_json }
+    c1.concat Coupon.not_discount_codes.generic.order("coupons.dt_start DESC").map { |x| x.map_json }
   end
 
   def self.gen_coupon(anagen_id, params, user_id)

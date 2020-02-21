@@ -39,7 +39,7 @@ class AnagensController < ApplicationController
     @cd_addable = Article.contenuti_digitali.order(:descriz)
     tmp = @anagen.contos.where(tipoconto: "C").first
     @eshop_orders = tmp ? tmp.tesdocs : []
-    @coupons = @anagen.coupons
+    @coupons = @anagen.coupons.order("coupons.dt_start DESC")
     @socials = @anagen.anag_socials
 
     respond_to do |format|
