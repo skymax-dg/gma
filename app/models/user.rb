@@ -448,20 +448,23 @@ class User < ActiveRecord::Base
   end
 
   def self.filter_and_export_to_xls(params, azienda)
+#    ds = self.export_filter2(params, azienda)
     ds = self.export_filter(params, azienda)
     self.export_xls(ds)
   end
 
-  def self.export_filter(params, azienda)
+  # deprecato
+  def self.export_filter2(params, azienda)
+    t1 = Time.now
     Rails.logger.info "ZZZZZZZ params: #{params}"
     ds = []
     st = false
     self.where("anagen_id <> 0").each do |u|
       st = 0 if u.anagen_id == 3421
-      if  (params["status"] == "1" && !u.anagen.gac_dati_completi?) || (params["status"] == "2" && u.anagen.gac_dati_completi?) || (params["status"] == "3")
+      if  (params["status"] == "0" && !u.anagen.gac_dati_completi?) || (params["status"] == "1" && u.anagen.gac_dati_completi?) || (params["status"] == "-1")
         st = 1 if u.anagen_id == 3421
 
-        if (params["fl_consenso"] == "1" && u.anagen.newsletter?) || (params["fl_consenso"] != "1")
+        if (params["fl_consenso"] == "1" && u.anagen.newsletter?) || (params["fl_consenso"] == "-1")
           st = 2 if u.anagen_id == 3421
           fl_ordine = params["fl_ordine"] == "1"
 
@@ -481,9 +484,9 @@ class User < ActiveRecord::Base
 
                 if fl_ordine && ( (art_id && u.anagen.has_order_by_article?(art_id, dt1, dt2)) || !art_id ) || !fl_ordine
                   st = 6 if u.anagen_id == 3421
-                  coupon_scad = [nil, ""].include?(params["coupon_in_scadenza"]) ? nil : params["coupon_in_scadenza"].to_i
+                  coupon_scad = [nil, ""].include?(params["coupon_in_scadenza"]) ? -1 : params["coupon_in_scadenza"].to_i
 
-                  if (coupon_scad == 1 && u.anagen.coupon_in_scadenza?) || coupon_scad != 1
+                  if (coupon_scad == 1 && u.anagen.coupon_in_scadenza?) || coupon_scad == -1
                     st = 7 if u.anagen_id == 3421
                     reg_code = ["",nil].include?(params["region_code"]) ? nil : params["region_code"].to_i
                     Rails.logger.info "---------- reg_code: #{reg_code} (#{reg_code.class})"
@@ -508,6 +511,77 @@ class User < ActiveRecord::Base
     end
     Rails.logger.info "---------- st: #{st}"
     Rails.logger.info "---------- ds.size: #{ds.size}"
+    t = Time.now - t1
+    Rails.logger.info "-------------- export_xls params %s time %.02f nr rec %d" % [params, t, ds.size]
+    ds
+  end
+
+  def check_anagrafica?(m, reg_code, prov_code)
+    return true if m == -1
+    an = self.anagen
+    if an.gac_dati_completi?
+      if m == 1
+        return false if (reg_code  && !an.is_in_region?(reg_code))
+        return false if (prov_code  && !an.is_in_province?(prov_code))
+        true
+      else
+        false
+      end
+    else
+      m == 0
+    end
+  end
+
+  def check_coupon?(m)
+    return true if m == -1
+    self.anagen.coupon_in_scadenza? ? m == 1 : m == 0
+  end
+
+  def check_consenso?(m)
+    return true if m == -1
+    self.anagen.newsletter? ? m == 1 : m == 0
+  end
+
+  def check_ordine?(m, azienda, dt1, dt2, kw_id, art_id)
+    return true if m == -1
+    if self.anagen.orders(azienda).size > 0  
+      return false if m == 0
+      return false if dt1 && dt2 && !a.has_order_in_dt_range?(dt1, dt2)
+      return false if kw_id && !a.has_order_by_key_word?(kw_id, dt1, dt2)
+      return false if art_id && !a.has_order_by_article?(art_id, dt1, dt2)
+      true
+    else
+      m == 0
+    end
+  end
+
+  def self.export_filter(params, azienda)
+    t1 = Time.now
+    dt1 = ["",nil].include?(params["export_filter"]["dt_start"]) ? nil : Date.parse(params["export_filter"]["dt_start"])
+    dt2 = ["",nil].include?(params["export_filter"]["dt_end"])   ? nil : Date.parse(params["export_filter"]["dt_end"])
+    coupon_scad = [nil, ""].include?(params["coupon_in_scadenza"]) ? -1 : params["coupon_in_scadenza"].to_i
+    reg_code = ["",nil].include?(params["region_code"]) ? nil : params["region_code"].to_i
+    prov_code = ["",nil].include?(params["province_code"]) ? nil : params["province_code"]
+    kw_id = [nil, ""].include?(params["key_word_id"]) ? nil : params["key_word_id"]
+    art_id = [nil, ""].include?(params["article_id"]) ? nil : params["article_id"].to_i
+    ds = []
+
+    status = params["status"].to_i    # 1 anagrafica completa 0 anagrafica non completa -1 non importa
+    fl_cons = params["fl_consenso"].to_i # 1 consenso SI  0 consenso no  -1 non importa
+    fl_ordine = params["fl_ordine"].to_i  #  1 ordine presente 0 ordine non presente -1 non importa
+
+    self.where("anagen_id <> 0").each do |u|
+      if u.check_anagrafica?(status, reg_code, prov_code) &&
+          u.check_consenso?(fl_cons) &&
+          u.check_coupon?(coupon_scad) &&
+          u.check_ordine?(fl_ordine, azienda, dt1, dt2, kw_id, art_id)
+            n,c = u.anagen.decode_denomin
+            ds << [n, c, u.email, u.anagen_id]
+      end
+    end
+
+    t = Time.now - t1
+    Rails.logger.info "-------------- export_xls params %s time %.02f nr rec %d" % [params, t, ds.size]
     ds
   end
 

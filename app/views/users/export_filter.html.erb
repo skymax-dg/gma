@@ -11,7 +11,7 @@
             </label>
           </div>
           <div class="six columns">
-            <%= select_tag("status", options_for_select([["Anagrafica non completa", 1], ["Anagrafica completa", 2]], 1)) %>
+            <%= select_tag("status", options_for_select([["Anagrafica non completa", 0], ["Anagrafica completa", 1], ["non importa", -1]], -1)) %>
           </div>
           <div class="two columns"> </div>
         </div>
@@ -23,7 +23,7 @@
             </label>
           </div>
           <div class="six columns">
-            <%= select_tag("fl_consenso", options_for_select([["Si", 1], ["No", 0]], 1)) %>
+            <%= select_tag("fl_consenso", options_for_select([["Si", 1], ["No", 0], ["non importa", -1]], -1)) %>
           </div>
 
           <div class="two columns"> </div>
@@ -36,7 +36,7 @@
             </label>
           </div>
           <div class="six columns">
-            <%= select_tag("fl_ordine", options_for_select([["Si", 1], ["No", 0]], 1)) %>
+            <%= select_tag("fl_ordine", options_for_select([["Si", 1], ["No", 0], ["non importa", -1]], -1)) %>
           </div>
           <div class="two columns"> </div>
         </div>
@@ -96,7 +96,7 @@
             </label>
           </div>
           <div class="six columns">
-            <%= select_tag("coupon_in_scadenza", options_for_select([["No",0], ["Si",1]])) %>
+            <%= select_tag("coupon_in_scadenza", options_for_select([["No",0], ["Si",1], ["non importa", -1]], -1)) %>
           </div>
           <div class="two columns"> </div>
         </div>
