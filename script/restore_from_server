@@ -1,0 +1,6 @@
+nf0=$1.tar.gz
+scp root@85.234.141.88:$nf0 .
+gzip -d $nf0
+nf=$1.tar
+db=gma_dev
+pg_restore --no-owner --no-acl --clean --host=localhost --username=postgres -d $db $nf

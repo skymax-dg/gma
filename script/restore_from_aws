@@ -1,0 +1,28 @@
+if [ $# -lt 1 ]; then
+  echo "usage: restore_from_aws  orario database_name (default gac_eifis)"
+  echo "or restore_from_aws orario db_src db_dst"
+  exit -1
+fi
+
+if [ $# -eq 1 ]; then
+  db1=gac_eifis
+  db2=gac_eifis
+  ts=$1
+fi
+
+if [ $# -eq 2 ]; then
+  db1=$2
+  db2=$2
+  ts=$1
+fi
+
+if [ $# -eq 3 ]; then
+  db1=$2
+  db2=$3
+  ts=$1
+fi
+echo restore del database $db1$ts su $db2
+nf=db.tar
+aws2 s3 cp s3://eshop19/backup/$db1$ts.tar.gz $nf.gz
+gzip -d $nf.gz
+pg_restore --no-owner --no-acl --clean --host=localhost --username=postgres -d $db2 $nf

@@ -1,0 +1,11 @@
+db=gma_prod
+db2=gma_dev
+aws2 s3 ls eshop19/backup/ | grep $db | tail -n 1  | while read d1 d2 d3 d4; do
+	aws2 s3 cp s3://eshop19/backup/$d4 $d4
+  gzip -d $d4
+  nf=$(echo $d4 | sed 's/\.gz//')
+  echo restore $nf nel database $db2
+  pg_restore --no-owner --no-acl --clean --host=localhost --username=postgres -d $db2 $nf
+  echo elimino il file temporaneo $nf
+  rm $nf
+done
