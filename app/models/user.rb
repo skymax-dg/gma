@@ -380,11 +380,27 @@ class User < ActiveRecord::Base
     o2 = []
     nt = Tesdoc.where(causmag_id: 77).size
     o2 << ["",nt]
-    Tesdoc.select("date(data_doc) as data, count(*) as numero").where("causmag_id = 77").group("date(data_doc)").order('data DESC').each do |r|
-      o2 << [r["data"].to_s , r["numero"].to_i ]
+    Tesdoc.select("date(data_doc) as data, count(*) as numero").where("causmag_id = 77").group("date(data_doc)").order('data DESC').limit(7).each do |r|
+      o2 << [r["data"].to_s , r["numero"].to_i]
+    end
+
+    o3 = []
+    Tesdoc.joins(:rigdocs).select("date(tesdocs.data_doc) as data, sum(rigdocs.prezzo) as totale9" ).where("tesdocs.causmag_id = 77").group("date(tesdocs.data_doc)").order('data DESC').each do |r|
+
+      dt = Date.parse(r["data"])
+      tt = r["totale9"].to_f
+      o3 << [r["data"].to_s , dt.year, dt.month, tt ]
+    end
+
+    # Statistica mensile
+    o4 = []
+    o5 = o3.group_by { |e| "%04d-%02d"%[ e[1] ? e[1] : 0, e[2] ? e[2] : 0] }
+    o5.each do |k,v| 
+      t = v.sum { |e| e[3] }
+      o4 << [ k, 0, t ]
     end
     
-    [h, o2]
+    [h, o2, o4]
   end
 
   # deprecato
