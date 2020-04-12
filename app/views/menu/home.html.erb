@@ -32,10 +32,10 @@
 <% end %>
 </td>
 <td>
-<% @stat_months[1..-1].each do |v| %>
+<% @stat_months[0..-1].each do |v| %>
   <div  style='<%= "width: #{ 100 + v[2]/20}px" %>; background-color:green; margin: 4px; padding:2px '>
   <span style="color: yellow;"><%= v[0] %>&nbsp;:&nbsp;</span>
-  <span style="color: white; background-color:green"> <b><%= v[2].to_i %></b> </span>
+  <span style="color: white; background-color:green"> <b><%= v[2] %></b> </span>
   </div>
 <% end %>
 </td>

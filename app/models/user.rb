@@ -385,10 +385,10 @@ class User < ActiveRecord::Base
     end
 
     o3 = []
-    Tesdoc.joins(:rigdocs).select("date(tesdocs.data_doc) as data, sum(rigdocs.prezzo) as totale9" ).where("tesdocs.causmag_id = 77").group("date(tesdocs.data_doc)").order('data DESC').each do |r|
+    Tesdoc.joins(:rigdocs).select("date(tesdocs.data_doc) as data, sum(rigdocs.prezzo*rigdocs.qta) as totale9" ).where("tesdocs.causmag_id = 77").group("date(tesdocs.data_doc)").order('data DESC').each do |r|
 
       dt = Date.parse(r["data"])
-      tt = r["totale9"].to_f
+      tt = r["totale9"].to_i
       o3 << [r["data"].to_s , dt.year, dt.month, tt ]
     end
 
