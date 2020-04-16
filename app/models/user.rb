@@ -149,6 +149,9 @@ class User < ActiveRecord::Base
       return [-2, nil]
     else
       login = mail.split("@")[0][0..19]
+      if User.exists?(login: login, azienda: azienda)
+        login = mail.gsub(/@|\./,"")[0..19]
+      end
       user = User.new(email: mail, azienda: azienda, user_tp: 2, login: login)
       user.pwd = user.random_pwd
       if user.save 
