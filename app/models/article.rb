@@ -260,24 +260,28 @@ class Article < ActiveRecord::Base
     Article.joins(:key_words).where("key_words.id = ?", kw.id)
   end
 
-  def self.announcements
+  def self.announcements(n)
     kw = KeyWordArticle.where(desc: "Novita'").first
-    Article.joins(:key_words).where("key_words.id = ?", kw.id)
+    r = Article.joins(:key_words).where("key_words.id = ?", kw.id)
+    n > 0 ? r.limit(n) : r
   end
   
-  def self.promotions
+  def self.promotions(n)
     kw = KeyWordArticle.where(desc: "Promozioni").first
-    Article.joins(:key_words).where("key_words.id = ?", kw.id)
+    r = Article.joins(:key_words).where("key_words.id = ?", kw.id)
+    n > 0 ? r.limit(n) : r
   end
   
-  def self.bestsellers
+  def self.bestsellers(n)
     kw = KeyWordArticle.where(desc: "Bestseller").first
-    Article.joins(:key_words).where("key_words.id = ?", kw.id)
+    r = Article.joins(:key_words).where("key_words.id = ?", kw.id)
+    n > 0 ? r.limit(n) : r
   end
   
-  def self.products
+  def self.products(n)
     kw = KeyWordArticle.where(desc: "Generico").first
-    Article.joins(:key_words).where("key_words.id = ?", kw.id)
+    r = Article.joins(:key_words).where("key_words.id = ?", kw.id)
+    n > 0 ? r.limit(n) : r
   end
 
   def can_buy?

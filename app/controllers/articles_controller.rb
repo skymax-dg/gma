@@ -270,22 +270,26 @@ class ArticlesController < ApplicationController
   end
 
   def announcements
-    ds = Article.announcements
+    n = params[:limit] ? params[:limit].to_i : 0
+    ds = Article.announcements(n)
     render json: map_json_array(ds) 
   end
   
   def promotions
-    ds = Article.promotions
+    n = params[:limit] ? params[:limit].to_i : 0
+    ds = Article.promotions(n)
     render json: map_json_array(ds) 
   end
   
   def bestsellers
-    ds = Article.bestsellers
+    n = params[:limit] ? params[:limit].to_i : 0
+    ds = Article.bestsellers(n)
     render json: map_json_array(ds) 
   end
   
   def products
-    ds = Article.products
+    n = params[:limit] ? params[:limit].to_i : 0
+    ds = Article.products(n)
     render json: map_json_array(ds) 
   end
   
