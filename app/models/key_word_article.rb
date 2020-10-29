@@ -9,7 +9,7 @@ class KeyWordArticle < KeyWord
     ris = []
     a.childs.not_hidden.each do |x|
       ris << self.map_json_data(x)
-      x.childs.each { |y| ris << self.map_json_array(y) }
+      x.childs.not_hidden.each { |y| ris << self.map_json_array(y) }
     end
     [self.map_json_data(a),ris].flatten
   end
