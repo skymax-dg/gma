@@ -167,6 +167,3 @@ DEPENDENCIES
   uglifier (>= 1.0.3)
   will_paginate (~> 3.0.beta)
   zurb-foundation
-
-BUNDLED WITH
-   1.16.6

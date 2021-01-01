@@ -114,21 +114,20 @@ namespace :new_year do
     # creo i nuovi conti
     conta = 0
     contos.each do |row|
-      puts row.codice, row.descriz
+      puts row[:codice], row[:descriz]
       conta += 1
       unless m_safe
           Conto.create( 
-            :azienda => row.azienda, 
+            :azienda => row[:azienda], 
             :annoese => anno, 
-            :codice => row.codice,
-            :descriz => row.descriz,
-            :tipoconto => row.tipoconto,
-            :cntrpartita => row.cntrpartita,
-            :sconto => row.sconto,
-            :anagen_id => row.anagen_id,
-            :tipopeo => row.tipopeo
+            :codice => row[:codice],
+            :descriz => row[:descriz],
+            :tipoconto => row[:tipoconto],
+            :cntrpartita => row[:cntrpartita],
+            :sconto => row[:sconto],
+            :anagen_id => row[:anagen_id],
+            :tipopeo => row[:tipopeo]
           )
-        end
       end
     end
 
