@@ -81,4 +81,58 @@ namespace :new_year do
     puts "conti inseriti %d"%[conta]
   end
 
+  desc "duplicazione conti"
+  task :clone_conti => [:environment] do
+
+
+    anno = get_int( "anno da iniziare", 2012, 2099, nil)
+
+    conferma = Readline.readline("Confermare importazione conti da anno  %d per iniziare anno %d? [S/s-N/n]"%[anno-1, anno])
+    if conferma.downcase != 's'
+      abort "Operazione annullata dall'utente"
+    end
+
+    m_safe = (Readline.readline("elaboro senza salvare [S/s-N/n]").downcase == 's')
+
+    # salvo i dati dell'anno precedente
+    contos = []
+    Conto.where(:annoese => anno-1).each do |co|
+      contos << { 
+        :azienda => co.azienda ,
+        :annoese => co.annoese ,
+        :codice => co.codice ,
+        :descriz => co.descriz ,
+        :tipoconto => co.tipoconto ,
+        :cntrpartita => co.cntrpartita ,
+        :sconto => co.sconto ,
+        :anagen_id => co.anagen_id ,
+        :tipopeo => co.tipopeo 
+      }
+    end
+    puts "conti letti %d"%[contos.count]
+
+    # creo i nuovi conti
+    conta = 0
+    contos.each do |row|
+      puts row.codice, row.descriz
+      conta += 1
+      unless m_safe
+          Conto.create( 
+            :azienda => row.azienda, 
+            :annoese => anno, 
+            :codice => row.codice,
+            :descriz => row.descriz,
+            :tipoconto => row.tipoconto,
+            :cntrpartita => row.cntrpartita,
+            :sconto => row.sconto,
+            :anagen_id => row.anagen_id,
+            :tipopeo => row.tipopeo
+          )
+        end
+      end
+    end
+
+    puts "conti inseriti %d"%[conta]
+  end
+
 end
