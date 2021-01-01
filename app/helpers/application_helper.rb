@@ -65,7 +65,7 @@ module ApplicationHelper
     if params[:yearrange]
       yearrange = params[:yearrange]
     else
-      yearrange = "1920:2020"
+      yearrange = "1920:2030"
     end
 
     if params[:date] || params[:time]
