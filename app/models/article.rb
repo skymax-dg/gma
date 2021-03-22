@@ -307,21 +307,31 @@ class Article < ActiveRecord::Base
   end
 
   def self.global_search(key)
+    Rails.logger.info "global_seargh --------------------- key #{key}"
+
 
     # cerco per autore
-    aa = Anagen.where("UPPER(denomin) like UPPER(?)", "%{key}%")
+    aa = Anagen.where("UPPER(denomin) like UPPER(?)", "%#{key}%")
+    Rails.logger.info ".... autore #{aa.size}" 
     if aa.size > 0
-      return Article.not_hidden.by_author(aa[0].id) 
+      aa.each do |aut|
+        rr = Article.not_hidden.by_author(aut.id) 
+        if rr.size > 0
+          return rr
+        end
+      end
     end
      
     # cerco per titolo
-    aa = Article.not_hidden.where("UPPER(descriz) like UPPER(?)", "%{key}%")
+    aa = Article.not_hidden.where("UPPER(descriz) like UPPER(?)", "%#{key}%")
+    Rails.logger.info ".... titolo #{aa.size}" 
     if aa.size > 0
       return aa
     end
 
     # cerco per codice
     aa = Article.not_hidden.where("codice = ?",key)
+    Rails.logger.info ".... codice #{aa.size}" 
     if aa.size > 0
       return aa
     end
