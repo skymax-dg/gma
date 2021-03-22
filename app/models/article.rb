@@ -309,21 +309,19 @@ class Article < ActiveRecord::Base
   def self.global_search(key)
 
     # cerco per autore
-    k2 = "%{key}%"
-    aa = Anagen.where("UPPER(denomin) like UPPER({k2})")
+    aa = Anagen.where("UPPER(denomin) like UPPER(?)", "%{key}%")
     if aa.size > 0
       return Article.not_hidden.by_author(aa[0].id) 
     end
      
     # cerco per titolo
-    k2 = "%{key}%"
-    aa = Article.not_hidden.where("UPPER(descriz) like UPPER({k2})")
+    aa = Article.not_hidden.where("UPPER(descriz) like UPPER(?)", "%{key}%")
     if aa.size > 0
       return aa
     end
 
     # cerco per codice
-    aa = Article.not_hidden.where("codice = '%s'"%[key])
+    aa = Article.not_hidden.where("codice = ?",key)
     if aa.size > 0
       return aa
     end
