@@ -309,13 +309,15 @@ class Article < ActiveRecord::Base
   def self.global_search(key)
 
     # cerco per autore
-    aa = Anagen.where("denomin ilike '%%%s%%'"%[key])
+    k2 = '%'+key+'%'
+    aa = Anagen.where("denomin ilike '%s'"%[k2])
     if aa.size > 0
       return Article.not_hidden.by_author(aa[0].id) 
     end
      
     # cerco per titolo
-    aa = Article.not_hidden.where("descriz ilike '%%%s%%'"%[key])
+    k2 = '%'+key+'%'
+    aa = Article.not_hidden.where("descriz ilike '%s'"%[k2])
     if aa.size > 0
       return aa
     end
