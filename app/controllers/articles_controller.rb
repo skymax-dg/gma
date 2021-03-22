@@ -301,6 +301,7 @@ class ArticlesController < ApplicationController
          when "3" then params[:category_id] ? Article.not_hidden.by_key_word(params[:category_id]).order("articles.dtpub DESC")    : []
          when "4" then params[:codice]      ? Article.not_hidden.where(codice: params[:codice]).order("articles.dtpub DESC")       : []
          when "5" then params[:supplier_id] ? Article.not_hidden.by_supplier(params[:supplier_id])                                 : []
+         when "6" then params[:search]   ? Article.global_search(params[:search]) : []
          else []
          end
 

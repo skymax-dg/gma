@@ -306,6 +306,30 @@ class Article < ActiveRecord::Base
     self.state == 6
   end
 
+  def self.global_search(key)
+
+    # cerco per autore
+    aa = Anagen.where("denomin like '%%%s%%'"%[key])
+    if aa.size > 0
+      return Article.not_hidden.by_author(aa[0].id) 
+    end
+     
+    # cerco per titolo
+    aa = Article.not_hidden.where("descriz like '%%%s%%'"%[key])
+    if aa.size > 0
+      return aa
+    end
+
+    # cerco per codice
+    aa = Article.not_hidden.where("codice = '%s'"%[key])
+    if aa.size > 0
+      return aa
+    end
+
+    []
+
+  end
+
   private
     def require_no_rigdocs
       self.errors.add :base, "Almeno una riga documento fa riferimento all'articolo che si desidera eliminare."
