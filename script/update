@@ -1,0 +1,12 @@
+echo git pull
+git pull origin dev
+echo bundle install
+bundle install
+echo do migration
+rake db:migrate
+echo restarting passenger
+touch tmp/restart.txt
+#passenger-config restart-app
+#echo restarting delayed job
+#bin/delayed_job restart
+echo update completed! now you can log out from this server

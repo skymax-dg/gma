@@ -1,0 +1,1 @@
+passenger-config restart-app
