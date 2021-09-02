@@ -109,7 +109,7 @@ GEM
       thor (~> 0.14.6)
     rake (10.0.3)
     rb-readline (0.4.2)
-    rdoc (3.12)
+    rdoc (3.12.2)
       json (~> 1.4)
     ruby-ole (1.2.11.6)
     ruby-rc4 (0.1.5)
